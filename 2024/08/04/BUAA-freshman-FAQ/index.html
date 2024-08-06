@@ -1,71 +1,314 @@
-<?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title>第一次尝试</title>
-    <url>/2023/11/27/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95/</url>
-    <content><![CDATA[<pre><code>万事开头难。
-</code></pre>
-<p>有关建设个人博客这件事，本人其实早在2022年5月，就已按各路教程，用Hexo和Github Pages搭好了环境。苦于当时的学业压力，加上后续也没有任何写随笔的时间和欲望，这一项目就此搁浅，主页上也只留着默认的“hello world”。</p>
-<p>转眼，过了一年半，这个想法又被提上了日程。主要的推动力，我想是高宁老师在几周前《大国领袖》课程上的点醒。的确，写作使人深刻。思想在矛盾中产生进步，而若不以文字记录下所思所想，任何进步所获，都将被时间冲淡，最后终将导致自己寸步未进。听得此话，如醍醐灌顶。也许，真的是时候认真记录一下自己的所思所想了。</p>
-<p>初入大学数月，感受颇丰——无论是学业上，还是这几个月来自己学余的所见所闻。这几个月，有看完MyGo!!!!!、补完少歌之后的感动，有学业繁重、认识到自己与各路大神差距的压力，有对自己选择信息类，而非三年前自己所热爱的航空学的怀疑，更有初中以后，自己的精神支柱长期空缺的反思。上述种种，我想，绝非只是自己心里想想，然后任其随时间逝去就能过去的。用文字记录下自己的感受，并在写作中反思，我想才是正解。</p>
-<p>当然，自己搭建Blog，也绝非易事。在您观看这篇文章时，本人可能还在潜心研究NexT主题的各类复杂设置，这个博客也大概率还只是一个刚搭好的毛胚房。这也算是我第一次真正使用Github开发自己的项目，要学习的东西自然也是很多。</p>
-<p>写到这里，已然词穷。本人Blog的第一篇文章，就到此草草作结吧。</p>
-<p>但愿写完这篇文章之后，我还能记得继续写吧（笑</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>心得</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>图床测试</title>
-    <url>/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</url>
-    <content><![CDATA[<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/%7B433FA560-1033-4134-A91E-3F4E0C6D3AC2%7D.png" alt="{433FA560-1033-4134-A91E-3F4E0C6D3AC2}.png"></p>
-<p>通过阿里云OSS+PicGo的方案，本博客成功实现了图床功能。</p>
-<p>Github在国内访问速度太慢，为了实现图片快速加载，只能加点钱上阿里云了 :(</p>
-<p>不过一个月也就6块钱，也就约等于一个月少喝一瓶东方树叶嘛😋</p>
-]]></content>
-      <categories>
-        <category>建站历程</category>
-      </categories>
-      <tags>
-        <tag>测试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>建站第一日</title>
-    <url>/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/</url>
-    <content><![CDATA[<p>今天做成的事情不多，主要是做了一下侧边栏的结构，改了个色，加了个favicon，然后基本就没了。</p>
-<p>上述工作的确很简单，但为何忙了一天，却只完成了这几件事呢？问题出在评论区功能和图床的实现上。</p>
-<span id="more"></span>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#003153"><meta name="generator" content="Hexo 7.0.0">
 
-<p>先说图床。<br>这个Blog显然不会是一个纯文字的博客，后续放图进文章的问题肯定要考虑到。<br>Github Pages没记错的话，库大小似乎是有限制的（1GB？），把所有文章的图片直接存库里固然不现实。找了一天，暂时还没有找到一个成本为0或接近0的方案，基本都要涉及到买域名&#x2F;配置云服务。目前看到一个PicGo + Github的方案似乎可行，之后有空再试。</p>
-<p>再说评论系统。<br>为了和各位读者相互交流，评论区肯定是少不了的。<br>但是，正是在评论区实现的方案选择上，我近乎浪费了一整个早上。为什么呢？还请继续往下看：</p>
-<p>NexT主题集成了几个评论系统：disqus, 畅言，livere，gitalk和utterances。<br>disqus在国内访问速率堪忧，甚至大概率打不开，不在考虑范围内；<br>livere在国内倒是能用，但是必须要社交平台账号登录，不大符合我允许匿名留言的想法；<br>gitalk和utterances必须要求Github登录后才能评论，门槛之高不言而喻，且同样无法实现匿名评论。<br>那畅言呢？要求登录是其一，其美观程度之差是其二，本着不妥协的原则，这个方案也行不通。</p>
-<p>在上述方案都不符合预期的情况下，只得求助各路教程，而各路教程都不约而同地指向了valine。valine允许匿名，外观简洁，看起来就是最佳之选了。在一番了解后，发现valine原本被集成在NexT内，但出于不再开源和安全问题的原因被移除，以单独插件形式存在。安装并配置好后，却发现其无法正常使用：起初是出现401报错，后变为不报错，但评论无法正常发表，点下发表后毫无反应。</p>
-<p>一番折腾后，评论区的建设仍毫无进展，只得暂时作罢。</p>
-<p>Blog的基本框架现在已经成型。接下来的建设任务，我想就是攻克下这两个难题了。至于小细节，留到日后吧。</p>
-]]></content>
-      <categories>
-        <category>建站历程</category>
-      </categories>
-      <tags>
-        <tag>心得</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>送给组内信类新生的一点点私货</title>
-    <url>/2024/08/04/BUAA-freshman-FAQ/</url>
-    <content><![CDATA[<h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>首先，欢迎各位成为北航士谔书院的一员，也很荣幸能与大家共处同一梦拓小组！</p>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/pz13.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/pz12.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/pz11.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#003153">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"waline","storage":true,"lazyload":false,"nav":null,"activeClass":"waline"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="序首先，欢迎各位成为北航士谔书院的一员，也很荣幸能与大家共处同一梦拓小组！ 本文将尝试对大家初入大一可能遇到的部分问题进行解答，以备各位不时之需；同时夹带大量私货，欢迎各位参考😋 本文是按苯人自己一年来的经验，想到什么写什么写成的，应该能涵盖各位可能碰到的不少问题。若有其它没有覆盖到的问题，欢迎各位联系交流！🤗">
+<meta property="og:type" content="article">
+<meta property="og:title" content="送给组内信类新生的一点点私货">
+<meta property="og:url" content="http://example.com/2024/08/04/BUAA-freshman-FAQ/index.html">
+<meta property="og:site_name" content="Position 0">
+<meta property="og:description" content="序首先，欢迎各位成为北航士谔书院的一员，也很荣幸能与大家共处同一梦拓小组！ 本文将尝试对大家初入大一可能遇到的部分问题进行解答，以备各位不时之需；同时夹带大量私货，欢迎各位参考😋 本文是按苯人自己一年来的经验，想到什么写什么写成的，应该能涵盖各位可能碰到的不少问题。若有其它没有覆盖到的问题，欢迎各位联系交流！🤗">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806124149.png">
+<meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806131618.png">
+<meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806162926.png">
+<meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/c3a458bf4308d96022967f7e6b759be0.jpg">
+<meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806153253.png">
+<meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/d9802a3a6c4a441eceffdbf1f89f305c.png">
+<meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806174303.png">
+<meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806175433.png">
+<meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806175510.png">
+<meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806175554.png">
+<meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806175748.png">
+<meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806175932.png">
+<meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806180116.png">
+<meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806180616.png">
+<meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806181826.png">
+<meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806192608.png">
+<meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806194045.png">
+<meta property="article:published_time" content="2024-08-04T13:11:00.000Z">
+<meta property="article:modified_time" content="2024-08-06T12:43:29.606Z">
+<meta property="article:author" content="LajiPZ">
+<meta property="article:tag" content="心得">
+<meta property="article:tag" content="梦拓">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806124149.png">
+
+
+<link rel="canonical" href="http://example.com/2024/08/04/BUAA-freshman-FAQ/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2024/08/04/BUAA-freshman-FAQ/","path":"2024/08/04/BUAA-freshman-FAQ/","title":"送给组内信类新生的一点点私货"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>送给组内信类新生的一点点私货 | Position 0</title>
+  
+
+
+
+
+
+
+
+<link rel="dns-prefetch" href="https://waline-1-k4078585.deta.app/">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Position 0</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">LajiPZ的随想屋</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-随笔"><a href="/categories/%E9%9A%8F%E7%AC%94/" rel="section"><i class="fa-solid fa-pen fa-fw"></i>随笔</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%8F"><span class="nav-number">1.</span> <span class="nav-text">序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8B%B1%E8%AF%AD%E8%AF%BE%E7%A8%8B%E9%80%89A%EF%BC%8C%E8%BF%98%E6%98%AF%E9%80%89B%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">英语课程选A，还是选B？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%E8%A6%81%E8%BD%AC%E5%8F%98%E5%90%97%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">学习方法要转变吗？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%89%E4%BB%80%E4%B9%88%E5%8A%9E%E6%B3%95%E9%A2%84%E4%B9%A0%E5%90%97%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">有什么办法预习吗？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99%E7%9A%84%E6%9D%A5%E6%BA%90"><span class="nav-number">4.1.</span> <span class="nav-text">两个学习资料的来源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="nav-number">4.2.</span> <span class="nav-text">C语言程序设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">4.2.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%84%9F%E5%8F%97"><span class="nav-number">4.2.2.</span> <span class="nav-text">个人感受</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E7%A7%91%E6%95%B0%E5%AD%A6%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%80%EF%BC%89"><span class="nav-number">4.3.</span> <span class="nav-text">工科数学分析（一）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E6%96%87-1"><span class="nav-number">4.3.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%84%9F%E5%8F%97-1"><span class="nav-number">4.3.2.</span> <span class="nav-text">个人感受</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E7%A7%91%E9%AB%98%E7%AD%89%E4%BB%A3%E6%95%B0"><span class="nav-number">4.4.</span> <span class="nav-text">工科高等代数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E6%96%87-2"><span class="nav-number">4.4.1.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%84%9F%E5%8F%97-2"><span class="nav-number">4.4.2.</span> <span class="nav-text">个人感受</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%BF%85%E4%BF%AE%E8%AF%BE%E7%A8%8B"><span class="nav-number">4.5.</span> <span class="nav-text">其他必修课程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E5%85%B3%E6%B3%A8%E5%93%AA%E4%BA%9B%E4%BF%A1%E6%81%AF%E6%B8%A0%E9%81%93%EF%BC%9F"><span class="nav-number">5.</span> <span class="nav-text">需要关注哪些信息渠道？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7"><span class="nav-number">5.1.</span> <span class="nav-text">微信公众号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%99%E5%8A%A1%E5%A4%84%E5%AE%98%E7%BD%91"><span class="nav-number">5.2.</span> <span class="nav-text">教务处官网</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A6%96%E9%A1%B5"><span class="nav-number">5.2.1.</span> <span class="nav-text">首页</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%99%E5%8A%A1%E7%B3%BB%E7%BB%9F"><span class="nav-number">5.2.2.</span> <span class="nav-text">教务系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE"><span class="nav-number">5.2.3.</span> <span class="nav-text">访问</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E6%96%87-3"><span class="nav-number">5.2.4.</span> <span class="nav-text">正文</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%89%E5%85%B3%E5%9B%9B%E3%80%81%E5%85%AD%E7%BA%A7"><span class="nav-number">6.</span> <span class="nav-text">有关四、六级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%89%E5%85%B3%E4%BD%93%E8%82%B2%E9%94%BB%E7%82%BC"><span class="nav-number">7.</span> <span class="nav-text">有关体育锻炼</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%89%E5%85%B3%E6%B2%99%E6%B2%B3%E7%BE%8E%E9%A3%9F"><span class="nav-number">8.</span> <span class="nav-text">有关沙河美食</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E7%B1%BB%E5%8F%AA%E6%9C%89%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%80%E4%B8%AA%E2%80%9D%E5%A5%BD%E2%80%9C%E9%80%89%E6%8B%A9%EF%BC%9F"><span class="nav-number">9.</span> <span class="nav-text">信类只有计算机一个”好“选择？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%97%E4%BA%AC%E2%80%9D%E8%88%AA%E7%A9%BA%E8%88%AA%E5%A4%A9%E2%80%9C%E5%A4%A7%E5%AD%A6%EF%BC%9F"><span class="nav-number">10.</span> <span class="nav-text">北京”航空航天“大学？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%8B"><span class="nav-number">11.</span> <span class="nav-text">跋</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="LajiPZ"
+      src="/images/b_a16c7cb292cd966e3fe480d51b1bfac6.jpg">
+  <p class="site-author-name" itemprop="name">LajiPZ</p>
+  <div class="site-description" itemprop="description">Mediocrity</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/08/04/BUAA-freshman-FAQ/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/b_a16c7cb292cd966e3fe480d51b1bfac6.jpg">
+      <meta itemprop="name" content="LajiPZ">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Position 0">
+      <meta itemprop="description" content="Mediocrity">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="送给组内信类新生的一点点私货 | Position 0">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          送给组内信类新生的一点点私货
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-08-04 21:11:00" itemprop="dateCreated datePublished" datetime="2024-08-04T21:11:00+08:00">2024-08-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-08-06 20:43:29" itemprop="dateModified" datetime="2024-08-06T20:43:29+08:00">2024-08-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%A2%A6%E6%8B%93%E7%9B%B8%E5%85%B3/" itemprop="url" rel="index"><span itemprop="name">梦拓相关</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2024/08/04/BUAA-freshman-FAQ/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/2024/08/04/BUAA-freshman-FAQ/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>10k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>19 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>首先，欢迎各位成为北航士谔书院的一员，也很荣幸能与大家共处同一梦拓小组！</p>
 <p>本文将尝试对大家初入大一可能遇到的部分问题进行解答，以备各位不时之需；同时夹带大量私货，欢迎各位参考😋</p>
 <p>本文是按苯人自己一年来的经验，想到什么写什么写成的，应该能涵盖各位可能碰到的不少问题。若有其它没有覆盖到的问题，欢迎各位联系交流！🤗</p>
 <span id="more"></span>
 
 <p>同时推荐一份民间编写的学生指南，供各位参考；<strong>由于这个指南全靠民间热心的各位大神自发更新，里面的消息可能有不少未及时更新或不准确，仅供参考，真有拿不准的问题欢迎问导员或者梦拓！</strong>：</p>
-<p>【腾讯文档】北京航空航天大学学生手册<br><a href="https://docs.qq.com/aio/DQXdSc0hXYlFVcnVY">https://docs.qq.com/aio/DQXdSc0hXYlFVcnVY</a></p>
-<p>另有一个比较抽象的新生指南：<a href="https://github.com/BUAA-Wjay/BUAANew%EF%BC%88%E5%8F%AF%E8%83%BD%E9%9C%80%E8%A6%81%E7%BF%BB%E5%A2%99%EF%BC%89%EF%BC%8C%E9%87%8C%E9%9D%A2%E6%B6%88%E6%81%AF**%E5%8F%AF%E8%83%BD%E9%9C%80%E8%A6%81%E8%87%AA%E5%B7%B1%E7%94%84%E5%88%AB%E4%B8%80%E4%B8%8B%EF%BC%8C">https://github.com/BUAA-Wjay/BUAANew（可能需要翻墙），里面消息**可能需要自己甄别一下，</a>** 尤其是各类非官方群，毕竟那里通常是<strong>卖课、推销、诈骗的高发区</strong>。</p>
+<p>【腾讯文档】北京航空航天大学学生手册<br><a target="_blank" rel="noopener" href="https://docs.qq.com/aio/DQXdSc0hXYlFVcnVY">https://docs.qq.com/aio/DQXdSc0hXYlFVcnVY</a></p>
+<p>另有一个比较抽象的新生指南：<a target="_blank" rel="noopener" href="https://github.com/BUAA-Wjay/BUAANew%EF%BC%88%E5%8F%AF%E8%83%BD%E9%9C%80%E8%A6%81%E7%BF%BB%E5%A2%99%EF%BC%89%EF%BC%8C%E9%87%8C%E9%9D%A2%E6%B6%88%E6%81%AF**%E5%8F%AF%E8%83%BD%E9%9C%80%E8%A6%81%E8%87%AA%E5%B7%B1%E7%94%84%E5%88%AB%E4%B8%80%E4%B8%8B%EF%BC%8C">https://github.com/BUAA-Wjay/BUAANew（可能需要翻墙），里面消息**可能需要自己甄别一下，</a>** 尤其是各类非官方群，毕竟那里通常是<strong>卖课、推销、诈骗的高发区</strong>。</p>
 <h2 id="英语课程选A，还是选B？"><a href="#英语课程选A，还是选B？" class="headerlink" title="英语课程选A，还是选B？"></a>英语课程选A，还是选B？</h2><p>在各位联系到作为梦拓的我的不久之后，相信大家已经对英语课程的分级考有所耳闻了。虽说会参考分班考成绩来分，但这个还是需要各位填选A班还是B班的志愿；那么，选哪个呢？</p>
 <p>可能有同学担心，两个班的课业压力差别较大；又或者是在各类吹水群里，听说了前一届甚至前几届前辈对A&#x2F;B班的评价，对A&#x2F;B班的学习状态已有了刻板印象……自然，课业上的压力，两个班的区别<strong>当然是存在的</strong>。<strong>但是！A&#x2F;B班的课业压力孰轻孰重，各届的情况存在巨大的差别</strong>，前人的经验或许有帮助，但在这<strong>很有可能不具参考价值</strong>。</p>
 <p>比如，我的 <strong>上一届（2022级）</strong> 普遍反映A班的作业和杂事都很多，难度大云云，B班就很轻松；然而！在我的<strong>这一届（2023级），情况却恰恰相反</strong>。我选择的A班反而每周十分轻松。课堂氛围轻松不说，除了课堂展示以外的杂事与作业真不多，作业检查程度也不算太严；反观同寝室另外3位选择了B班的同学，<strong>每周</strong>都会同各类神奇的英语作业（比如：假设自己要留学，做留学的出行等一系列计划）斗智斗勇不说，据其描述课上也很忙……</p>
@@ -82,7 +325,7 @@
 <p>进入信息大类，各位大一上学起来要花点功夫的主要就是<strong>工科数学分析、工科高等代数、C语言程序设计</strong>三门课程。剩下的基本没预习的必要。</p>
 <h3 id="两个学习资料的来源"><a href="#两个学习资料的来源" class="headerlink" title="两个学习资料的来源"></a>两个学习资料的来源</h3><p>开始之前，个人先推荐两个学习资料的来源渠道。</p>
 <p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806124149.png" alt="image.png"><br>一个是<strong>北航士谔书院的学业支持中心</strong>的北航网盘资料库。里面包含了大一整个学年可能用到的<strong>往年题，课件</strong>等可能有用的学习资料，同时也有一部分竞赛四六级资料。如果各位对预习有所兴趣，完全可以看着里面的课件ppt来预习 <strong>（事实上，大学，至少北航，上课基本不看教材，而基本只看ppt，知识点等等都在上面；更有甚者是念ppt上课，这也很常见）</strong> 。</p>
-<p>里面的资料，相信对各位一定有所帮助：<br><a href="https://bhpan.buaa.edu.cn/anyshare/en-us/link/AAE382BC57552F47C3963B94EA8821E684/8432FD008DFD4F3D9256370735A84832/8EA3C8E70B7941ED9AA164501F0950D2/2E077C8617154E118896618A7C295703/8C5F58E5D4F94DD39151E336665D507B/7A3FF43284484037A2515529D9B0478F?_tb=none">https://bhpan.buaa.edu.cn/anyshare/en-us/link/AAE382BC57552F47C3963B94EA8821E684/8432FD008DFD4F3D9256370735A84832/8EA3C8E70B7941ED9AA164501F0950D2/2E077C8617154E118896618A7C295703/8C5F58E5D4F94DD39151E336665D507B/7A3FF43284484037A2515529D9B0478F?_tb=none</a></p>
+<p>里面的资料，相信对各位一定有所帮助：<br><a target="_blank" rel="noopener" href="https://bhpan.buaa.edu.cn/anyshare/en-us/link/AAE382BC57552F47C3963B94EA8821E684/8432FD008DFD4F3D9256370735A84832/8EA3C8E70B7941ED9AA164501F0950D2/2E077C8617154E118896618A7C295703/8C5F58E5D4F94DD39151E336665D507B/7A3FF43284484037A2515529D9B0478F?_tb=none">https://bhpan.buaa.edu.cn/anyshare/en-us/link/AAE382BC57552F47C3963B94EA8821E684/8432FD008DFD4F3D9256370735A84832/8EA3C8E70B7941ED9AA164501F0950D2/2E077C8617154E118896618A7C295703/8C5F58E5D4F94DD39151E336665D507B/7A3FF43284484037A2515529D9B0478F?_tb=none</a></p>
 <p>   <img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806131618.png" alt="image.png"></p>
 <p>另一个是一个往届前辈运营的一个微信公众号：<strong>三文鱼卷。</strong> <em>（以防各位顾虑，纯推荐，没接广，23333）</em> </p>
 <p>这里面可以查到 <strong>包括但不限于信息类</strong> 的大一学习指南，里面整理的资料也挺全。<em>但是里面整理的资料难免出现分类混乱，质量参差不齐等问题，大家打包下载之后自己注意一下就可以了</em></p>
@@ -91,11 +334,11 @@
 <p>如果您<strong>恰好是前oier</strong>，大佬接我一拜😭🛐，这门课您根本不用担心！</p>
 <p>这一部分打好C语言的基础就可以了，后面大一下的数据结构课程就是建立在这门课的基础上的。</p>
 <p>预习这一部分课程，看 <strong>《C Primer Plus》</strong> 这本经典的C语言教材即可。在各位上课的时候，也可以把这本书当作自己的正式教材。</p>
-<p>又或者，试试这个：《Learn C the Hard Way》（<a href="https://wizardforcel.gitbooks.io/lcthw/content/preface.html%EF%BC%89%E3%80%82">https://wizardforcel.gitbooks.io/lcthw/content/preface.html）。</a></p>
+<p>又或者，试试这个：《Learn C the Hard Way》（<a target="_blank" rel="noopener" href="https://wizardforcel.gitbooks.io/lcthw/content/preface.html%EF%BC%89%E3%80%82">https://wizardforcel.gitbooks.io/lcthw/content/preface.html）。</a></p>
 <p>只不过，这个教材涉及到Unix&#x2F;Linux，可能更适合对Unix&#x2F;Linux已经有所了解的同学。不熟悉也没关系，如果目的只是学C语言的话，碰到涉及Linux和valgrind等工具的部分跳掉即可，用vscode等IDE就行。至于vscode怎么配置C语言开发环境，网上自行搜索即可，教程挺多的。<br><em>（当然，这个教材对IDE不是很认可。从 <strong>只学C语言的角度，</strong> 可以姑且忽略这个反对的声音，23333）</em></p>
 <p>想多练手的话，<strong>力扣（LeetCode）</strong> 和<strong>洛谷</strong>可以考虑做一下。</p>
 <h4 id="个人感受"><a href="#个人感受" class="headerlink" title="个人感受"></a>个人感受</h4><ul>
-<li><p>这门课的<strong>作业</strong>，和每周上完课后的<strong>上机小测</strong>和<strong>考试</strong>都是在课程组的<strong>AC编程平台（<a href="https://accoding.buaa.edu.cn/%EF%BC%89">https://accoding.buaa.edu.cn/）</a></strong> 上进行的。形式效仿的是IOI赛制。<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806162926.png" alt="image.png"></p>
+<li><p>这门课的<strong>作业</strong>，和每周上完课后的<strong>上机小测</strong>和<strong>考试</strong>都是在课程组的<strong>AC编程平台（<a target="_blank" rel="noopener" href="https://accoding.buaa.edu.cn/%EF%BC%89">https://accoding.buaa.edu.cn/）</a></strong> 上进行的。形式效仿的是IOI赛制。<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806162926.png" alt="image.png"></p>
 </li>
 <li><p>一次典型的练习或上机会有 A-J 10个题。<strong>尽力而为就好，千万不要苛求做全，之前没接触过编程的同学很难做到。</strong> 作为参考，本人一般能做A-G题，有时可以接触到H、I题。</p>
 </li>
@@ -185,7 +428,7 @@
 <h4 id="教务系统"><a href="#教务系统" class="headerlink" title="教务系统"></a>教务系统</h4><p><strong>（再次，注，这个需要有统一身份认证账号后才能访问，各位新同学弄好账号之后就能访问了，稍安毋躁）</strong></p>
 <h4 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h4><p>在校内的话，是可以在教务处首页点”本研教育管理系统“直接进去的。但在校外不行，需要多一个步骤——由北航VPN访问。</p>
 <ul>
-<li><p>首先要进入北航官网（<a href="http://www.buaa.edu.cn),在导航栏点”常用链接“,再点”vpn系统“./">www.buaa.edu.cn），在导航栏点”常用链接“，再点”VPN系统“。</a><br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806175433.png" alt="image.png"></p>
+<li><p>首先要进入北航官网（<a target="_blank" rel="noopener" href="http://www.buaa.edu.cn),在导航栏点”常用链接“,再点”vpn系统“./">www.buaa.edu.cn），在导航栏点”常用链接“，再点”VPN系统“。</a><br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806175433.png" alt="image.png"></p>
 </li>
 <li><p>进入界面以后，随便选一个即可。此处以VPN4为例。<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806175510.png" alt="image.png"></p>
 </li>
@@ -222,7 +465,7 @@
 <p>至于学院路的？孩子才搬过来，还不知道有啥好吃的，再探完了再报😋</p>
 <h2 id="信类只有计算机一个”好“选择？"><a href="#信类只有计算机一个”好“选择？" class="headerlink" title="信类只有计算机一个”好“选择？"></a>信类只有计算机一个”好“选择？</h2><p>答案很简明：<strong>不是</strong>，而且现在选计算机<strong>也不见得是好选择</strong>。</p>
 <p>此处且借梦拓培训时，上一届学长的分享内容一用（注：国奖 &#x3D; 国家奖学金）；<strong>里面的一些错误观点也可供各位参考</strong>：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806194045.png" alt="image.png"><br>计算机<strong>人才过饱和</strong>，这已经是不争的事实了；<strong>上一个出现这种情况的叫土木工程。</strong></p>
-<p>【[打灰爱音&#x2F;填词] 搅拌机下——“不提桶跑路已是我最后仅存的善良”】 <a href="https://www.bilibili.com/video/BV1eM4m1m74i">https://www.bilibili.com/video/BV1eM4m1m74i</a></p>
+<p>【[打灰爱音&#x2F;填词] 搅拌机下——“不提桶跑路已是我最后仅存的善良”】 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1eM4m1m74i">https://www.bilibili.com/video/BV1eM4m1m74i</a></p>
 <p>不妨把这首二创歌曲的对应部分改成计算机对应的内容，说不定你能发现周围人吹嘘计算机和曾经吹嘘土木的一些相似之处？（笑）</p>
 <p>薪资呢？如果你觉得干开发就能赚大钱的话，不妨打开一个叫Boss直聘的软件，搜一下热门的前&#x2F;后端开发的普遍薪资是多少。总之是<strong>不存在</strong>”一毕业就有40w薪资“这种事情的。</p>
 <p><strong>也许各位的确是奔着6系（计算机）来到北航的。但是，希望在大一这一年里，你能找到自己真正喜欢的专业方向，在大一下专业分流的时候，找到真正适合自己，且自己真心喜欢的选择。</strong></p>
@@ -244,13 +487,112 @@
 <p>这部分就写到这吧。可能各位对上述观点不大认同，那也没关系，就当是我对校内一些不良风气发的牢骚即可；但，如果各位认同小弟上述愚见的话，小弟自是非常感激。</p>
 <h2 id="跋"><a href="#跋" class="headerlink" title="跋"></a>跋</h2><p>这篇私货就写到这吧。如果日后有想到什么，再写点东西发给各位看官（</p>
 <p>本来是想再写写自我介绍的，但是时间实在紧迫……先这样吧，过几天我再写一个有关我自己的碎碎念。</p>
-]]></content>
-      <categories>
-        <category>梦拓相关</category>
-      </categories>
-      <tags>
-        <tag>心得</tag>
-        <tag>梦拓</tag>
-      </tags>
-  </entry>
-</search>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%BF%83%E5%BE%97/" rel="tag"># 心得</a>
+              <a href="/tags/%E6%A2%A6%E6%8B%93/" rel="tag"># 梦拓</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/" rel="prev" title="图床测试">
+                  <i class="fa fa-angle-left"></i> 图床测试
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2022 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">LajiPZ</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">12k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">22 分钟</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-CN","enable":true,"serverURL":"https://waline-1-k4078585.deta.app/","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"el":"#waline","comment":true,"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","path":"/2024/08/04/BUAA-freshman-FAQ/"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>
