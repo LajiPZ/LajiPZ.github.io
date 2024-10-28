@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>图床测试</title>
-    <url>/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</url>
-    <content><![CDATA[<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/%7B433FA560-1033-4134-A91E-3F4E0C6D3AC2%7D.png" alt="{433FA560-1033-4134-A91E-3F4E0C6D3AC2}.png"></p>
-<p>通过阿里云OSS+PicGo的方案，本博客成功实现了图床功能。</p>
-<p>Github在国内访问速度太慢，为了实现图片快速加载，只能加点钱上阿里云了 :(</p>
-<p>不过一个月也就6块钱，也就约等于一个月少喝一瓶东方树叶嘛😋</p>
-]]></content>
+    <title>法科社</title>
+    <url>/2024/09/22/FKS/</url>
+    <content><![CDATA[<h1 id="0903"><a href="#0903" class="headerlink" title="0903"></a>0903</h1><p>技术是不是中立的？</p>
+<h1 id="0910"><a href="#0910" class="headerlink" title="0910"></a>0910</h1><p>监控资本主义是否是一个不可避免的趋势？还是我们可以想办法改变他？</p>
+<h2 id="监视资本主义的定义"><a href="#监视资本主义的定义" class="headerlink" title="监视资本主义的定义"></a>监视资本主义的定义</h2><ul>
+<li>一种通过行为数据提取与分析获利的新经济模式</li>
+<li>数据的无意识采集与市场化</li>
+</ul>
+<h2 id="核心问题"><a href="#核心问题" class="headerlink" title="核心问题"></a>核心问题</h2><ul>
+<li>行为数据如何被使用？</li>
+<li>用户是否有数据控制权？</li>
+</ul>
+<h2 id="传统资本主义-vs-监控资本主义"><a href="#传统资本主义-vs-监控资本主义" class="headerlink" title="传统资本主义 vs. 监控资本主义"></a>传统资本主义 vs. 监控资本主义</h2><ul>
+<li>传统资本主义：物质商品生产和消费</li>
+<li>监控资本主义：通过行为数据创造价值</li>
+<li>案例：Google, Facebook如何利用行为数据盈利</li>
+</ul>
+<h2 id="监控资本主义的三大支柱"><a href="#监控资本主义的三大支柱" class="headerlink" title="监控资本主义的三大支柱"></a>监控资本主义的三大支柱</h2><ul>
+<li>行为剩余：企业利用超出用户预期的数据进行观测</li>
+<li>预测商品：数据用于预测用户未来行为并用于商业化</li>
+<li>权力不对等：数据提取的隐蔽性与用户缺乏控制权</li>
+</ul>
+<h2 id="行为剩余的运作机制：-用户行为数据的提取"><a href="#行为剩余的运作机制：-用户行为数据的提取" class="headerlink" title="行为剩余的运作机制： 用户行为数据的提取"></a>行为剩余的运作机制： 用户行为数据的提取</h2><ul>
+<li>用户无意识产生的“剩余”数据</li>
+<li>这些数据如何被科技公司分析、商业化</li>
+</ul>
+<h2 id="权力的新前沿：数据注意与数字监控"><a href="#权力的新前沿：数据注意与数字监控" class="headerlink" title="权力的新前沿：数据注意与数字监控"></a>权力的新前沿：数据注意与数字监控</h2><ul>
+<li>数据霸权：科技巨头通过数据构建的权力结构，Google, Facebook的垄断地位</li>
+<li>控制社会与行为干预：算法通过影响用户行为维持数据霸权。案例：剑桥分析影响美国大选</li>
+<li>隐私的终结：用户数据的无意识采集</li>
+</ul>
+<h2 id="社会、政治与道德影响"><a href="#社会、政治与道德影响" class="headerlink" title="社会、政治与道德影响"></a>社会、政治与道德影响</h2><h2 id="反抗与未来的可能性"><a href="#反抗与未来的可能性" class="headerlink" title="反抗与未来的可能性"></a>反抗与未来的可能性</h2>]]></content>
       <categories>
-        <category>建站历程</category>
+        <category>课程相关</category>
       </categories>
       <tags>
-        <tag>测试</tag>
+        <tag>水课</tag>
       </tags>
   </entry>
   <entry>
@@ -216,43 +241,24 @@
       </tags>
   </entry>
   <entry>
-    <title>法科社</title>
-    <url>/2024/09/22/FKS/</url>
-    <content><![CDATA[<h1 id="0903"><a href="#0903" class="headerlink" title="0903"></a>0903</h1><p>技术是不是中立的？</p>
-<h1 id="0910"><a href="#0910" class="headerlink" title="0910"></a>0910</h1><p>监控资本主义是否是一个不可避免的趋势？还是我们可以想办法改变他？</p>
-<h2 id="监视资本主义的定义"><a href="#监视资本主义的定义" class="headerlink" title="监视资本主义的定义"></a>监视资本主义的定义</h2><ul>
-<li>一种通过行为数据提取与分析获利的新经济模式</li>
-<li>数据的无意识采集与市场化</li>
-</ul>
-<h2 id="核心问题"><a href="#核心问题" class="headerlink" title="核心问题"></a>核心问题</h2><ul>
-<li>行为数据如何被使用？</li>
-<li>用户是否有数据控制权？</li>
-</ul>
-<h2 id="传统资本主义-vs-监控资本主义"><a href="#传统资本主义-vs-监控资本主义" class="headerlink" title="传统资本主义 vs. 监控资本主义"></a>传统资本主义 vs. 监控资本主义</h2><ul>
-<li>传统资本主义：物质商品生产和消费</li>
-<li>监控资本主义：通过行为数据创造价值</li>
-<li>案例：Google, Facebook如何利用行为数据盈利</li>
-</ul>
-<h2 id="监控资本主义的三大支柱"><a href="#监控资本主义的三大支柱" class="headerlink" title="监控资本主义的三大支柱"></a>监控资本主义的三大支柱</h2><ul>
-<li>行为剩余：企业利用超出用户预期的数据进行观测</li>
-<li>预测商品：数据用于预测用户未来行为并用于商业化</li>
-<li>权力不对等：数据提取的隐蔽性与用户缺乏控制权</li>
-</ul>
-<h2 id="行为剩余的运作机制：-用户行为数据的提取"><a href="#行为剩余的运作机制：-用户行为数据的提取" class="headerlink" title="行为剩余的运作机制： 用户行为数据的提取"></a>行为剩余的运作机制： 用户行为数据的提取</h2><ul>
-<li>用户无意识产生的“剩余”数据</li>
-<li>这些数据如何被科技公司分析、商业化</li>
-</ul>
-<h2 id="权力的新前沿：数据注意与数字监控"><a href="#权力的新前沿：数据注意与数字监控" class="headerlink" title="权力的新前沿：数据注意与数字监控"></a>权力的新前沿：数据注意与数字监控</h2><ul>
-<li>数据霸权：科技巨头通过数据构建的权力结构，Google, Facebook的垄断地位</li>
-<li>控制社会与行为干预：算法通过影响用户行为维持数据霸权。案例：剑桥分析影响美国大选</li>
-<li>隐私的终结：用户数据的无意识采集</li>
-</ul>
-<h2 id="社会、政治与道德影响"><a href="#社会、政治与道德影响" class="headerlink" title="社会、政治与道德影响"></a>社会、政治与道德影响</h2><h2 id="反抗与未来的可能性"><a href="#反抗与未来的可能性" class="headerlink" title="反抗与未来的可能性"></a>反抗与未来的可能性</h2>]]></content>
+    <title>建站第一日</title>
+    <url>/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/</url>
+    <content><![CDATA[<p>今天做成的事情不多，主要是做了一下侧边栏的结构，改了个色，加了个favicon，然后基本就没了。</p>
+<p>上述工作的确很简单，但为何忙了一天，却只完成了这几件事呢？问题出在评论区功能和图床的实现上。</p>
+<span id="more"></span>
+
+<p>先说图床。<br>这个Blog显然不会是一个纯文字的博客，后续放图进文章的问题肯定要考虑到。<br>Github Pages没记错的话，库大小似乎是有限制的（1GB？），把所有文章的图片直接存库里固然不现实。找了一天，暂时还没有找到一个成本为0或接近0的方案，基本都要涉及到买域名&#x2F;配置云服务。目前看到一个PicGo + Github的方案似乎可行，之后有空再试。</p>
+<p>再说评论系统。<br>为了和各位读者相互交流，评论区肯定是少不了的。<br>但是，正是在评论区实现的方案选择上，我近乎浪费了一整个早上。为什么呢？还请继续往下看：</p>
+<p>NexT主题集成了几个评论系统：disqus, 畅言，livere，gitalk和utterances。<br>disqus在国内访问速率堪忧，甚至大概率打不开，不在考虑范围内；<br>livere在国内倒是能用，但是必须要社交平台账号登录，不大符合我允许匿名留言的想法；<br>gitalk和utterances必须要求Github登录后才能评论，门槛之高不言而喻，且同样无法实现匿名评论。<br>那畅言呢？要求登录是其一，其美观程度之差是其二，本着不妥协的原则，这个方案也行不通。</p>
+<p>在上述方案都不符合预期的情况下，只得求助各路教程，而各路教程都不约而同地指向了valine。valine允许匿名，外观简洁，看起来就是最佳之选了。在一番了解后，发现valine原本被集成在NexT内，但出于不再开源和安全问题的原因被移除，以单独插件形式存在。安装并配置好后，却发现其无法正常使用：起初是出现401报错，后变为不报错，但评论无法正常发表，点下发表后毫无反应。</p>
+<p>一番折腾后，评论区的建设仍毫无进展，只得暂时作罢。</p>
+<p>Blog的基本框架现在已经成型。接下来的建设任务，我想就是攻克下这两个难题了。至于小细节，留到日后吧。</p>
+]]></content>
       <categories>
-        <category>课程相关</category>
+        <category>建站历程</category>
       </categories>
       <tags>
-        <tag>水课</tag>
+        <tag>心得</tag>
       </tags>
   </entry>
   <entry>
@@ -261,6 +267,7 @@
     <content><![CDATA[<h1 id="注"><a href="#注" class="headerlink" title="注"></a>注</h1><p>本版本仅作基本功能演示，且基于命令行进行交互，对于大规模工程并不友好。</p>
 <p>哪怕使用了文件重定向输入，文件里的输入格式也不算友好，最后输出也不好看。</p>
 <p>日后再进行进一步的完善。</p>
+<span id="more"></span>
 <h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><p>这是一个Java命令行文件。阁下可使用<code>cmd</code>,<code>git bash</code>等命令行工具执行。</p>
 <ul>
 <li><p>开始执行时，命令行会提示<code>Input sockets:</code>；此时，在命令行内，**一行输入一个端口名称，并在输入完成后输入“-1”表示输入完成。</p>
@@ -322,6 +329,21 @@
       </categories>
       <tags>
         <tag>计组</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>图床测试</title>
+    <url>/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</url>
+    <content><![CDATA[<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/%7B433FA560-1033-4134-A91E-3F4E0C6D3AC2%7D.png" alt="{433FA560-1033-4134-A91E-3F4E0C6D3AC2}.png"></p>
+<p>通过阿里云OSS+PicGo的方案，本博客成功实现了图床功能。</p>
+<p>Github在国内访问速度太慢，为了实现图片快速加载，只能加点钱上阿里云了 :(</p>
+<p>不过一个月也就6块钱，也就约等于一个月少喝一瓶东方树叶嘛😋</p>
+]]></content>
+      <categories>
+        <category>建站历程</category>
+      </categories>
+      <tags>
+        <tag>测试</tag>
       </tags>
   </entry>
   <entry>
@@ -542,27 +564,6 @@
 ]]></content>
       <categories>
         <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>心得</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>建站第一日</title>
-    <url>/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/</url>
-    <content><![CDATA[<p>今天做成的事情不多，主要是做了一下侧边栏的结构，改了个色，加了个favicon，然后基本就没了。</p>
-<p>上述工作的确很简单，但为何忙了一天，却只完成了这几件事呢？问题出在评论区功能和图床的实现上。</p>
-<span id="more"></span>
-
-<p>先说图床。<br>这个Blog显然不会是一个纯文字的博客，后续放图进文章的问题肯定要考虑到。<br>Github Pages没记错的话，库大小似乎是有限制的（1GB？），把所有文章的图片直接存库里固然不现实。找了一天，暂时还没有找到一个成本为0或接近0的方案，基本都要涉及到买域名&#x2F;配置云服务。目前看到一个PicGo + Github的方案似乎可行，之后有空再试。</p>
-<p>再说评论系统。<br>为了和各位读者相互交流，评论区肯定是少不了的。<br>但是，正是在评论区实现的方案选择上，我近乎浪费了一整个早上。为什么呢？还请继续往下看：</p>
-<p>NexT主题集成了几个评论系统：disqus, 畅言，livere，gitalk和utterances。<br>disqus在国内访问速率堪忧，甚至大概率打不开，不在考虑范围内；<br>livere在国内倒是能用，但是必须要社交平台账号登录，不大符合我允许匿名留言的想法；<br>gitalk和utterances必须要求Github登录后才能评论，门槛之高不言而喻，且同样无法实现匿名评论。<br>那畅言呢？要求登录是其一，其美观程度之差是其二，本着不妥协的原则，这个方案也行不通。</p>
-<p>在上述方案都不符合预期的情况下，只得求助各路教程，而各路教程都不约而同地指向了valine。valine允许匿名，外观简洁，看起来就是最佳之选了。在一番了解后，发现valine原本被集成在NexT内，但出于不再开源和安全问题的原因被移除，以单独插件形式存在。安装并配置好后，却发现其无法正常使用：起初是出现401报错，后变为不报错，但评论无法正常发表，点下发表后毫无反应。</p>
-<p>一番折腾后，评论区的建设仍毫无进展，只得暂时作罢。</p>
-<p>Blog的基本框架现在已经成型。接下来的建设任务，我想就是攻克下这两个难题了。至于小细节，留到日后吧。</p>
-]]></content>
-      <categories>
-        <category>建站历程</category>
       </categories>
       <tags>
         <tag>心得</tag>
