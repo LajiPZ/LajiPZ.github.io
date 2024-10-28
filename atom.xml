@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Position 0</title>
+  <icon>http://example.com/icon.png</icon>
+  <subtitle>LajiPZ的随想屋</subtitle>
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2024-09-22T01:48:13.888Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>LajiPZ</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>法科社</title>
+    <link href="http://example.com/2024/09/22/FKS/"/>
+    <id>http://example.com/2024/09/22/FKS/</id>
+    <published>2024-09-22T00:47:00.000Z</published>
+    <updated>2024-09-22T01:48:13.888Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;0903&quot;&gt;&lt;a href=&quot;#0903&quot; class=&quot;headerlink&quot; title=&quot;0903&quot;&gt;&lt;/a&gt;0903&lt;/h1&gt;&lt;p&gt;技术是不是中立的？&lt;/p&gt;
+&lt;h1 id=&quot;0910&quot;&gt;&lt;a href=&quot;#0910&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="课程相关" scheme="http://example.com/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="水课" scheme="http://example.com/tags/%E6%B0%B4%E8%AF%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>本人背单词的粗劣经验</title>
+    <link href="http://example.com/2024/08/08/%E6%9C%AC%E4%BA%BA%E8%83%8C%E5%8D%95%E8%AF%8D%E7%9A%84%E7%B2%97%E5%8A%A3%E7%BB%8F%E9%AA%8C/"/>
+    <id>http://example.com/2024/08/08/%E6%9C%AC%E4%BA%BA%E8%83%8C%E5%8D%95%E8%AF%8D%E7%9A%84%E7%B2%97%E5%8A%A3%E7%BB%8F%E9%AA%8C/</id>
+    <published>2024-08-08T03:45:14.000Z</published>
+    <updated>2024-09-21T15:59:43.297Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;写在前面：本文本来是写给本人一位英语学着有些吃力的好友的一篇私货；但由于自己在给梦拓学弟们写闲聊的时候扯到了我自己学英语的经历，索性就把我自己写的这篇烂文发出来给各位参考（或公开处刑）吧。&lt;br&gt;如果本文有不足&amp;#x2F;误导&amp;#x2F;错误之处，欢迎您在本文的评论区中直接指出（更是欢迎语言学相关的朋友给予专业的指导），小弟必感激不尽！&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    <category term="随笔" scheme="http://example.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+    <category term="心得" scheme="http://example.com/tags/%E5%BF%83%E5%BE%97/"/>
+    
+    <category term="英语" scheme="http://example.com/tags/%E8%8B%B1%E8%AF%AD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>自己的碎碎念</title>
+    <link href="http://example.com/2024/08/07/casualTalk/"/>
+    <id>http://example.com/2024/08/07/casualTalk/</id>
+    <published>2024-08-07T12:58:06.000Z</published>
+    <updated>2024-09-21T15:59:43.296Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;在给各位塞的私货里面，我大段写了一些经验，自己这部分提的不多；故这里再多闲聊一点，让各位能对我大一经历了什么有点了解（笑）&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="梦拓相关" scheme="http://example.com/categories/%E6%A2%A6%E6%8B%93%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="梦拓" scheme="http://example.com/tags/%E6%A2%A6%E6%8B%93/"/>
+    
+    <category term="心得" scheme="http://example.com/tags/%E5%BF%83%E5%BE%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>送给组内信类新生的一点点私货</title>
+    <link href="http://example.com/2024/08/04/BUAA-freshman-FAQ/"/>
+    <id>http://example.com/2024/08/04/BUAA-freshman-FAQ/</id>
+    <published>2024-08-04T13:11:00.000Z</published>
+    <updated>2024-09-21T15:59:43.295Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;序&quot;&gt;&lt;a href=&quot;#序&quot; class=&quot;headerlink&quot; title=&quot;序&quot;&gt;&lt;/a&gt;序&lt;/h2&gt;&lt;p&gt;首先，欢迎各位成为北航士谔书院的一员，也很荣幸能与大家共处同一梦拓小组！&lt;/p&gt;
+&lt;p&gt;本文将尝试对大家初入大一可能遇到的部分问题进行解答，以备各位不时之需；同时夹带大量私货，欢迎各位参考😋&lt;/p&gt;
+&lt;p&gt;本文是按苯人自己一年来的经验，想到什么写什么写成的，应该能涵盖各位可能碰到的不少问题。若有其它没有覆盖到的问题，欢迎各位联系交流！🤗&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="梦拓相关" scheme="http://example.com/categories/%E6%A2%A6%E6%8B%93%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="梦拓" scheme="http://example.com/tags/%E6%A2%A6%E6%8B%93/"/>
+    
+    <category term="心得" scheme="http://example.com/tags/%E5%BF%83%E5%BE%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>图床测试</title>
+    <link href="http://example.com/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/"/>
+    <id>http://example.com/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</id>
+    <published>2023-11-30T05:47:18.000Z</published>
+    <updated>2024-09-21T15:59:43.296Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/%7B433FA560-1033-4134-A91E-3F4E0C6D3AC2%7D.png&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="建站历程" scheme="http://example.com/categories/%E5%BB%BA%E7%AB%99%E5%8E%86%E7%A8%8B/"/>
+    
+    
+    <category term="测试" scheme="http://example.com/tags/%E6%B5%8B%E8%AF%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>建站第一日</title>
+    <link href="http://example.com/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/"/>
+    <id>http://example.com/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/</id>
+    <published>2023-11-28T14:36:21.000Z</published>
+    <updated>2024-09-21T15:59:43.297Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;今天做成的事情不多，主要是做了一下侧边栏的结构，改了个色，加了个favicon，然后基本就没了。&lt;/p&gt;
+&lt;p&gt;上述工作的确很简单，但为何忙了一天，却只完成了这几件事呢？问题出在评论区功能和图床的实现上。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="建站历程" scheme="http://example.com/categories/%E5%BB%BA%E7%AB%99%E5%8E%86%E7%A8%8B/"/>
+    
+    
+    <category term="心得" scheme="http://example.com/tags/%E5%BF%83%E5%BE%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>第一次尝试</title>
+    <link href="http://example.com/2023/11/27/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95/"/>
+    <id>http://example.com/2023/11/27/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95/</id>
+    <published>2023-11-27T03:30:00.000Z</published>
+    <updated>2024-09-21T15:59:43.297Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;pre&gt;&lt;code&gt;万事开头难。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;有关建设个人博客这件事，本人其实早在2022年5月，就已按各路教程，用Hexo和Github</summary>
+        
+      
+    
+    
+    
+    <category term="随笔" scheme="http://example.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+    <category term="心得" scheme="http://example.com/tags/%E5%BF%83%E5%BE%97/"/>
+    
+  </entry>
+  
+</feed>
