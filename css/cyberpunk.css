@@ -11683,7 +11683,7 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  background-position: 200% 75%;
+  background-position: 50% 75%;
 }
 body {
   counter-reset: card;
