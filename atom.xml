@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-10-28T02:41:59.366Z</updated>
+  <updated>2024-10-28T03:03:16.999Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,10 +21,11 @@
     <link href="http://example.com/2024/10/28/%E6%95%B0%E6%8D%AE%E9%80%9A%E8%B7%AF%E8%A1%A8%E6%9F%A5%E8%AF%A2%E6%9C%BA/"/>
     <id>http://example.com/2024/10/28/%E6%95%B0%E6%8D%AE%E9%80%9A%E8%B7%AF%E8%A1%A8%E6%9F%A5%E8%AF%A2%E6%9C%BA/</id>
     <published>2024-10-28T00:47:00.000Z</published>
-    <updated>2024-10-28T02:41:59.366Z</updated>
+    <updated>2024-10-28T03:03:16.999Z</updated>
     
     
-    <summary type="html">&lt;h1 id=&quot;注&quot;&gt;&lt;a href=&quot;#注&quot; class=&quot;headerlink&quot; title=&quot;注&quot;&gt;&lt;/a&gt;注&lt;/h1&gt;&lt;p&gt;本版本仅作基本功能演示，且基于命令行进行交互，对于大规模工程并不友好。&lt;/p&gt;
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202024-10-25%20170212.png&quot; alt=&quot;Screenshot 2024-10-25 170212.png&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;注&quot;&gt;&lt;a href=&quot;#注&quot; class=&quot;headerlink&quot; title=&quot;注&quot;&gt;&lt;/a&gt;注&lt;/h1&gt;&lt;p&gt;本版本仅作基本功能演示，且基于命令行进行交互，对于大规模工程并不友好。&lt;/p&gt;
 &lt;p&gt;哪怕使用了文件重定向输入，文件里的输入格式也不算友好，最后输出也不好看。&lt;/p&gt;
 &lt;p&gt;日后再进行进一步的完善。&lt;/p&gt;</summary>
     
