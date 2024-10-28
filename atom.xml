@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-10-28T02:35:06.429Z</updated>
+  <updated>2024-10-28T02:41:59.366Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://example.com/2024/10/28/%E6%95%B0%E6%8D%AE%E9%80%9A%E8%B7%AF%E8%A1%A8%E6%9F%A5%E8%AF%A2%E6%9C%BA/"/>
     <id>http://example.com/2024/10/28/%E6%95%B0%E6%8D%AE%E9%80%9A%E8%B7%AF%E8%A1%A8%E6%9F%A5%E8%AF%A2%E6%9C%BA/</id>
     <published>2024-10-28T00:47:00.000Z</published>
-    <updated>2024-10-28T02:35:06.429Z</updated>
+    <updated>2024-10-28T02:41:59.366Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;注&quot;&gt;&lt;a href=&quot;#注&quot; class=&quot;headerlink&quot; title=&quot;注&quot;&gt;&lt;/a&gt;注&lt;/h1&gt;&lt;p&gt;本版本仅作基本功能演示，且基于命令行进行交互，对于大规模工程并不友好。&lt;/p&gt;
@@ -42,17 +42,10 @@
     <link href="http://example.com/2024/09/22/FKS/"/>
     <id>http://example.com/2024/09/22/FKS/</id>
     <published>2024-09-22T00:47:00.000Z</published>
-    <updated>2024-10-28T02:34:09.369Z</updated>
+    <updated>2024-10-28T02:43:41.669Z</updated>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;0903&quot;&gt;&lt;a href=&quot;#0903&quot; class=&quot;headerlink&quot; title=&quot;0903&quot;&gt;&lt;/a&gt;0903&lt;/h1&gt;&lt;p&gt;技术是不是中立的？&lt;/p&gt;
-&lt;h1 id=&quot;0910&quot;&gt;&lt;a href=&quot;#0910&quot;</summary>
-        
-      
+    <summary type="html">&lt;h1 id=&quot;0903&quot;&gt;&lt;a href=&quot;#0903&quot; class=&quot;headerlink&quot; title=&quot;0903&quot;&gt;&lt;/a&gt;0903&lt;/h1&gt;&lt;p&gt;技术是不是中立的？&lt;/p&gt;</summary>
     
     
     
@@ -68,7 +61,7 @@
     <link href="http://example.com/2024/08/08/%E6%9C%AC%E4%BA%BA%E8%83%8C%E5%8D%95%E8%AF%8D%E7%9A%84%E7%B2%97%E5%8A%A3%E7%BB%8F%E9%AA%8C/"/>
     <id>http://example.com/2024/08/08/%E6%9C%AC%E4%BA%BA%E8%83%8C%E5%8D%95%E8%AF%8D%E7%9A%84%E7%B2%97%E5%8A%A3%E7%BB%8F%E9%AA%8C/</id>
     <published>2024-08-08T03:45:14.000Z</published>
-    <updated>2024-10-28T02:34:22.684Z</updated>
+    <updated>2024-10-28T02:42:06.119Z</updated>
     
     
     <summary type="html">&lt;blockquote&gt;
@@ -91,7 +84,7 @@
     <link href="http://example.com/2024/08/07/casualTalk/"/>
     <id>http://example.com/2024/08/07/casualTalk/</id>
     <published>2024-08-07T12:58:06.000Z</published>
-    <updated>2024-10-28T02:34:06.443Z</updated>
+    <updated>2024-10-28T02:41:34.102Z</updated>
     
     
     <summary type="html">&lt;p&gt;在给各位塞的私货里面，我大段写了一些经验，自己这部分提的不多；故这里再多闲聊一点，让各位能对我大一经历了什么有点了解（笑）&lt;/p&gt;</summary>
@@ -112,7 +105,7 @@
     <link href="http://example.com/2024/08/04/BUAA-freshman-FAQ/"/>
     <id>http://example.com/2024/08/04/BUAA-freshman-FAQ/</id>
     <published>2024-08-04T13:11:00.000Z</published>
-    <updated>2024-10-28T02:34:03.029Z</updated>
+    <updated>2024-10-28T02:41:26.846Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;序&quot;&gt;&lt;a href=&quot;#序&quot; class=&quot;headerlink&quot; title=&quot;序&quot;&gt;&lt;/a&gt;序&lt;/h2&gt;&lt;p&gt;首先，欢迎各位成为北航士谔书院的一员，也很荣幸能与大家共处同一梦拓小组！&lt;/p&gt;
