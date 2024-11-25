@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Position 0</title>
-  <icon>http://example.com/icon.png</icon>
+  <icon>https://lajipz.github.io/icon.png</icon>
   <subtitle>LajiPZ的随想屋</subtitle>
-  <link href="http://example.com/atom.xml" rel="self"/>
+  <link href="https://lajipz.github.io/atom.xml" rel="self"/>
   
-  <link href="http://example.com/"/>
+  <link href="https://lajipz.github.io/"/>
   <updated>2024-10-28T03:03:16.999Z</updated>
-  <id>http://example.com/</id>
+  <id>https://lajipz.github.io/</id>
   
   <author>
     <name>LajiPZ</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>数据通路查询机</title>
-    <link href="http://example.com/2024/10/28/%E6%95%B0%E6%8D%AE%E9%80%9A%E8%B7%AF%E8%A1%A8%E6%9F%A5%E8%AF%A2%E6%9C%BA/"/>
-    <id>http://example.com/2024/10/28/%E6%95%B0%E6%8D%AE%E9%80%9A%E8%B7%AF%E8%A1%A8%E6%9F%A5%E8%AF%A2%E6%9C%BA/</id>
+    <link href="https://lajipz.github.io/2024/10/28/%E6%95%B0%E6%8D%AE%E9%80%9A%E8%B7%AF%E8%A1%A8%E6%9F%A5%E8%AF%A2%E6%9C%BA/"/>
+    <id>https://lajipz.github.io/2024/10/28/%E6%95%B0%E6%8D%AE%E9%80%9A%E8%B7%AF%E8%A1%A8%E6%9F%A5%E8%AF%A2%E6%9C%BA/</id>
     <published>2024-10-28T00:47:00.000Z</published>
     <updated>2024-10-28T03:03:16.999Z</updated>
     
@@ -31,17 +31,17 @@
     
     
     
-    <category term="课程相关" scheme="http://example.com/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.github.io/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="计组" scheme="http://example.com/tags/%E8%AE%A1%E7%BB%84/"/>
+    <category term="计组" scheme="https://lajipz.github.io/tags/%E8%AE%A1%E7%BB%84/"/>
     
   </entry>
   
   <entry>
     <title>法科社</title>
-    <link href="http://example.com/2024/09/22/FKS/"/>
-    <id>http://example.com/2024/09/22/FKS/</id>
+    <link href="https://lajipz.github.io/2024/09/22/FKS/"/>
+    <id>https://lajipz.github.io/2024/09/22/FKS/</id>
     <published>2024-09-22T00:47:00.000Z</published>
     <updated>2024-10-28T02:43:41.669Z</updated>
     
@@ -50,17 +50,17 @@
     
     
     
-    <category term="课程相关" scheme="http://example.com/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.github.io/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="水课" scheme="http://example.com/tags/%E6%B0%B4%E8%AF%BE/"/>
+    <category term="水课" scheme="https://lajipz.github.io/tags/%E6%B0%B4%E8%AF%BE/"/>
     
   </entry>
   
   <entry>
     <title>本人背单词的粗劣经验</title>
-    <link href="http://example.com/2024/08/08/%E6%9C%AC%E4%BA%BA%E8%83%8C%E5%8D%95%E8%AF%8D%E7%9A%84%E7%B2%97%E5%8A%A3%E7%BB%8F%E9%AA%8C/"/>
-    <id>http://example.com/2024/08/08/%E6%9C%AC%E4%BA%BA%E8%83%8C%E5%8D%95%E8%AF%8D%E7%9A%84%E7%B2%97%E5%8A%A3%E7%BB%8F%E9%AA%8C/</id>
+    <link href="https://lajipz.github.io/2024/08/08/%E6%9C%AC%E4%BA%BA%E8%83%8C%E5%8D%95%E8%AF%8D%E7%9A%84%E7%B2%97%E5%8A%A3%E7%BB%8F%E9%AA%8C/"/>
+    <id>https://lajipz.github.io/2024/08/08/%E6%9C%AC%E4%BA%BA%E8%83%8C%E5%8D%95%E8%AF%8D%E7%9A%84%E7%B2%97%E5%8A%A3%E7%BB%8F%E9%AA%8C/</id>
     <published>2024-08-08T03:45:14.000Z</published>
     <updated>2024-10-28T02:42:06.119Z</updated>
     
@@ -71,19 +71,19 @@
     
     
     
-    <category term="随笔" scheme="http://example.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    <category term="随笔" scheme="https://lajipz.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-    <category term="心得" scheme="http://example.com/tags/%E5%BF%83%E5%BE%97/"/>
+    <category term="心得" scheme="https://lajipz.github.io/tags/%E5%BF%83%E5%BE%97/"/>
     
-    <category term="英语" scheme="http://example.com/tags/%E8%8B%B1%E8%AF%AD/"/>
+    <category term="英语" scheme="https://lajipz.github.io/tags/%E8%8B%B1%E8%AF%AD/"/>
     
   </entry>
   
   <entry>
     <title>自己的碎碎念</title>
-    <link href="http://example.com/2024/08/07/casualTalk/"/>
-    <id>http://example.com/2024/08/07/casualTalk/</id>
+    <link href="https://lajipz.github.io/2024/08/07/casualTalk/"/>
+    <id>https://lajipz.github.io/2024/08/07/casualTalk/</id>
     <published>2024-08-07T12:58:06.000Z</published>
     <updated>2024-10-28T02:41:34.102Z</updated>
     
@@ -92,19 +92,19 @@
     
     
     
-    <category term="梦拓相关" scheme="http://example.com/categories/%E6%A2%A6%E6%8B%93%E7%9B%B8%E5%85%B3/"/>
+    <category term="梦拓相关" scheme="https://lajipz.github.io/categories/%E6%A2%A6%E6%8B%93%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="梦拓" scheme="http://example.com/tags/%E6%A2%A6%E6%8B%93/"/>
+    <category term="心得" scheme="https://lajipz.github.io/tags/%E5%BF%83%E5%BE%97/"/>
     
-    <category term="心得" scheme="http://example.com/tags/%E5%BF%83%E5%BE%97/"/>
+    <category term="梦拓" scheme="https://lajipz.github.io/tags/%E6%A2%A6%E6%8B%93/"/>
     
   </entry>
   
   <entry>
     <title>送给组内信类新生的一点点私货</title>
-    <link href="http://example.com/2024/08/04/BUAA-freshman-FAQ/"/>
-    <id>http://example.com/2024/08/04/BUAA-freshman-FAQ/</id>
+    <link href="https://lajipz.github.io/2024/08/04/BUAA-freshman-FAQ/"/>
+    <id>https://lajipz.github.io/2024/08/04/BUAA-freshman-FAQ/</id>
     <published>2024-08-04T13:11:00.000Z</published>
     <updated>2024-10-28T02:41:26.846Z</updated>
     
@@ -115,19 +115,19 @@
     
     
     
-    <category term="梦拓相关" scheme="http://example.com/categories/%E6%A2%A6%E6%8B%93%E7%9B%B8%E5%85%B3/"/>
+    <category term="梦拓相关" scheme="https://lajipz.github.io/categories/%E6%A2%A6%E6%8B%93%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="梦拓" scheme="http://example.com/tags/%E6%A2%A6%E6%8B%93/"/>
+    <category term="心得" scheme="https://lajipz.github.io/tags/%E5%BF%83%E5%BE%97/"/>
     
-    <category term="心得" scheme="http://example.com/tags/%E5%BF%83%E5%BE%97/"/>
+    <category term="梦拓" scheme="https://lajipz.github.io/tags/%E6%A2%A6%E6%8B%93/"/>
     
   </entry>
   
   <entry>
     <title>图床测试</title>
-    <link href="http://example.com/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/"/>
-    <id>http://example.com/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</id>
+    <link href="https://lajipz.github.io/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/"/>
+    <id>https://lajipz.github.io/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</id>
     <published>2023-11-30T05:47:18.000Z</published>
     <updated>2024-10-28T02:26:21.077Z</updated>
     
@@ -142,17 +142,17 @@
     
     
     
-    <category term="建站历程" scheme="http://example.com/categories/%E5%BB%BA%E7%AB%99%E5%8E%86%E7%A8%8B/"/>
+    <category term="建站历程" scheme="https://lajipz.github.io/categories/%E5%BB%BA%E7%AB%99%E5%8E%86%E7%A8%8B/"/>
     
     
-    <category term="测试" scheme="http://example.com/tags/%E6%B5%8B%E8%AF%95/"/>
+    <category term="测试" scheme="https://lajipz.github.io/tags/%E6%B5%8B%E8%AF%95/"/>
     
   </entry>
   
   <entry>
     <title>建站第一日</title>
-    <link href="http://example.com/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/"/>
-    <id>http://example.com/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/</id>
+    <link href="https://lajipz.github.io/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/"/>
+    <id>https://lajipz.github.io/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/</id>
     <published>2023-11-28T14:36:21.000Z</published>
     <updated>2024-10-28T02:34:18.430Z</updated>
     
@@ -162,17 +162,17 @@
     
     
     
-    <category term="建站历程" scheme="http://example.com/categories/%E5%BB%BA%E7%AB%99%E5%8E%86%E7%A8%8B/"/>
+    <category term="建站历程" scheme="https://lajipz.github.io/categories/%E5%BB%BA%E7%AB%99%E5%8E%86%E7%A8%8B/"/>
     
     
-    <category term="心得" scheme="http://example.com/tags/%E5%BF%83%E5%BE%97/"/>
+    <category term="心得" scheme="https://lajipz.github.io/tags/%E5%BF%83%E5%BE%97/"/>
     
   </entry>
   
   <entry>
     <title>第一次尝试</title>
-    <link href="http://example.com/2023/11/27/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95/"/>
-    <id>http://example.com/2023/11/27/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95/</id>
+    <link href="https://lajipz.github.io/2023/11/27/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95/"/>
+    <id>https://lajipz.github.io/2023/11/27/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95/</id>
     <published>2023-11-27T03:30:00.000Z</published>
     <updated>2024-10-28T02:26:25.636Z</updated>
     
@@ -189,10 +189,10 @@
     
     
     
-    <category term="随笔" scheme="http://example.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    <category term="随笔" scheme="https://lajipz.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
     
     
-    <category term="心得" scheme="http://example.com/tags/%E5%BF%83%E5%BE%97/"/>
+    <category term="心得" scheme="https://lajipz.github.io/tags/%E5%BF%83%E5%BE%97/"/>
     
   </entry>
   
