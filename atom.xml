@@ -6,7 +6,7 @@
   <link href="http://lajipz.top/atom.xml" rel="self"/>
   
   <link href="http://lajipz.top/"/>
-  <updated>2025-02-04T13:33:42.568Z</updated>
+  <updated>2025-02-04T13:32:06.233Z</updated>
   <id>http://lajipz.top/</id>
   
   <author>
@@ -15,27 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>航砖祭祖后日谈</title>
-    <link href="http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/"/>
-    <id>http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</id>
-    <published>2025-02-04T13:23:00.000Z</published>
-    <updated>2025-02-04T13:33:42.568Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;本文将对BUAA_CO_2024进行简要回顾，并给出自己的一些主观建议，仅供参考。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
-    
-    
-    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
-    
-    <category term="计组" scheme="http://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
-    
-  </entry>
   
   <entry>
     <title>技术演示 - 并发执行的多测试数据对拍脚本</title>
@@ -52,6 +31,27 @@
 &lt;h1 id=&quot;需求：针对多组测试数据的评测&quot;&gt;&lt;a href=&quot;#需求：针对多组测试数据的评测&quot; class=&quot;headerlink&quot; title=&quot;需求：针对多组测试数据的评测&quot;&gt;&lt;/a&gt;需求：针对多组测试数据的评测&lt;/h1&gt;&lt;p&gt;为尽可能追求测试覆盖率，且方便测试程序的编写，我们往往会选择构造多组测试数据进行测试。&lt;/p&gt;
 &lt;p&gt;回顾本人先前构造，且至今一直使用的对拍脚本，每次仅可对拍一组测试数据。要进行多组数据的测试，需要每次对待测数据进行手动替换，效率实在太低。&lt;/p&gt;
 &lt;p&gt;因此，我决定对我的对拍脚本进行完善，使之支持多组数据的评测。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    
+    <category term="计组" scheme="http://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>航砖祭祖后日谈</title>
+    <link href="http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/"/>
+    <id>http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</id>
+    <published>2025-02-04T13:23:00.000Z</published>
+    <updated>2025-02-04T13:33:42.568Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;本文将对BUAA_CO_2024进行简要回顾，并给出自己的一些主观建议，仅供参考。&lt;/p&gt;</summary>
     
     
     
@@ -162,9 +162,9 @@
     <category term="梦拓相关" scheme="http://lajipz.top/categories/%E6%A2%A6%E6%8B%93%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
-    
     <category term="梦拓" scheme="http://lajipz.top/tags/%E6%A2%A6%E6%8B%93/"/>
+    
+    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
     
   </entry>
   
@@ -185,9 +185,9 @@
     <category term="梦拓相关" scheme="http://lajipz.top/categories/%E6%A2%A6%E6%8B%93%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
-    
     <category term="梦拓" scheme="http://lajipz.top/tags/%E6%A2%A6%E6%8B%93/"/>
+    
+    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
     
   </entry>
   
