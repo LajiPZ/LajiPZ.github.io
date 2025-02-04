@@ -6,7 +6,7 @@
   <link href="http://lajipz.top/atom.xml" rel="self"/>
   
   <link href="http://lajipz.top/"/>
-  <updated>2025-02-04T13:32:06.233Z</updated>
+  <updated>2025-02-04T13:33:42.568Z</updated>
   <id>http://lajipz.top/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>航砖祭祖后日谈</title>
+    <link href="http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/"/>
+    <id>http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</id>
+    <published>2025-02-04T13:23:00.000Z</published>
+    <updated>2025-02-04T13:33:42.568Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;本文将对BUAA_CO_2024进行简要回顾，并给出自己的一些主观建议，仅供参考。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    
+    <category term="计组" scheme="http://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
+    
+  </entry>
   
   <entry>
     <title>技术演示 - 并发执行的多测试数据对拍脚本</title>
@@ -31,27 +52,6 @@
 &lt;h1 id=&quot;需求：针对多组测试数据的评测&quot;&gt;&lt;a href=&quot;#需求：针对多组测试数据的评测&quot; class=&quot;headerlink&quot; title=&quot;需求：针对多组测试数据的评测&quot;&gt;&lt;/a&gt;需求：针对多组测试数据的评测&lt;/h1&gt;&lt;p&gt;为尽可能追求测试覆盖率，且方便测试程序的编写，我们往往会选择构造多组测试数据进行测试。&lt;/p&gt;
 &lt;p&gt;回顾本人先前构造，且至今一直使用的对拍脚本，每次仅可对拍一组测试数据。要进行多组数据的测试，需要每次对待测数据进行手动替换，效率实在太低。&lt;/p&gt;
 &lt;p&gt;因此，我决定对我的对拍脚本进行完善，使之支持多组数据的评测。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
-    
-    
-    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
-    
-    <category term="计组" scheme="http://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>航砖祭祖后日谈</title>
-    <link href="http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/"/>
-    <id>http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</id>
-    <published>2025-02-04T13:23:00.000Z</published>
-    <updated>2025-02-04T13:33:42.568Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;本文将对BUAA_CO_2024进行简要回顾，并给出自己的一些主观建议，仅供参考。&lt;/p&gt;</summary>
     
     
     
@@ -101,19 +101,17 @@
     <link href="http://lajipz.top/2025/02/04/%E2%80%9C%E6%B3%95%E5%BE%8B%E3%80%81%E7%A7%91%E6%8A%80%E4%B8%8E%E7%A4%BE%E4%BC%9A%E2%80%9D%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%20-%202024/"/>
     <id>http://lajipz.top/2025/02/04/%E2%80%9C%E6%B3%95%E5%BE%8B%E3%80%81%E7%A7%91%E6%8A%80%E4%B8%8E%E7%A4%BE%E4%BC%9A%E2%80%9D%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%20-%202024/</id>
     <published>2025-02-04T00:47:00.000Z</published>
-    <updated>2025-02-04T13:45:00.525Z</updated>
+    <updated>2025-02-04T13:55:31.937Z</updated>
     
     
     <summary type="html">&lt;p&gt;本文记录了本人复习“法律、科技与社会”课程时，对课后思考题给出的答案。&lt;/p&gt;
 &lt;p&gt;众所周知，本课的期末考试就是从课后思考题中抽集体来考，怎么复习想必大家都知道了。当然，不知道这几个思考题之后会不会变。&lt;/p&gt;
 &lt;p&gt;以下答案均为本人手搓，在考试获得了95分，当然这个给分可能有玄学成分在里面，仅供参考。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;技术是中立的吗？为什么？&lt;br&gt;不是。&lt;ul&gt;
+&lt;h1 id=&quot;技术是中立的吗？为什么？&quot;&gt;&lt;a href=&quot;#技术是中立的吗？为什么？&quot; class=&quot;headerlink&quot; title=&quot;技术是中立的吗？为什么？&quot;&gt;&lt;/a&gt;技术是中立的吗？为什么？&lt;/h1&gt;&lt;p&gt;   不是。&lt;/p&gt;
+&lt;ul&gt;
 &lt;li&gt;技术置身于社会中，具有社会性。&lt;/li&gt;
 &lt;li&gt;技术是占有世界的媒介，同时也是人类活动的一种形式。其背后包含了人类思维结果。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ol&gt;</summary>
+&lt;/ul&gt;</summary>
     
     
     
@@ -164,9 +162,9 @@
     <category term="梦拓相关" scheme="http://lajipz.top/categories/%E6%A2%A6%E6%8B%93%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="梦拓" scheme="http://lajipz.top/tags/%E6%A2%A6%E6%8B%93/"/>
-    
     <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    
+    <category term="梦拓" scheme="http://lajipz.top/tags/%E6%A2%A6%E6%8B%93/"/>
     
   </entry>
   
@@ -187,9 +185,9 @@
     <category term="梦拓相关" scheme="http://lajipz.top/categories/%E6%A2%A6%E6%8B%93%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="梦拓" scheme="http://lajipz.top/tags/%E6%A2%A6%E6%8B%93/"/>
-    
     <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    
+    <category term="梦拓" scheme="http://lajipz.top/tags/%E6%A2%A6%E6%8B%93/"/>
     
   </entry>
   
