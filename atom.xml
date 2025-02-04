@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Position 0</title>
+  <title>Position 0 - LajiPZ的随想屋</title>
   <icon>http://lajipz.top/icon.png</icon>
-  <subtitle>LajiPZ的随想屋</subtitle>
+  <subtitle>Position 0 - LajiPZ的随想屋</subtitle>
   <link href="http://lajipz.top/atom.xml" rel="self"/>
   
   <link href="http://lajipz.top/"/>
-  <updated>2024-10-28T03:03:16.999Z</updated>
+  <updated>2025-02-04T13:32:06.233Z</updated>
   <id>http://lajipz.top/</id>
   
   <author>
@@ -17,36 +17,103 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>数据通路查询机</title>
-    <link href="http://lajipz.top/2024/10/28/%E6%95%B0%E6%8D%AE%E9%80%9A%E8%B7%AF%E8%A1%A8%E6%9F%A5%E8%AF%A2%E6%9C%BA/"/>
-    <id>http://lajipz.top/2024/10/28/%E6%95%B0%E6%8D%AE%E9%80%9A%E8%B7%AF%E8%A1%A8%E6%9F%A5%E8%AF%A2%E6%9C%BA/</id>
-    <published>2024-10-28T00:47:00.000Z</published>
-    <updated>2024-10-28T03:03:16.999Z</updated>
+    <title>技术演示 - 并发执行的多测试数据对拍脚本</title>
+    <link href="http://lajipz.top/2025/02/04/%E6%8A%80%E6%9C%AF%E6%BC%94%E7%A4%BA%20-%20%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C%E7%9A%84%E5%A4%9A%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%E5%AF%B9%E6%8B%8D%E8%84%9A%E6%9C%AC/"/>
+    <id>http://lajipz.top/2025/02/04/%E6%8A%80%E6%9C%AF%E6%BC%94%E7%A4%BA%20-%20%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C%E7%9A%84%E5%A4%9A%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%E5%AF%B9%E6%8B%8D%E8%84%9A%E6%9C%AC/</id>
+    <published>2025-02-04T13:23:00.000Z</published>
+    <updated>2025-02-04T13:32:06.233Z</updated>
     
     
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202024-10-25%20170212.png&quot; alt=&quot;Screenshot 2024-10-25 170212.png&quot;&gt;&lt;/p&gt;
-&lt;h1 id=&quot;注&quot;&gt;&lt;a href=&quot;#注&quot; class=&quot;headerlink&quot; title=&quot;注&quot;&gt;&lt;/a&gt;注&lt;/h1&gt;&lt;p&gt;本版本仅作基本功能演示，且基于命令行进行交互，对于大规模工程并不友好。&lt;/p&gt;
-&lt;p&gt;哪怕使用了文件重定向输入，文件里的输入格式也不算友好，最后输出也不好看。&lt;/p&gt;
-&lt;p&gt;日后再进行进一步的完善。&lt;/p&gt;</summary>
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;归档于250204，供后来者参考。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;读前须知：本文针对Windows环境；Linux仙人参考思路即可…&lt;/p&gt;
+&lt;h1 id=&quot;需求：针对多组测试数据的评测&quot;&gt;&lt;a href=&quot;#需求：针对多组测试数据的评测&quot; class=&quot;headerlink&quot; title=&quot;需求：针对多组测试数据的评测&quot;&gt;&lt;/a&gt;需求：针对多组测试数据的评测&lt;/h1&gt;&lt;p&gt;为尽可能追求测试覆盖率，且方便测试程序的编写，我们往往会选择构造多组测试数据进行测试。&lt;/p&gt;
+&lt;p&gt;回顾本人先前构造，且至今一直使用的对拍脚本，每次仅可对拍一组测试数据。要进行多组数据的测试，需要每次对待测数据进行手动替换，效率实在太低。&lt;/p&gt;
+&lt;p&gt;因此，我决定对我的对拍脚本进行完善，使之支持多组数据的评测。&lt;/p&gt;</summary>
     
     
     
     <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
+    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    
     <category term="计组" scheme="http://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
     
   </entry>
   
   <entry>
-    <title>法科社</title>
-    <link href="http://lajipz.top/2024/09/22/FKS/"/>
-    <id>http://lajipz.top/2024/09/22/FKS/</id>
-    <published>2024-09-22T00:47:00.000Z</published>
-    <updated>2024-10-28T02:43:41.669Z</updated>
+    <title>航砖祭祖后日谈</title>
+    <link href="http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/"/>
+    <id>http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</id>
+    <published>2025-02-04T13:23:00.000Z</published>
+    <updated>2025-02-04T13:33:42.568Z</updated>
     
     
-    <summary type="html">&lt;h1 id=&quot;0903&quot;&gt;&lt;a href=&quot;#0903&quot; class=&quot;headerlink&quot; title=&quot;0903&quot;&gt;&lt;/a&gt;0903&lt;/h1&gt;&lt;p&gt;技术是不是中立的？&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;本文将对BUAA_CO_2024进行简要回顾，并给出自己的一些主观建议，仅供参考。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    
+    <category term="计组" scheme="http://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>通过命令行，更优雅地利用ISE进行开发</title>
+    <link href="http://lajipz.top/2025/02/04/%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E6%9B%B4%E4%BC%98%E9%9B%85%E5%9C%B0%E5%88%A9%E7%94%A8ISE%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91/"/>
+    <id>http://lajipz.top/2025/02/04/%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E6%9B%B4%E4%BC%98%E9%9B%85%E5%9C%B0%E5%88%A9%E7%94%A8ISE%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91/</id>
+    <published>2025-02-04T13:23:00.000Z</published>
+    <updated>2025-02-04T13:30:11.318Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;归档于250204，供后来者参考。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;众所周知，在使用ISE进行开发的时候，您可能会遇到以下问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;每次开干，都要手动创建一个新项目&lt;/li&gt;
+&lt;li&gt;创建文件的操作极为繁琐&lt;/li&gt;
+&lt;li&gt;仿真一次需要多次操作鼠标&lt;/li&gt;
+&lt;li&gt;ISE项目文件内文件繁多，文件管理堪称灾难&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;但在本文的方法下，以上问题均可一一化解！&lt;/p&gt;
+&lt;p&gt;本文是教程中&lt;a href=&quot;http://cscore.buaa.edu.cn/tutorial/verilog/verilog-6/verilog-6-6/&quot;&gt;ISE、VCS 与自动化测试&lt;/a&gt;的一小点拓展。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    
+    <category term="计组" scheme="http://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>“法律、科技与社会”课后思考题答案 - 2024</title>
+    <link href="http://lajipz.top/2025/02/04/%E2%80%9C%E6%B3%95%E5%BE%8B%E3%80%81%E7%A7%91%E6%8A%80%E4%B8%8E%E7%A4%BE%E4%BC%9A%E2%80%9D%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%20-%202024/"/>
+    <id>http://lajipz.top/2025/02/04/%E2%80%9C%E6%B3%95%E5%BE%8B%E3%80%81%E7%A7%91%E6%8A%80%E4%B8%8E%E7%A4%BE%E4%BC%9A%E2%80%9D%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%20-%202024/</id>
+    <published>2025-02-04T00:47:00.000Z</published>
+    <updated>2025-02-04T13:45:00.525Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;本文记录了本人复习“法律、科技与社会”课程时，对课后思考题给出的答案。&lt;/p&gt;
+&lt;p&gt;众所周知，本课的期末考试就是从课后思考题中抽集体来考，怎么复习想必大家都知道了。当然，不知道这几个思考题之后会不会变。&lt;/p&gt;
+&lt;p&gt;以下答案均为本人手搓，在考试获得了95分，当然这个给分可能有玄学成分在里面，仅供参考。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;技术是中立的吗？为什么？&lt;br&gt;不是。&lt;ul&gt;
+&lt;li&gt;技术置身于社会中，具有社会性。&lt;/li&gt;
+&lt;li&gt;技术是占有世界的媒介，同时也是人类活动的一种形式。其背后包含了人类思维结果。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;</summary>
     
     
     
@@ -54,6 +121,8 @@
     
     
     <category term="水课" scheme="http://lajipz.top/tags/%E6%B0%B4%E8%AF%BE/"/>
+    
+    <category term="FKS" scheme="http://lajipz.top/tags/FKS/"/>
     
   </entry>
   
