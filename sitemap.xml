@@ -110,7 +110,7 @@
   </url>
   
   <url>
-    <loc>http://lajipz.top/categories/index.html</loc>
+    <loc>http://lajipz.top/blog_source/Welcome.html</loc>
     
     <lastmod>2024-09-21</lastmod>
     
@@ -128,7 +128,7 @@
   </url>
   
   <url>
-    <loc>http://lajipz.top/blog_source/Welcome.html</loc>
+    <loc>http://lajipz.top/categories/index.html</loc>
     
     <lastmod>2024-09-21</lastmod>
     
@@ -178,13 +178,6 @@
   </url>
   
   <url>
-    <loc>http://lajipz.top/tags/%E6%B5%8B%E8%AF%95/</loc>
-    <lastmod>2025-02-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://lajipz.top/tags/%E6%B0%B4%E8%AF%BE/</loc>
     <lastmod>2025-02-05</lastmod>
     <changefreq>weekly</changefreq>
@@ -199,7 +192,7 @@
   </url>
   
   <url>
-    <loc>http://lajipz.top/tags/%E8%8B%B1%E8%AF%AD/</loc>
+    <loc>http://lajipz.top/tags/%E6%B5%8B%E8%AF%95/</loc>
     <lastmod>2025-02-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -207,6 +200,13 @@
   
   <url>
     <loc>http://lajipz.top/tags/%E8%AE%A1%E7%BB%84/</loc>
+    <lastmod>2025-02-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://lajipz.top/tags/%E8%8B%B1%E8%AF%AD/</loc>
     <lastmod>2025-02-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -222,14 +222,14 @@
   </url>
   
   <url>
-    <loc>http://lajipz.top/categories/%E5%BB%BA%E7%AB%99%E5%8E%86%E7%A8%8B/</loc>
+    <loc>http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/</loc>
     <lastmod>2025-02-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/</loc>
+    <loc>http://lajipz.top/categories/%E5%BB%BA%E7%AB%99%E5%8E%86%E7%A8%8B/</loc>
     <lastmod>2025-02-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

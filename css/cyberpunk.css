@@ -11693,6 +11693,10 @@ body {
   background-size: cover;
   background-position: 50% 75%;
 }
+:root {
+  --waline-theme-color: #3889ca !important;
+  --waline-active-color: #6bc2ed !important;
+}
 body {
   counter-reset: card;
 }
