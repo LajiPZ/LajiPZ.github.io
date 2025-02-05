@@ -1,6 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>图床测试</title>
+    <url>/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</url>
+    <content><![CDATA[<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/%7B433FA560-1033-4134-A91E-3F4E0C6D3AC2%7D.png" alt="{433FA560-1033-4134-A91E-3F4E0C6D3AC2}.png"></p>
+<p>通过阿里云OSS+PicGo的方案，本博客成功实现了图床功能。</p>
+<p>Github在国内访问速度太慢，为了实现图片快速加载，只能加点钱上阿里云了 :(</p>
+<p>不过一个月也就6块钱，也就约等于一个月少喝一瓶东方树叶嘛😋</p>
+]]></content>
+      <categories>
+        <category>建站历程</category>
+      </categories>
+      <tags>
+        <tag>测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>建站第一日</title>
+    <url>/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/</url>
+    <content><![CDATA[<p>今天做成的事情不多，主要是做了一下侧边栏的结构，改了个色，加了个favicon，然后基本就没了。</p>
+<p>上述工作的确很简单，但为何忙了一天，却只完成了这几件事呢？问题出在评论区功能和图床的实现上。</p>
+<span id="more"></span>
+
+<p>先说图床。<br>这个Blog显然不会是一个纯文字的博客，后续放图进文章的问题肯定要考虑到。<br>Github Pages没记错的话，库大小似乎是有限制的（1GB？），把所有文章的图片直接存库里固然不现实。找了一天，暂时还没有找到一个成本为0或接近0的方案，基本都要涉及到买域名&#x2F;配置云服务。目前看到一个PicGo + Github的方案似乎可行，之后有空再试。</p>
+<p>再说评论系统。<br>为了和各位读者相互交流，评论区肯定是少不了的。<br>但是，正是在评论区实现的方案选择上，我近乎浪费了一整个早上。为什么呢？还请继续往下看：</p>
+<p>NexT主题集成了几个评论系统：disqus, 畅言，livere，gitalk和utterances。<br>disqus在国内访问速率堪忧，甚至大概率打不开，不在考虑范围内；<br>livere在国内倒是能用，但是必须要社交平台账号登录，不大符合我允许匿名留言的想法；<br>gitalk和utterances必须要求Github登录后才能评论，门槛之高不言而喻，且同样无法实现匿名评论。<br>那畅言呢？要求登录是其一，其美观程度之差是其二，本着不妥协的原则，这个方案也行不通。</p>
+<p>在上述方案都不符合预期的情况下，只得求助各路教程，而各路教程都不约而同地指向了valine。valine允许匿名，外观简洁，看起来就是最佳之选了。在一番了解后，发现valine原本被集成在NexT内，但出于不再开源和安全问题的原因被移除，以单独插件形式存在。安装并配置好后，却发现其无法正常使用：起初是出现401报错，后变为不报错，但评论无法正常发表，点下发表后毫无反应。</p>
+<p>一番折腾后，评论区的建设仍毫无进展，只得暂时作罢。</p>
+<p>Blog的基本框架现在已经成型。接下来的建设任务，我想就是攻克下这两个难题了。至于小细节，留到日后吧。</p>
+]]></content>
+      <categories>
+        <category>建站历程</category>
+      </categories>
+      <tags>
+        <tag>心得</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自己的碎碎念</title>
+    <url>/2024/08/07/casualTalk/</url>
+    <content><![CDATA[<p>在给各位塞的私货里面，我大段写了一些经验，自己这部分提的不多；故这里再多闲聊一点，让各位能对我大一经历了什么有点了解（笑）</p>
+<span id="more"></span>
+<h1 id="学业"><a href="#学业" class="headerlink" title="学业"></a>学业</h1><p>本人现就读与计算机学院（6系）的计算机科学与技术专业。</p>
+<p>那么，我是大佬吗？<strong>我不是。</strong> 专业分流时，本人成绩<strong>年级排名491&#x2F;1034，分进6系的时候排名是171&#x2F;190+。</strong> 成绩就自爆到下面吧，大家感兴趣可以看（bian）看（shi）:<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240807211353.png" alt="image.png"></p>
+<p>如各位所见，真不行。</p>
+<p>真要反思是怎么回事的话，<strong>可能</strong>是大一上&#x2F;大一下的前半学期过于放纵，<strong>天天都抽时间打电动导致的</strong>。这就导致时间不大充足，数分&#x2F;基物<strong>作业写不及只能抄</strong>，引起了一系列后果。各位<strong>如果十分重视学业，千万引以为戒，</strong> 北航这个<strong>大一</strong>虽然可以比高中放松一点，但还是可以当<strong>高四</strong>读的。（唉大类招生）</p>
+<p><strong>但也侧面说明了，其实现在大类招生也理性了很多，不用太“卷”就能整到自己想要的专业。</strong></p>
+<p>说来也惭愧，本人这几科里最亮眼的是<strong>英语</strong>。算是唯一可以吹嘘的资本（笑）</p>
+<h1 id="为什么选6系？"><a href="#为什么选6系？" class="headerlink" title="为什么选6系？"></a>为什么选6系？</h1><p><strong>兴趣使然居多。</strong> 主要是，孩子从小学就一路在打电脑兼折腾电脑，这方面兴趣浓郁不说，有关计算机的大部分术语我也算熟悉。</p>
+<p><strong>编程严谨而言不在我的兴趣范围内</strong>，就当是系统学习计算机知识必须要承担的代价吧。因此各位在大一觉得对编程没兴趣的话，也不要因此对选6系有所顾虑。</p>
+<p>我是一开始就决定报6系的吗？<strong>算是，也算不是。</strong> 算是的原因是，我高考填志愿的时候确实是奔着6系的名头，把信息类放到了第一志愿；算不是的原因是，我在大一的时候，对选哪个专业的思想有非常严重的波动。</p>
+<p>这里就谈谈这个波动吧。也算是一点分流经验分享？</p>
+<p>一开始是因为参观了41系的微纳中心，又看到学校方面的资源给的非常足，加上自己<strong>某种意义上也算是对计算机硬件感兴趣，而对软件不感兴趣</strong>而有了选41的想法。</p>
+<p>提到41就不能不提2。为什么2不在考虑范围？因为我的认知是，41偏重CPU之类的大型芯片工程（这里姑且忽略一下41的器（cai）件（liao）和工艺装备系），而2偏重的是MEMS，FPGA之类的小器件，这个我不感兴趣。而且我觉得MEMS这类的市场早就饱和了（虽说需求还是旺的）</p>
+<p>2还有个方向是电磁场。由于大一下我基物学得比较痛苦（某种意义也可以怪当时上电磁场这部分的zy老师上得过于无趣），加上数学不好，这个我觉得不行。</p>
+<p>而且，打算去41&#x2F;2，我为啥不在高考填志愿的时候填UESTC？</p>
+<p>然后有了<strong>编程激发不了自己兴趣，之后学着估计吃力的想法</strong>。在这个想法的驱使下，我拷问了自己报北航的目的是什么：说起来你可能不信，我最开始萌生报北航的意愿，<strong>是航空！</strong> <strong>欸！恰好我自己对航空的兴趣这么多年还真没减退，要不我准备大二转去隔壁5系吧！</strong> <strong>听起来确实很荒谬，但我当时确实就是这么想的！连假期补上工图之类的计划都做了。</strong></p>
+<p>这个影响还是有点大的。其一就是转专业的分数要求只要加权平均达到80即可，我有一段时间的学习方针就是<strong>不要太卷，能把平均分保住80分以上就可以了，到时候转去5系即可。当然这个方针对我后续的学习有不小的影响，间接促成了数分、离散、基物比较糟糕的成绩。</strong></p>
+<p>最后是怎么想的呢？住七年沙河算是一个劝退点（<strong>实话实说，我觉得沙河校区内的各项环境其实都不错，北京城逛个两三次基本就腻了，沙河的确是潜心治学的一个好去处</strong>）。还有就是转专业太麻烦的问题。</p>
+<p>还有一个，就是我觉得我国在航空方面已经够先进了。C919的翼型我认为已经足够完美，歼20的气动设计等等都足够先进，读5系毕业之后，以后估计没我的事。<em>换句话说，喜欢坐冷板凳，但航空的板凳已经够热了？233333</em></p>
+<p><strong>还有就是我数学不行。航空对数学要求还是高的，不信请自行了解一个叫Navier-Stokes方程的东西。</strong></p>
+<p>然后我又把目光投向了3系，准确来说是305。为什么呢？因为它们说是自动化，实际上飞控，无人机基本就是他们在干。师资力量也雄厚，而且航天口的活也有在干。控制工程我觉得也是个足够吸引我的领域。<strong>进3系算是可以把我的计算机+航空两个爱好能有机地联系起来。</strong></p>
+<p><strong>顺带一提，各位选专业的时候，不妨进各学院的官网，看看博士生&#x2F;硕士生导师的师资团队，对学院各个老师的大致研究方向有个概念。当时我就是这么了解41&#x2F;3系的。当时看到305老师的研究课题很多契合我兴趣的时候，我那叫一个激动啊（</strong></p>
+<p>那最后为什么不去？还是数学的锅，自动控制原理我觉得对我来说还是有点挑战…</p>
+<p>其实我最后还是在3跟6之间摇摆不定，想的就是靠专业系统抽奖。第一志愿考虑初心写的是计算机，第二志愿就是自动化，然后系统抽到了计算机。<strong>嗯，就这样吧</strong></p>
+<p>对了，说到志愿、计算机等等，又想起一个事情，<strong>我为什么要选北航？</strong></p>
+<p>高考填志愿的时候，我是可以挑战一下南大计算机的。但是，<strong>一是自己对航空的兴趣，二是北京的地理位置，三是危险的可能</strong>促成了我选北航。</p>
+<p>第一个就不在这细说了，我们谈第二个。南京我以前去玩过，吃的真不行，鸭血粉丝汤之类的我真吃不惯，而且据说南大食堂也不行；北京能吃的就多得多。<strong>而且有一个重要影响因素，就是北京是全国拍飞机最好的地方之一（其它还有上海、成都等），而南京就没什么好拍的。</strong> <strong>北京人文等方面的优势就不说了，不言自明。</strong></p>
+<p>危险的可能是什么呢？当时南大的计算机和天坑专业是放在一起的（好像是环境？），而且我的分数也是刚够到南大的门槛。考虑到这种危险性，我还是放弃填报南大的计算机，选择了北航。</p>
+<p>现在我后悔吗？<strong>我不后悔。</strong> 倒是从铁了心读计算机的角度，还是有点后悔的。个人觉得6系开课的质量不如南大。南大的计算机教学我感觉还真优于6。要举例的话我就举南大的计算机系统基础课（PA）吧。<strong>我觉得那个才是我心目中读CS该上的课。</strong></p>
+<p><strong>当然，上述仅供吐槽，大家看看乐子就好！千万不要跟着后悔啊23333，况且6系放眼全国而言也很不错了</strong></p>
+<h1 id="有关英语"><a href="#有关英语" class="headerlink" title="有关英语"></a>有关英语</h1><p>既然是闲聊，那就多聊点吧233333</p>
+<p>我觉得英语这方面我还是可以聊一点的，这里就分享一点我学英语的经历吧</p>
+<p><strong>我其实没怎么刻意学过英语。我英语真的全靠打游戏学的。</strong> </p>
+<p>这方面要从一个叫未转变者（Unturned）的游戏说起，我在小学四年级-六年级的时候玩得很多。当时这个游戏没有官方中文，<strong>汉化全靠民间汉化补丁。</strong> 但是！这个游戏经常更新新内容（好事），民间汉化自然是更不上更新的进度的，然后就会出现游戏界面<strong>中英掺杂的混乱情况。</strong></p>
+<p>这TM能忍？某种意义上，我是有强迫症的，比如中英掺杂我看着就不爽 <em>（可能是这个的原因，我看着导员等天天说ddl这个词就非常的不爽，好好说截止日期会死？）</em> ，于是我一怒之下卸载了汉化，且不管当时的我看得懂不，直接<strong>上英语原版！</strong>影响其实也不大，因为各个功能的布局我都记着的。自此孩子打开了新世界的大门，在眼前看到的英语界面和记忆里汉化界面的中英对照下，我记下了不少有用的词。**</p>
+<p>这个习惯延续到了我后面五年级开始打彩6的时候。<strong>某种意义上，是彩6把这个习惯发扬光大的。</strong> 因为当时的彩6中文字体有问题（尤其是数字），看着那叫一个难看；英语的字体就没问题。然后我就顺手把彩6的界面也调成全英了。<strong>欸！彩六这边有旁白且也是英语（旁白甚至还提供多种语言），旁白还带字幕，还有干员小故事，顺手学英语的条件那叫一个优越啊！</strong></p>
+<p>后面就成瘾了。能调英语的界面我都尽量调（Windows这边，微软式中文功不可没）。硬要说原理就是创造一个能每天用英语的环境。<em>当然国产软件我不调，以微信等腾讯应用为例，那个英文翻的tm什么玩意</em></p>
+<p>由于我复杂的成分，我无聊还有看Linus Tech Tips（加拿大白嫖王，在此顺便向NixieSub致敬一下），LGR，The 8-bit Guy之类的频道，现在想起来也对学英语有帮助？</p>
+<p>然后再加上自己看到不认识的词就顺便记一下的习惯，还有看到东西就无聊想想英语对应什么词的神奇习惯，这英语就这么学会了（</p>
+<p>说到背单词？初中轶事：当时我们英语课不准上课整英语以外的事情，我手上<strong>恰好有一本牛津高阶词典</strong>，然后我没事干就拿它翻着玩，看到我感兴趣且不认识的词就顺便记一下；某种意义上，这就等于背没难度上限的乱序版词汇书（<em>更直白一点，这不就tm背词典吗？</em>），词汇量确实是这么来的，2333333。当然现在没干了，也没这个时间和机会干了</p>
+<p>另有一份写得稍微正式点的主观经验分享，详见博客，欢迎围观&#x2F;吐槽&#x2F;围攻（误）</p>
+<p>就写到这吧。 </p>
+]]></content>
+      <categories>
+        <category>梦拓相关</category>
+      </categories>
+      <tags>
+        <tag>心得</tag>
+        <tag>梦拓</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>“法律、科技与社会”课后思考题答案 - 2024</title>
+    <url>/2025/02/04/%E2%80%9C%E6%B3%95%E5%BE%8B%E3%80%81%E7%A7%91%E6%8A%80%E4%B8%8E%E7%A4%BE%E4%BC%9A%E2%80%9D%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%20-%202024/</url>
+    <content><![CDATA[<p>本文记录了本人复习“法律、科技与社会”课程时，对课后思考题给出的答案。</p>
+<p>众所周知，本课的期末考试就是从课后思考题中抽集体来考，怎么复习想必大家都知道了。当然，不知道这几个思考题之后会不会变。</p>
+<p>以下答案均为本人手搓，在考试获得了95分，当然这个给分可能有玄学成分在里面，仅供参考。</p>
+<h1 id="技术是中立的吗？为什么？"><a href="#技术是中立的吗？为什么？" class="headerlink" title="技术是中立的吗？为什么？"></a>技术是中立的吗？为什么？</h1><p>   不是。</p>
+<ul>
+<li>技术置身于社会中，具有社会性。</li>
+<li>技术是占有世界的媒介，同时也是人类活动的一种形式。其背后包含了人类思维结果。</li>
+</ul>
+<span id="more"></span>
+
+<h1 id="监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？"><a href="#监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？" class="headerlink" title="监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？"></a>监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？</h1><ul>
+<li>用户行为数据将为资本带来利益；从资本逐利的本质而言，监控资本主义的趋势不可避免。</li>
+<li>这一趋势可以被抑制。</li>
+<li>立法与管制</li>
+<li>提高公共意识与参与度</li>
+<li>探索技术向善路径，减少技术对个人隐私的侵害</li>
+</ul>
+<h1 id="学校是否有权使用人脸识别对学生进行考勤？为什么？"><a href="#学校是否有权使用人脸识别对学生进行考勤？为什么？" class="headerlink" title="学校是否有权使用人脸识别对学生进行考勤？为什么？"></a>学校是否有权使用人脸识别对学生进行考勤？为什么？</h1><ul>
+<li>自隐私方面：若学校方面明确了：1.收集的人脸识别信息仅用于考勤，2.且收集的信息将按照相关法律法规进行处理，3.并在事前提前征得了同学的同意，则这一方案可认为可行；</li>
+<li>然而，根据我国目前出台的相关法律法规，此时也需保证人脸识别不作为考勤的唯一方式。</li>
+<li>更严格而言，根据《个人信息保护法》，在公众场合所收集的身份信息只能用于维护公共安全目的，此时考勤并不在维护公共安全范围之内，故可以认为学校无权这么做。</li>
+</ul>
+<h1 id="什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？"><a href="#什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？" class="headerlink" title="什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？"></a>什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？</h1><ul>
+<li>自动驾驶系统在事故不可避免时，是优先保全车上人员安全，还是行人等车外人员的安全。</li>
+<li>首先是在技术上，要尽可能减少“不可避免事故”的发生；</li>
+<li>其次，在设计自动驾驶系统时，应注意伦理方面的考量，确保系统决策符合人类伦理。</li>
+</ul>
+<h1 id="是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？"><a href="#是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？" class="headerlink" title="是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？"></a>是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？</h1><ul>
+<li>是</li>
+<li>存在物化女性的风险</li>
+<li>有悖伦理</li>
+<li>存在因此引起的技术以来与奴隶问题。</li>
+<li>情感与亲密关系的简化。</li>
+</ul>
+<h1 id="什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？"><a href="#什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？" class="headerlink" title="什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？"></a>什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？</h1><p>   指无需有意义的人类控制即可选择目标并施加武力的系统。</p>
+<p>   应该。</p>
+<ul>
+<li>道义角度：其决策远离了人的判断，在道义上这无法接受。</li>
+<li>法律角度：其违背了《国际人权法案》和《武装冲突法》的精神，可能会对非作战人员产生杀伤。</li>
+<li>战略角度：研发出的致命自主武器可能会扩散到潜在敌人中。</li>
+</ul>
+<h1 id="什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？"><a href="#什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？" class="headerlink" title="什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？"></a><strong>什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？</strong></h1><p>   算法歧视是指算法在决策过程中，偏向特定人群或不公平对待某些群体的现象。</p>
+<p>   形成原因：</p>
+<ul>
+<li>数据偏差：算法主要依赖于测试数据；数据不全面，则算法可能会因此产生偏见。</li>
+<li>设计偏见：开发者在设计算法时融入了个人偏见。</li>
+<li>反馈循环：在一些算法系统中，用户行为会反馈到算法中，这可能扩大原有的偏见</li>
+</ul>
+<p>   改进方法：</p>
+<ul>
+<li>改进数据质量</li>
+<li>提高算法透明度与解释性</li>
+<li>引入公平性评估和偏差测试</li>
+<li>用户反馈与持续优化</li>
+</ul>
+<h1 id="在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？"><a href="#在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？" class="headerlink" title="在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？"></a>在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？</h1><ul>
+<li>存在。</li>
+<li>个人角度：提高个人隐私意识，以正当手段维护自己的个人隐私</li>
+<li>立法角度：完善相关法律法规，自法律角度约束个人敏感信息的使用</li>
+<li>数据收集者角度：尊重用户隐私，避免过度收集用户敏感信息；完善技术手段，减少敏感信息的使用，避免敏感信息的泄露</li>
+</ul>
+<h1 id="作为计算机专业的学生，你如何看待人工智能的未来？"><a href="#作为计算机专业的学生，你如何看待人工智能的未来？" class="headerlink" title="作为计算机专业的学生，你如何看待人工智能的未来？"></a>作为<strong>计算机专业</strong>的学生，你如何看待人工智能的未来？</h1><ul>
+<li>自生产工具的角度而言，人工智能将促进人类社会的生产力发展，从而促进人类社会的进步，我们应继续追求人工智能在技术层面的进步，从而进一步发展社会生产力；同时，我们也应积极接受并利用AI这一生产力工具。</li>
+<li>自道德伦理角度而言，人工智能的使用，可能出现潜在的道德伦理问题，当前也出现了深度伪造、AI合成假新闻等问题。这需要我们在技术层面加以防范，；</li>
+<li>自社会角度而言，人工智能必然会因人工智能的出现，对已有的部分人工进行替代。同时，人工智能的出现，也为我们带来了新的就业机会。因此，我们需要积极顺应这一变化，积极学习AI相关知识，同时提高自身创新能力与软实力。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>课程相关</category>
+      </categories>
+      <tags>
+        <tag>水课</tag>
+        <tag>FKS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>送给组内信类新生的一点点私货</title>
     <url>/2024/08/04/BUAA-freshman-FAQ/</url>
     <content><![CDATA[<h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>首先，欢迎各位成为北航士谔书院的一员，也很荣幸能与大家共处同一梦拓小组！</p>
@@ -196,156 +365,8 @@
         <category>梦拓相关</category>
       </categories>
       <tags>
-        <tag>梦拓</tag>
         <tag>心得</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>自己的碎碎念</title>
-    <url>/2024/08/07/casualTalk/</url>
-    <content><![CDATA[<p>在给各位塞的私货里面，我大段写了一些经验，自己这部分提的不多；故这里再多闲聊一点，让各位能对我大一经历了什么有点了解（笑）</p>
-<span id="more"></span>
-<h1 id="学业"><a href="#学业" class="headerlink" title="学业"></a>学业</h1><p>本人现就读与计算机学院（6系）的计算机科学与技术专业。</p>
-<p>那么，我是大佬吗？<strong>我不是。</strong> 专业分流时，本人成绩<strong>年级排名491&#x2F;1034，分进6系的时候排名是171&#x2F;190+。</strong> 成绩就自爆到下面吧，大家感兴趣可以看（bian）看（shi）:<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240807211353.png" alt="image.png"></p>
-<p>如各位所见，真不行。</p>
-<p>真要反思是怎么回事的话，<strong>可能</strong>是大一上&#x2F;大一下的前半学期过于放纵，<strong>天天都抽时间打电动导致的</strong>。这就导致时间不大充足，数分&#x2F;基物<strong>作业写不及只能抄</strong>，引起了一系列后果。各位<strong>如果十分重视学业，千万引以为戒，</strong> 北航这个<strong>大一</strong>虽然可以比高中放松一点，但还是可以当<strong>高四</strong>读的。（唉大类招生）</p>
-<p><strong>但也侧面说明了，其实现在大类招生也理性了很多，不用太“卷”就能整到自己想要的专业。</strong></p>
-<p>说来也惭愧，本人这几科里最亮眼的是<strong>英语</strong>。算是唯一可以吹嘘的资本（笑）</p>
-<h1 id="为什么选6系？"><a href="#为什么选6系？" class="headerlink" title="为什么选6系？"></a>为什么选6系？</h1><p><strong>兴趣使然居多。</strong> 主要是，孩子从小学就一路在打电脑兼折腾电脑，这方面兴趣浓郁不说，有关计算机的大部分术语我也算熟悉。</p>
-<p><strong>编程严谨而言不在我的兴趣范围内</strong>，就当是系统学习计算机知识必须要承担的代价吧。因此各位在大一觉得对编程没兴趣的话，也不要因此对选6系有所顾虑。</p>
-<p>我是一开始就决定报6系的吗？<strong>算是，也算不是。</strong> 算是的原因是，我高考填志愿的时候确实是奔着6系的名头，把信息类放到了第一志愿；算不是的原因是，我在大一的时候，对选哪个专业的思想有非常严重的波动。</p>
-<p>这里就谈谈这个波动吧。也算是一点分流经验分享？</p>
-<p>一开始是因为参观了41系的微纳中心，又看到学校方面的资源给的非常足，加上自己<strong>某种意义上也算是对计算机硬件感兴趣，而对软件不感兴趣</strong>而有了选41的想法。</p>
-<p>提到41就不能不提2。为什么2不在考虑范围？因为我的认知是，41偏重CPU之类的大型芯片工程（这里姑且忽略一下41的器（cai）件（liao）和工艺装备系），而2偏重的是MEMS，FPGA之类的小器件，这个我不感兴趣。而且我觉得MEMS这类的市场早就饱和了（虽说需求还是旺的）</p>
-<p>2还有个方向是电磁场。由于大一下我基物学得比较痛苦（某种意义也可以怪当时上电磁场这部分的zy老师上得过于无趣），加上数学不好，这个我觉得不行。</p>
-<p>而且，打算去41&#x2F;2，我为啥不在高考填志愿的时候填UESTC？</p>
-<p>然后有了<strong>编程激发不了自己兴趣，之后学着估计吃力的想法</strong>。在这个想法的驱使下，我拷问了自己报北航的目的是什么：说起来你可能不信，我最开始萌生报北航的意愿，<strong>是航空！</strong> <strong>欸！恰好我自己对航空的兴趣这么多年还真没减退，要不我准备大二转去隔壁5系吧！</strong> <strong>听起来确实很荒谬，但我当时确实就是这么想的！连假期补上工图之类的计划都做了。</strong></p>
-<p>这个影响还是有点大的。其一就是转专业的分数要求只要加权平均达到80即可，我有一段时间的学习方针就是<strong>不要太卷，能把平均分保住80分以上就可以了，到时候转去5系即可。当然这个方针对我后续的学习有不小的影响，间接促成了数分、离散、基物比较糟糕的成绩。</strong></p>
-<p>最后是怎么想的呢？住七年沙河算是一个劝退点（<strong>实话实说，我觉得沙河校区内的各项环境其实都不错，北京城逛个两三次基本就腻了，沙河的确是潜心治学的一个好去处</strong>）。还有就是转专业太麻烦的问题。</p>
-<p>还有一个，就是我觉得我国在航空方面已经够先进了。C919的翼型我认为已经足够完美，歼20的气动设计等等都足够先进，读5系毕业之后，以后估计没我的事。<em>换句话说，喜欢坐冷板凳，但航空的板凳已经够热了？233333</em></p>
-<p><strong>还有就是我数学不行。航空对数学要求还是高的，不信请自行了解一个叫Navier-Stokes方程的东西。</strong></p>
-<p>然后我又把目光投向了3系，准确来说是305。为什么呢？因为它们说是自动化，实际上飞控，无人机基本就是他们在干。师资力量也雄厚，而且航天口的活也有在干。控制工程我觉得也是个足够吸引我的领域。<strong>进3系算是可以把我的计算机+航空两个爱好能有机地联系起来。</strong></p>
-<p><strong>顺带一提，各位选专业的时候，不妨进各学院的官网，看看博士生&#x2F;硕士生导师的师资团队，对学院各个老师的大致研究方向有个概念。当时我就是这么了解41&#x2F;3系的。当时看到305老师的研究课题很多契合我兴趣的时候，我那叫一个激动啊（</strong></p>
-<p>那最后为什么不去？还是数学的锅，自动控制原理我觉得对我来说还是有点挑战…</p>
-<p>其实我最后还是在3跟6之间摇摆不定，想的就是靠专业系统抽奖。第一志愿考虑初心写的是计算机，第二志愿就是自动化，然后系统抽到了计算机。<strong>嗯，就这样吧</strong></p>
-<p>对了，说到志愿、计算机等等，又想起一个事情，<strong>我为什么要选北航？</strong></p>
-<p>高考填志愿的时候，我是可以挑战一下南大计算机的。但是，<strong>一是自己对航空的兴趣，二是北京的地理位置，三是危险的可能</strong>促成了我选北航。</p>
-<p>第一个就不在这细说了，我们谈第二个。南京我以前去玩过，吃的真不行，鸭血粉丝汤之类的我真吃不惯，而且据说南大食堂也不行；北京能吃的就多得多。<strong>而且有一个重要影响因素，就是北京是全国拍飞机最好的地方之一（其它还有上海、成都等），而南京就没什么好拍的。</strong> <strong>北京人文等方面的优势就不说了，不言自明。</strong></p>
-<p>危险的可能是什么呢？当时南大的计算机和天坑专业是放在一起的（好像是环境？），而且我的分数也是刚够到南大的门槛。考虑到这种危险性，我还是放弃填报南大的计算机，选择了北航。</p>
-<p>现在我后悔吗？<strong>我不后悔。</strong> 倒是从铁了心读计算机的角度，还是有点后悔的。个人觉得6系开课的质量不如南大。南大的计算机教学我感觉还真优于6。要举例的话我就举南大的计算机系统基础课（PA）吧。<strong>我觉得那个才是我心目中读CS该上的课。</strong></p>
-<p><strong>当然，上述仅供吐槽，大家看看乐子就好！千万不要跟着后悔啊23333，况且6系放眼全国而言也很不错了</strong></p>
-<h1 id="有关英语"><a href="#有关英语" class="headerlink" title="有关英语"></a>有关英语</h1><p>既然是闲聊，那就多聊点吧233333</p>
-<p>我觉得英语这方面我还是可以聊一点的，这里就分享一点我学英语的经历吧</p>
-<p><strong>我其实没怎么刻意学过英语。我英语真的全靠打游戏学的。</strong> </p>
-<p>这方面要从一个叫未转变者（Unturned）的游戏说起，我在小学四年级-六年级的时候玩得很多。当时这个游戏没有官方中文，<strong>汉化全靠民间汉化补丁。</strong> 但是！这个游戏经常更新新内容（好事），民间汉化自然是更不上更新的进度的，然后就会出现游戏界面<strong>中英掺杂的混乱情况。</strong></p>
-<p>这TM能忍？某种意义上，我是有强迫症的，比如中英掺杂我看着就不爽 <em>（可能是这个的原因，我看着导员等天天说ddl这个词就非常的不爽，好好说截止日期会死？）</em> ，于是我一怒之下卸载了汉化，且不管当时的我看得懂不，直接<strong>上英语原版！</strong>影响其实也不大，因为各个功能的布局我都记着的。自此孩子打开了新世界的大门，在眼前看到的英语界面和记忆里汉化界面的中英对照下，我记下了不少有用的词。**</p>
-<p>这个习惯延续到了我后面五年级开始打彩6的时候。<strong>某种意义上，是彩6把这个习惯发扬光大的。</strong> 因为当时的彩6中文字体有问题（尤其是数字），看着那叫一个难看；英语的字体就没问题。然后我就顺手把彩6的界面也调成全英了。<strong>欸！彩六这边有旁白且也是英语（旁白甚至还提供多种语言），旁白还带字幕，还有干员小故事，顺手学英语的条件那叫一个优越啊！</strong></p>
-<p>后面就成瘾了。能调英语的界面我都尽量调（Windows这边，微软式中文功不可没）。硬要说原理就是创造一个能每天用英语的环境。<em>当然国产软件我不调，以微信等腾讯应用为例，那个英文翻的tm什么玩意</em></p>
-<p>由于我复杂的成分，我无聊还有看Linus Tech Tips（加拿大白嫖王，在此顺便向NixieSub致敬一下），LGR，The 8-bit Guy之类的频道，现在想起来也对学英语有帮助？</p>
-<p>然后再加上自己看到不认识的词就顺便记一下的习惯，还有看到东西就无聊想想英语对应什么词的神奇习惯，这英语就这么学会了（</p>
-<p>说到背单词？初中轶事：当时我们英语课不准上课整英语以外的事情，我手上<strong>恰好有一本牛津高阶词典</strong>，然后我没事干就拿它翻着玩，看到我感兴趣且不认识的词就顺便记一下；某种意义上，这就等于背没难度上限的乱序版词汇书（<em>更直白一点，这不就tm背词典吗？</em>），词汇量确实是这么来的，2333333。当然现在没干了，也没这个时间和机会干了</p>
-<p>另有一份写得稍微正式点的主观经验分享，详见博客，欢迎围观&#x2F;吐槽&#x2F;围攻（误）</p>
-<p>就写到这吧。 </p>
-]]></content>
-      <categories>
-        <category>梦拓相关</category>
-      </categories>
-      <tags>
         <tag>梦拓</tag>
-        <tag>心得</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>“法律、科技与社会”课后思考题答案 - 2024</title>
-    <url>/2025/02/04/%E2%80%9C%E6%B3%95%E5%BE%8B%E3%80%81%E7%A7%91%E6%8A%80%E4%B8%8E%E7%A4%BE%E4%BC%9A%E2%80%9D%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%20-%202024/</url>
-    <content><![CDATA[<p>本文记录了本人复习“法律、科技与社会”课程时，对课后思考题给出的答案。</p>
-<p>众所周知，本课的期末考试就是从课后思考题中抽集体来考，怎么复习想必大家都知道了。当然，不知道这几个思考题之后会不会变。</p>
-<p>以下答案均为本人手搓，在考试获得了95分，当然这个给分可能有玄学成分在里面，仅供参考。</p>
-<h1 id="技术是中立的吗？为什么？"><a href="#技术是中立的吗？为什么？" class="headerlink" title="技术是中立的吗？为什么？"></a>技术是中立的吗？为什么？</h1><p>   不是。</p>
-<ul>
-<li>技术置身于社会中，具有社会性。</li>
-<li>技术是占有世界的媒介，同时也是人类活动的一种形式。其背后包含了人类思维结果。</li>
-</ul>
-<span id="more"></span>
-
-<h1 id="监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？"><a href="#监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？" class="headerlink" title="监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？"></a>监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？</h1><ul>
-<li>用户行为数据将为资本带来利益；从资本逐利的本质而言，监控资本主义的趋势不可避免。</li>
-<li>这一趋势可以被抑制。</li>
-<li>立法与管制</li>
-<li>提高公共意识与参与度</li>
-<li>探索技术向善路径，减少技术对个人隐私的侵害</li>
-</ul>
-<h1 id="学校是否有权使用人脸识别对学生进行考勤？为什么？"><a href="#学校是否有权使用人脸识别对学生进行考勤？为什么？" class="headerlink" title="学校是否有权使用人脸识别对学生进行考勤？为什么？"></a>学校是否有权使用人脸识别对学生进行考勤？为什么？</h1><ul>
-<li>自隐私方面：若学校方面明确了：1.收集的人脸识别信息仅用于考勤，2.且收集的信息将按照相关法律法规进行处理，3.并在事前提前征得了同学的同意，则这一方案可认为可行；</li>
-<li>然而，根据我国目前出台的相关法律法规，此时也需保证人脸识别不作为考勤的唯一方式。</li>
-<li>更严格而言，根据《个人信息保护法》，在公众场合所收集的身份信息只能用于维护公共安全目的，此时考勤并不在维护公共安全范围之内，故可以认为学校无权这么做。</li>
-</ul>
-<h1 id="什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？"><a href="#什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？" class="headerlink" title="什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？"></a>什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？</h1><ul>
-<li>自动驾驶系统在事故不可避免时，是优先保全车上人员安全，还是行人等车外人员的安全。</li>
-<li>首先是在技术上，要尽可能减少“不可避免事故”的发生；</li>
-<li>其次，在设计自动驾驶系统时，应注意伦理方面的考量，确保系统决策符合人类伦理。</li>
-</ul>
-<h1 id="是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？"><a href="#是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？" class="headerlink" title="是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？"></a>是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？</h1><ul>
-<li>是</li>
-<li>存在物化女性的风险</li>
-<li>有悖伦理</li>
-<li>存在因此引起的技术以来与奴隶问题。</li>
-<li>情感与亲密关系的简化。</li>
-</ul>
-<h1 id="什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？"><a href="#什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？" class="headerlink" title="什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？"></a>什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？</h1><p>   指无需有意义的人类控制即可选择目标并施加武力的系统。</p>
-<p>   应该。</p>
-<ul>
-<li>道义角度：其决策远离了人的判断，在道义上这无法接受。</li>
-<li>法律角度：其违背了《国际人权法案》和《武装冲突法》的精神，可能会对非作战人员产生杀伤。</li>
-<li>战略角度：研发出的致命自主武器可能会扩散到潜在敌人中。</li>
-</ul>
-<h1 id="什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？"><a href="#什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？" class="headerlink" title="什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？"></a><strong>什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？</strong></h1><p>   算法歧视是指算法在决策过程中，偏向特定人群或不公平对待某些群体的现象。</p>
-<p>   形成原因：</p>
-<ul>
-<li>数据偏差：算法主要依赖于测试数据；数据不全面，则算法可能会因此产生偏见。</li>
-<li>设计偏见：开发者在设计算法时融入了个人偏见。</li>
-<li>反馈循环：在一些算法系统中，用户行为会反馈到算法中，这可能扩大原有的偏见</li>
-</ul>
-<p>   改进方法：</p>
-<ul>
-<li>改进数据质量</li>
-<li>提高算法透明度与解释性</li>
-<li>引入公平性评估和偏差测试</li>
-<li>用户反馈与持续优化</li>
-</ul>
-<h1 id="在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？"><a href="#在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？" class="headerlink" title="在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？"></a>在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？</h1><ul>
-<li>存在。</li>
-<li>个人角度：提高个人隐私意识，以正当手段维护自己的个人隐私</li>
-<li>立法角度：完善相关法律法规，自法律角度约束个人敏感信息的使用</li>
-<li>数据收集者角度：尊重用户隐私，避免过度收集用户敏感信息；完善技术手段，减少敏感信息的使用，避免敏感信息的泄露</li>
-</ul>
-<h1 id="作为计算机专业的学生，你如何看待人工智能的未来？"><a href="#作为计算机专业的学生，你如何看待人工智能的未来？" class="headerlink" title="作为计算机专业的学生，你如何看待人工智能的未来？"></a>作为<strong>计算机专业</strong>的学生，你如何看待人工智能的未来？</h1><ul>
-<li>自生产工具的角度而言，人工智能将促进人类社会的生产力发展，从而促进人类社会的进步，我们应继续追求人工智能在技术层面的进步，从而进一步发展社会生产力；同时，我们也应积极接受并利用AI这一生产力工具。</li>
-<li>自道德伦理角度而言，人工智能的使用，可能出现潜在的道德伦理问题，当前也出现了深度伪造、AI合成假新闻等问题。这需要我们在技术层面加以防范，；</li>
-<li>自社会角度而言，人工智能必然会因人工智能的出现，对已有的部分人工进行替代。同时，人工智能的出现，也为我们带来了新的就业机会。因此，我们需要积极顺应这一变化，积极学习AI相关知识，同时提高自身创新能力与软实力。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>课程相关</category>
-      </categories>
-      <tags>
-        <tag>水课</tag>
-        <tag>FKS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>图床测试</title>
-    <url>/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</url>
-    <content><![CDATA[<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/%7B433FA560-1033-4134-A91E-3F4E0C6D3AC2%7D.png" alt="{433FA560-1033-4134-A91E-3F4E0C6D3AC2}.png"></p>
-<p>通过阿里云OSS+PicGo的方案，本博客成功实现了图床功能。</p>
-<p>Github在国内访问速度太慢，为了实现图片快速加载，只能加点钱上阿里云了 :(</p>
-<p>不过一个月也就6块钱，也就约等于一个月少喝一瓶东方树叶嘛😋</p>
-]]></content>
-      <categories>
-        <category>建站历程</category>
-      </categories>
-      <tags>
-        <tag>测试</tag>
       </tags>
   </entry>
   <entry>
@@ -433,24 +454,237 @@
       </tags>
   </entry>
   <entry>
-    <title>建站第一日</title>
-    <url>/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/</url>
-    <content><![CDATA[<p>今天做成的事情不多，主要是做了一下侧边栏的结构，改了个色，加了个favicon，然后基本就没了。</p>
-<p>上述工作的确很简单，但为何忙了一天，却只完成了这几件事呢？问题出在评论区功能和图床的实现上。</p>
+    <title>通过命令行，更优雅地利用ISE进行开发</title>
+    <url>/2025/02/04/%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E6%9B%B4%E4%BC%98%E9%9B%85%E5%9C%B0%E5%88%A9%E7%94%A8ISE%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91/</url>
+    <content><![CDATA[<blockquote>
+<p>归档于250204，供后来者参考。</p>
+</blockquote>
+<p>众所周知，在使用ISE进行开发的时候，您可能会遇到以下问题：</p>
+<ul>
+<li>每次开干，都要手动创建一个新项目</li>
+<li>创建文件的操作极为繁琐</li>
+<li>仿真一次需要多次操作鼠标</li>
+<li>ISE项目文件内文件繁多，文件管理堪称灾难</li>
+</ul>
+<p>但在本文的方法下，以上问题均可一一化解！</p>
+<p>本文是教程中<a href="http://cscore.buaa.edu.cn/tutorial/verilog/verilog-6/verilog-6-6/">ISE、VCS 与自动化测试</a>的一小点拓展。</p>
 <span id="more"></span>
 
-<p>先说图床。<br>这个Blog显然不会是一个纯文字的博客，后续放图进文章的问题肯定要考虑到。<br>Github Pages没记错的话，库大小似乎是有限制的（1GB？），把所有文章的图片直接存库里固然不现实。找了一天，暂时还没有找到一个成本为0或接近0的方案，基本都要涉及到买域名&#x2F;配置云服务。目前看到一个PicGo + Github的方案似乎可行，之后有空再试。</p>
-<p>再说评论系统。<br>为了和各位读者相互交流，评论区肯定是少不了的。<br>但是，正是在评论区实现的方案选择上，我近乎浪费了一整个早上。为什么呢？还请继续往下看：</p>
-<p>NexT主题集成了几个评论系统：disqus, 畅言，livere，gitalk和utterances。<br>disqus在国内访问速率堪忧，甚至大概率打不开，不在考虑范围内；<br>livere在国内倒是能用，但是必须要社交平台账号登录，不大符合我允许匿名留言的想法；<br>gitalk和utterances必须要求Github登录后才能评论，门槛之高不言而喻，且同样无法实现匿名评论。<br>那畅言呢？要求登录是其一，其美观程度之差是其二，本着不妥协的原则，这个方案也行不通。</p>
-<p>在上述方案都不符合预期的情况下，只得求助各路教程，而各路教程都不约而同地指向了valine。valine允许匿名，外观简洁，看起来就是最佳之选了。在一番了解后，发现valine原本被集成在NexT内，但出于不再开源和安全问题的原因被移除，以单独插件形式存在。安装并配置好后，却发现其无法正常使用：起初是出现401报错，后变为不报错，但评论无法正常发表，点下发表后毫无反应。</p>
-<p>一番折腾后，评论区的建设仍毫无进展，只得暂时作罢。</p>
-<p>Blog的基本框架现在已经成型。接下来的建设任务，我想就是攻克下这两个难题了。至于小细节，留到日后吧。</p>
+<h1 id="摆脱ISE的项目文件夹"><a href="#摆脱ISE的项目文件夹" class="headerlink" title="摆脱ISE的项目文件夹"></a>摆脱ISE的项目文件夹</h1><p>在教程中，我们发现：在通过命令行使用ISE时，我们实际需要的只有<code>.prj, .tcl, （模块名）.v</code>这些文件；</p>
+<p><strong>也就是说，我们完全可以在ISE项目文件夹外新开一个文件夹，存储我们的源代码，并利用命令行调用ISE！</strong></p>
+<p>观察<code>.prj</code>的内部结构，发现它其实是支持相对路径的：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">verilog work &quot;./src/NPC.v&quot;</span><br><span class="line">verilog work &quot;./src/IFU.v&quot;</span><br><span class="line">verilog work &quot;./src/GRF.v&quot;</span><br><span class="line">verilog work &quot;./src/EXT.v&quot;</span><br><span class="line">verilog work &quot;./src/DM.v&quot;</span><br><span class="line">verilog work &quot;./src/CTRL.v&quot;</span><br><span class="line">verilog work &quot;./src/CMP.v&quot;</span><br><span class="line">verilog work &quot;./src/ALU.v&quot;</span><br><span class="line">verilog work &quot;./src/mips.v&quot;</span><br><span class="line">verilog work &quot;./src/mips_tb.v&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意！在ISE自动生成的<code>.prj</code>中，是没有将testbench包含在内的；若想使用本文中方法进行开发，请务必如上文所示，将testbench顺路包含在<code>.prj</code>文件内！</p>
+</blockquote>
+<p>于是，我们就可以把所有的<code>.v</code>源代码统一放进工作目录下的一个文件夹内进行管理。</p>
+<p>在工作目录下，我们必须放好<code>.prj, .tcl</code>文件，以及读入<code>IFU</code>的机器码<code>code.txt</code>。 最后结构如下所示。</p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_225602.png" alt="Screenshot_2024-10-30_225602.png"></p>
+<p>这样就实现了项目目录的有效管理，开新模块的时候也不会有烦人的对话框了。</p>
+<p>这也为我们纯使用VSCode+插件等外部编辑器方案提供了极大的便利。</p>
+<h2 id="241103更新：自动生成-prj"><a href="#241103更新：自动生成-prj" class="headerlink" title="241103更新：自动生成.prj"></a>241103更新：自动生成<code>.prj</code></h2><p>自己手动敲<code>prj</code>还是难受，还是自动生成吧！</p>
+<p>要做到这点也很简单，利用<code>cmd</code>的<code>dir</code>指令和<code>for</code>指令，在进行编译前生成一下<code>mips.prj</code>即可：</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> /f <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">dir</span> /b src&#x27;) <span class="keyword">do</span> <span class="built_in">echo</span> verilog work &quot;./src/<span class="variable">%%i</span>&quot; &gt;&gt; mips.prj </span><br></pre></td></tr></table></figure>
+
+<p>实验证明，包含<code>include</code>的宏定义文件包含进去不会出问题，使用了这一写法的各位大可不用顾虑。</p>
+<p>但需要注意的是，请确保执行之前，目录之内没有已存在的<code>mips.prj</code>文件。</p>
+<h1 id="小事：利用设置好的环境变量"><a href="#小事：利用设置好的环境变量" class="headerlink" title="小事：利用设置好的环境变量"></a>小事：利用设置好的环境变量</h1><blockquote>
+<p>此处主要针对Windows用户，相信用Linux看这部分的仙人都知道在Linux上怎么做</p>
+</blockquote>
+<p>在教程内，我们已经知道了自动化运行的指令了；但是，前面跟一大串目录，不觉得很烦人吗？</p>
+<p>恰巧，教程里已经提示过你，要将ISE的安装目录加入环境变量了。我们在这部分不妨再说说，怎么利用设置好的环境变量，简化掉指令前面那一大串难看的安装目录。</p>
+<p>在正式开始前，我们不妨先Win+R一下，输入<code>%windir%</code>，发现他会自动跳转到你的Windows系统目录内。<strong>这说明，Windows（至少cmd）是支持由环境变量名进行目录跳转的</strong>！</p>
+<p>要做的事情也很简单了；添加一个值为<code>（ISE安装目录，如C:\Xilinx\14.7\ISE_DS\ISE）</code>，名为<code>xilinx</code>的环境变量（系统还是用户环境变量均可，实验下来这里都可以）。</p>
+<p>然后，我们就可以把命令改写为<code>%xilinx%\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb</code>，更加美观。</p>
+<h1 id="使用命令行生成波形"><a href="#使用命令行生成波形" class="headerlink" title="使用命令行生成波形"></a>使用命令行生成波形</h1><p>教程这部分有所欠缺，实际上是可以通过命令行看波形的。</p>
+<h2 id="小事：有关-tcl"><a href="#小事：有关-tcl" class="headerlink" title="小事：有关.tcl"></a>小事：有关<code>.tcl</code></h2><p>正式开始之前，我们先多说一点<code>.tcl</code>相关的事。</p>
+<p><strong>教程内提到的<code>.tcl</code>，其实就是给ISE的ISim用的一个脚本;编译出来的<code>mips.exe</code>其实就是ISim的一个实例。</strong></p>
+<p>我们不加入任何参数执行<code>mips.exe</code>，会进入iSim的命令行模式：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_231741.png" alt="Screenshot_2024-10-30_231741.png"></p>
+<p><code>.tcl</code>里写入的指令，其实就是在这个命令行程序下执行的！</p>
+<p>此时我们自然一头雾水，遂输入<code>help</code>查看帮助：<br>![image.png](.&#x2F;assets&#x2F;Screenshot 2024-10-30 231837.png)</p>
+<p>猛然发现，有一条<code>wave</code>指令，可能跟我们生成波形的需求有关！</p>
+<p>查询后得知，<code>wave log</code>指令最有帮助，帮助文档说明如下：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_232153.png" alt="Screenshot_2024-10-30_232153.png"></p>
+<p>回顾我们编译时执行的指令：<code>%xilinx%\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb</code>，此时我们实际上是把<code>mips_tb</code>当作了顶层模块。</p>
+<p>值得注意的是，此时的<code>object_name</code><strong>是对于模块内（即此时的<code>mips_tb</code>）的实例的</strong>。</p>
+<p>众所周知，ISE自动生成的testbench，待测模块实例默认为<code>uut</code>，故我们将其作为<code>object_name</code>传入，同时带上<code>-r</code>参数递归包含所有子模块，我们就可以在波形文件中得到所有子模块的端口，<code>wire</code>等信号的波形。</p>
+<p>最后，经修改后的<code>.tcl</code>如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wave log -r uut </span><br><span class="line">run 200us;</span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
+
+<p>在执行了<code>mips.exe -nolog -tclbatch mips.tcl</code>后，我们会发现工作目录里多了一个<code>isim.wdb</code>文件，这就是我们仿真所得到的波形。</p>
+<h1 id="查看波形"><a href="#查看波形" class="headerlink" title="查看波形"></a>查看波形</h1><p>一番搜索后，使用这一命令即可查看生成的波形：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%xilinx%\bin\nt64\isimgui.exe -view isim.wdb</span><br></pre></td></tr></table></figure>
+
+<p>通过上述操作，我们的确得到了满意的效果：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_233234.png" alt="Screenshot_2024-10-30_233234.png"></p>
+<p>此时，你大可将当前视图内的信号全选，全部删除，然后再在UI左侧的<code>Instances and Processes</code>与<code>Objects</code>里，选择自己感兴趣的信号加入视图。<strong>此时删掉再加信号，并不需要重新仿真才能得到波形，即加即有！！</strong></p>
+<blockquote>
+<p>你问为什么GUI里不是即加即有？因为我们执行的<code>wave log -r uut </code>实际上记录了所有的信号，而在GUI里，若你不将要观察的特定信号加入视图，iSim是不会记录这个信号的波形的。</p>
+</blockquote>
+<blockquote>
+<p>事实上，不加<code>wave log -r uut</code>也会生成波形文件，不过里面没有记录任何波形</p>
+</blockquote>
+<h1 id="编写一键仿真脚本"><a href="#编写一键仿真脚本" class="headerlink" title="编写一键仿真脚本"></a>编写一键仿真脚本</h1><blockquote>
+<p>小白向，各路仙人可以直接跳过</p>
+</blockquote>
+<p>要做的事情很简单，写个批处理文件就行了。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%xilinx%\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb</span><br><span class="line">mips.exe -nolog -tclbatch mips.tcl</span><br><span class="line">%xilinx%\bin\nt64\isimgui.exe -view isim.wdb</span><br></pre></td></tr></table></figure>
+
+<p>将我们要执行的这三条指令写入一个.bat文件，双击即可执行，一键完成<code>编译-仿真-查看波形</code>三个步骤。</p>
+<p>对于<code>$display</code>输出的文本，此时将在弹出的命令行窗口内显示。</p>
+<h2 id="241103更新：更完善的自动化脚本run-bat"><a href="#241103更新：更完善的自动化脚本run-bat" class="headerlink" title="241103更新：更完善的自动化脚本run.bat"></a><del>241103更新：更完善的自动化脚本<code>run.bat</code></del></h2><p><strong>！！请注意，此处除<code>clear.bat</code>外的实现可能存在问题，请看下文241130的更新版本！！</strong></p>
+<blockquote>
+<p>241110：针对P5以后的输出格式，进行了输出过滤正则表达式的完善，再次感谢姜宇墨同学的提醒</p>
+</blockquote>
+<p>主要进行了以下完善：</p>
+<ul>
+<li>考虑到波形查看并不必要，故<code>run.bat</code>默认不打开波形视图，另给出一打开波形试图的<code>run_waveform.bat</code></li>
+<li>自动生成<code>mips.prj</code></li>
+<li>添加了编译错误的判断（感谢<a href="http://cscore.buaa.edu.cn/#/discussion_area/1474/1732/posts">罗浩宇同学的帖子</a>给出的脚本编写思路）</li>
+<li>在运行后自动进行缓存文件的清理。为此，引入了另一脚本<code>clear.bat</code></li>
+<li>对输出进行了简单的过滤</li>
+<li>在命令行内直接查看输出</li>
+</ul>
+<p><code>run.bat</code>:</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="keyword">for</span> /f <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">dir</span> /b src&#x27;) <span class="keyword">do</span> <span class="built_in">echo</span> verilog work &quot;./src/<span class="variable">%%i</span>&quot; &gt;&gt; mips.prj </span><br><span class="line"><span class="variable">%xilinx%</span>\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb &gt;<span class="built_in">nul</span></span><br><span class="line"><span class="keyword">IF</span> <span class="keyword">ERRORLEVEL</span> <span class="number">1</span> (</span><br><span class="line">    <span class="built_in">echo</span> An error occurred when compiling.</span><br><span class="line">    <span class="built_in">pause</span></span><br><span class="line">    .\clear.bat</span><br><span class="line">    <span class="keyword">exit</span></span><br><span class="line">)</span><br><span class="line">mips.exe -nolog -tclbatch mips.tcl &gt; isim_out.temp</span><br><span class="line"><span class="built_in">findstr</span> &quot;@&quot; isim_out.temp &gt; isim_out.txt</span><br><span class="line"><span class="built_in">type</span> isim_out.txt</span><br><span class="line"><span class="built_in">pause</span></span><br><span class="line">.\clear.bat</span><br></pre></td></tr></table></figure>
+
+<p><code>run_waveform.bat</code>:</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="keyword">for</span> /f <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">dir</span> /b src&#x27;) <span class="keyword">do</span> <span class="built_in">echo</span> verilog work &quot;./src/<span class="variable">%%i</span>&quot; &gt;&gt; mips.prj </span><br><span class="line"><span class="variable">%xilinx%</span>\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb &gt;<span class="built_in">nul</span></span><br><span class="line"><span class="keyword">IF</span> <span class="keyword">ERRORLEVEL</span> <span class="number">1</span> (</span><br><span class="line">    <span class="built_in">echo</span> An error occurred when compiling.</span><br><span class="line">    <span class="built_in">pause</span></span><br><span class="line">    .\clear.bat</span><br><span class="line">    <span class="keyword">exit</span></span><br><span class="line">)</span><br><span class="line">mips.exe -nolog -tclbatch mips.tcl &gt; isim_out.temp</span><br><span class="line"><span class="built_in">findstr</span> &quot;@&quot; isim_out.temp &gt; isim_out.txt</span><br><span class="line"><span class="built_in">type</span> isim_out.txt</span><br><span class="line"><span class="built_in">pause</span></span><br><span class="line"><span class="variable">%xilinx%</span>\bin\nt64\isimgui.exe -view isim.wdb</span><br><span class="line">.\clear.bat</span><br></pre></td></tr></table></figure>
+
+<p><code>clear.bat</code></p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="built_in">rmdir</span> isim /s /q</span><br><span class="line"><span class="built_in">del</span> mips.exe fuseRelaunch.<span class="built_in">cmd</span> fuse.* isim.wdb isim_out.temp mips.prj</span><br></pre></td></tr></table></figure>
+
+<p>注意，在<code>run.bat</code>意外中断时，若缓存文件未成功清理，请手动点击<code>clear.bat</code>进行清理，以免后续再次仿真时出现问题。</p>
+<h2 id="241105更新：上机实践经验"><a href="#241105更新：上机实践经验" class="headerlink" title="241105更新：上机实践经验"></a>241105更新：上机实践经验</h2><p>在上机过程中，孩子对这一方法进行了实验，确定了上机时这一方案的可用性。不过，注意到有同学反馈上机时使用存在问题。一番总结发现，在使用的时候，需要注意以下几点：</p>
+<ul>
+<li><p><strong>目录中不能出现中文字符或特殊符号</strong>，cmd对其支持可谓极差，出现了会导致找不到当前目录下生成的<code>mips.exe</code>的问题</p>
+</li>
+<li><p>上机的时候，请先提前手动配置好环境变量。ISE的安装目录，可通过对桌面快捷方式右键-打开文件所在的位置找到。</p>
+<p><strong>需要注意的是，快捷方式指向的目录并不是我们最终要找的ISE安装目录。我们要找的安装目录，是快捷方式指向的文件夹内，那个叫ISE的文件夹。</strong></p>
+<p>上机环境的环境变量，请使用<code>桌面“此电脑”快捷方式-右键菜单，属性-“设置”页中的“高级系统设置”选项-“高级”选项卡中的“环境变量...”</code>进行编辑。</p>
+</li>
+<li><p><strong>运行目录请务必放在D盘，切勿放在C盘。</strong> 因为上机环境的C盘有读写权限限制，在C盘运行脚本会导致<code>mips.exe</code>无法生成，导致运行失败；</p>
+</li>
+<li><p>运行时可能会弹出烦人的SmartScreen弹窗。<del>由于这部分我手上没有Win10环境进行测试，这里可能需要各位自行搜索关闭SmartScreen的方法</del> &#x2F;&#x2F; 上机环境下，由于权限设置，SmartScreen无法关闭。要规避这个问题，建议在打包脚本的时候，先以.txt的格式保存脚本内容，再在上机时，将.txt中脚本，粘贴到<strong>用机房电脑创建的.bat文件里</strong>。你问怎么写？新建.txt，粘贴内容，改扩展名就行了</p>
+</li>
+</ul>
+<h1 id="241110更新"><a href="#241110更新" class="headerlink" title="241110更新"></a>241110更新</h1><blockquote>
+<p>感谢姜宇墨同学的提醒…</p>
+</blockquote>
+<p>在P5开始，输出格式发生了变化，每一行以当前运行的时间数为开头，本文先前使用的正则表达式匹配方法存在问题，现已修正。</p>
+<h1 id="241118-两次上机实验发现的问题"><a href="#241118-两次上机实验发现的问题" class="headerlink" title="241118:两次上机实验发现的问题"></a>241118:两次上机实验发现的问题</h1><p>这部分我实在没有头绪，希望各位能给出一些完善的思路。</p>
+<p>在本人两次于三号机房肝P5时，我没有一次成功查看波形，但是输出正常。查看未过滤的mips.exe输出，发现在执行波形输出时，出现了FATAL ERROR；</p>
+<p>但此前在4号实验室时考P4时，波形输出并没有问题。</p>
+<p>初步怀疑是cmd并行执行指令引起的问题；如各位有解决这一问题的办法，欢迎私发本人&#x2F;在评论区提出，万分感谢！</p>
+<h1 id="241130：上机遇到问题的临时解法"><a href="#241130：上机遇到问题的临时解法" class="headerlink" title="241130：上机遇到问题的临时解法"></a>241130：上机遇到问题的临时解法</h1><h2 id="bat导致SmartScreen拦截"><a href="#bat导致SmartScreen拦截" class="headerlink" title=".bat导致SmartScreen拦截"></a>.bat导致SmartScreen拦截</h2><p>在上交文件前，把拓展名.bat改成.txt；此后，要么直接把拓展名改回来，要么将.txt中内容，复制到另一份用机房电脑创建的.bat文件中。我个人倾向后者，因为理论而言后者能最稳妥地绕开SmartScreen。</p>
+<h2 id="并发执行，导致波形无法查看"><a href="#并发执行，导致波形无法查看" class="headerlink" title="并发执行，导致波形无法查看"></a>并发执行，导致波形无法查看</h2><p>利用<code>call</code>使得各指令顺序执行，尝试避免并行执行引起的问题。<strong>注意，这一改法尚未上机实验，请不要把其作为上机时使用的唯一方法；也欢迎各位上机后反馈使用效果！</strong></p>
+<p><code>run.bat</code>:</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="keyword">for</span> /f <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">dir</span> /b src&#x27;) <span class="keyword">do</span> <span class="built_in">echo</span> verilog work &quot;./src/<span class="variable">%%i</span>&quot; &gt;&gt; mips.prj </span><br><span class="line"><span class="keyword">call</span> <span class="variable">%xilinx%</span>\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb &gt;<span class="built_in">nul</span></span><br><span class="line"><span class="keyword">IF</span> <span class="keyword">ERRORLEVEL</span> <span class="number">1</span> (</span><br><span class="line">    <span class="built_in">echo</span> An error occurred when compiling.</span><br><span class="line">    <span class="built_in">pause</span></span><br><span class="line">    .\clear.bat</span><br><span class="line">    <span class="keyword">exit</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">call</span> mips.exe -nolog -tclbatch mips.tcl &gt; isim_out.temp</span><br><span class="line"><span class="keyword">call</span> <span class="built_in">findstr</span> &quot;@&quot; isim_out.temp &gt; isim_out.txt</span><br><span class="line"><span class="keyword">call</span> <span class="built_in">type</span> isim_out.txt</span><br><span class="line"><span class="keyword">call</span> <span class="built_in">pause</span></span><br><span class="line"><span class="keyword">call</span> .\clear.bat</span><br></pre></td></tr></table></figure>
+
+<p><code>run_waveform.bat</code>:</p>
+<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="keyword">for</span> /f <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">dir</span> /b src&#x27;) <span class="keyword">do</span> <span class="built_in">echo</span> verilog work &quot;./src/<span class="variable">%%i</span>&quot; &gt;&gt; mips.prj </span><br><span class="line"><span class="keyword">call</span> <span class="variable">%xilinx%</span>\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb &gt;<span class="built_in">nul</span></span><br><span class="line"><span class="keyword">IF</span> <span class="keyword">ERRORLEVEL</span> <span class="number">1</span> (</span><br><span class="line">    <span class="built_in">echo</span> An error occurred when compiling.</span><br><span class="line">    <span class="built_in">pause</span></span><br><span class="line">    .\clear.bat</span><br><span class="line">    <span class="keyword">exit</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">call</span> mips.exe -nolog -tclbatch mips.tcl &gt; isim_out.temp</span><br><span class="line"><span class="keyword">call</span> <span class="built_in">findstr</span> &quot;@&quot; isim_out.temp &gt; isim_out.txt</span><br><span class="line"><span class="keyword">call</span> <span class="built_in">type</span> isim_out.txt</span><br><span class="line"><span class="keyword">call</span> <span class="built_in">pause</span></span><br><span class="line"><span class="keyword">call</span> <span class="variable">%xilinx%</span>\bin\nt64\isimgui.exe -view isim.wdb</span><br><span class="line"><span class="keyword">call</span> .\clear.bat</span><br></pre></td></tr></table></figure>
+
+<p><code>clear.bat</code>不用修改，按上面的实现就可以了。</p>
+<h1 id="241209：确认问题解决"><a href="#241209：确认问题解决" class="headerlink" title="241209：确认问题解决"></a>241209：确认问题解决</h1><p>在两次试验241130中的修改后，波形已确保可以稳定生成。本方法自此可确认可靠。</p>
+<p>在上机使用时，仍需注意SmartScreen引起的问题，解法见上文。</p>
+<h1 id="TL-DR：上机怎么用？"><a href="#TL-DR：上机怎么用？" class="headerlink" title="TL;DR：上机怎么用？"></a>TL;DR：上机怎么用？</h1><p>这里针对直接使用Windows环境，Linux仙人可能需要自己钻研一下（当然用Linux的一般也不用看这个教程吧，笑）…</p>
+<h2 id="课下准备"><a href="#课下准备" class="headerlink" title="课下准备"></a>课下准备</h2><p>把脚本改成<code>.txt</code>后缀，再塞进自己的提交里</p>
+<h2 id="课上：配置名为xilinx的环境变量"><a href="#课上：配置名为xilinx的环境变量" class="headerlink" title="课上：配置名为xilinx的环境变量"></a>课上：<strong>配置名为<code>xilinx</code>的环境变量</strong></h2><blockquote>
+<p>为适应不同ISE安装目录而开发。若觉得配置环境变量太麻烦，建议直接把脚本里的<code>%xilinx%</code>直接换成ISE的安装目录，因为ISE的默认安装目录应该都是一样的。</p>
+</blockquote>
+<p><code>此电脑-属性-高级系统设置-环境变量-（新建用户环境变量）</code></p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/image.png" alt="image.png"></p>
+<p>其中，ISE的目录在上机时应该也是<code>C:\Xilinx\14.7\ISE_DS\ISE</code>；</p>
+<p>最保险的方法是，<code>对着ISE的桌面快捷方式右键-打开文件位置-打开弹出的&quot;ISE_DS&quot;文件夹内的&quot;ISE&quot;文件夹-复制路径</code> 。</p>
+<p><strong>注意！ISE快捷方式直接打开的文件夹不是我们要的目标！！要多点进一个文件夹，不要忘了！</strong></p>
+<h2 id="课上：用机房电脑创建脚本"><a href="#课上：用机房电脑创建脚本" class="headerlink" title="课上：用机房电脑创建脚本"></a>课上：用机房电脑创建脚本</h2><p><strong>机房电脑由于权限设置，不可能关掉SmartScreen。</strong> 为了绕开这个当前场景无用的安全检查，我们只能这么绕一下。</p>
+<p>这里主要针对要双击运行的<code>run.bat</code>。<code>clear.bat</code>由于在<code>run.bat</code>内间接调用，这个安全机制无效，可以不用处理。</p>
+<ul>
+<li>用机房电脑，创建跟你的脚本同名的<code>.bat</code>（创.txt再改后缀，这里不赘述了）。</li>
+<li>等到开始考试时，把你的脚本.txt内容拷贝进刚刚创建的.bat。</li>
+<li>把准备好的.bat放进你的源码文件夹（结构见上文），即可绕开SmartScreen，双击即可直接运行。</li>
+</ul>
+<p>本文就到此结束了，速速实践，摆脱ISE臃肿的GUI吧！🤤</p>
 ]]></content>
       <categories>
-        <category>建站历程</category>
+        <category>课程相关</category>
       </categories>
       <tags>
         <tag>心得</tag>
+        <tag>计组</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>航砖祭祖后日谈</title>
+    <url>/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</url>
+    <content><![CDATA[<p>本文将对BUAA_CO_2024进行简要回顾，并给出自己的一些主观建议，仅供参考。</p>
+<span id="more"></span>
+
+<h1 id="预习建议"><a href="#预习建议" class="headerlink" title="预习建议"></a>预习建议</h1><p>主要针对实验部分进行预习。理论部分听课&#x2F;考前看408资料即可。有简单&#x2F;复杂两个预习方法。</p>
+<p>简单玩法，我推荐游玩图灵完备（Turing Complete）。玩到汇编之前基本就差不多了，当然能打完是最好，2333</p>
+<p>复杂玩法（<strong>地狱难度！！</strong>），我力推<a href="https://ysyx.oscc.cc/">“一生一芯”项目</a>。做到B阶段，在体系结构方面的理解就足够薄纱课程组给的实验方案了；课上测试另说（笑）</p>
+<p>要完成“一生一芯”，请预留至少两个月时间。<strong>难度真的很高，做之前做好思想觉悟！！</strong></p>
+<p>只不过，一生一芯用的指令集是RISC-V，跟课程组选用的MIPS有所不同。二者都属于RISC，不过有一些实现细节的不同，我认为影响不大。</p>
+<p>哪怕你在大二上上完了计组，如果你对体系结构感兴趣，我还是推荐你抽时间做一做一生一芯这个项目。因为在你上完后（至少我上完后），你会发现，本校的计组在硬件实现方面的知识实在欠缺，想不到吧？</p>
+<h1 id="课程概况"><a href="#课程概况" class="headerlink" title="课程概况"></a>课程概况</h1><p>最终目标：要求实现支持数条MIPS指令，以及异常、中断的五级流水线处理器。</p>
+<p>要求实现的指令集十分精简，具体可看本人P7的设计文档。</p>
+<p>课程分为理论课与实验课两部分。理论课讲述的是正常的计组课程内容。理论课部分的资料，出于课件版权问题，不在此放出。在课程正式开始时，建议咨询各路学长&#x2F;学姐获取资料。</p>
+<p>实验课即是各个Project。</p>
+<ul>
+<li>P0~P1：利用Logisim构建一些简单电路</li>
+<li>P2：利用MARS编写MIPS汇编程序</li>
+<li>P3：使用Logisim搭建单周期MIPS处理器</li>
+<li>P4：使用Verilog实现单周期MIPS处理器</li>
+<li>P5：实现五级流水线，处理各类冒险（数据冒险等）</li>
+<li>P6：进一步完善P5的设计，主要是添加MDU与新指令</li>
+<li>P7：支持异常与中断</li>
+</ul>
+<p>实验部分，在线上测试平台(cscore.buaa.edu.cn)，对各位的设计进行测试。</p>
+<h1 id="细说实验部分"><a href="#细说实验部分" class="headerlink" title="细说实验部分"></a>细说实验部分</h1><p>包含机房上机、课下作业两环节。</p>
+<p>对每一Project，需完成课下提交，方有上机测试资格；在完成上机测试之后，该Project才视为通过。各Project实行闯关制，唯有前一Project通过才可进行下一Project。</p>
+<p>在本届中，闯关制在P3才正式启动；也就是说，P0-P2课下&#x2F;课上未通过，也不会影响后续进度，到P3开始才影响。<strong>但考虑到实验部分成绩会算入最终成绩，我仍然建议尽力而为。</strong></p>
+<p>在学期的第1-3周为Pre阶段；同学在此期间在课程网站的教程部分，学习后续要用到的知识。其中有一些习题，<strong>由于判分标准始终不明，我还是建议尽力而为。</strong></p>
+<p>4-15周则是实验正式开始阶段。期间，你需要完成“一周一P，打下计组Project那些事”（P7例外，给了两周）。12周对8个Project（0-7），还包括P0-P2的保送，容错其实还行。</p>
+<p>课下测试是<strong>弱测</strong>，仅对你的实现是否基本正确进行测试，在边界条件下的正确性可能不会测试。在线上测试时，除对你的新加指令进行测试外，还会对你的课下提交进行<strong>强测</strong>，覆盖更多的边界条件。</p>
+<p>若你课下没考虑周全，看到课下提交通过就认为完事的话，那你很有可能会在课上满脸痛苦的找bug，还找不出，最后喜提再来一次…</p>
+<p>这也是为什么，我们需要在课下造评测机，数据生成器等等，自行尽可能全面测试。</p>
+<p>机房上机类似于考试，在本届设在每周一晚7点开始，共持续2小时，<strong>闭卷</strong>。</p>
+<p>每次上机考三个题，三个过两个记为通过，全过记为优秀。<strong>过两题和过三题的给分区别至今无人明确，我继续建议尽力而为。同时，在时间不够的时候，切勿盲目追求三题全过。</strong></p>
+<p>P0-P2就是做一下Pre练习类似的题目，有一定难度；</p>
+<p>P3-P6是三个加指令题。<strong>这部分就有意思了</strong>，这里加的不是MIPS指令集中的指令，而是课程组自行编写的新指令。具体题型建议参考往届学长&#x2F;学姐博客。</p>
+<p>P7则是对课下提交进行强测，并附带一个异常有关的加指令题。只要课下写得好，P7其实更简单。</p>
+<p>在每次上机完成后，还要简要回答一些问题。这部分就是助教挑几个问题问，大家基本都能答上，不用担心。</p>
+<h1 id="讨论区"><a href="#讨论区" class="headerlink" title="讨论区"></a>讨论区</h1><p>课程平台设有讨论区。在此鼓励各位积极水帖，积极分享交流经验。</p>
+<p>你可以分享：</p>
+<ul>
+<li>解题思路</li>
+<li>架构搭建经验</li>
+<li>数据生成思路&#x2F;实现</li>
+<li>评测机搭建思路&#x2F;实现</li>
+<li>其它可以提高效率的窍门：比如我自己就找到了命令行调用ISE的办法，直接抛弃臃肿的GUI🤤</li>
+</ul>
+<h1 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h1><h2 id="有关硬件实现"><a href="#有关硬件实现" class="headerlink" title="有关硬件实现"></a>有关硬件实现</h2><p>前面有稍微提到，本课程设计在硬件实现方面有所欠缺。何出此言？</p>
+<p>在P6时，我们要求加入MDU，以支持乘除操作。但是，课程组给出的要求是用<code>*</code>、<code>/</code>、<code>%</code>行为级描述乘、除、取余操作，其硬件实现在实验教材中并未提及（在我这一届）。在理论课那边呢？这要看老师，有些老师可能会提，也有不提的，这是一点。</p>
+<p>第二点，自2023年（我的上一届），课程设计去掉了P8 - FPGA实验。自此，实验设计中唯一跟硬件沾边的部分被砍没了。</p>
+<p>因此，只看实验教程，你不会知道：</p>
+<ul>
+<li>怎么把自己的设计搬上FPGA</li>
+<li>时序约束文件怎么写</li>
+<li>FPGA上怎么调用IP核，用上板载DRAM&#x2F;SRAM</li>
+<li>自己设计的时序情况如何，怎么进行时序优化</li>
+</ul>
+<p>第三点，课上测试。有一些指令逻辑对应的电路设计很难实现，且需要搭建专门模块，在我看来不大符合“通用处理器”的设计初衷。有些题目，在我看来，考察的其实是面向过程编程能力和读题能力，跟体系结构没什么关系。但从考察对自己架构的熟悉程度而言，这种设计也合理。</p>
+<p>因此，如果你实在对体系结构感兴趣，我推荐你课下自己多花时间了解，不要窘于课程设计。当然，如果你对体系结构不感兴趣，这种课程设计也确实足够了。</p>
+<h2 id="和理论课的脱节"><a href="#和理论课的脱节" class="headerlink" title="和理论课的脱节"></a>和理论课的脱节</h2><p>这个情况主要对2306。对于高工的同学（2318）是另外一个故事，我看他们的实验性实验设计挺不错的。</p>
+<p>主要是，理论课讲了Cache，实验课没有考察实现。这个问题在高工部分的新版实验解决了，那个实验有考察Cache部分的内容，不知道这个实验2406会不会采用。</p>
+<p>还有就是，理论课进度取决于老师。比如，P5实验开始，有的老师可能已经讲完了流水线和冒险有关知识，而有的老师还没开始，这就会导致实验进度与理论课进度的脱节。这问题没啥好解法，自己看往年课件吧。</p>
+<p>在这两点以外，其实就没什么好吐槽的了，挺好的。</p>
+]]></content>
+      <categories>
+        <category>课程相关</category>
+      </categories>
+      <tags>
+        <tag>心得</tag>
+        <tag>计组</tag>
       </tags>
   </entry>
   <entry>
@@ -619,240 +853,6 @@
       </categories>
       <tags>
         <tag>心得</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>航砖祭祖后日谈</title>
-    <url>/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</url>
-    <content><![CDATA[<p>本文将对BUAA_CO_2024进行简要回顾，并给出自己的一些主观建议，仅供参考。</p>
-<span id="more"></span>
-
-<h1 id="预习建议"><a href="#预习建议" class="headerlink" title="预习建议"></a>预习建议</h1><p>主要针对实验部分进行预习。理论部分听课&#x2F;考前看408资料即可。有简单&#x2F;复杂两个预习方法。</p>
-<p>简单玩法，我推荐游玩图灵完备（Turing Complete）。玩到汇编之前基本就差不多了，当然能打完是最好，2333</p>
-<p>复杂玩法（<strong>地狱难度！！</strong>），我力推<a href="https://ysyx.oscc.cc/">“一生一芯”项目</a>。做到B阶段，在体系结构方面的理解就足够薄纱课程组给的实验方案了；课上测试另说（笑）</p>
-<p>要完成“一生一芯”，请预留至少两个月时间。<strong>难度真的很高，做之前做好思想觉悟！！</strong></p>
-<p>只不过，一生一芯用的指令集是RISC-V，跟课程组选用的MIPS有所不同。二者都属于RISC，不过有一些实现细节的不同，我认为影响不大。</p>
-<p>哪怕你在大二上上完了计组，如果你对体系结构感兴趣，我还是推荐你抽时间做一做一生一芯这个项目。因为在你上完后（至少我上完后），你会发现，本校的计组在硬件实现方面的知识实在欠缺，想不到吧？</p>
-<h1 id="课程概况"><a href="#课程概况" class="headerlink" title="课程概况"></a>课程概况</h1><p>最终目标：要求实现支持数条MIPS指令，以及异常、中断的五级流水线处理器。</p>
-<p>要求实现的指令集十分精简，具体可看本人P7的设计文档。</p>
-<p>课程分为理论课与实验课两部分。理论课讲述的是正常的计组课程内容。理论课部分的资料，出于课件版权问题，不在此放出。在课程正式开始时，建议咨询各路学长&#x2F;学姐获取资料。</p>
-<p>实验课即是各个Project。</p>
-<ul>
-<li>P0~P1：利用Logisim构建一些简单电路</li>
-<li>P2：利用MARS编写MIPS汇编程序</li>
-<li>P3：使用Logisim搭建单周期MIPS处理器</li>
-<li>P4：使用Verilog实现单周期MIPS处理器</li>
-<li>P5：实现五级流水线，处理各类冒险（数据冒险等）</li>
-<li>P6：进一步完善P5的设计，主要是添加MDU与新指令</li>
-<li>P7：支持异常与中断</li>
-</ul>
-<p>实验部分，在线上测试平台(cscore.buaa.edu.cn)，对各位的设计进行测试。</p>
-<h1 id="细说实验部分"><a href="#细说实验部分" class="headerlink" title="细说实验部分"></a>细说实验部分</h1><p>包含机房上机、课下作业两环节。</p>
-<p>对每一Project，需完成课下提交，方有上机测试资格；在完成上机测试之后，该Project才视为通过。各Project实行闯关制，唯有前一Project通过才可进行下一Project。</p>
-<p>在本届中，闯关制在P3才正式启动；也就是说，P0-P2课下&#x2F;课上未通过，也不会影响后续进度，到P3开始才影响。<strong>但考虑到实验部分成绩会算入最终成绩，我仍然建议尽力而为。</strong></p>
-<p>在学期的第1-3周为Pre阶段；同学在此期间在课程网站的教程部分，学习后续要用到的知识。其中有一些习题，<strong>由于判分标准始终不明，我还是建议尽力而为。</strong></p>
-<p>4-15周则是实验正式开始阶段。期间，你需要完成“一周一P，打下计组Project那些事”（P7例外，给了两周）。12周对8个Project（0-7），还包括P0-P2的保送，容错其实还行。</p>
-<p>课下测试是<strong>弱测</strong>，仅对你的实现是否基本正确进行测试，在边界条件下的正确性可能不会测试。在线上测试时，除对你的新加指令进行测试外，还会对你的课下提交进行<strong>强测</strong>，覆盖更多的边界条件。</p>
-<p>若你课下没考虑周全，看到课下提交通过就认为完事的话，那你很有可能会在课上满脸痛苦的找bug，还找不出，最后喜提再来一次…</p>
-<p>这也是为什么，我们需要在课下造评测机，数据生成器等等，自行尽可能全面测试。</p>
-<p>机房上机类似于考试，在本届设在每周一晚7点开始，共持续2小时，<strong>闭卷</strong>。</p>
-<p>每次上机考三个题，三个过两个记为通过，全过记为优秀。<strong>过两题和过三题的给分区别至今无人明确，我继续建议尽力而为。同时，在时间不够的时候，切勿盲目追求三题全过。</strong></p>
-<p>P0-P2就是做一下Pre练习类似的题目，有一定难度；</p>
-<p>P3-P6是三个加指令题。<strong>这部分就有意思了</strong>，这里加的不是MIPS指令集中的指令，而是课程组自行编写的新指令。具体题型建议参考往届学长&#x2F;学姐博客。</p>
-<p>P7则是对课下提交进行强测，并附带一个异常有关的加指令题。只要课下写得好，P7其实更简单。</p>
-<p>在每次上机完成后，还要简要回答一些问题。这部分就是助教挑几个问题问，大家基本都能答上，不用担心。</p>
-<h1 id="讨论区"><a href="#讨论区" class="headerlink" title="讨论区"></a>讨论区</h1><p>课程平台设有讨论区。在此鼓励各位积极水帖，积极分享交流经验。</p>
-<p>你可以分享：</p>
-<ul>
-<li>解题思路</li>
-<li>架构搭建经验</li>
-<li>数据生成思路&#x2F;实现</li>
-<li>评测机搭建思路&#x2F;实现</li>
-<li>其它可以提高效率的窍门：比如我自己就找到了命令行调用ISE的办法，直接抛弃臃肿的GUI🤤</li>
-</ul>
-<h1 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h1><h2 id="有关硬件实现"><a href="#有关硬件实现" class="headerlink" title="有关硬件实现"></a>有关硬件实现</h2><p>前面有稍微提到，本课程设计在硬件实现方面有所欠缺。何出此言？</p>
-<p>在P6时，我们要求加入MDU，以支持乘除操作。但是，课程组给出的要求是用<code>*</code>、<code>/</code>、<code>%</code>行为级描述乘、除、取余操作，其硬件实现在实验教材中并未提及（在我这一届）。在理论课那边呢？这要看老师，有些老师可能会提，也有不提的，这是一点。</p>
-<p>第二点，自2023年（我的上一届），课程设计去掉了P8 - FPGA实验。自此，实验设计中唯一跟硬件沾边的部分被砍没了。</p>
-<p>因此，只看实验教程，你不会知道：</p>
-<ul>
-<li>怎么把自己的设计搬上FPGA</li>
-<li>时序约束文件怎么写</li>
-<li>FPGA上怎么调用IP核，用上板载DRAM&#x2F;SRAM</li>
-<li>自己设计的时序情况如何，怎么进行时序优化</li>
-</ul>
-<p>第三点，课上测试。有一些指令逻辑对应的电路设计很难实现，且需要搭建专门模块，在我看来不大符合“通用处理器”的设计初衷。有些题目，在我看来，考察的其实是面向过程编程能力和读题能力，跟体系结构没什么关系。但从考察对自己架构的熟悉程度而言，这种设计也合理。</p>
-<p>因此，如果你实在对体系结构感兴趣，我推荐你课下自己多花时间了解，不要窘于课程设计。当然，如果你对体系结构不感兴趣，这种课程设计也确实足够了。</p>
-<h2 id="和理论课的脱节"><a href="#和理论课的脱节" class="headerlink" title="和理论课的脱节"></a>和理论课的脱节</h2><p>这个情况主要对2306。对于高工的同学（2318）是另外一个故事，我看他们的实验性实验设计挺不错的。</p>
-<p>主要是，理论课讲了Cache，实验课没有考察实现。这个问题在高工部分的新版实验解决了，那个实验有考察Cache部分的内容，不知道这个实验2406会不会采用。</p>
-<p>还有就是，理论课进度取决于老师。比如，P5实验开始，有的老师可能已经讲完了流水线和冒险有关知识，而有的老师还没开始，这就会导致实验进度与理论课进度的脱节。这问题没啥好解法，自己看往年课件吧。</p>
-<p>在这两点以外，其实就没什么好吐槽的了，挺好的。</p>
-]]></content>
-      <categories>
-        <category>课程相关</category>
-      </categories>
-      <tags>
-        <tag>心得</tag>
-        <tag>计组</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>通过命令行，更优雅地利用ISE进行开发</title>
-    <url>/2025/02/04/%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E6%9B%B4%E4%BC%98%E9%9B%85%E5%9C%B0%E5%88%A9%E7%94%A8ISE%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91/</url>
-    <content><![CDATA[<blockquote>
-<p>归档于250204，供后来者参考。</p>
-</blockquote>
-<p>众所周知，在使用ISE进行开发的时候，您可能会遇到以下问题：</p>
-<ul>
-<li>每次开干，都要手动创建一个新项目</li>
-<li>创建文件的操作极为繁琐</li>
-<li>仿真一次需要多次操作鼠标</li>
-<li>ISE项目文件内文件繁多，文件管理堪称灾难</li>
-</ul>
-<p>但在本文的方法下，以上问题均可一一化解！</p>
-<p>本文是教程中<a href="http://cscore.buaa.edu.cn/tutorial/verilog/verilog-6/verilog-6-6/">ISE、VCS 与自动化测试</a>的一小点拓展。</p>
-<span id="more"></span>
-
-<h1 id="摆脱ISE的项目文件夹"><a href="#摆脱ISE的项目文件夹" class="headerlink" title="摆脱ISE的项目文件夹"></a>摆脱ISE的项目文件夹</h1><p>在教程中，我们发现：在通过命令行使用ISE时，我们实际需要的只有<code>.prj, .tcl, （模块名）.v</code>这些文件；</p>
-<p><strong>也就是说，我们完全可以在ISE项目文件夹外新开一个文件夹，存储我们的源代码，并利用命令行调用ISE！</strong></p>
-<p>观察<code>.prj</code>的内部结构，发现它其实是支持相对路径的：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">verilog work &quot;./src/NPC.v&quot;</span><br><span class="line">verilog work &quot;./src/IFU.v&quot;</span><br><span class="line">verilog work &quot;./src/GRF.v&quot;</span><br><span class="line">verilog work &quot;./src/EXT.v&quot;</span><br><span class="line">verilog work &quot;./src/DM.v&quot;</span><br><span class="line">verilog work &quot;./src/CTRL.v&quot;</span><br><span class="line">verilog work &quot;./src/CMP.v&quot;</span><br><span class="line">verilog work &quot;./src/ALU.v&quot;</span><br><span class="line">verilog work &quot;./src/mips.v&quot;</span><br><span class="line">verilog work &quot;./src/mips_tb.v&quot;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>注意！在ISE自动生成的<code>.prj</code>中，是没有将testbench包含在内的；若想使用本文中方法进行开发，请务必如上文所示，将testbench顺路包含在<code>.prj</code>文件内！</p>
-</blockquote>
-<p>于是，我们就可以把所有的<code>.v</code>源代码统一放进工作目录下的一个文件夹内进行管理。</p>
-<p>在工作目录下，我们必须放好<code>.prj, .tcl</code>文件，以及读入<code>IFU</code>的机器码<code>code.txt</code>。 最后结构如下所示。</p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_225602.png" alt="Screenshot_2024-10-30_225602.png"></p>
-<p>这样就实现了项目目录的有效管理，开新模块的时候也不会有烦人的对话框了。</p>
-<p>这也为我们纯使用VSCode+插件等外部编辑器方案提供了极大的便利。</p>
-<h2 id="241103更新：自动生成-prj"><a href="#241103更新：自动生成-prj" class="headerlink" title="241103更新：自动生成.prj"></a>241103更新：自动生成<code>.prj</code></h2><p>自己手动敲<code>prj</code>还是难受，还是自动生成吧！</p>
-<p>要做到这点也很简单，利用<code>cmd</code>的<code>dir</code>指令和<code>for</code>指令，在进行编译前生成一下<code>mips.prj</code>即可：</p>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> /f <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">dir</span> /b src&#x27;) <span class="keyword">do</span> <span class="built_in">echo</span> verilog work &quot;./src/<span class="variable">%%i</span>&quot; &gt;&gt; mips.prj </span><br></pre></td></tr></table></figure>
-
-<p>实验证明，包含<code>include</code>的宏定义文件包含进去不会出问题，使用了这一写法的各位大可不用顾虑。</p>
-<p>但需要注意的是，请确保执行之前，目录之内没有已存在的<code>mips.prj</code>文件。</p>
-<h1 id="小事：利用设置好的环境变量"><a href="#小事：利用设置好的环境变量" class="headerlink" title="小事：利用设置好的环境变量"></a>小事：利用设置好的环境变量</h1><blockquote>
-<p>此处主要针对Windows用户，相信用Linux看这部分的仙人都知道在Linux上怎么做</p>
-</blockquote>
-<p>在教程内，我们已经知道了自动化运行的指令了；但是，前面跟一大串目录，不觉得很烦人吗？</p>
-<p>恰巧，教程里已经提示过你，要将ISE的安装目录加入环境变量了。我们在这部分不妨再说说，怎么利用设置好的环境变量，简化掉指令前面那一大串难看的安装目录。</p>
-<p>在正式开始前，我们不妨先Win+R一下，输入<code>%windir%</code>，发现他会自动跳转到你的Windows系统目录内。<strong>这说明，Windows（至少cmd）是支持由环境变量名进行目录跳转的</strong>！</p>
-<p>要做的事情也很简单了；添加一个值为<code>（ISE安装目录，如C:\Xilinx\14.7\ISE_DS\ISE）</code>，名为<code>xilinx</code>的环境变量（系统还是用户环境变量均可，实验下来这里都可以）。</p>
-<p>然后，我们就可以把命令改写为<code>%xilinx%\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb</code>，更加美观。</p>
-<h1 id="使用命令行生成波形"><a href="#使用命令行生成波形" class="headerlink" title="使用命令行生成波形"></a>使用命令行生成波形</h1><p>教程这部分有所欠缺，实际上是可以通过命令行看波形的。</p>
-<h2 id="小事：有关-tcl"><a href="#小事：有关-tcl" class="headerlink" title="小事：有关.tcl"></a>小事：有关<code>.tcl</code></h2><p>正式开始之前，我们先多说一点<code>.tcl</code>相关的事。</p>
-<p><strong>教程内提到的<code>.tcl</code>，其实就是给ISE的ISim用的一个脚本;编译出来的<code>mips.exe</code>其实就是ISim的一个实例。</strong></p>
-<p>我们不加入任何参数执行<code>mips.exe</code>，会进入iSim的命令行模式：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_231741.png" alt="Screenshot_2024-10-30_231741.png"></p>
-<p><code>.tcl</code>里写入的指令，其实就是在这个命令行程序下执行的！</p>
-<p>此时我们自然一头雾水，遂输入<code>help</code>查看帮助：<br>![image.png](.&#x2F;assets&#x2F;Screenshot 2024-10-30 231837.png)</p>
-<p>猛然发现，有一条<code>wave</code>指令，可能跟我们生成波形的需求有关！</p>
-<p>查询后得知，<code>wave log</code>指令最有帮助，帮助文档说明如下：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_232153.png" alt="Screenshot_2024-10-30_232153.png"></p>
-<p>回顾我们编译时执行的指令：<code>%xilinx%\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb</code>，此时我们实际上是把<code>mips_tb</code>当作了顶层模块。</p>
-<p>值得注意的是，此时的<code>object_name</code><strong>是对于模块内（即此时的<code>mips_tb</code>）的实例的</strong>。</p>
-<p>众所周知，ISE自动生成的testbench，待测模块实例默认为<code>uut</code>，故我们将其作为<code>object_name</code>传入，同时带上<code>-r</code>参数递归包含所有子模块，我们就可以在波形文件中得到所有子模块的端口，<code>wire</code>等信号的波形。</p>
-<p>最后，经修改后的<code>.tcl</code>如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wave log -r uut </span><br><span class="line">run 200us;</span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
-
-<p>在执行了<code>mips.exe -nolog -tclbatch mips.tcl</code>后，我们会发现工作目录里多了一个<code>isim.wdb</code>文件，这就是我们仿真所得到的波形。</p>
-<h1 id="查看波形"><a href="#查看波形" class="headerlink" title="查看波形"></a>查看波形</h1><p>一番搜索后，使用这一命令即可查看生成的波形：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%xilinx%\bin\nt64\isimgui.exe -view isim.wdb</span><br></pre></td></tr></table></figure>
-
-<p>通过上述操作，我们的确得到了满意的效果：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_233234.png" alt="Screenshot_2024-10-30_233234.png"></p>
-<p>此时，你大可将当前视图内的信号全选，全部删除，然后再在UI左侧的<code>Instances and Processes</code>与<code>Objects</code>里，选择自己感兴趣的信号加入视图。<strong>此时删掉再加信号，并不需要重新仿真才能得到波形，即加即有！！</strong></p>
-<blockquote>
-<p>你问为什么GUI里不是即加即有？因为我们执行的<code>wave log -r uut </code>实际上记录了所有的信号，而在GUI里，若你不将要观察的特定信号加入视图，iSim是不会记录这个信号的波形的。</p>
-</blockquote>
-<blockquote>
-<p>事实上，不加<code>wave log -r uut</code>也会生成波形文件，不过里面没有记录任何波形</p>
-</blockquote>
-<h1 id="编写一键仿真脚本"><a href="#编写一键仿真脚本" class="headerlink" title="编写一键仿真脚本"></a>编写一键仿真脚本</h1><blockquote>
-<p>小白向，各路仙人可以直接跳过</p>
-</blockquote>
-<p>要做的事情很简单，写个批处理文件就行了。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">%xilinx%\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb</span><br><span class="line">mips.exe -nolog -tclbatch mips.tcl</span><br><span class="line">%xilinx%\bin\nt64\isimgui.exe -view isim.wdb</span><br></pre></td></tr></table></figure>
-
-<p>将我们要执行的这三条指令写入一个.bat文件，双击即可执行，一键完成<code>编译-仿真-查看波形</code>三个步骤。</p>
-<p>对于<code>$display</code>输出的文本，此时将在弹出的命令行窗口内显示。</p>
-<h2 id="241103更新：更完善的自动化脚本run-bat"><a href="#241103更新：更完善的自动化脚本run-bat" class="headerlink" title="241103更新：更完善的自动化脚本run.bat"></a><del>241103更新：更完善的自动化脚本<code>run.bat</code></del></h2><p><strong>！！请注意，此处除<code>clear.bat</code>外的实现可能存在问题，请看下文241130的更新版本！！</strong></p>
-<blockquote>
-<p>241110：针对P5以后的输出格式，进行了输出过滤正则表达式的完善，再次感谢姜宇墨同学的提醒</p>
-</blockquote>
-<p>主要进行了以下完善：</p>
-<ul>
-<li>考虑到波形查看并不必要，故<code>run.bat</code>默认不打开波形视图，另给出一打开波形试图的<code>run_waveform.bat</code></li>
-<li>自动生成<code>mips.prj</code></li>
-<li>添加了编译错误的判断（感谢<a href="http://cscore.buaa.edu.cn/#/discussion_area/1474/1732/posts">罗浩宇同学的帖子</a>给出的脚本编写思路）</li>
-<li>在运行后自动进行缓存文件的清理。为此，引入了另一脚本<code>clear.bat</code></li>
-<li>对输出进行了简单的过滤</li>
-<li>在命令行内直接查看输出</li>
-</ul>
-<p><code>run.bat</code>:</p>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="keyword">for</span> /f <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">dir</span> /b src&#x27;) <span class="keyword">do</span> <span class="built_in">echo</span> verilog work &quot;./src/<span class="variable">%%i</span>&quot; &gt;&gt; mips.prj </span><br><span class="line"><span class="variable">%xilinx%</span>\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb &gt;<span class="built_in">nul</span></span><br><span class="line"><span class="keyword">IF</span> <span class="keyword">ERRORLEVEL</span> <span class="number">1</span> (</span><br><span class="line">    <span class="built_in">echo</span> An error occurred when compiling.</span><br><span class="line">    <span class="built_in">pause</span></span><br><span class="line">    .\clear.bat</span><br><span class="line">    <span class="keyword">exit</span></span><br><span class="line">)</span><br><span class="line">mips.exe -nolog -tclbatch mips.tcl &gt; isim_out.temp</span><br><span class="line"><span class="built_in">findstr</span> &quot;@&quot; isim_out.temp &gt; isim_out.txt</span><br><span class="line"><span class="built_in">type</span> isim_out.txt</span><br><span class="line"><span class="built_in">pause</span></span><br><span class="line">.\clear.bat</span><br></pre></td></tr></table></figure>
-
-<p><code>run_waveform.bat</code>:</p>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="keyword">for</span> /f <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">dir</span> /b src&#x27;) <span class="keyword">do</span> <span class="built_in">echo</span> verilog work &quot;./src/<span class="variable">%%i</span>&quot; &gt;&gt; mips.prj </span><br><span class="line"><span class="variable">%xilinx%</span>\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb &gt;<span class="built_in">nul</span></span><br><span class="line"><span class="keyword">IF</span> <span class="keyword">ERRORLEVEL</span> <span class="number">1</span> (</span><br><span class="line">    <span class="built_in">echo</span> An error occurred when compiling.</span><br><span class="line">    <span class="built_in">pause</span></span><br><span class="line">    .\clear.bat</span><br><span class="line">    <span class="keyword">exit</span></span><br><span class="line">)</span><br><span class="line">mips.exe -nolog -tclbatch mips.tcl &gt; isim_out.temp</span><br><span class="line"><span class="built_in">findstr</span> &quot;@&quot; isim_out.temp &gt; isim_out.txt</span><br><span class="line"><span class="built_in">type</span> isim_out.txt</span><br><span class="line"><span class="built_in">pause</span></span><br><span class="line"><span class="variable">%xilinx%</span>\bin\nt64\isimgui.exe -view isim.wdb</span><br><span class="line">.\clear.bat</span><br></pre></td></tr></table></figure>
-
-<p><code>clear.bat</code></p>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="built_in">rmdir</span> isim /s /q</span><br><span class="line"><span class="built_in">del</span> mips.exe fuseRelaunch.<span class="built_in">cmd</span> fuse.* isim.wdb isim_out.temp mips.prj</span><br></pre></td></tr></table></figure>
-
-<p>注意，在<code>run.bat</code>意外中断时，若缓存文件未成功清理，请手动点击<code>clear.bat</code>进行清理，以免后续再次仿真时出现问题。</p>
-<h2 id="241105更新：上机实践经验"><a href="#241105更新：上机实践经验" class="headerlink" title="241105更新：上机实践经验"></a>241105更新：上机实践经验</h2><p>在上机过程中，孩子对这一方法进行了实验，确定了上机时这一方案的可用性。不过，注意到有同学反馈上机时使用存在问题。一番总结发现，在使用的时候，需要注意以下几点：</p>
-<ul>
-<li><p><strong>目录中不能出现中文字符或特殊符号</strong>，cmd对其支持可谓极差，出现了会导致找不到当前目录下生成的<code>mips.exe</code>的问题</p>
-</li>
-<li><p>上机的时候，请先提前手动配置好环境变量。ISE的安装目录，可通过对桌面快捷方式右键-打开文件所在的位置找到。</p>
-<p><strong>需要注意的是，快捷方式指向的目录并不是我们最终要找的ISE安装目录。我们要找的安装目录，是快捷方式指向的文件夹内，那个叫ISE的文件夹。</strong></p>
-<p>上机环境的环境变量，请使用<code>桌面“此电脑”快捷方式-右键菜单，属性-“设置”页中的“高级系统设置”选项-“高级”选项卡中的“环境变量...”</code>进行编辑。</p>
-</li>
-<li><p><strong>运行目录请务必放在D盘，切勿放在C盘。</strong> 因为上机环境的C盘有读写权限限制，在C盘运行脚本会导致<code>mips.exe</code>无法生成，导致运行失败；</p>
-</li>
-<li><p>运行时可能会弹出烦人的SmartScreen弹窗。<del>由于这部分我手上没有Win10环境进行测试，这里可能需要各位自行搜索关闭SmartScreen的方法</del> &#x2F;&#x2F; 上机环境下，由于权限设置，SmartScreen无法关闭。要规避这个问题，建议在打包脚本的时候，先以.txt的格式保存脚本内容，再在上机时，将.txt中脚本，粘贴到<strong>用机房电脑创建的.bat文件里</strong>。你问怎么写？新建.txt，粘贴内容，改扩展名就行了</p>
-</li>
-</ul>
-<h1 id="241110更新"><a href="#241110更新" class="headerlink" title="241110更新"></a>241110更新</h1><blockquote>
-<p>感谢姜宇墨同学的提醒…</p>
-</blockquote>
-<p>在P5开始，输出格式发生了变化，每一行以当前运行的时间数为开头，本文先前使用的正则表达式匹配方法存在问题，现已修正。</p>
-<h1 id="241118-两次上机实验发现的问题"><a href="#241118-两次上机实验发现的问题" class="headerlink" title="241118:两次上机实验发现的问题"></a>241118:两次上机实验发现的问题</h1><p>这部分我实在没有头绪，希望各位能给出一些完善的思路。</p>
-<p>在本人两次于三号机房肝P5时，我没有一次成功查看波形，但是输出正常。查看未过滤的mips.exe输出，发现在执行波形输出时，出现了FATAL ERROR；</p>
-<p>但此前在4号实验室时考P4时，波形输出并没有问题。</p>
-<p>初步怀疑是cmd并行执行指令引起的问题；如各位有解决这一问题的办法，欢迎私发本人&#x2F;在评论区提出，万分感谢！</p>
-<h1 id="241130：上机遇到问题的临时解法"><a href="#241130：上机遇到问题的临时解法" class="headerlink" title="241130：上机遇到问题的临时解法"></a>241130：上机遇到问题的临时解法</h1><h2 id="bat导致SmartScreen拦截"><a href="#bat导致SmartScreen拦截" class="headerlink" title=".bat导致SmartScreen拦截"></a>.bat导致SmartScreen拦截</h2><p>在上交文件前，把拓展名.bat改成.txt；此后，要么直接把拓展名改回来，要么将.txt中内容，复制到另一份用机房电脑创建的.bat文件中。我个人倾向后者，因为理论而言后者能最稳妥地绕开SmartScreen。</p>
-<h2 id="并发执行，导致波形无法查看"><a href="#并发执行，导致波形无法查看" class="headerlink" title="并发执行，导致波形无法查看"></a>并发执行，导致波形无法查看</h2><p>利用<code>call</code>使得各指令顺序执行，尝试避免并行执行引起的问题。<strong>注意，这一改法尚未上机实验，请不要把其作为上机时使用的唯一方法；也欢迎各位上机后反馈使用效果！</strong></p>
-<p><code>run.bat</code>:</p>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="keyword">for</span> /f <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">dir</span> /b src&#x27;) <span class="keyword">do</span> <span class="built_in">echo</span> verilog work &quot;./src/<span class="variable">%%i</span>&quot; &gt;&gt; mips.prj </span><br><span class="line"><span class="keyword">call</span> <span class="variable">%xilinx%</span>\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb &gt;<span class="built_in">nul</span></span><br><span class="line"><span class="keyword">IF</span> <span class="keyword">ERRORLEVEL</span> <span class="number">1</span> (</span><br><span class="line">    <span class="built_in">echo</span> An error occurred when compiling.</span><br><span class="line">    <span class="built_in">pause</span></span><br><span class="line">    .\clear.bat</span><br><span class="line">    <span class="keyword">exit</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">call</span> mips.exe -nolog -tclbatch mips.tcl &gt; isim_out.temp</span><br><span class="line"><span class="keyword">call</span> <span class="built_in">findstr</span> &quot;@&quot; isim_out.temp &gt; isim_out.txt</span><br><span class="line"><span class="keyword">call</span> <span class="built_in">type</span> isim_out.txt</span><br><span class="line"><span class="keyword">call</span> <span class="built_in">pause</span></span><br><span class="line"><span class="keyword">call</span> .\clear.bat</span><br></pre></td></tr></table></figure>
-
-<p><code>run_waveform.bat</code>:</p>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="keyword">for</span> /f <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">dir</span> /b src&#x27;) <span class="keyword">do</span> <span class="built_in">echo</span> verilog work &quot;./src/<span class="variable">%%i</span>&quot; &gt;&gt; mips.prj </span><br><span class="line"><span class="keyword">call</span> <span class="variable">%xilinx%</span>\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb &gt;<span class="built_in">nul</span></span><br><span class="line"><span class="keyword">IF</span> <span class="keyword">ERRORLEVEL</span> <span class="number">1</span> (</span><br><span class="line">    <span class="built_in">echo</span> An error occurred when compiling.</span><br><span class="line">    <span class="built_in">pause</span></span><br><span class="line">    .\clear.bat</span><br><span class="line">    <span class="keyword">exit</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">call</span> mips.exe -nolog -tclbatch mips.tcl &gt; isim_out.temp</span><br><span class="line"><span class="keyword">call</span> <span class="built_in">findstr</span> &quot;@&quot; isim_out.temp &gt; isim_out.txt</span><br><span class="line"><span class="keyword">call</span> <span class="built_in">type</span> isim_out.txt</span><br><span class="line"><span class="keyword">call</span> <span class="built_in">pause</span></span><br><span class="line"><span class="keyword">call</span> <span class="variable">%xilinx%</span>\bin\nt64\isimgui.exe -view isim.wdb</span><br><span class="line"><span class="keyword">call</span> .\clear.bat</span><br></pre></td></tr></table></figure>
-
-<p><code>clear.bat</code>不用修改，按上面的实现就可以了。</p>
-<h1 id="241209：确认问题解决"><a href="#241209：确认问题解决" class="headerlink" title="241209：确认问题解决"></a>241209：确认问题解决</h1><p>在两次试验241130中的修改后，波形已确保可以稳定生成。本方法自此可确认可靠。</p>
-<p>在上机使用时，仍需注意SmartScreen引起的问题，解法见上文。</p>
-<h1 id="TL-DR：上机怎么用？"><a href="#TL-DR：上机怎么用？" class="headerlink" title="TL;DR：上机怎么用？"></a>TL;DR：上机怎么用？</h1><p>这里针对直接使用Windows环境，Linux仙人可能需要自己钻研一下（当然用Linux的一般也不用看这个教程吧，笑）…</p>
-<h2 id="课下准备"><a href="#课下准备" class="headerlink" title="课下准备"></a>课下准备</h2><p>把脚本改成<code>.txt</code>后缀，再塞进自己的提交里</p>
-<h2 id="课上：配置名为xilinx的环境变量"><a href="#课上：配置名为xilinx的环境变量" class="headerlink" title="课上：配置名为xilinx的环境变量"></a>课上：<strong>配置名为<code>xilinx</code>的环境变量</strong></h2><blockquote>
-<p>为适应不同ISE安装目录而开发。若觉得配置环境变量太麻烦，建议直接把脚本里的<code>%xilinx%</code>直接换成ISE的安装目录，因为ISE的默认安装目录应该都是一样的。</p>
-</blockquote>
-<p><code>此电脑-属性-高级系统设置-环境变量-（新建用户环境变量）</code></p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/image.png" alt="image.png"></p>
-<p>其中，ISE的目录在上机时应该也是<code>C:\Xilinx\14.7\ISE_DS\ISE</code>；</p>
-<p>最保险的方法是，<code>对着ISE的桌面快捷方式右键-打开文件位置-打开弹出的&quot;ISE_DS&quot;文件夹内的&quot;ISE&quot;文件夹-复制路径</code> 。</p>
-<p><strong>注意！ISE快捷方式直接打开的文件夹不是我们要的目标！！要多点进一个文件夹，不要忘了！</strong></p>
-<h2 id="课上：用机房电脑创建脚本"><a href="#课上：用机房电脑创建脚本" class="headerlink" title="课上：用机房电脑创建脚本"></a>课上：用机房电脑创建脚本</h2><p><strong>机房电脑由于权限设置，不可能关掉SmartScreen。</strong> 为了绕开这个当前场景无用的安全检查，我们只能这么绕一下。</p>
-<p>这里主要针对要双击运行的<code>run.bat</code>。<code>clear.bat</code>由于在<code>run.bat</code>内间接调用，这个安全机制无效，可以不用处理。</p>
-<ul>
-<li>用机房电脑，创建跟你的脚本同名的<code>.bat</code>（创.txt再改后缀，这里不赘述了）。</li>
-<li>等到开始考试时，把你的脚本.txt内容拷贝进刚刚创建的.bat。</li>
-<li>把准备好的.bat放进你的源码文件夹（结构见上文），即可绕开SmartScreen，双击即可直接运行。</li>
-</ul>
-<p>本文就到此结束了，速速实践，摆脱ISE臃肿的GUI吧！🤤</p>
-]]></content>
-      <categories>
-        <category>课程相关</category>
-      </categories>
-      <tags>
-        <tag>心得</tag>
-        <tag>计组</tag>
       </tags>
   </entry>
 </search>
