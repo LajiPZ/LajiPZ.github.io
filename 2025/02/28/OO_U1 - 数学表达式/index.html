@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>OO_U1 - 数学表达式 - Position 0 - LajiPZ的随想屋</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Position 0 - LajiPZ的随想屋"><meta name="msapplication-TileImage" content="/img/pz13.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Position 0 - LajiPZ的随想屋"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Hw1这本是一个描述本人思路的草稿，后决定还是整理一下，发到公屏交流一下）） 要求读入一个含：  加，减 乘 乘方 至多一层括号（建议考虑多层的拓展）的 单变量（e.g. 字母x） 表达式。  输出：  展开所有括号 结果尽可能短"><meta property="og:type" content="blog"><meta property="og:title" content="OO_U1 - 数学表达式"><meta property="og:url" content="http://lajipz.top/2025/02/28/OO_U1%20-%20%E6%95%B0%E5%AD%A6%E8%A1%A8%E8%BE%BE%E5%BC%8F/"><meta property="og:site_name" content="Position 0 - LajiPZ的随想屋"><meta property="og:description" content="Hw1这本是一个描述本人思路的草稿，后决定还是整理一下，发到公屏交流一下）） 要求读入一个含：  加，减 乘 乘方 至多一层括号（建议考虑多层的拓展）的 单变量（e.g. 字母x） 表达式。  输出：  展开所有括号 结果尽可能短"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://lajipz.top/img/og_image.png"><meta property="article:published_time" content="2025-02-28T02:44:00.000Z"><meta property="article:modified_time" content="2025-02-28T02:47:29.297Z"><meta property="article:author" content="LajiPZ"><meta property="article:tag" content="面向对象"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://lajipz.top/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lajipz.top/2025/02/28/OO_U1%20-%20%E6%95%B0%E5%AD%A6%E8%A1%A8%E8%BE%BE%E5%BC%8F/"},"headline":"OO_U1 - 数学表达式","image":["http://lajipz.top/img/og_image.png"],"datePublished":"2025-02-28T02:44:00.000Z","dateModified":"2025-02-28T02:47:29.297Z","author":{"@type":"Person","name":"LajiPZ"},"publisher":{"@type":"Organization","name":"Position 0 - LajiPZ的随想屋","logo":{"@type":"ImageObject","url":"http://lajipz.top/img/pz13.png"}},"description":"Hw1这本是一个描述本人思路的草稿，后决定还是整理一下，发到公屏交流一下）） 要求读入一个含：  加，减 乘 乘方 至多一层括号（建议考虑多层的拓展）的 单变量（e.g. 字母x） 表达式。  输出：  展开所有括号 结果尽可能短"}</script><link rel="canonical" href="http://lajipz.top/2025/02/28/OO_U1%20-%20%E6%95%B0%E5%AD%A6%E8%A1%A8%E8%BE%BE%E5%BC%8F/"><link rel="icon" href="/img/pz13.png"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/6.0.0/css/all.min.css"><link data-pjax rel="stylesheet" href="https://unpkg.com/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://unpkg.com/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://unpkg.com/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Position 0 - LajiPZ的随想屋" type="application/atom+xml">
+</head><body class="is-$3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-02-28T02:44:00.000Z" title="2/28/2025, 10:44:00 AM">2025-02-28</time>发表</span><span class="level-item"><time dateTime="2025-02-28T02:47:29.297Z" title="2/28/2025, 10:47:29 AM">2025-02-28</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a></span><span class="level-item">14 分钟读完 (大约2151个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">OO_U1 - 数学表达式</h1><div class="content"><h1 id="Hw1"><a href="#Hw1" class="headerlink" title="Hw1"></a>Hw1</h1><p>这本是一个描述本人思路的草稿，后决定还是整理一下，发到公屏交流一下））</p>
+<h2 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h2><p>读入一个含：</p>
+<ul>
+<li>加，减</li>
+<li>乘</li>
+<li>乘方</li>
+<li>至多一层括号（建议考虑多层的拓展）<br>的 <strong>单变量（e.g. 字母x）</strong> 表达式。</li>
+</ul>
+<p>输出：</p>
+<ul>
+<li>展开所有括号</li>
+<li>结果尽可能短<span id="more"></span></li>
+</ul>
+<h2 id="构造"><a href="#构造" class="headerlink" title="构造"></a>构造</h2><p>我们可以继续沿用先前的逻辑，不过需要针对乘方进行优化（用一个我看得懂，杂揉了RegEx的写法，严谨定义请参阅参考书）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- Expr：(+|-)&#123;0,1&#125;term | expr(+|-)term</span><br><span class="line">- Term：Term * Factor | (+|-)&#123;0,1&#125;Factor</span><br><span class="line">- Factor：**变量** | 常数 | Expr</span><br><span class="line">- 变量：x(^【一个正数，可能有前导0和+】)&#123;0,&#125;</span><br><span class="line">- 常数：(+|-)&#123;0,1&#125;\d+</span><br></pre></td></tr></table></figure>
+
+
+<p>为了处理幂函数，我们引入Factor的下一级SubFactor：当前定义下，为<code>^</code>两端的对象，可为数字，变量或表达式。</p>
+<p>此时，我们的指数一定为一个正数，这里SubFactor涵盖指数会不会有问题？在Parser标记的过程，不会；但在后面由标记好的Expr，得到多项式的过程中，就有可能出问题了。</p>
+<h2 id="多层括号嵌套"><a href="#多层括号嵌套" class="headerlink" title="多层括号嵌套"></a>多层括号嵌套</h2><p>看了OOpre.hw7的都知道，那边的实现之所以不能处理多层嵌套，是因为在最低层次中引入了SubExpr；我们只需把SubExpr换成Expr，就可以处理多层括号嵌套了。</p>
+<h2 id="发病"><a href="#发病" class="headerlink" title="发病"></a>发病</h2><p>这是一个在参考书的定义下不可能出现的情况，但仍然值得考虑：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+-++---+++-009+b</span><br></pre></td></tr></table></figure>
+<p>对应regex：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(\+|-)&#123;0,1&#125;((\d|\+|-)+)</span><br></pre></td></tr></table></figure>
+
+<p>实际情况中，至多只可能出现三个连续的符号，但考虑一下也好。</p>
+<h2 id="继续构造"><a href="#继续构造" class="headerlink" title="继续构造"></a>继续构造</h2><h2 id="lexer"><a href="#lexer" class="headerlink" title="lexer"></a>lexer</h2><p>将输入tokenize。<br>分以下几类：</p>
+<ul>
+<li><code>+</code></li>
+<li><code>-</code></li>
+<li><code>*</code></li>
+<li><code>^</code></li>
+<li><code>(</code></li>
+<li><code>)</code></li>
+<li>数字：调用parseNum()，分析出数字。此时我们先不考虑符号数的问题。</li>
+</ul>
+<p>空字符直接跳过，毕竟在我们的定义中，空格不存在语义；不关心其数量而直接跳过，并无影响。</p>
+<p>为什么在parse前要tokenize？这对后续拓展其实是有利的，比如说，变量名字不是一个字符x，而是多个字符时。</p>
+<h2 id="符号化简"><a href="#符号化简" class="headerlink" title="符号化简"></a>符号化简</h2><p>我们认为，此时各个Term的连接应该都是加号。因此，我们需要想一个处理正负的方法。</p>
+<p>我们需要对符号进行简化，得到唯一的正负标识<code>reversed</code>。</p>
+<p>这个<code>reversed</code>标记该放到哪一层呢？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">此时，我们应在最小单元处，进行加减号的化简；因此，我们决定，在parseSubFactor()过程中进行加减号的吞并，同时使用一标识符，指示SubFactor是否取反。</span><br><span class="line"></span><br><span class="line">事实上，我们只需要对Num，Var记录这一取反符号</span><br></pre></td></tr></table></figure>
+
+<p>仔细思考发现，上述思路对于以下样例处理存在问题：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+-5+-x^5</span><br></pre></td></tr></table></figure>
+
+<p>幂函数整体是一个正值。因此，我们处理正负的问题，应该停留在Factor层次。处理连续符号的过程，因此也放在Factor处进行。</p>
+<p>为此，我们还需修改Factor类的构成：除SubFactor容器外，还需记录一个<code>boolean reversed</code>.</p>
+<p>具体实现为：</p>
+<ul>
+<li>Expr：parse方法需提供<code>reversed</code>，指示默当前正负；直接向下parse，并传递<code>reversed</code>。</li>
+<li>Term：符号可认为只对第一个乘数有影响，故只将该<code>reversed</code>传递到第一个Factor，其余Factor的reversed全设为false；继续向下parse</li>
+<li>Factor：<strong>先处理符号。</strong> 当前读到+保持<code>reversed</code>不变，读到-对<code>reversed</code>取反。完成处理后，使用处理好的<code>reversed</code>新建Factor对象，再进行下一层的parse（方法同现有的类似，不再赘述）。</li>
+<li>SubFactor：分三类情况，数字，变量和表达式。仿照现有思路处理即可。<strong>不过</strong>，对于表达式，我们此时调用parseExpr()时，传入的<code>reserved</code>应为false，因为我们已经在其上一级Factor处理好了符号。</li>
+</ul>
+<p>这样一来，我们逐层向下传递了各个Factor的正负属性，从而为下文进行多项式转换提供便利。</p>
+<h2 id="多项式转换"><a href="#多项式转换" class="headerlink" title="多项式转换"></a>多项式转换</h2><p>我们通过<code>Parser.parseExpr()</code>，得到了一个处理（或者说，标记？）后的<code>Expr</code>。</p>
+<p>考察最终化简式，可以得知其形式为：<br>$$\sum a*x^b$$<br>因此，我们需要构造：</p>
+<ul>
+<li><code>Mono</code>类：一个单项式</li>
+<li><code>Poly</code>类：一个多项式，使用容器存储其包含的单项式</li>
+</ul>
+<p>同样，我们认为，此时各单项式间连接只有加法。</p>
+<p>如何定义Mono？其中包含：</p>
+<ul>
+<li><code>BigInteger multiplier</code>：a</li>
+<li><code>String var</code>:x</li>
+<li><code>BigInteger exp</code>: b</li>
+</ul>
+<p>针对纯数字的表达，我们规定：</p>
+<ul>
+<li>值全部存储在<code>multiplier</code>中</li>
+<li><code>var</code>此时为空串<code>&quot;&quot;</code>，为变量可能为多字符的情况准备</li>
+<li><code>exp</code>恒为1</li>
+</ul>
+<p>在这个思路的指引下，我们引入一个处理器<code>Flattener</code>，将已进行标记的表达式<code>expr</code>“拍扁“，得到一个满足上式的多项式。此时，我们并不需要考虑化简的问题；化简的过程，我们在Poly类内实现一个方法即可。</p>
+<p>为何要多一个Flattener? 感觉上，边Parse边获取单项式似乎是可行的，但为了高内聚低耦合，还是把获取单项式的过程独立出来吧。</p>
+<p>Flatter中需要实现的方法：</p>
+<ul>
+<li><code>getPoly()</code>：将表达式转为多项式</li>
+<li><code>getMono()</code>：逐层得到单项式，返回一个<strong>单项式容器</strong>；显然，要根据传入的是Expr&#x2F;Sub&#x2F;Factor来进行不同的处理</li>
+</ul>
+<p><code>getPoly()</code>调用<code>getMono(Expr)</code>，随后将容器包装为Poly对象。</p>
+<p>我们在此仍然采取递归下降的思路，对已标记的Expr进行处理。根据传入对象类别划分：</p>
+<ul>
+<li><p>Expr：创建一单项式容器<code>monoList</code>；遍历包含的Term，由getMono()得到子容器；此时是加号，简单合并各容器即可。</p>
+</li>
+<li><p>Term：遍历Factor，得到各子容器；此时是乘号，调用一个<strong>多项式乘法方法</strong>，得到存有单项式的一个容器</p>
+</li>
+<li><p>Factor：过程略有复杂。<br>在当前定义下，必为<code>a^b</code>的形式。若为<code>x^b</code>，直接构建新的<code>Mono</code>，加入将返回的单项式容器；若为<code>&lt;num&gt;^b</code>，则直接进行计算，按照上文中，纯数字下单项式的约定，构建单项式；若为<code>&lt;expr&gt;^b</code>，则调用一个<strong>多项式求幂方法</strong>，得到一系列单项式，最后加入容器。</p>
+<p>在得到单项式，返回容器之前，还记得Factor的<code>reserved</code>属性吗？此时，若其为true，则需要调用一个<strong>取反方法</strong>，将各个单项式的系数取反。</p>
+</li>
+</ul>
+<p>好的，现在我们还要做：</p>
+<ul>
+<li>多项式乘法：多次<strong>单项式乘法</strong></li>
+<li>多项式求幂：多次调用多项式乘法即可</li>
+<li>取反：将各个单项式的系数取反。</li>
+<li>单项式乘法：功能不赘述。<br>不过，我们的乘数为0，乘后指数为0的情况都需要在此处理。</li>
+</ul>
+<p>这三者的实现其实很简单，这里就不再赘述，不过可以提一下多项式求幂：</p>
+<p>在定义中，<code>m^0=1</code>，我们怎么实现这个逻辑呢？显然，我们求幂返回的是个单项式容器；故，我们在方法被调用的开始，初始化一个只含单项式：<strong>数字1</strong>的容器；随后，根据次幂，将其同底数多项式相乘指数次即可。</p>
+<p>一番操作后，我们就得到了一个未化简的多项式对象Poly了。</p>
+<h2 id="化简"><a href="#化简" class="headerlink" title="化简"></a>化简</h2><p>思路很简单：遍历单项式容器，合并同次幂单项式。</p>
+<p>需要对单项式为数字（即，<code>var.equals(&quot;&quot;)</code>）单独开情况处理。不用担心指数为0的情况，上面的单项式乘法里，我们已经处理掉了。</p>
+<p>限于篇幅，且实现也不困难，这里就不展开说了。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>OO_U1 - 数学表达式</p><p><a href="http://lajipz.top/2025/02/28/OO_U1 - 数学表达式/">http://lajipz.top/2025/02/28/OO_U1 - 数学表达式/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>LajiPZ</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2025-02-28</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-02-28</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">面向对象</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=671eeccad01e2b00125527bf&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/02/04/%E6%8A%80%E6%9C%AF%E6%BC%94%E7%A4%BA%20-%20%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C%E7%9A%84%E5%A4%9A%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%E5%AF%B9%E6%8B%8D%E8%84%9A%E6%9C%AC/"><span class="level-item">技术演示 - 并发执行的多测试数据对拍脚本</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="waline-thread"></div><link rel="stylesheet" href="https://unpkg.com/@waline/client@2/dist/waline.css"><script src="https://unpkg.com/@waline/client@2/dist/waline.js"></script><script>Waline.init({
+            el: '#waline-thread',
+            serverURL: "https://comments.lajipz.top/",
+            path: window.location.pathname,
+            lang: "zh-CN",
+            
+            emoji: ["https://unpkg.com/@waline/emojis@1.2.0/tieba","https://unpkg.com/@waline/emojis@1.2.0/weibo","https://unpkg.com/@waline/emojis@1.2.0/bilibili"],
+            
+            meta: ["nick","mail","link"],
+            requiredMeta: [],
+            login: "enable",
+            
+            pageSize: 10,
+            imageUploader: false,
+            highlighter: false,
+            texRenderer: false,
+            search: false,
+            pageview: false,
+            comment: false,
+            copyright: true,
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Hw1"><span class="level-left"><span class="level-item">1</span><span class="level-item">Hw1</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#要求"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">要求</span></span></a></li><li><a class="level is-mobile" href="#构造"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">构造</span></span></a></li><li><a class="level is-mobile" href="#多层括号嵌套"><span class="level-left"><span class="level-item">1.3</span><span class="level-item">多层括号嵌套</span></span></a></li><li><a class="level is-mobile" href="#发病"><span class="level-left"><span class="level-item">1.4</span><span class="level-item">发病</span></span></a></li><li><a class="level is-mobile" href="#继续构造"><span class="level-left"><span class="level-item">1.5</span><span class="level-item">继续构造</span></span></a></li><li><a class="level is-mobile" href="#lexer"><span class="level-left"><span class="level-item">1.6</span><span class="level-item">lexer</span></span></a></li><li><a class="level is-mobile" href="#符号化简"><span class="level-left"><span class="level-item">1.7</span><span class="level-item">符号化简</span></span></a></li><li><a class="level is-mobile" href="#多项式转换"><span class="level-left"><span class="level-item">1.8</span><span class="level-item">多项式转换</span></span></a></li><li><a class="level is-mobile" href="#化简"><span class="level-left"><span class="level-item">1.9</span><span class="level-item">化简</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a><p class="is-size-7"><span>&copy; 2025 LajiPZ</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">Background by @katorei</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://unpkg.com/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://unpkg.com/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://unpkg.com/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://unpkg.com/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script src="https://unpkg.com/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
