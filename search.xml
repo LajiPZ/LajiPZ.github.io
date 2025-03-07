@@ -552,6 +552,21 @@
       </tags>
   </entry>
   <entry>
+    <title>图床测试</title>
+    <url>/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</url>
+    <content><![CDATA[<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/%7B433FA560-1033-4134-A91E-3F4E0C6D3AC2%7D.png" alt="{433FA560-1033-4134-A91E-3F4E0C6D3AC2}.png"></p>
+<p>通过阿里云OSS+PicGo的方案，本博客成功实现了图床功能。</p>
+<p>Github在国内访问速度太慢，为了实现图片快速加载，只能加点钱上阿里云了 :(</p>
+<p>不过一个月也就6块钱，也就约等于一个月少喝一瓶东方树叶嘛😋</p>
+]]></content>
+      <categories>
+        <category>建站历程</category>
+      </categories>
+      <tags>
+        <tag>测试</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>建站第一日</title>
     <url>/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/</url>
     <content><![CDATA[<p>今天做成的事情不多，主要是做了一下侧边栏的结构，改了个色，加了个favicon，然后基本就没了。</p>
@@ -570,21 +585,6 @@
       </categories>
       <tags>
         <tag>心得</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>图床测试</title>
-    <url>/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</url>
-    <content><![CDATA[<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/%7B433FA560-1033-4134-A91E-3F4E0C6D3AC2%7D.png" alt="{433FA560-1033-4134-A91E-3F4E0C6D3AC2}.png"></p>
-<p>通过阿里云OSS+PicGo的方案，本博客成功实现了图床功能。</p>
-<p>Github在国内访问速度太慢，为了实现图片快速加载，只能加点钱上阿里云了 :(</p>
-<p>不过一个月也就6块钱，也就约等于一个月少喝一瓶东方树叶嘛😋</p>
-]]></content>
-      <categories>
-        <category>建站历程</category>
-      </categories>
-      <tags>
-        <tag>测试</tag>
       </tags>
   </entry>
   <entry>
