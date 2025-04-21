@@ -10836,9 +10836,8 @@ article.article .content pre {
 }
 article.article .content code {
   background-color: #f9f2f4;
-  padding: 2px 6px;
+  padding: 0px 5px;
   border-radius: 3px;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
 /* 保持原有字体样式 */
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   font-size: 0.9em;

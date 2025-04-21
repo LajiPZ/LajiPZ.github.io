@@ -6,7 +6,7 @@
   <link href="http://lajipz.top/atom.xml" rel="self"/>
   
   <link href="http://lajipz.top/"/>
-  <updated>2025-04-21T06:39:05.077Z</updated>
+  <updated>2025-04-21T06:32:23.121Z</updated>
   <id>http://lajipz.top/</id>
   
   <author>
@@ -17,16 +17,17 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>OO_U2 - HW7简要总结</title>
-    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/"/>
-    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/</id>
+    <title>OO_U2 - HW5,6阶段性总结</title>
+    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/"/>
+    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/</id>
     <published>2025-04-17T15:00:00.000Z</published>
-    <updated>2025-04-21T06:39:05.077Z</updated>
+    <updated>2025-04-21T06:32:23.121Z</updated>
     
     
-    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;讨论区已有一众仙人分享了自己的实现，但我认为我有在降低修改复杂度上更进一步的办法。&lt;/p&gt;
-&lt;p&gt;考虑到本次作业为本单元的最后一次作业，我的修改方法更注重于&lt;strong&gt;降低修改的复杂度，可能存在部分性能的牺牲。&lt;/strong&gt; 在各位进行参考时，请注意这一点。&lt;/p&gt;
-&lt;p&gt;本人实现的亮点在于：UPDATE请求的处理，与双轿厢目标楼层的规避，&lt;strong&gt;全部利用线程交互实现&lt;/strong&gt;。&lt;/p&gt;</summary>
+    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;我的调度算法，与我的架构实现耦合度较高，因此我不得不先提一些我自己的电梯实现；不需要的同学，欢迎直接跳开“电梯实现”部分。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这算是本人两周以来的一个总结吧，终于有时间写了…&lt;/p&gt;</summary>
     
     
     
@@ -67,28 +68,6 @@
   </entry>
   
   <entry>
-    <title>OO_U2 - HW5,6阶段性总结</title>
-    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/"/>
-    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/</id>
-    <published>2025-04-17T15:00:00.000Z</published>
-    <updated>2025-04-21T06:32:23.121Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;我的调度算法，与我的架构实现耦合度较高，因此我不得不先提一些我自己的电梯实现；不需要的同学，欢迎直接跳开“电梯实现”部分。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;这算是本人两周以来的一个总结吧，终于有时间写了…&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
-    
-    
-    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
-    
-  </entry>
-  
-  <entry>
     <title>使用ReentrantLock，实现更灵活的锁管理策略</title>
     <link href="http://lajipz.top/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/"/>
     <id>http://lajipz.top/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/</id>
@@ -100,6 +79,27 @@
 &lt;p&gt;本文是对OO第二单元总结的一部分。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;众所周知，我们可以通过&lt;code&gt;synchronized&lt;/code&gt;方法，以及&lt;code&gt;synchronized&lt;/code&gt;代码块获取对象的锁；但是，你是否发现，这一做法有时并不灵活？&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OO_U2 - HW7简要总结</title>
+    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/"/>
+    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/</id>
+    <published>2025-04-17T15:00:00.000Z</published>
+    <updated>2025-04-21T06:39:05.077Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;讨论区已有一众仙人分享了自己的实现，但我认为我有在降低修改复杂度上更进一步的办法。&lt;/p&gt;
+&lt;p&gt;考虑到本次作业为本单元的最后一次作业，我的修改方法更注重于&lt;strong&gt;降低修改的复杂度，可能存在部分性能的牺牲。&lt;/strong&gt; 在各位进行参考时，请注意这一点。&lt;/p&gt;
+&lt;p&gt;本人实现的亮点在于：UPDATE请求的处理，与双轿厢目标楼层的规避，&lt;strong&gt;全部利用线程交互实现&lt;/strong&gt;。&lt;/p&gt;</summary>
     
     
     
@@ -164,6 +164,27 @@
   </entry>
   
   <entry>
+    <title>航砖祭祖后日谈</title>
+    <link href="http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/"/>
+    <id>http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</id>
+    <published>2025-02-04T13:23:00.000Z</published>
+    <updated>2025-02-21T05:50:09.322Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;本文将对BUAA_CO_2024进行简要回顾，并给出自己的一些主观建议，仅供参考。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    
+    <category term="计组" scheme="http://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
+    
+  </entry>
+  
+  <entry>
     <title>技术演示 - 并发执行的多测试数据对拍脚本</title>
     <link href="http://lajipz.top/2025/02/04/%E6%8A%80%E6%9C%AF%E6%BC%94%E7%A4%BA%20-%20%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C%E7%9A%84%E5%A4%9A%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%E5%AF%B9%E6%8B%8D%E8%84%9A%E6%9C%AC/"/>
     <id>http://lajipz.top/2025/02/04/%E6%8A%80%E6%9C%AF%E6%BC%94%E7%A4%BA%20-%20%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C%E7%9A%84%E5%A4%9A%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%E5%AF%B9%E6%8B%8D%E8%84%9A%E6%9C%AC/</id>
@@ -178,27 +199,6 @@
 &lt;h1 id=&quot;需求：针对多组测试数据的评测&quot;&gt;&lt;a href=&quot;#需求：针对多组测试数据的评测&quot; class=&quot;headerlink&quot; title=&quot;需求：针对多组测试数据的评测&quot;&gt;&lt;/a&gt;需求：针对多组测试数据的评测&lt;/h1&gt;&lt;p&gt;为尽可能追求测试覆盖率，且方便测试程序的编写，我们往往会选择构造多组测试数据进行测试。&lt;/p&gt;
 &lt;p&gt;回顾本人先前构造，且至今一直使用的对拍脚本，每次仅可对拍一组测试数据。要进行多组数据的测试，需要每次对待测数据进行手动替换，效率实在太低。&lt;/p&gt;
 &lt;p&gt;因此，我决定对我的对拍脚本进行完善，使之支持多组数据的评测。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
-    
-    
-    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
-    
-    <category term="计组" scheme="http://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>航砖祭祖后日谈</title>
-    <link href="http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/"/>
-    <id>http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</id>
-    <published>2025-02-04T13:23:00.000Z</published>
-    <updated>2025-02-21T05:50:09.322Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;本文将对BUAA_CO_2024进行简要回顾，并给出自己的一些主观建议，仅供参考。&lt;/p&gt;</summary>
     
     
     
