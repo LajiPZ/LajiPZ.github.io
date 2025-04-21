@@ -1,400 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>OO_U2 - HW5,6阶段性总结</title>
-    <url>/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
-<p>我的调度算法，与我的架构实现耦合度较高，因此我不得不先提一些我自己的电梯实现；不需要的同学，欢迎直接跳开“电梯实现”部分。</p>
-</blockquote>
-<p>这算是本人两周以来的一个总结吧，终于有时间写了…</p>
-<span id="more"></span>
-
-<h1 id="浅提电梯实现"><a href="#浅提电梯实现" class="headerlink" title="浅提电梯实现"></a>浅提电梯实现</h1><p>读前注意，本人的设计并非最佳，其中有不少会引起复杂度增加的设计，请各位参考时务必谨慎。</p>
-<h2 id="概况"><a href="#概况" class="headerlink" title="概况"></a>概况</h2><p>在完成HW6后，本人的整体架构如下：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250406221034.png" alt="Pasted image 20250406221034.png"></p>
-<p>其中，电梯信息与电梯运行进程分离，便于维护。</p>
-<p>我的电梯，将运行状态分为以下几类：</p>
-<ul>
-<li>IDLE：闲置，此处与常理理解中的闲置是一致的，不多赘述</li>
-<li><strong>RESERVED</strong>：<strong>预约</strong>，<strong>在闲置状态的电梯</strong>，收到<strong>起点与电梯当前所在位置不同楼的请求</strong>时，进入的<strong>移动状态</strong>。</li>
-<li>RUNNING：运行，电梯处在<strong>非预约状态</strong>时的正常移动状态。</li>
-<li>WAITING：等待，电梯停靠，进行上下客时进入的状态。停靠完成后，<strong>视情况</strong>转入RUNNING&#x2F;RESERVED&#x2F;IDLE状态。</li>
-</ul>
-<p>同时，我们还需要记录电梯的<strong>运行方向</strong>，现规定：</p>
-<ul>
-<li>1：上行</li>
-<li>-1：下行</li>
-<li>0：仅在进入IDLE时设为此值。</li>
-<li>在电梯进入WAITING时，<strong>方向将被设置为下一步要移动的方向</strong></li>
-</ul>
-<p>电梯内亦有一子请求表，记录满足以下条件的请求：</p>
-<ul>
-<li><strong>请求与电梯运行方向一致</strong></li>
-<li>记录当前方向的所有请求；比如，我们的电梯正在处理一个<code>F1-F3</code>的请求，现在处于<code>F2</code>；此时，若有一<code>F4-F5</code>的请求，则该请求可被指派给电梯，加入子请求表</li>
-</ul>
-<h2 id="存储状态的额外信息"><a href="#存储状态的额外信息" class="headerlink" title="存储状态的额外信息"></a>存储状态的额外信息</h2><p>上面提到，我们的子请求表只允许同向请求加入；在我们现在的实现下，这种情况当然会产生：</p>
-<ul>
-<li>电梯在<code>F3</code>，IDLE</li>
-<li>出现了一个<code>F1-F7</code>的请求，电梯进入RESERVED，空放到<code>F1</code></li>
-<li>电梯从<code>F3</code>空放去<code>F1</code>途中出现一个<code>F2-F1</code>的请求，我们自然希望捎带它，将其加入子请求表</li>
-</ul>
-<p>也就是说，<strong>空放方向与发出预约的请求的方向反向。</strong> 我们自然需要一个地方暂存这个预约请求；我选择通过<strong>继承</strong>的方法，<strong>将其存在状态内</strong>。</p>
-<p>具体而言：</p>
-<ul>
-<li>上面四个状态均属于一个<code>Status</code>类，内有一<code>enum Type</code>属性，记录当前状态类型</li>
-<li>若一个状态需要记录额外信息，则该状态作为<code>Status</code>的子类，<strong>额外信息作为子类的属性</strong>，存在子类中。</li>
-</ul>
-<p>我们此时只需对RESERVED，WAITING两个状态记录额外信息。</p>
-<p>RESERVED：</p>
-<ul>
-<li><code>allowPickUp</code>：中途是否允许捎带</li>
-<li><code>requester</code>：进行预约的请求。允许为null。</li>
-</ul>
-<p>WAITING：</p>
-<ul>
-<li><code>prevStatus</code>：进入WAITING前的状态。</li>
-</ul>
-<p>欲知为何如此，请继续看下文。</p>
-<h2 id="兼容SCHE请求"><a href="#兼容SCHE请求" class="headerlink" title="兼容SCHE请求"></a>兼容<code>SCHE</code>请求</h2><p>不知各位是否发现，在HW6引入的临时调度，跟我们上面提到的RESERVED略有相似之处？</p>
-<p>我们要让我们的现有设计兼容<code>SCHE</code>请求，只需做这么几件事情：</p>
-<ul>
-<li><code>SCHE-BEGIN</code>前，把途中无法捎带的请求赶回请求池；</li>
-<li>在临时调度至不同层时，<code>SCHE-BEGIN</code>对应转入一个 <strong><code>requester = null</code>，不允许捎带</strong>的RESERVED状态</li>
-<li>确保已有的RESERVED状态下的电梯运行规则，能够处理上述的<code>RESERVED</code>情况</li>
-</ul>
-<p>就这样，我们就做完了<code>SCHE</code>请求的电梯运行部分；剩下的，只需要实现指派电梯进<code>RESERVED</code>的逻辑，很省事吧！？</p>
-<h2 id="等待状态的转移规则"><a href="#等待状态的转移规则" class="headerlink" title="等待状态的转移规则"></a>等待状态的转移规则</h2><p>WAITING的状态转移规则如下：</p>
-<ul>
-<li>先前为<code>RUNNING</code>：<br>若仍有请求未到终点，则恢复RUNNING<br>若请求已全部满足，则进入IDLE</li>
-<li>先前为<code>RESERVED</code>：<br>若未到预约者起点，则恢复RESERVED<br>若到达了预约者起点，则进入RUNNING，同时<strong>将暂存的请求加入子请求表</strong></li>
-<li>先前为<code>IDLE</code>：<br>直接进入<code>RUNNING</code>，<br>因为我们保证，IDLE下的电梯被预约后，直接进入RESERVED状态，<br>此时必是因为，有一起点与IDLE状态下电梯所在位置的请求被分给了电梯。</li>
-</ul>
-<h1 id="调度算法"><a href="#调度算法" class="headerlink" title="调度算法"></a>调度算法</h1><p>交互方面，我采用的是一<code>Dispatcher</code>对多个<code>Elevator</code>的实现，与绝大多数做法一致。</p>
-<p>大家都知道影子电梯，不过它需要<strong>模拟电梯的整个运行过程</strong>，实现略显复杂；那么，有没有一个在复杂度和影子电梯的高效率之间折中的方案呢？</p>
-<p>是有的。我的这个策略在思路上与影子电梯有颇多相似之处，只不过：</p>
-<ul>
-<li>只需要计算（模拟）<strong>当前请求</strong>的运行时间</li>
-<li>已指派给电梯的其它请求的估计，<strong>利用优先级机制实现</strong></li>
-</ul>
-<h2 id="是否允许加入"><a href="#是否允许加入" class="headerlink" title="是否允许加入"></a>是否允许加入</h2><p>进行计算之前，<code>Dispatcher</code>需要得知当前正在评估的电梯，能否接受当前待加入的请求。</p>
-<p>可加入的规则如下：</p>
-<ul>
-<li>若电梯此时在IDLE状态下，直接允许加入，否则进行下述流程</li>
-<li>请求方向需与电梯当前运行方向一致；方向有关的说明见上文。</li>
-<li>电梯同向，且电梯此时没有超过请求的起点</li>
-<li>如果状态为（RESERVED）&#x2F;（WAITING，且前一个状态是RESERVED），则：<br>RESERVED状态需允许捎带<br>若预约请求方向与当前运行方向相反，则待加入请求的终点不得超过预约请求的起点</li>
-<li>加入后，不会出现电梯满员的情况</li>
-</ul>
-<p>“电梯满员”视个人实现不同，判断逻辑可能不同；我这里就以我的实现为例，谈谈我的判断逻辑。</p>
-<p>正如上文所述架构实现，我们一个电梯的子请求队列不仅包含了当前在电梯内的请求，还包含了将来电梯要捎带的请求；</p>
-<p>我们的判断逻辑是，假设请求加入了子请求表，<strong>得出各楼层处，最多同时出现的请求数；</strong> </p>
-<p>这一“同时出现的请求数”，反映了那一运行区间内，电梯内的人数。</p>
-<p><strong>若各区间的同时出现请求数的最大值，大于电梯容量，则认为此时加入请求会导致超员。</strong></p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250406214224.png" alt="Pasted image 20250406214224.png"></p>
-<p>如图所示，待加入请求在<code>F2-F3</code>区间会导致超员，故我们不应加入这一待加入请求。</p>
-<p>需要注意的是，如果采用了上文RESERVED状态的实现，若预约请求方向与电梯空放方向一致，此时还需将预约请求放进上面的图里进行比较。</p>
-<h2 id="计算评价指数"><a href="#计算评价指数" class="headerlink" title="计算评价指数"></a>计算评价指数</h2><p>在上述复杂的判断后，我们终于可以开始计算了…</p>
-<p>我们的计算公式如下：</p>
-<p>$$index &#x3D; index_{base} + priorityPenalty * elevStopTime$$</p>
-<h3 id="index-base"><a href="#index-base" class="headerlink" title="$index_{base}$"></a>$index_{base}$</h3><p>我们先需要得知：</p>
-<ul>
-<li>$dis$：电梯所在位置，与请求起点的楼层数</li>
-<li>$travel$：请求跨越的楼层数</li>
-<li>$stopCount$：请求沿途需要停靠，以让自己进电梯&#x2F;捎带其它请求；<code>stopCount</code>即中途停靠的次数</li>
-</ul>
-<p>随后即可算出当前请求的运行时间，作为我们评价指数计算的第一步；</p>
-<p>$$index_{base} &#x3D; (dis + travel)*elevSpeed + stopCount * elevStopTime $$</p>
-<h3 id="priorityPenalty"><a href="#priorityPenalty" class="headerlink" title="$priorityPenalty$"></a>$priorityPenalty$</h3><p>优先级惩罚，是所有请求的优先级惩罚之和：</p>
-<p>$$priorityPenalty &#x3D; \sum_{i&#x3D;1}^{n}{penalty_{R_i}}$$</p>
-<p>对于一个请求$R$，设其优先级为$priority$，楼层跨度为$travel$，则我们规定该请求允许的中途停靠次数$maxAllowedStops$如下：<br>$$maxAllowedStops &#x3D; round(travel * (1 - \frac{priority}{100}))$$<br>其中，$round(x)$取$x$最靠近的整数。</p>
-<p>在我们进行评价指数的计算时，我们先假设待加入请求已被加入；随后，对原有的请求$R_i$，算出加入后的<strong>总停靠次数</strong>$stops$。</p>
-<ul>
-<li>若$stops &lt;&#x3D; maxAllowedStops$：$penalty_{R_i} &#x3D; 0$</li>
-<li>否则：$penalty_{R_i} &#x3D; (stops - maxAllowedStops) * priority$</li>
-</ul>
-<h3 id="小总结"><a href="#小总结" class="headerlink" title="小总结"></a>小总结</h3><p>由此，我们就可以算出各个（可加入请求的）电梯的评价指数，选择评价指数最低者加入。</p>
-<p>上述是一个相对简单的模型，相信各位有更好的实现。</p>
-<h1 id="评测方案"><a href="#评测方案" class="headerlink" title="评测方案"></a>评测方案</h1><p>我选择构建评测机框架，<strong>留出随机数据生成器（dataGen）与正确性检查器（Checker）的接口</strong>。这样有利于提高不同题目下评测的灵活性。</p>
-<p>评测机框架方面，我构建了一个可以评测<strong>多程序、多测试点</strong>的多线程评测机，按照以下两种策略运行：</p>
-<ul>
-<li>测试深度优先：评测机优先对一个待测程序，测试多个测试点</li>
-<li>测试广度优先：评测机优先对一个测试点，测试多个程序</li>
-</ul>
-<p>评测机框架建议允许添加数据生成器生成的数据以外的数据，从而为人工构造高强度数据提供可能。</p>
-<p>运行测试程序方面，我选用了Python的<code>subprocess</code>库，其中的<code>POpen</code>方法十分有用，不仅可以指定子进程的工作目录，还可重定向子进程的输出。</p>
-<p>注意到，我们的数据投喂器读取的是**当前工作目录下的<code>stdin.txt</code>**；因此，我们可以通过指定不同工作目录的方法，来让投喂器同时测试多个样例。</p>
-<p>随后，我们即可使用数据投喂器+打包好的<code>.jar</code>进行评测；两个子进程需要用管道串起来，实现如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">input_process = subprocess.Popen(</span><br><span class="line">                [<span class="string">&#x27;input.exe&#x27;</span>],  <span class="comment"># input.exe 读取当前目录的 stdin.txt</span></span><br><span class="line">                cwd=case_dir,    <span class="comment"># 设置工作目录为测试用例目录</span></span><br><span class="line">                stdout=subprocess.PIPE,</span><br><span class="line">                stderr=subprocess.DEVNULL,</span><br><span class="line">                text=<span class="literal">True</span></span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">java_process = subprocess.Popen(</span><br><span class="line">                [<span class="string">&#x27;java&#x27;</span>, <span class="string">&#x27;-jar&#x27;</span>, os.path.join(target_dir, jar_file), <span class="string">f&quot;-Xmx<span class="subst">&#123;memLimit&#125;</span>&quot;</span>],</span><br><span class="line">                stdin=input_process.stdout,</span><br><span class="line">                stdout=fileout,</span><br><span class="line">                stderr=fileerr,</span><br><span class="line">                text=<span class="literal">True</span></span><br><span class="line">            )</span><br></pre></td></tr></table></figure>
-
-<p>据闻Python的<code>psutils</code>库有办法记录CPU使用时间，不过我的尝试没有成功，希望做过尝试的同学多多分享经验:P</p>
-<p>我两次作业的随机数据生成器与Checker均先由AI生成，再由人工进行细节修改。</p>
-<p>注意到，AI生成的Checker并不完全准确，在HW6时这一问题尤为显著，需要多处人工修正；<strong>在寻求AI工具的帮助，节省时间的同时，请务必仔细检查AI生成的工具是否能如预期般工作。</strong></p>
-<h1 id="之前写过的一些总结"><a href="#之前写过的一些总结" class="headerlink" title="之前写过的一些总结"></a>之前写过的一些总结</h1><ul>
-<li><a href="http://oo.e2.buaa.edu.cn/assignment/623/discussion/1684">使用ReentrantLock，实现更灵活的锁管理策略</a></li>
-<li><a href="http://oo.buaa.edu.cn/assignment/621/discussion/1682">在IDEA内部，进行更高效的死锁调试</a></li>
-</ul>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
-<li><p>本单元，我感觉最需要的其实是细心，不然线程间交互很容易出现问题。</p>
-</li>
-<li><p>架构设计同样起到了关键的作用。本人架构中<code>RESERVED</code>状态的抽象，大大节省了本单元的开发时间。</p>
-<p>我认为，只要架构：</p>
-<ul>
-<li>易于维护；</li>
-<li>复杂度低（可以归进上条）；</li>
-<li>运行效率在可接受范围内；</li>
-</ul>
-<p>就可以算一个好设计。</p>
-<p>不过，我自己不得不承认，我本单元架构在不少实现细节上的复杂度实在太高，因此带来的BUG与维护的不便不在少数。</p>
-</li>
-<li><p>本单元亦让我直观地感受到了<strong>算法和数学模型，于程序的重要性何在。</strong> </p>
-<p>本人实现中，判断电梯是否满员的问题，可以抽象为计算一个二维空间内，所有线段的最多重叠次数；没有算法的帮助，计算效率很难提升。</p>
-<p>处理优先级问题的方法，其实就是简单的数学建模。</p>
-</li>
-<li><p>感受到了AI的力量。使用AI生成<code>checker</code>+人工修改的效率，远比纯手搓要高。</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>课程相关</category>
-      </categories>
-      <tags>
-        <tag>面向对象</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OO_U2 - 电梯</title>
-    <url>/2025/04/17/OO_U2%20-%20%E7%94%B5%E6%A2%AF/</url>
-    <content><![CDATA[<p>这是一篇导航帖。</p>
-<p>本单元任务较忙，故我没有时间整合出一篇概括所有内容的文章。</p>
-<p>博客周作业做了一些概括，但是我觉得里面我自己省掉了不小好玩的细节。</p>
-<p>以下文章均与本单元有关，欢迎各位按需查阅：</p>
-<ul>
-<li><a href="https://bbs.csdn.net/topics/619679170?spm=1001.2014.3001.6377">CSDN上的博客周作业</a></li>
-<li><a href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/">HW5，6总结</a></li>
-<li><a href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/">HW7总结</a></li>
-<li><a href="http://lajipz.top/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/">ReentrantLock使用</a></li>
-<li><a href="http://lajipz.top/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/">利用IDEA查死锁</a></li>
-</ul>
-<span id="more"></span>
-<h1 id="杂记"><a href="#杂记" class="headerlink" title="杂记"></a>杂记</h1><h2 id="单元前序知识：Java多线程"><a href="#单元前序知识：Java多线程" class="headerlink" title="单元前序知识：Java多线程"></a>单元前序知识：Java多线程</h2><p><code>synchronized</code>关键词有三种可能的修饰对象：</p>
-<ul>
-<li>实例方法：<code>public synchronized void method() &#123;&#125;</code>；<br>锁<strong>实例（this）的锁</strong>，或者说，<strong>对象锁。</strong><br>其他线程在该锁释放前，无法访问<strong>该实例的<code>synchronized</code>方法</strong>（言下之意，非<code>synchronized</code>可以访问）</li>
-<li>静态方法：<code>public static synchronized void method()&#123;&#125;</code><br>锁定<strong>类</strong>，锁定后，其他线程无法访问该类的<code>sync</code>方法</li>
-<li>代码块：锁<strong>对象锁</strong>，和第一个一致。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public void method() &#123;</span><br><span class="line">	synchronized (Object) &#123;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="对象锁的行为"><a href="#对象锁的行为" class="headerlink" title="对象锁的行为"></a>对象锁的行为</h2><p>经过实验，发现：</p>
-<ul>
-<li>在对象锁被一个进程占用时，其他线程无法访问该对象的<code>synchronized</code>方法，<strong>但可以访问没加<code>sync</code>的方法，甚至由此对对象的属性进行更改</strong></li>
-<li>在<code>Obj</code>的对象锁被一个进程占用时，其他线程在执行到<code>synchronized (Obj) &#123;&#125;</code>代码块处会被阻塞。</li>
-<li>对象锁针对的是<strong>对象</strong>，而不是<strong>方法</strong>；因此，调用一个sync方法<code>method1()</code>，<code>method1()</code>又调用另一sync方法<code>method2()</code>，是<strong>不会被阻塞的</strong>，因为当前线程一直拿着对象的锁。可能会带来预期外的不阻塞</li>
-</ul>
-<h2 id="wait-，notifyAll"><a href="#wait-，notifyAll" class="headerlink" title="wait()，notifyAll()"></a><code>wait()</code>，<code>notifyAll()</code></h2><p><code>Obj.wait()</code>会暂停线程A（A此时拥有<code>Obj</code>的锁）的执行，直到另一线程B使用<code>Obj.notifyAll()</code>将其唤醒。</p>
-<p>同时，<code>Obj.wait()</code><strong>会释放线程A拥有的<code>Obj</code>锁</strong>。</p>
-<p><code>notify()</code>会<strong>随机唤醒</strong>等待池中的<strong>一个</strong>程序，而<code>notifyAll()</code>是<strong>全部</strong>唤醒。</p>
-<h2 id="Thread类"><a href="#Thread类" class="headerlink" title="Thread类"></a>Thread类</h2><p>涉及<code>Runnable</code>的太复杂，我们选择直接<code>extends Thread</code>，随后重写<code>run()</code>实现启动线程。</p>
-<p>只有<code>start()</code>会创建新线程，<code>run()</code>只会顺序执行代码块。</p>
-<h2 id="确定要保护的方法"><a href="#确定要保护的方法" class="headerlink" title="确定要保护的方法"></a>确定要保护的方法</h2><p>在一个对象里，如果出现了要多线程共享的属性，那引用该属性的方法<strong>全部都要保护</strong>。</p>
-]]></content>
-      <categories>
-        <category>课程相关</category>
-      </categories>
-      <tags>
-        <tag>面向对象</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>自己的碎碎念</title>
-    <url>/2024/08/07/casualTalk/</url>
-    <content><![CDATA[<p>在给各位塞的私货里面，我大段写了一些经验，自己这部分提的不多；故这里再多闲聊一点，让各位能对我大一经历了什么有点了解（笑）</p>
-<span id="more"></span>
-<h1 id="学业"><a href="#学业" class="headerlink" title="学业"></a>学业</h1><p>本人现就读与计算机学院（6系）的计算机科学与技术专业。</p>
-<p>那么，我是大佬吗？<strong>我不是。</strong> 专业分流时，本人成绩<strong>年级排名491&#x2F;1034，分进6系的时候排名是171&#x2F;190+。</strong> 成绩就自爆到下面吧，大家感兴趣可以看（bian）看（shi）:<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240807211353.png" alt="image.png"></p>
-<p>如各位所见，真不行。</p>
-<p>真要反思是怎么回事的话，<strong>可能</strong>是大一上&#x2F;大一下的前半学期过于放纵，<strong>天天都抽时间打电动导致的</strong>。这就导致时间不大充足，数分&#x2F;基物<strong>作业写不及只能抄</strong>，引起了一系列后果。各位<strong>如果十分重视学业，千万引以为戒，</strong> 北航这个<strong>大一</strong>虽然可以比高中放松一点，但还是可以当<strong>高四</strong>读的。（唉大类招生）</p>
-<p><strong>但也侧面说明了，其实现在大类招生也理性了很多，不用太“卷”就能整到自己想要的专业。</strong></p>
-<p>说来也惭愧，本人这几科里最亮眼的是<strong>英语</strong>。算是唯一可以吹嘘的资本（笑）</p>
-<h1 id="为什么选6系？"><a href="#为什么选6系？" class="headerlink" title="为什么选6系？"></a>为什么选6系？</h1><p><strong>兴趣使然居多。</strong> 主要是，孩子从小学就一路在打电脑兼折腾电脑，这方面兴趣浓郁不说，有关计算机的大部分术语我也算熟悉。</p>
-<p><strong>编程严谨而言不在我的兴趣范围内</strong>，就当是系统学习计算机知识必须要承担的代价吧。因此各位在大一觉得对编程没兴趣的话，也不要因此对选6系有所顾虑。</p>
-<p>我是一开始就决定报6系的吗？<strong>算是，也算不是。</strong> 算是的原因是，我高考填志愿的时候确实是奔着6系的名头，把信息类放到了第一志愿；算不是的原因是，我在大一的时候，对选哪个专业的思想有非常严重的波动。</p>
-<p>这里就谈谈这个波动吧。也算是一点分流经验分享？</p>
-<p>一开始是因为参观了41系的微纳中心，又看到学校方面的资源给的非常足，加上自己<strong>某种意义上也算是对计算机硬件感兴趣，而对软件不感兴趣</strong>而有了选41的想法。</p>
-<p>提到41就不能不提2。为什么2不在考虑范围？因为我的认知是，41偏重CPU之类的大型芯片工程（这里姑且忽略一下41的器（cai）件（liao）和工艺装备系），而2偏重的是MEMS，FPGA之类的小器件，这个我不感兴趣。而且我觉得MEMS这类的市场早就饱和了（虽说需求还是旺的）</p>
-<p>2还有个方向是电磁场。由于大一下我基物学得比较痛苦（某种意义也可以怪当时上电磁场这部分的zy老师上得过于无趣），加上数学不好，这个我觉得不行。</p>
-<p>而且，打算去41&#x2F;2，我为啥不在高考填志愿的时候填UESTC？</p>
-<p>然后有了<strong>编程激发不了自己兴趣，之后学着估计吃力的想法</strong>。在这个想法的驱使下，我拷问了自己报北航的目的是什么：说起来你可能不信，我最开始萌生报北航的意愿，<strong>是航空！</strong> <strong>欸！恰好我自己对航空的兴趣这么多年还真没减退，要不我准备大二转去隔壁5系吧！</strong> <strong>听起来确实很荒谬，但我当时确实就是这么想的！连假期补上工图之类的计划都做了。</strong></p>
-<p>这个影响还是有点大的。其一就是转专业的分数要求只要加权平均达到80即可，我有一段时间的学习方针就是<strong>不要太卷，能把平均分保住80分以上就可以了，到时候转去5系即可。当然这个方针对我后续的学习有不小的影响，间接促成了数分、离散、基物比较糟糕的成绩。</strong></p>
-<p>最后是怎么想的呢？住七年沙河算是一个劝退点（<strong>实话实说，我觉得沙河校区内的各项环境其实都不错，北京城逛个两三次基本就腻了，沙河的确是潜心治学的一个好去处</strong>）。还有就是转专业太麻烦的问题。</p>
-<p>还有一个，就是我觉得我国在航空方面已经够先进了。C919的翼型我认为已经足够完美，歼20的气动设计等等都足够先进，读5系毕业之后，以后估计没我的事。<em>换句话说，喜欢坐冷板凳，但航空的板凳已经够热了？233333</em></p>
-<p><strong>还有就是我数学不行。航空对数学要求还是高的，不信请自行了解一个叫Navier-Stokes方程的东西。</strong></p>
-<p>然后我又把目光投向了3系，准确来说是305。为什么呢？因为它们说是自动化，实际上飞控，无人机基本就是他们在干。师资力量也雄厚，而且航天口的活也有在干。控制工程我觉得也是个足够吸引我的领域。<strong>进3系算是可以把我的计算机+航空两个爱好能有机地联系起来。</strong></p>
-<p><strong>顺带一提，各位选专业的时候，不妨进各学院的官网，看看博士生&#x2F;硕士生导师的师资团队，对学院各个老师的大致研究方向有个概念。当时我就是这么了解41&#x2F;3系的。当时看到305老师的研究课题很多契合我兴趣的时候，我那叫一个激动啊（</strong></p>
-<p>那最后为什么不去？还是数学的锅，自动控制原理我觉得对我来说还是有点挑战…</p>
-<p>其实我最后还是在3跟6之间摇摆不定，想的就是靠专业系统抽奖。第一志愿考虑初心写的是计算机，第二志愿就是自动化，然后系统抽到了计算机。<strong>嗯，就这样吧</strong></p>
-<p>对了，说到志愿、计算机等等，又想起一个事情，<strong>我为什么要选北航？</strong></p>
-<p>高考填志愿的时候，我是可以挑战一下南大计算机的。但是，<strong>一是自己对航空的兴趣，二是北京的地理位置，三是危险的可能</strong>促成了我选北航。</p>
-<p>第一个就不在这细说了，我们谈第二个。南京我以前去玩过，吃的真不行，鸭血粉丝汤之类的我真吃不惯，而且据说南大食堂也不行；北京能吃的就多得多。<strong>而且有一个重要影响因素，就是北京是全国拍飞机最好的地方之一（其它还有上海、成都等），而南京就没什么好拍的。</strong> <strong>北京人文等方面的优势就不说了，不言自明。</strong></p>
-<p>危险的可能是什么呢？当时南大的计算机和天坑专业是放在一起的（好像是环境？），而且我的分数也是刚够到南大的门槛。考虑到这种危险性，我还是放弃填报南大的计算机，选择了北航。</p>
-<p>现在我后悔吗？<strong>我不后悔。</strong> 倒是从铁了心读计算机的角度，还是有点后悔的。个人觉得6系开课的质量不如南大。南大的计算机教学我感觉还真优于6。要举例的话我就举南大的计算机系统基础课（PA）吧。<strong>我觉得那个才是我心目中读CS该上的课。</strong></p>
-<p><strong>当然，上述仅供吐槽，大家看看乐子就好！千万不要跟着后悔啊23333，况且6系放眼全国而言也很不错了</strong></p>
-<h1 id="有关英语"><a href="#有关英语" class="headerlink" title="有关英语"></a>有关英语</h1><p>既然是闲聊，那就多聊点吧233333</p>
-<p>我觉得英语这方面我还是可以聊一点的，这里就分享一点我学英语的经历吧</p>
-<p><strong>我其实没怎么刻意学过英语。我英语真的全靠打游戏学的。</strong> </p>
-<p>这方面要从一个叫未转变者（Unturned）的游戏说起，我在小学四年级-六年级的时候玩得很多。当时这个游戏没有官方中文，<strong>汉化全靠民间汉化补丁。</strong> 但是！这个游戏经常更新新内容（好事），民间汉化自然是更不上更新的进度的，然后就会出现游戏界面<strong>中英掺杂的混乱情况。</strong></p>
-<p>这TM能忍？某种意义上，我是有强迫症的，比如中英掺杂我看着就不爽 <em>（可能是这个的原因，我看着导员等天天说ddl这个词就非常的不爽，好好说截止日期会死？）</em> ，于是我一怒之下卸载了汉化，且不管当时的我看得懂不，直接<strong>上英语原版！</strong>影响其实也不大，因为各个功能的布局我都记着的。自此孩子打开了新世界的大门，在眼前看到的英语界面和记忆里汉化界面的中英对照下，我记下了不少有用的词。**</p>
-<p>这个习惯延续到了我后面五年级开始打彩6的时候。<strong>某种意义上，是彩6把这个习惯发扬光大的。</strong> 因为当时的彩6中文字体有问题（尤其是数字），看着那叫一个难看；英语的字体就没问题。然后我就顺手把彩6的界面也调成全英了。<strong>欸！彩六这边有旁白且也是英语（旁白甚至还提供多种语言），旁白还带字幕，还有干员小故事，顺手学英语的条件那叫一个优越啊！</strong></p>
-<p>后面就成瘾了。能调英语的界面我都尽量调（Windows这边，微软式中文功不可没）。硬要说原理就是创造一个能每天用英语的环境。<em>当然国产软件我不调，以微信等腾讯应用为例，那个英文翻的tm什么玩意</em></p>
-<p>由于我复杂的成分，我无聊还有看Linus Tech Tips（加拿大白嫖王，在此顺便向NixieSub致敬一下），LGR，The 8-bit Guy之类的频道，现在想起来也对学英语有帮助？</p>
-<p>然后再加上自己看到不认识的词就顺便记一下的习惯，还有看到东西就无聊想想英语对应什么词的神奇习惯，这英语就这么学会了（</p>
-<p>说到背单词？初中轶事：当时我们英语课不准上课整英语以外的事情，我手上<strong>恰好有一本牛津高阶词典</strong>，然后我没事干就拿它翻着玩，看到我感兴趣且不认识的词就顺便记一下；某种意义上，这就等于背没难度上限的乱序版词汇书（<em>更直白一点，这不就tm背词典吗？</em>），词汇量确实是这么来的，2333333。当然现在没干了，也没这个时间和机会干了</p>
-<p>另有一份写得稍微正式点的主观经验分享，详见博客，欢迎围观&#x2F;吐槽&#x2F;围攻（误）</p>
-<p>就写到这吧。 </p>
-]]></content>
-      <categories>
-        <category>梦拓相关</category>
-      </categories>
-      <tags>
-        <tag>梦拓</tag>
-        <tag>心得</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OO_U2 - HW7简要总结</title>
-    <url>/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>讨论区已有一众仙人分享了自己的实现，但我认为我有在降低修改复杂度上更进一步的办法。</p>
-<p>考虑到本次作业为本单元的最后一次作业，我的修改方法更注重于<strong>降低修改的复杂度，可能存在部分性能的牺牲。</strong> 在各位进行参考时，请注意这一点。</p>
-<p>本人实现的亮点在于：UPDATE请求的处理，与双轿厢目标楼层的规避，<strong>全部利用线程交互实现</strong>。</p>
-<span id="more"></span>
-<h1 id="支持UPDATE请求"><a href="#支持UPDATE请求" class="headerlink" title="支持UPDATE请求"></a>支持UPDATE请求</h1><h2 id="特殊请求由谁分给电梯？"><a href="#特殊请求由谁分给电梯？" class="headerlink" title="特殊请求由谁分给电梯？"></a>特殊请求由谁分给电梯？</h2><p>针对上一单元的SCHE请求与本单元的UPDATE请求，<strong>我都选择交由<code>Dispatcher</code>实例进行处理。</strong></p>
-<p>原因无他，为了减少进程交互的复杂性。 我的电梯运行线程<code>Scheduler</code>与电梯信息类<code>Elevator</code>是分离的，我希望<code>Elevator</code>只有<code>Dispatcher</code>与<code>Scheduler</code>两者在竞争。</p>
-<p>这两类特殊请求都将直接加入请求池。那我们怎么保证Dispatcher优先处理这两种特殊请求呢？</p>
-<p>答案是，将请求池改为用<strong>优先队列</strong>实现。这是因为，<strong>优先队列的比较条件（提供了Comparator接口）可以自行实现</strong>，这为我们当前情况的需求提供了极大的便利。</p>
-<p>我们需要保证：</p>
-<ul>
-<li>SCHE&#x2F;UPDATE请求在优先队列的首位</li>
-<li>剩下的普通请求在后面。</li>
-</ul>
-<p>示例如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Comparator;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RequestComparator</span> <span class="keyword">implements</span> <span class="title class_">Comparator</span>&lt;SubRequest&gt; &#123;  </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(SubRequest o1, SubRequest o2)</span> &#123;  </span><br><span class="line">        <span class="type">int</span> <span class="variable">o1Index</span> <span class="operator">=</span> calcIndex(o1);  </span><br><span class="line">        <span class="type">int</span> <span class="variable">o2Index</span> <span class="operator">=</span> calcIndex(o2);  </span><br><span class="line">        <span class="keyword">return</span> o1Index - o2Index;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">calcIndex</span><span class="params">(SubRequest subRequest)</span> &#123;  </span><br><span class="line">        <span class="keyword">if</span> (subRequest.isSche()) &#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;  </span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (subRequest.isUpdate()) &#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;  </span><br><span class="line">        <span class="keyword">else</span> &#123;  </span><br><span class="line">            <span class="comment">// 按你自己的方法，处理普通请求！</span></span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在Dispatcher从头遍历优先队列时，我们此时即可保证特殊请求被优先处理。</p>
-<h2 id="UPDATE请求的处理"><a href="#UPDATE请求的处理" class="headerlink" title="UPDATE请求的处理"></a>UPDATE请求的处理</h2><p>现在，我们的UPDATE请求放在了Dispatcher处理；此时，聪明的你不难发现一些问题：</p>
-<ul>
-<li>在UPDATE请求处理完成前，Dispatcher是不是会被阻塞，不能分配其他请求？</li>
-<li>UPDATE显然需要一个<strong>类似总控的东西，来控制有关的交互</strong>；这个总控难道就是Dispatcher线程本身？</li>
-</ul>
-<p>这样肯定不对。<strong>因此，我们在Dispatcher内引入一个子进程，作为UPDATE请求处理的“总控”。</strong></p>
-<p>这个子线程怎么创建呢？<strong>使用Lambda表达式，可以快速创建新线程</strong>：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Thread</span> <span class="variable">th</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;  </span><br><span class="line">    <span class="comment">// Do something!</span></span><br><span class="line">&#125;);  </span><br><span class="line">th.start();</span><br></pre></td></tr></table></figure>
-
-<p>这样，Dispatcher线程就可在处理升级请求的过程中，继续分配其他可分配的请求，而不会发生阻塞。</p>
-<p>如果你不放心，还可以用<code>th.join()</code>，在Dispatcher线程的某处，强制处理UPDATE请求的子线程完成后，再继续执行。</p>
-<p>总控与两台待升级的电梯的整体交互逻辑如下：</p>
-<ul>
-<li>告知两台电梯需要升级，<strong>等待两电梯就绪</strong></li>
-<li><code>Scheduler</code>读取<code>Elevator</code>中信息，得知电梯需要升级，进行疏散乘客等“预处理”操作</li>
-<li>处理完成后，通知总控该电梯已就绪，<strong>等待总控对其进行升级</strong></li>
-<li>总控在两台电梯均就绪后，输出<code>UPDATE-BEGIN</code>，随后修改电梯的运行属性，完成升级</li>
-</ul>
-<p>具体实现上，我的电梯信息类<code>Elevator</code>采用了<code>ReentrantLock</code>实现锁管理，上文中的两个等待，我们通过创建两个<code>Elevator</code>锁的<code>Condition</code>实现。</p>
-<p>电梯如何指示自己已就绪？我采取给电梯增加一个<code>UPDATE</code>运行状态；在电梯完成了“预处理”后，电梯就将进入这一运行状态，并使用<code>Condition.signal()</code>唤醒总控。</p>
-<p>下述伪代码仅作示意之用。更进一步的细节，需要各位根据自己的架构实现。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Elevator</span><br><span class="line">ReentrantLock lock;</span><br><span class="line">Condition schedulerUpdateCond = lock.newCondition()</span><br><span class="line">Condition dispatcherUpdateCond = lock.newCondition()</span><br><span class="line"></span><br><span class="line">setUpdateStatus() &#123;</span><br><span class="line">		this.status = new Status(&quot;UPDATE&quot;);</span><br><span class="line">		this.dispatcherUpdateCond.signal();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">updateA() &#123; // updateB()同理</span><br><span class="line">	// 修改属性，并将电梯运行状态设为IDLE</span><br><span class="line">	this.schedulerUpdateCond.signal()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Scheduler</span><br><span class="line">elevator.lock.lock();</span><br><span class="line">...</span><br><span class="line">if (elevator.shouldUpdate()) &#123;</span><br><span class="line">	evacuatePassengers();</span><br><span class="line">	elevator.setUpdateStatus;</span><br><span class="line">	elevator.schedulerUpdateCond.await();</span><br><span class="line">	elevator.respondUpdate; // 解除指示电梯需要升级的flag</span><br><span class="line">	// await()结束后，电梯已被更新为新的状态，按照原有的运行逻辑运行即可！</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Dispatcher</span><br><span class="line">Thread th = new Thread(() -&gt; &#123;  </span><br><span class="line">    Elevator elevA, elevB;</span><br><span class="line"></span><br><span class="line">	// 由两层await()，实现两电梯均就绪后再继续</span><br><span class="line">    elevA.lock.lock();</span><br><span class="line">    if(elevA.getStatus() != &quot;UPDATE&quot;) &#123;</span><br><span class="line">	    elevA.dispatcherUpdateCond.await();</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	elevB.lock.lock();</span><br><span class="line">    if(elevB.getStatus() != &quot;UPDATE&quot;) &#123;</span><br><span class="line">	    elevB.dispatcherUpdateCond.await();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	// UPDATE-BEGIN</span><br><span class="line">		//重新分配被取消RECEIVE的请求</span><br><span class="line">		elevA.updateA();</span><br><span class="line">		elevB.updateB();</span><br><span class="line">	// UPDATE-END</span><br><span class="line"></span><br><span class="line">	// 放elevA/B的锁</span><br><span class="line">&#125;);  </span><br><span class="line">th.start();</span><br></pre></td></tr></table></figure>
-
-<h2 id="“三角死锁关系？”"><a href="#“三角死锁关系？”" class="headerlink" title="“三角死锁关系？”"></a>“三角死锁关系？”</h2><p>看到上面的实现后，聪明的你不难发现，这一实现中，如果调度策略是影子电梯，总控、<code>Scheduler</code>、<code>Dispatcher</code>三者都可能争夺<code>Elevator</code>的锁，很容易出现死锁，不是吗？</p>
-<p>事实上，只要锁管理得够好，这个问题仍然是可以避免的。下面，我将从这三个竞争者在处理UPDATE请求的情况下，分析如何避免“三角死锁”。</p>
-<ul>
-<li>Dispatcher:（事实上，关键的只有这一处）<br>在进行普通请求分配时，先判断当前电梯的是否仍在响应UPDATE请求（<strong>这一判断不获取电梯的锁</strong>），再获取锁</li>
-<li>Scheduler&#x2F;总控：<code>await()</code>在开始等待前会自动放锁，等待结束后会自动重新获得锁；仔细观看上面的实现，你会发现，冲突此时并不存在！</li>
-</ul>
-<h1 id="楼层冲突规避"><a href="#楼层冲突规避" class="headerlink" title="楼层冲突规避"></a>楼层冲突规避</h1><h2 id="基本分析"><a href="#基本分析" class="headerlink" title="基本分析"></a>基本分析</h2><p>很遗憾，我们不能通过不到“目标楼层”的方法，规避楼层冲突的问题，否则全部都被改造成双轿厢，且目标楼层均在同一层时，会导致跨越目标楼层的请求全部无法完成。</p>
-<p>产生冲突的情况，我们大致可以分为三类：</p>
-<ul>
-<li>相向而行：两电梯同时将要到达目标楼层</li>
-<li>同向而行：一个电梯尚未完全离开目标楼层，而另一电梯即将到达</li>
-<li>一动一静：一个电梯闲置于目标楼层，或正在目标楼层下客，而另一电梯即将到达</li>
-</ul>
-<p>在我的实现中，与电梯移动有关的逻辑是这样，相信各位的实现与其大同小异：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Scheduler </span><br><span class="line">while (true) &#123;</span><br><span class="line">	elevator.lock.lock;</span><br><span class="line">	try &#123;</span><br><span class="line">		if (/*一般情况*/) &#123;</span><br><span class="line">			normSchedule();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; finally &#123;</span><br><span class="line">		// 以防中途开锁</span><br><span class="line">		if(elevator.lock.isHeldByCurrentThread()) &#123; elevator.lock.unlock(); &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">normSchedule() &#123;</span><br><span class="line">	if (elevator.status == RUNNING)</span><br><span class="line">		runningSchedule;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">runningSchedule() &#123;</span><br><span class="line">	elevator.lock.unlock();</span><br><span class="line">	// 唤醒Dispatcher；开锁是为了允许Dispatcher此时为其分配可加入的请求</span><br><span class="line">	sleep(speed);</span><br><span class="line">	elevator.lock.lock();</span><br><span class="line">	// 更改楼层</span><br><span class="line">	// 输出ARRIVE</span><br><span class="line">	// 判断下一步状态：是下客的WAITING，还是继续RUNNING？</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>为了防止不必要的判断，这一判断只应在<strong>当前电梯即将进入目标楼层时进行。</strong></p>
-<p>在判断之前，我们自然<strong>要获取对方电梯的锁，以免对方电梯的状态在判断时改变。</strong></p>
-<p>观察我们上面实现的锁管理情况，我们不难发现：</p>
-<ul>
-<li>为了避免死锁，我们尽量确保一个线程一次只拿一把锁；</li>
-<li><code>runningSchedule()</code>中恰好有一个开锁的窗口，为一次只拿一把锁提供了可能</li>
-<li>对方电梯正前往目标楼层时，由于我们上面的锁机制，<strong>读取到的对方当前楼层，一定是目标楼层的前一层</strong></li>
-<li>在对方电梯的当前楼层为目标楼层时，读出的状态不可能为<code>RUNNING</code>，只可能为闲置的<code>IDLE</code>，或正在下客的<code>WAITING</code></li>
-</ul>
-<p>因此，上述三种冲突情况，我们只需要对“相向而行”这一情况特殊考虑；其余情况，都可以通过判断对方当前位置是否为目标楼层判断。</p>
-<p>“相向而行”特殊在哪呢？特殊在<strong>无法直接确定需要等待的电梯</strong>。其他两种情况中，我们可以确定等待的是当前不在目标楼层的电梯，这一情况不行。</p>
-<p>对此，我规定：<strong>下方的电梯，规避上方的电梯。</strong></p>
-<p>为了减少复杂度，我并没有考虑轿厢中乘客的问题，性能可能因此下降；如各位希望争取这一部分性能，可以以这一条件为最低级条件，将轿厢内请求加入判断条件中。</p>
-<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>自然，为了避免死锁，我们的判断放在在<code>runningSchedule()</code>那一开锁的窗口内。</p>
-<p>下文中以<code>cooper</code>称呼对方电梯。（coop-er，能想出的最简洁称号就这个了，笑）</p>
-<p>为双轿厢电梯单独写一套运行逻辑自然不大明治。我们将这一判断逻辑融入原有的运行逻辑中，判断<strong>只在电梯已被改造为双轿厢（对方电梯<code>cooper !=null</code>）时</strong>进行。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">runningSchedule() &#123;</span><br><span class="line">	elevator.lock.unlock();</span><br><span class="line">	// 唤醒Dispatcher；开锁是为了允许Dispatcher此时为其分配可加入的请求</span><br><span class="line">	</span><br><span class="line">	if (elevator.willEnterTargetFloor &amp;&amp; cooper != null) &#123;</span><br><span class="line">		cooper.lock.lock();// 获取对方的锁</span><br><span class="line">		judge(); // 判断</span><br><span class="line">		// 放锁；这样放锁当然有目的，详见下文</span><br><span class="line">		if(cooper.lock.isHeldByCurrentThread()) &#123;cooper.lock.unlock(); &#125; </span><br><span class="line">	&#125;</span><br><span class="line">	sleep(speed);</span><br><span class="line">	elevator.lock.lock();</span><br></pre></td></tr></table></figure>
-
-<p>电梯避让的等待&#x2F;唤醒，使用挂在电梯信息类<code>Elevator</code>的锁上的Condition实现，命名为<code>conflictCond</code>。</p>
-<p>整体交互如下：</p>
-<ul>
-<li>在判断出我方需要等待后，我方执行<code>conflictCond.await()</code>，同时通知对方需要规避</li>
-<li>通知对方规避时，唤醒对方的Scheduler，以处理对方正处在IDLE，Scheduler正休眠的问题</li>
-<li>每当对方<strong>远离目标楼层</strong>时，就让对方执行我方方法<code>conflictCond.signalAll()</code>，唤醒等待冲突解除的我方。</li>
-</ul>
-<p>随后，我们就可得出如下判断逻辑：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">judge() &#123;</span><br><span class="line">	if (elevator.isElevB()) &#123; // 是在下方的B电梯  </span><br><span class="line">	    switch (cooper.getStatus().getStatusType()) &#123;  </span><br><span class="line">	        case RUNNING:  </span><br><span class="line">		        // 相向而行</span><br><span class="line">	            if (cooper.getFloorBeforeTargetFloor() == cooper.getCurrentFloor() </span><br><span class="line">	                &amp;&amp; cooper.towardsTargetFloor()) &#123;  </span><br><span class="line">	                cooper.setAvoid();  // 通知对方规避</span><br><span class="line">	                cooper.lock.unlock();  // 避免同时获取两把锁</span><br><span class="line">	                elevator.lock.lock(); // 没锁就await()，会发生什么？ </span><br><span class="line">	                elevator.conflictCond.await();  </span><br><span class="line">	                elevator.lock.unlock();  </span><br><span class="line">	            &#125;  </span><br><span class="line">	            break;  </span><br><span class="line">	        default: break;  </span><br><span class="line">	    &#125;  </span><br><span class="line">	&#125;  </span><br><span class="line">	// 其他情况</span><br><span class="line">	if (cooper.getCurrentFloor() == cooper.getTargetFloor()) &#123;  </span><br><span class="line">	    cooper.setAvoid();  </span><br><span class="line">	    cooper.setUnlock();  </span><br><span class="line">	    elevator.lock.lock(); </span><br><span class="line">	    elevator.conflictHangUp();  </span><br><span class="line">	    elevator.lock.unlock();  </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>判断写好之后，该通知对方规避了，响应机制当然也得有：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Elevator</span><br><span class="line">public void setAvoid() &#123;  </span><br><span class="line">    this.awaitingAvoid = true;  </span><br><span class="line">    this.idleCall();  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void respondAvoid() &#123;  </span><br><span class="line">    this.awaitingAvoid = false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>改完这些还不够，我们需要对WAITING&#x2F;IDLE两个状态的转移规则稍加修改，使得在一动一静的情况下，两种状态转移后，可以响应规避请求：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">waitingSchedule():</span><br><span class="line"></span><br><span class="line">... // 原有实现</span><br><span class="line">// 接在原有实现之后</span><br><span class="line"></span><br><span class="line">if (entersIdle) &#123;</span><br><span class="line">	if(shouldAvoid) &#123;</span><br><span class="line">		/*让电梯移动到下一层，类似SCHE，但到了之后不开门*/</span><br><span class="line">		respondAvoid()</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		setIdle()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">idleSchedule(): </span><br><span class="line">if (keepsIdle) &#123;</span><br><span class="line">	if (shouldAvoid) &#123;</span><br><span class="line">		/*让电梯移动到下一层，类似SCHE，但到了之后不开门*/</span><br><span class="line">		respondAvoid()</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		// 原逻辑</span><br><span class="line">	&#125;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对于同向而行的情况，我们还需要继续修改RUNNING下的运行逻辑，使得避让请求被正确响应：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">runningSchedule() &#123;</span><br><span class="line">	... // sleep()完成</span><br><span class="line">	/*更改楼层*/</span><br><span class="line">	/*在楼层更改时，若远离了目标楼层，暂存一个flag*/</span><br><span class="line">	.... // 状态转移</span><br><span class="line">	// normSche原有逻辑结束</span><br><span class="line">	if (flag) &#123;</span><br><span class="line">		elevator.setUnlock(); // 同样，此处开锁是为了保证一个线程只拿一把锁</span><br><span class="line">		respondAvoid()</span><br><span class="line">		cooper.lock.lock();</span><br><span class="line">		cooper.conflictCond.signal();</span><br><span class="line">		cooper.lock.unlock();</span><br><span class="line">	&#125;</span><br><span class="line">	// 需要Scheduler线程的`while(true)`处能够正确处理中途开锁的锁释放问题，可以看看本文前面的实现</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>做到这里，我们就成功的使用纯线程交互的方法，完成了楼层冲突的处理，<strong>不需要引入任何新的类来进行管理。</strong></p>
-<h1 id="调度"><a href="#调度" class="headerlink" title="调度"></a>调度</h1><p>再次，我们本单元求稳为先，选择的方法<strong>不一定最优</strong>。</p>
-<p>我的原调度逻辑（见<a href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/">HW5，6总结</a>）类似影子电梯，在出现双轿厢的时候也犯了难。比起编写新逻辑，我选择最大程度复用原有的调度逻辑。</p>
-<p>在原有的调度基础上，我们<strong>需要添加是否在运营范围内的判断。</strong></p>
-<p>调度第一步，沿用原有逻辑，<strong>对所有电梯</strong>评估请求是否可分配，选评价指数最低者。</p>
-<p>同时，在这一步中，<strong>记录下所有的双轿厢电梯。</strong> </p>
-<p><strong>此处记录的并不是双轿厢电梯对，而是其中的每一个电梯。</strong> 例如：2、3是一对双轿厢电梯，我们这里记录的是：<code>电梯2、电梯3</code>，而不是<code>[电梯2，电梯3]</code>。</p>
-<p>若第一步未能分配，则进行第二步，<strong>“拆请求”</strong>。在第二步中，我们只对<strong>双轿厢</strong>电梯进行评估。</p>
-<ul>
-<li>将原有请求，以当前评估电梯的目标楼层为节点，按先后顺序分成两段；</li>
-<li>在第一段请求完成后，再由Dispatcher分配第二段请求。</li>
-</ul>
-<p>“拆请求”如何实现？我们需要修改我们已有的乘客请求类<code>passengerRequest</code>，在其属性中加一个<code>passengerRequest followingRequest</code>，存储当前请求的后半段。</p>
-<p>在下电梯的时候，需要判断是否包含后续请求，有则<code>OUT-F</code>，并将后续请求放回请求池，没有则<code>OUT-S</code>。</p>
-<p><strong>判断是否可加入，与计算代价指数的逻辑不变。</strong> 不过，我们选取电梯的逻辑发生了变化，选取优先级如下：</p>
-<ul>
-<li>可行楼层跨度最大</li>
-<li>原设计中，评估指数最小者</li>
-</ul>
-<p>选取楼层跨度最大者，是因为，我们无法保证后续换乘的次数；换乘可能会造成额外的等待时间，且额外等待时间难以预知。楼层跨度尽可能大，可以尽可能减少换乘次数，一定程度缓解这一问题。</p>
-<h1 id="线程交互"><a href="#线程交互" class="headerlink" title="线程交互"></a>线程交互</h1><p>不难注意到，对于双轿厢电梯对的其中一个电梯，在IDLE，无请求，且closed的条件下就结束，在这里肯定不对劲。不这样的话，目标楼层的冲突没法规避。</p>
-<p>我采取了一个相对粗糙的办法：</p>
-<ul>
-<li>电梯的<code>close()</code>由Dispatcher调用，这是我的原有设计</li>
-<li>在close时，Dispatcher用一<strong>不加锁的方法</strong>，获取当前所有电梯的状态；只在所有电梯都处在IDLE状态时，才将所有电梯<code>close()</code>，否则<code>wait()</code></li>
-<li>保证电梯在进入IDLE时，会唤醒Dispatcher</li>
-</ul>
-<p>至此，我们完成了HW7所需的所有改造。</p>
-]]></content>
-      <categories>
-        <category>课程相关</category>
-      </categories>
-      <tags>
-        <tag>面向对象</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>送给组内信类新生的一点点私货</title>
     <url>/2024/08/04/BUAA-freshman-FAQ/</url>
     <content><![CDATA[<h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>首先，欢迎各位成为北航士谔书院的一员，也很荣幸能与大家共处同一梦拓小组！</p>
@@ -592,84 +198,6 @@
       <tags>
         <tag>梦拓</tag>
         <tag>心得</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>“法律、科技与社会”课后思考题答案 - 2024</title>
-    <url>/2025/02/04/%E2%80%9C%E6%B3%95%E5%BE%8B%E3%80%81%E7%A7%91%E6%8A%80%E4%B8%8E%E7%A4%BE%E4%BC%9A%E2%80%9D%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%20-%202024/</url>
-    <content><![CDATA[<p>本文记录了本人复习“法律、科技与社会”课程时，对课后思考题给出的答案。</p>
-<p>众所周知，本课的期末考试就是从课后思考题中抽集体来考，怎么复习想必大家都知道了。当然，不知道这几个思考题之后会不会变。</p>
-<p>以下答案均为本人手搓，在考试获得了95分，当然这个给分可能有玄学成分在里面，仅供参考。</p>
-<h1 id="技术是中立的吗？为什么？"><a href="#技术是中立的吗？为什么？" class="headerlink" title="技术是中立的吗？为什么？"></a>技术是中立的吗？为什么？</h1><p>   不是。</p>
-<ul>
-<li>技术置身于社会中，具有社会性。</li>
-<li>技术是占有世界的媒介，同时也是人类活动的一种形式。其背后包含了人类思维结果。</li>
-</ul>
-<span id="more"></span>
-
-<h1 id="监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？"><a href="#监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？" class="headerlink" title="监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？"></a>监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？</h1><ul>
-<li>用户行为数据将为资本带来利益；从资本逐利的本质而言，监控资本主义的趋势不可避免。</li>
-<li>这一趋势可以被抑制。</li>
-<li>立法与管制</li>
-<li>提高公共意识与参与度</li>
-<li>探索技术向善路径，减少技术对个人隐私的侵害</li>
-</ul>
-<h1 id="学校是否有权使用人脸识别对学生进行考勤？为什么？"><a href="#学校是否有权使用人脸识别对学生进行考勤？为什么？" class="headerlink" title="学校是否有权使用人脸识别对学生进行考勤？为什么？"></a>学校是否有权使用人脸识别对学生进行考勤？为什么？</h1><ul>
-<li>自隐私方面：若学校方面明确了：1.收集的人脸识别信息仅用于考勤，2.且收集的信息将按照相关法律法规进行处理，3.并在事前提前征得了同学的同意，则这一方案可认为可行；</li>
-<li>然而，根据我国目前出台的相关法律法规，此时也需保证人脸识别不作为考勤的唯一方式。</li>
-<li>更严格而言，根据《个人信息保护法》，在公众场合所收集的身份信息只能用于维护公共安全目的，此时考勤并不在维护公共安全范围之内，故可以认为学校无权这么做。</li>
-</ul>
-<h1 id="什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？"><a href="#什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？" class="headerlink" title="什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？"></a>什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？</h1><ul>
-<li>自动驾驶系统在事故不可避免时，是优先保全车上人员安全，还是行人等车外人员的安全。</li>
-<li>首先是在技术上，要尽可能减少“不可避免事故”的发生；</li>
-<li>其次，在设计自动驾驶系统时，应注意伦理方面的考量，确保系统决策符合人类伦理。</li>
-</ul>
-<h1 id="是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？"><a href="#是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？" class="headerlink" title="是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？"></a>是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？</h1><ul>
-<li>是</li>
-<li>存在物化女性的风险</li>
-<li>有悖伦理</li>
-<li>存在因此引起的技术以来与奴隶问题。</li>
-<li>情感与亲密关系的简化。</li>
-</ul>
-<h1 id="什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？"><a href="#什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？" class="headerlink" title="什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？"></a>什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？</h1><p>   指无需有意义的人类控制即可选择目标并施加武力的系统。</p>
-<p>   应该。</p>
-<ul>
-<li>道义角度：其决策远离了人的判断，在道义上这无法接受。</li>
-<li>法律角度：其违背了《国际人权法案》和《武装冲突法》的精神，可能会对非作战人员产生杀伤。</li>
-<li>战略角度：研发出的致命自主武器可能会扩散到潜在敌人中。</li>
-</ul>
-<h1 id="什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？"><a href="#什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？" class="headerlink" title="什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？"></a><strong>什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？</strong></h1><p>   算法歧视是指算法在决策过程中，偏向特定人群或不公平对待某些群体的现象。</p>
-<p>   形成原因：</p>
-<ul>
-<li>数据偏差：算法主要依赖于测试数据；数据不全面，则算法可能会因此产生偏见。</li>
-<li>设计偏见：开发者在设计算法时融入了个人偏见。</li>
-<li>反馈循环：在一些算法系统中，用户行为会反馈到算法中，这可能扩大原有的偏见</li>
-</ul>
-<p>   改进方法：</p>
-<ul>
-<li>改进数据质量</li>
-<li>提高算法透明度与解释性</li>
-<li>引入公平性评估和偏差测试</li>
-<li>用户反馈与持续优化</li>
-</ul>
-<h1 id="在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？"><a href="#在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？" class="headerlink" title="在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？"></a>在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？</h1><ul>
-<li>存在。</li>
-<li>个人角度：提高个人隐私意识，以正当手段维护自己的个人隐私</li>
-<li>立法角度：完善相关法律法规，自法律角度约束个人敏感信息的使用</li>
-<li>数据收集者角度：尊重用户隐私，避免过度收集用户敏感信息；完善技术手段，减少敏感信息的使用，避免敏感信息的泄露</li>
-</ul>
-<h1 id="作为计算机专业的学生，你如何看待人工智能的未来？"><a href="#作为计算机专业的学生，你如何看待人工智能的未来？" class="headerlink" title="作为计算机专业的学生，你如何看待人工智能的未来？"></a>作为<strong>计算机专业</strong>的学生，你如何看待人工智能的未来？</h1><ul>
-<li>自生产工具的角度而言，人工智能将促进人类社会的生产力发展，从而促进人类社会的进步，我们应继续追求人工智能在技术层面的进步，从而进一步发展社会生产力；同时，我们也应积极接受并利用AI这一生产力工具。</li>
-<li>自道德伦理角度而言，人工智能的使用，可能出现潜在的道德伦理问题，当前也出现了深度伪造、AI合成假新闻等问题。这需要我们在技术层面加以防范，；</li>
-<li>自社会角度而言，人工智能必然会因人工智能的出现，对已有的部分人工进行替代。同时，人工智能的出现，也为我们带来了新的就业机会。因此，我们需要积极顺应这一变化，积极学习AI相关知识，同时提高自身创新能力与软实力。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>课程相关</category>
-      </categories>
-      <tags>
-        <tag>水课</tag>
-        <tag>FKS</tag>
       </tags>
   </entry>
   <entry>
@@ -962,18 +490,420 @@
       </tags>
   </entry>
   <entry>
-    <title>图床测试</title>
-    <url>/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</url>
-    <content><![CDATA[<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/%7B433FA560-1033-4134-A91E-3F4E0C6D3AC2%7D.png" alt="{433FA560-1033-4134-A91E-3F4E0C6D3AC2}.png"></p>
-<p>通过阿里云OSS+PicGo的方案，本博客成功实现了图床功能。</p>
-<p>Github在国内访问速度太慢，为了实现图片快速加载，只能加点钱上阿里云了 :(</p>
-<p>不过一个月也就6块钱，也就约等于一个月少喝一瓶东方树叶嘛😋</p>
+    <title>OO_U2 - HW7简要总结</title>
+    <url>/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>讨论区已有一众仙人分享了自己的实现，但我认为我有在降低修改复杂度上更进一步的办法。</p>
+<p>考虑到本次作业为本单元的最后一次作业，我的修改方法更注重于<strong>降低修改的复杂度，可能存在部分性能的牺牲。</strong> 在各位进行参考时，请注意这一点。</p>
+<p>本人实现的亮点在于：UPDATE请求的处理，与双轿厢目标楼层的规避，<strong>全部利用线程交互实现</strong>。</p>
+<span id="more"></span>
+<h1 id="支持UPDATE请求"><a href="#支持UPDATE请求" class="headerlink" title="支持UPDATE请求"></a>支持UPDATE请求</h1><h2 id="特殊请求由谁分给电梯？"><a href="#特殊请求由谁分给电梯？" class="headerlink" title="特殊请求由谁分给电梯？"></a>特殊请求由谁分给电梯？</h2><p>针对上一单元的SCHE请求与本单元的UPDATE请求，<strong>我都选择交由<code>Dispatcher</code>实例进行处理。</strong></p>
+<p>原因无他，为了减少进程交互的复杂性。 我的电梯运行线程<code>Scheduler</code>与电梯信息类<code>Elevator</code>是分离的，我希望<code>Elevator</code>只有<code>Dispatcher</code>与<code>Scheduler</code>两者在竞争。</p>
+<p>这两类特殊请求都将直接加入请求池。那我们怎么保证Dispatcher优先处理这两种特殊请求呢？</p>
+<p>答案是，将请求池改为用<strong>优先队列</strong>实现。这是因为，<strong>优先队列的比较条件（提供了Comparator接口）可以自行实现</strong>，这为我们当前情况的需求提供了极大的便利。</p>
+<p>我们需要保证：</p>
+<ul>
+<li>SCHE&#x2F;UPDATE请求在优先队列的首位</li>
+<li>剩下的普通请求在后面。</li>
+</ul>
+<p>示例如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Comparator;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RequestComparator</span> <span class="keyword">implements</span> <span class="title class_">Comparator</span>&lt;SubRequest&gt; &#123;  </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(SubRequest o1, SubRequest o2)</span> &#123;  </span><br><span class="line">        <span class="type">int</span> <span class="variable">o1Index</span> <span class="operator">=</span> calcIndex(o1);  </span><br><span class="line">        <span class="type">int</span> <span class="variable">o2Index</span> <span class="operator">=</span> calcIndex(o2);  </span><br><span class="line">        <span class="keyword">return</span> o1Index - o2Index;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">calcIndex</span><span class="params">(SubRequest subRequest)</span> &#123;  </span><br><span class="line">        <span class="keyword">if</span> (subRequest.isSche()) &#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;  </span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (subRequest.isUpdate()) &#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;  </span><br><span class="line">        <span class="keyword">else</span> &#123;  </span><br><span class="line">            <span class="comment">// 按你自己的方法，处理普通请求！</span></span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在Dispatcher从头遍历优先队列时，我们此时即可保证特殊请求被优先处理。</p>
+<h2 id="UPDATE请求的处理"><a href="#UPDATE请求的处理" class="headerlink" title="UPDATE请求的处理"></a>UPDATE请求的处理</h2><p>现在，我们的UPDATE请求放在了Dispatcher处理；此时，聪明的你不难发现一些问题：</p>
+<ul>
+<li>在UPDATE请求处理完成前，Dispatcher是不是会被阻塞，不能分配其他请求？</li>
+<li>UPDATE显然需要一个<strong>类似总控的东西，来控制有关的交互</strong>；这个总控难道就是Dispatcher线程本身？</li>
+</ul>
+<p>这样肯定不对。<strong>因此，我们在Dispatcher内引入一个子进程，作为UPDATE请求处理的“总控”。</strong></p>
+<p>这个子线程怎么创建呢？<strong>使用Lambda表达式，可以快速创建新线程</strong>：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Thread</span> <span class="variable">th</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;  </span><br><span class="line">    <span class="comment">// Do something!</span></span><br><span class="line">&#125;);  </span><br><span class="line">th.start();</span><br></pre></td></tr></table></figure>
+
+<p>这样，Dispatcher线程就可在处理升级请求的过程中，继续分配其他可分配的请求，而不会发生阻塞。</p>
+<p>如果你不放心，还可以用<code>th.join()</code>，在Dispatcher线程的某处，强制处理UPDATE请求的子线程完成后，再继续执行。</p>
+<p>总控与两台待升级的电梯的整体交互逻辑如下：</p>
+<ul>
+<li>告知两台电梯需要升级，<strong>等待两电梯就绪</strong></li>
+<li><code>Scheduler</code>读取<code>Elevator</code>中信息，得知电梯需要升级，进行疏散乘客等“预处理”操作</li>
+<li>处理完成后，通知总控该电梯已就绪，<strong>等待总控对其进行升级</strong></li>
+<li>总控在两台电梯均就绪后，输出<code>UPDATE-BEGIN</code>，随后修改电梯的运行属性，完成升级</li>
+</ul>
+<p>具体实现上，我的电梯信息类<code>Elevator</code>采用了<code>ReentrantLock</code>实现锁管理，上文中的两个等待，我们通过创建两个<code>Elevator</code>锁的<code>Condition</code>实现。</p>
+<p>电梯如何指示自己已就绪？我采取给电梯增加一个<code>UPDATE</code>运行状态；在电梯完成了“预处理”后，电梯就将进入这一运行状态，并使用<code>Condition.signal()</code>唤醒总控。</p>
+<p>下述伪代码仅作示意之用。更进一步的细节，需要各位根据自己的架构实现。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Elevator</span><br><span class="line">ReentrantLock lock;</span><br><span class="line">Condition schedulerUpdateCond = lock.newCondition()</span><br><span class="line">Condition dispatcherUpdateCond = lock.newCondition()</span><br><span class="line"></span><br><span class="line">setUpdateStatus() &#123;</span><br><span class="line">		this.status = new Status(&quot;UPDATE&quot;);</span><br><span class="line">		this.dispatcherUpdateCond.signal();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">updateA() &#123; // updateB()同理</span><br><span class="line">	// 修改属性，并将电梯运行状态设为IDLE</span><br><span class="line">	this.schedulerUpdateCond.signal()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Scheduler</span><br><span class="line">elevator.lock.lock();</span><br><span class="line">...</span><br><span class="line">if (elevator.shouldUpdate()) &#123;</span><br><span class="line">	evacuatePassengers();</span><br><span class="line">	elevator.setUpdateStatus;</span><br><span class="line">	elevator.schedulerUpdateCond.await();</span><br><span class="line">	elevator.respondUpdate; // 解除指示电梯需要升级的flag</span><br><span class="line">	// await()结束后，电梯已被更新为新的状态，按照原有的运行逻辑运行即可！</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Dispatcher</span><br><span class="line">Thread th = new Thread(() -&gt; &#123;  </span><br><span class="line">    Elevator elevA, elevB;</span><br><span class="line"></span><br><span class="line">	// 由两层await()，实现两电梯均就绪后再继续</span><br><span class="line">    elevA.lock.lock();</span><br><span class="line">    if(elevA.getStatus() != &quot;UPDATE&quot;) &#123;</span><br><span class="line">	    elevA.dispatcherUpdateCond.await();</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	elevB.lock.lock();</span><br><span class="line">    if(elevB.getStatus() != &quot;UPDATE&quot;) &#123;</span><br><span class="line">	    elevB.dispatcherUpdateCond.await();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	// UPDATE-BEGIN</span><br><span class="line">		//重新分配被取消RECEIVE的请求</span><br><span class="line">		elevA.updateA();</span><br><span class="line">		elevB.updateB();</span><br><span class="line">	// UPDATE-END</span><br><span class="line"></span><br><span class="line">	// 放elevA/B的锁</span><br><span class="line">&#125;);  </span><br><span class="line">th.start();</span><br></pre></td></tr></table></figure>
+
+<h2 id="“三角死锁关系？”"><a href="#“三角死锁关系？”" class="headerlink" title="“三角死锁关系？”"></a>“三角死锁关系？”</h2><p>看到上面的实现后，聪明的你不难发现，这一实现中，如果调度策略是影子电梯，总控、<code>Scheduler</code>、<code>Dispatcher</code>三者都可能争夺<code>Elevator</code>的锁，很容易出现死锁，不是吗？</p>
+<p>事实上，只要锁管理得够好，这个问题仍然是可以避免的。下面，我将从这三个竞争者在处理UPDATE请求的情况下，分析如何避免“三角死锁”。</p>
+<ul>
+<li>Dispatcher:（事实上，关键的只有这一处）<br>在进行普通请求分配时，先判断当前电梯的是否仍在响应UPDATE请求（<strong>这一判断不获取电梯的锁</strong>），再获取锁</li>
+<li>Scheduler&#x2F;总控：<code>await()</code>在开始等待前会自动放锁，等待结束后会自动重新获得锁；仔细观看上面的实现，你会发现，冲突此时并不存在！</li>
+</ul>
+<h1 id="楼层冲突规避"><a href="#楼层冲突规避" class="headerlink" title="楼层冲突规避"></a>楼层冲突规避</h1><h2 id="基本分析"><a href="#基本分析" class="headerlink" title="基本分析"></a>基本分析</h2><p>很遗憾，我们不能通过不到“目标楼层”的方法，规避楼层冲突的问题，否则全部都被改造成双轿厢，且目标楼层均在同一层时，会导致跨越目标楼层的请求全部无法完成。</p>
+<p>产生冲突的情况，我们大致可以分为三类：</p>
+<ul>
+<li>相向而行：两电梯同时将要到达目标楼层</li>
+<li>同向而行：一个电梯尚未完全离开目标楼层，而另一电梯即将到达</li>
+<li>一动一静：一个电梯闲置于目标楼层，或正在目标楼层下客，而另一电梯即将到达</li>
+</ul>
+<p>在我的实现中，与电梯移动有关的逻辑是这样，相信各位的实现与其大同小异：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Scheduler </span><br><span class="line">while (true) &#123;</span><br><span class="line">	elevator.lock.lock;</span><br><span class="line">	try &#123;</span><br><span class="line">		if (/*一般情况*/) &#123;</span><br><span class="line">			normSchedule();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; finally &#123;</span><br><span class="line">		// 以防中途开锁</span><br><span class="line">		if(elevator.lock.isHeldByCurrentThread()) &#123; elevator.lock.unlock(); &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">normSchedule() &#123;</span><br><span class="line">	if (elevator.status == RUNNING)</span><br><span class="line">		runningSchedule;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">runningSchedule() &#123;</span><br><span class="line">	elevator.lock.unlock();</span><br><span class="line">	// 唤醒Dispatcher；开锁是为了允许Dispatcher此时为其分配可加入的请求</span><br><span class="line">	sleep(speed);</span><br><span class="line">	elevator.lock.lock();</span><br><span class="line">	// 更改楼层</span><br><span class="line">	// 输出ARRIVE</span><br><span class="line">	// 判断下一步状态：是下客的WAITING，还是继续RUNNING？</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了防止不必要的判断，这一判断只应在<strong>当前电梯即将进入目标楼层时进行。</strong></p>
+<p>在判断之前，我们自然<strong>要获取对方电梯的锁，以免对方电梯的状态在判断时改变。</strong></p>
+<p>观察我们上面实现的锁管理情况，我们不难发现：</p>
+<ul>
+<li>为了避免死锁，我们尽量确保一个线程一次只拿一把锁；</li>
+<li><code>runningSchedule()</code>中恰好有一个开锁的窗口，为一次只拿一把锁提供了可能</li>
+<li>对方电梯正前往目标楼层时，由于我们上面的锁机制，<strong>读取到的对方当前楼层，一定是目标楼层的前一层</strong></li>
+<li>在对方电梯的当前楼层为目标楼层时，读出的状态不可能为<code>RUNNING</code>，只可能为闲置的<code>IDLE</code>，或正在下客的<code>WAITING</code></li>
+</ul>
+<p>因此，上述三种冲突情况，我们只需要对“相向而行”这一情况特殊考虑；其余情况，都可以通过判断对方当前位置是否为目标楼层判断。</p>
+<p>“相向而行”特殊在哪呢？特殊在<strong>无法直接确定需要等待的电梯</strong>。其他两种情况中，我们可以确定等待的是当前不在目标楼层的电梯，这一情况不行。</p>
+<p>对此，我规定：<strong>下方的电梯，规避上方的电梯。</strong></p>
+<p>为了减少复杂度，我并没有考虑轿厢中乘客的问题，性能可能因此下降；如各位希望争取这一部分性能，可以以这一条件为最低级条件，将轿厢内请求加入判断条件中。</p>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>自然，为了避免死锁，我们的判断放在在<code>runningSchedule()</code>那一开锁的窗口内。</p>
+<p>下文中以<code>cooper</code>称呼对方电梯。（coop-er，能想出的最简洁称号就这个了，笑）</p>
+<p>为双轿厢电梯单独写一套运行逻辑自然不大明治。我们将这一判断逻辑融入原有的运行逻辑中，判断<strong>只在电梯已被改造为双轿厢（对方电梯<code>cooper !=null</code>）时</strong>进行。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">runningSchedule() &#123;</span><br><span class="line">	elevator.lock.unlock();</span><br><span class="line">	// 唤醒Dispatcher；开锁是为了允许Dispatcher此时为其分配可加入的请求</span><br><span class="line">	</span><br><span class="line">	if (elevator.willEnterTargetFloor &amp;&amp; cooper != null) &#123;</span><br><span class="line">		cooper.lock.lock();// 获取对方的锁</span><br><span class="line">		judge(); // 判断</span><br><span class="line">		// 放锁；这样放锁当然有目的，详见下文</span><br><span class="line">		if(cooper.lock.isHeldByCurrentThread()) &#123;cooper.lock.unlock(); &#125; </span><br><span class="line">	&#125;</span><br><span class="line">	sleep(speed);</span><br><span class="line">	elevator.lock.lock();</span><br></pre></td></tr></table></figure>
+
+<p>电梯避让的等待&#x2F;唤醒，使用挂在电梯信息类<code>Elevator</code>的锁上的Condition实现，命名为<code>conflictCond</code>。</p>
+<p>整体交互如下：</p>
+<ul>
+<li>在判断出我方需要等待后，我方执行<code>conflictCond.await()</code>，同时通知对方需要规避</li>
+<li>通知对方规避时，唤醒对方的Scheduler，以处理对方正处在IDLE，Scheduler正休眠的问题</li>
+<li>每当对方<strong>远离目标楼层</strong>时，就让对方执行我方方法<code>conflictCond.signalAll()</code>，唤醒等待冲突解除的我方。</li>
+</ul>
+<p>随后，我们就可得出如下判断逻辑：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">judge() &#123;</span><br><span class="line">	if (elevator.isElevB()) &#123; // 是在下方的B电梯  </span><br><span class="line">	    switch (cooper.getStatus().getStatusType()) &#123;  </span><br><span class="line">	        case RUNNING:  </span><br><span class="line">		        // 相向而行</span><br><span class="line">	            if (cooper.getFloorBeforeTargetFloor() == cooper.getCurrentFloor() </span><br><span class="line">	                &amp;&amp; cooper.towardsTargetFloor()) &#123;  </span><br><span class="line">	                cooper.setAvoid();  // 通知对方规避</span><br><span class="line">	                cooper.lock.unlock();  // 避免同时获取两把锁</span><br><span class="line">	                elevator.lock.lock(); // 没锁就await()，会发生什么？ </span><br><span class="line">	                elevator.conflictCond.await();  </span><br><span class="line">	                elevator.lock.unlock();  </span><br><span class="line">	            &#125;  </span><br><span class="line">	            break;  </span><br><span class="line">	        default: break;  </span><br><span class="line">	    &#125;  </span><br><span class="line">	&#125;  </span><br><span class="line">	// 其他情况</span><br><span class="line">	if (cooper.getCurrentFloor() == cooper.getTargetFloor()) &#123;  </span><br><span class="line">	    cooper.setAvoid();  </span><br><span class="line">	    cooper.setUnlock();  </span><br><span class="line">	    elevator.lock.lock(); </span><br><span class="line">	    elevator.conflictHangUp();  </span><br><span class="line">	    elevator.lock.unlock();  </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>判断写好之后，该通知对方规避了，响应机制当然也得有：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Elevator</span><br><span class="line">public void setAvoid() &#123;  </span><br><span class="line">    this.awaitingAvoid = true;  </span><br><span class="line">    this.idleCall();  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void respondAvoid() &#123;  </span><br><span class="line">    this.awaitingAvoid = false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>改完这些还不够，我们需要对WAITING&#x2F;IDLE两个状态的转移规则稍加修改，使得在一动一静的情况下，两种状态转移后，可以响应规避请求：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">waitingSchedule():</span><br><span class="line"></span><br><span class="line">... // 原有实现</span><br><span class="line">// 接在原有实现之后</span><br><span class="line"></span><br><span class="line">if (entersIdle) &#123;</span><br><span class="line">	if(shouldAvoid) &#123;</span><br><span class="line">		/*让电梯移动到下一层，类似SCHE，但到了之后不开门*/</span><br><span class="line">		respondAvoid()</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		setIdle()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">idleSchedule(): </span><br><span class="line">if (keepsIdle) &#123;</span><br><span class="line">	if (shouldAvoid) &#123;</span><br><span class="line">		/*让电梯移动到下一层，类似SCHE，但到了之后不开门*/</span><br><span class="line">		respondAvoid()</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		// 原逻辑</span><br><span class="line">	&#125;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于同向而行的情况，我们还需要继续修改RUNNING下的运行逻辑，使得避让请求被正确响应：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">runningSchedule() &#123;</span><br><span class="line">	... // sleep()完成</span><br><span class="line">	/*更改楼层*/</span><br><span class="line">	/*在楼层更改时，若远离了目标楼层，暂存一个flag*/</span><br><span class="line">	.... // 状态转移</span><br><span class="line">	// normSche原有逻辑结束</span><br><span class="line">	if (flag) &#123;</span><br><span class="line">		elevator.setUnlock(); // 同样，此处开锁是为了保证一个线程只拿一把锁</span><br><span class="line">		respondAvoid()</span><br><span class="line">		cooper.lock.lock();</span><br><span class="line">		cooper.conflictCond.signal();</span><br><span class="line">		cooper.lock.unlock();</span><br><span class="line">	&#125;</span><br><span class="line">	// 需要Scheduler线程的`while(true)`处能够正确处理中途开锁的锁释放问题，可以看看本文前面的实现</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>做到这里，我们就成功的使用纯线程交互的方法，完成了楼层冲突的处理，<strong>不需要引入任何新的类来进行管理。</strong></p>
+<h1 id="调度"><a href="#调度" class="headerlink" title="调度"></a>调度</h1><p>再次，我们本单元求稳为先，选择的方法<strong>不一定最优</strong>。</p>
+<p>我的原调度逻辑（见<a href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/">HW5，6总结</a>）类似影子电梯，在出现双轿厢的时候也犯了难。比起编写新逻辑，我选择最大程度复用原有的调度逻辑。</p>
+<p>在原有的调度基础上，我们<strong>需要添加是否在运营范围内的判断。</strong></p>
+<p>调度第一步，沿用原有逻辑，<strong>对所有电梯</strong>评估请求是否可分配，选评价指数最低者。</p>
+<p>同时，在这一步中，<strong>记录下所有的双轿厢电梯。</strong> </p>
+<p><strong>此处记录的并不是双轿厢电梯对，而是其中的每一个电梯。</strong> 例如：2、3是一对双轿厢电梯，我们这里记录的是：<code>电梯2、电梯3</code>，而不是<code>[电梯2，电梯3]</code>。</p>
+<p>若第一步未能分配，则进行第二步，<strong>“拆请求”</strong>。在第二步中，我们只对<strong>双轿厢</strong>电梯进行评估。</p>
+<ul>
+<li>将原有请求，以当前评估电梯的目标楼层为节点，按先后顺序分成两段；</li>
+<li>在第一段请求完成后，再由Dispatcher分配第二段请求。</li>
+</ul>
+<p>“拆请求”如何实现？我们需要修改我们已有的乘客请求类<code>passengerRequest</code>，在其属性中加一个<code>passengerRequest followingRequest</code>，存储当前请求的后半段。</p>
+<p>在下电梯的时候，需要判断是否包含后续请求，有则<code>OUT-F</code>，并将后续请求放回请求池，没有则<code>OUT-S</code>。</p>
+<p><strong>判断是否可加入，与计算代价指数的逻辑不变。</strong> 不过，我们选取电梯的逻辑发生了变化，选取优先级如下：</p>
+<ul>
+<li>可行楼层跨度最大</li>
+<li>原设计中，评估指数最小者</li>
+</ul>
+<p>选取楼层跨度最大者，是因为，我们无法保证后续换乘的次数；换乘可能会造成额外的等待时间，且额外等待时间难以预知。楼层跨度尽可能大，可以尽可能减少换乘次数，一定程度缓解这一问题。</p>
+<h1 id="线程交互"><a href="#线程交互" class="headerlink" title="线程交互"></a>线程交互</h1><p>不难注意到，对于双轿厢电梯对的其中一个电梯，在IDLE，无请求，且closed的条件下就结束，在这里肯定不对劲。不这样的话，目标楼层的冲突没法规避。</p>
+<p>我采取了一个相对粗糙的办法：</p>
+<ul>
+<li>电梯的<code>close()</code>由Dispatcher调用，这是我的原有设计</li>
+<li>在close时，Dispatcher用一<strong>不加锁的方法</strong>，获取当前所有电梯的状态；只在所有电梯都处在IDLE状态时，才将所有电梯<code>close()</code>，否则<code>wait()</code></li>
+<li>保证电梯在进入IDLE时，会唤醒Dispatcher</li>
+</ul>
+<p>至此，我们完成了HW7所需的所有改造。</p>
 ]]></content>
       <categories>
-        <category>建站历程</category>
+        <category>课程相关</category>
       </categories>
       <tags>
-        <tag>测试</tag>
+        <tag>面向对象</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OO_U2 - 电梯</title>
+    <url>/2025/04/17/OO_U2%20-%20%E7%94%B5%E6%A2%AF/</url>
+    <content><![CDATA[<p>这是一篇导航帖。</p>
+<p>本单元任务较忙，故我没有时间整合出一篇概括所有内容的文章。</p>
+<p>博客周作业做了一些概括，但是我觉得里面我自己省掉了不小好玩的细节。</p>
+<p>以下文章均与本单元有关，欢迎各位按需查阅：</p>
+<ul>
+<li><a href="https://bbs.csdn.net/topics/619679170?spm=1001.2014.3001.6377">CSDN上的博客周作业</a></li>
+<li><a href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/">HW5，6总结</a></li>
+<li><a href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/">HW7总结</a></li>
+<li><a href="http://lajipz.top/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/">ReentrantLock使用</a></li>
+<li><a href="http://lajipz.top/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/">利用IDEA查死锁</a></li>
+</ul>
+<span id="more"></span>
+<h1 id="杂记"><a href="#杂记" class="headerlink" title="杂记"></a>杂记</h1><h2 id="单元前序知识：Java多线程"><a href="#单元前序知识：Java多线程" class="headerlink" title="单元前序知识：Java多线程"></a>单元前序知识：Java多线程</h2><p><code>synchronized</code>关键词有三种可能的修饰对象：</p>
+<ul>
+<li>实例方法：<code>public synchronized void method() &#123;&#125;</code>；<br>锁<strong>实例（this）的锁</strong>，或者说，<strong>对象锁。</strong><br>其他线程在该锁释放前，无法访问<strong>该实例的<code>synchronized</code>方法</strong>（言下之意，非<code>synchronized</code>可以访问）</li>
+<li>静态方法：<code>public static synchronized void method()&#123;&#125;</code><br>锁定<strong>类</strong>，锁定后，其他线程无法访问该类的<code>sync</code>方法</li>
+<li>代码块：锁<strong>对象锁</strong>，和第一个一致。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public void method() &#123;</span><br><span class="line">	synchronized (Object) &#123;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="对象锁的行为"><a href="#对象锁的行为" class="headerlink" title="对象锁的行为"></a>对象锁的行为</h2><p>经过实验，发现：</p>
+<ul>
+<li>在对象锁被一个进程占用时，其他线程无法访问该对象的<code>synchronized</code>方法，<strong>但可以访问没加<code>sync</code>的方法，甚至由此对对象的属性进行更改</strong></li>
+<li>在<code>Obj</code>的对象锁被一个进程占用时，其他线程在执行到<code>synchronized (Obj) &#123;&#125;</code>代码块处会被阻塞。</li>
+<li>对象锁针对的是<strong>对象</strong>，而不是<strong>方法</strong>；因此，调用一个sync方法<code>method1()</code>，<code>method1()</code>又调用另一sync方法<code>method2()</code>，是<strong>不会被阻塞的</strong>，因为当前线程一直拿着对象的锁。可能会带来预期外的不阻塞</li>
+</ul>
+<h2 id="wait-，notifyAll"><a href="#wait-，notifyAll" class="headerlink" title="wait()，notifyAll()"></a><code>wait()</code>，<code>notifyAll()</code></h2><p><code>Obj.wait()</code>会暂停线程A（A此时拥有<code>Obj</code>的锁）的执行，直到另一线程B使用<code>Obj.notifyAll()</code>将其唤醒。</p>
+<p>同时，<code>Obj.wait()</code><strong>会释放线程A拥有的<code>Obj</code>锁</strong>。</p>
+<p><code>notify()</code>会<strong>随机唤醒</strong>等待池中的<strong>一个</strong>程序，而<code>notifyAll()</code>是<strong>全部</strong>唤醒。</p>
+<h2 id="Thread类"><a href="#Thread类" class="headerlink" title="Thread类"></a>Thread类</h2><p>涉及<code>Runnable</code>的太复杂，我们选择直接<code>extends Thread</code>，随后重写<code>run()</code>实现启动线程。</p>
+<p>只有<code>start()</code>会创建新线程，<code>run()</code>只会顺序执行代码块。</p>
+<h2 id="确定要保护的方法"><a href="#确定要保护的方法" class="headerlink" title="确定要保护的方法"></a>确定要保护的方法</h2><p>在一个对象里，如果出现了要多线程共享的属性，那引用该属性的方法<strong>全部都要保护</strong>。</p>
+]]></content>
+      <categories>
+        <category>课程相关</category>
+      </categories>
+      <tags>
+        <tag>面向对象</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>“法律、科技与社会”课后思考题答案 - 2024</title>
+    <url>/2025/02/04/%E2%80%9C%E6%B3%95%E5%BE%8B%E3%80%81%E7%A7%91%E6%8A%80%E4%B8%8E%E7%A4%BE%E4%BC%9A%E2%80%9D%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%20-%202024/</url>
+    <content><![CDATA[<p>本文记录了本人复习“法律、科技与社会”课程时，对课后思考题给出的答案。</p>
+<p>众所周知，本课的期末考试就是从课后思考题中抽集体来考，怎么复习想必大家都知道了。当然，不知道这几个思考题之后会不会变。</p>
+<p>以下答案均为本人手搓，在考试获得了95分，当然这个给分可能有玄学成分在里面，仅供参考。</p>
+<h1 id="技术是中立的吗？为什么？"><a href="#技术是中立的吗？为什么？" class="headerlink" title="技术是中立的吗？为什么？"></a>技术是中立的吗？为什么？</h1><p>   不是。</p>
+<ul>
+<li>技术置身于社会中，具有社会性。</li>
+<li>技术是占有世界的媒介，同时也是人类活动的一种形式。其背后包含了人类思维结果。</li>
+</ul>
+<span id="more"></span>
+
+<h1 id="监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？"><a href="#监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？" class="headerlink" title="监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？"></a>监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？</h1><ul>
+<li>用户行为数据将为资本带来利益；从资本逐利的本质而言，监控资本主义的趋势不可避免。</li>
+<li>这一趋势可以被抑制。</li>
+<li>立法与管制</li>
+<li>提高公共意识与参与度</li>
+<li>探索技术向善路径，减少技术对个人隐私的侵害</li>
+</ul>
+<h1 id="学校是否有权使用人脸识别对学生进行考勤？为什么？"><a href="#学校是否有权使用人脸识别对学生进行考勤？为什么？" class="headerlink" title="学校是否有权使用人脸识别对学生进行考勤？为什么？"></a>学校是否有权使用人脸识别对学生进行考勤？为什么？</h1><ul>
+<li>自隐私方面：若学校方面明确了：1.收集的人脸识别信息仅用于考勤，2.且收集的信息将按照相关法律法规进行处理，3.并在事前提前征得了同学的同意，则这一方案可认为可行；</li>
+<li>然而，根据我国目前出台的相关法律法规，此时也需保证人脸识别不作为考勤的唯一方式。</li>
+<li>更严格而言，根据《个人信息保护法》，在公众场合所收集的身份信息只能用于维护公共安全目的，此时考勤并不在维护公共安全范围之内，故可以认为学校无权这么做。</li>
+</ul>
+<h1 id="什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？"><a href="#什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？" class="headerlink" title="什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？"></a>什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？</h1><ul>
+<li>自动驾驶系统在事故不可避免时，是优先保全车上人员安全，还是行人等车外人员的安全。</li>
+<li>首先是在技术上，要尽可能减少“不可避免事故”的发生；</li>
+<li>其次，在设计自动驾驶系统时，应注意伦理方面的考量，确保系统决策符合人类伦理。</li>
+</ul>
+<h1 id="是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？"><a href="#是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？" class="headerlink" title="是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？"></a>是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？</h1><ul>
+<li>是</li>
+<li>存在物化女性的风险</li>
+<li>有悖伦理</li>
+<li>存在因此引起的技术以来与奴隶问题。</li>
+<li>情感与亲密关系的简化。</li>
+</ul>
+<h1 id="什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？"><a href="#什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？" class="headerlink" title="什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？"></a>什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？</h1><p>   指无需有意义的人类控制即可选择目标并施加武力的系统。</p>
+<p>   应该。</p>
+<ul>
+<li>道义角度：其决策远离了人的判断，在道义上这无法接受。</li>
+<li>法律角度：其违背了《国际人权法案》和《武装冲突法》的精神，可能会对非作战人员产生杀伤。</li>
+<li>战略角度：研发出的致命自主武器可能会扩散到潜在敌人中。</li>
+</ul>
+<h1 id="什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？"><a href="#什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？" class="headerlink" title="什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？"></a><strong>什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？</strong></h1><p>   算法歧视是指算法在决策过程中，偏向特定人群或不公平对待某些群体的现象。</p>
+<p>   形成原因：</p>
+<ul>
+<li>数据偏差：算法主要依赖于测试数据；数据不全面，则算法可能会因此产生偏见。</li>
+<li>设计偏见：开发者在设计算法时融入了个人偏见。</li>
+<li>反馈循环：在一些算法系统中，用户行为会反馈到算法中，这可能扩大原有的偏见</li>
+</ul>
+<p>   改进方法：</p>
+<ul>
+<li>改进数据质量</li>
+<li>提高算法透明度与解释性</li>
+<li>引入公平性评估和偏差测试</li>
+<li>用户反馈与持续优化</li>
+</ul>
+<h1 id="在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？"><a href="#在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？" class="headerlink" title="在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？"></a>在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？</h1><ul>
+<li>存在。</li>
+<li>个人角度：提高个人隐私意识，以正当手段维护自己的个人隐私</li>
+<li>立法角度：完善相关法律法规，自法律角度约束个人敏感信息的使用</li>
+<li>数据收集者角度：尊重用户隐私，避免过度收集用户敏感信息；完善技术手段，减少敏感信息的使用，避免敏感信息的泄露</li>
+</ul>
+<h1 id="作为计算机专业的学生，你如何看待人工智能的未来？"><a href="#作为计算机专业的学生，你如何看待人工智能的未来？" class="headerlink" title="作为计算机专业的学生，你如何看待人工智能的未来？"></a>作为<strong>计算机专业</strong>的学生，你如何看待人工智能的未来？</h1><ul>
+<li>自生产工具的角度而言，人工智能将促进人类社会的生产力发展，从而促进人类社会的进步，我们应继续追求人工智能在技术层面的进步，从而进一步发展社会生产力；同时，我们也应积极接受并利用AI这一生产力工具。</li>
+<li>自道德伦理角度而言，人工智能的使用，可能出现潜在的道德伦理问题，当前也出现了深度伪造、AI合成假新闻等问题。这需要我们在技术层面加以防范，；</li>
+<li>自社会角度而言，人工智能必然会因人工智能的出现，对已有的部分人工进行替代。同时，人工智能的出现，也为我们带来了新的就业机会。因此，我们需要积极顺应这一变化，积极学习AI相关知识，同时提高自身创新能力与软实力。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>课程相关</category>
+      </categories>
+      <tags>
+        <tag>水课</tag>
+        <tag>FKS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OO_U2 - HW5,6阶段性总结</title>
+    <url>/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>我的调度算法，与我的架构实现耦合度较高，因此我不得不先提一些我自己的电梯实现；不需要的同学，欢迎直接跳开“电梯实现”部分。</p>
+</blockquote>
+<p>这算是本人两周以来的一个总结吧，终于有时间写了…</p>
+<span id="more"></span>
+
+<h1 id="浅提电梯实现"><a href="#浅提电梯实现" class="headerlink" title="浅提电梯实现"></a>浅提电梯实现</h1><p>读前注意，本人的设计并非最佳，其中有不少会引起复杂度增加的设计，请各位参考时务必谨慎。</p>
+<h2 id="概况"><a href="#概况" class="headerlink" title="概况"></a>概况</h2><p>在完成HW6后，本人的整体架构如下：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250406221034.png" alt="Pasted image 20250406221034.png"></p>
+<p>其中，电梯信息与电梯运行进程分离，便于维护。</p>
+<p>我的电梯，将运行状态分为以下几类：</p>
+<ul>
+<li>IDLE：闲置，此处与常理理解中的闲置是一致的，不多赘述</li>
+<li><strong>RESERVED</strong>：<strong>预约</strong>，<strong>在闲置状态的电梯</strong>，收到<strong>起点与电梯当前所在位置不同楼的请求</strong>时，进入的<strong>移动状态</strong>。</li>
+<li>RUNNING：运行，电梯处在<strong>非预约状态</strong>时的正常移动状态。</li>
+<li>WAITING：等待，电梯停靠，进行上下客时进入的状态。停靠完成后，<strong>视情况</strong>转入RUNNING&#x2F;RESERVED&#x2F;IDLE状态。</li>
+</ul>
+<p>同时，我们还需要记录电梯的<strong>运行方向</strong>，现规定：</p>
+<ul>
+<li>1：上行</li>
+<li>-1：下行</li>
+<li>0：仅在进入IDLE时设为此值。</li>
+<li>在电梯进入WAITING时，<strong>方向将被设置为下一步要移动的方向</strong></li>
+</ul>
+<p>电梯内亦有一子请求表，记录满足以下条件的请求：</p>
+<ul>
+<li><strong>请求与电梯运行方向一致</strong></li>
+<li>记录当前方向的所有请求；比如，我们的电梯正在处理一个<code>F1-F3</code>的请求，现在处于<code>F2</code>；此时，若有一<code>F4-F5</code>的请求，则该请求可被指派给电梯，加入子请求表</li>
+</ul>
+<h2 id="存储状态的额外信息"><a href="#存储状态的额外信息" class="headerlink" title="存储状态的额外信息"></a>存储状态的额外信息</h2><p>上面提到，我们的子请求表只允许同向请求加入；在我们现在的实现下，这种情况当然会产生：</p>
+<ul>
+<li>电梯在<code>F3</code>，IDLE</li>
+<li>出现了一个<code>F1-F7</code>的请求，电梯进入RESERVED，空放到<code>F1</code></li>
+<li>电梯从<code>F3</code>空放去<code>F1</code>途中出现一个<code>F2-F1</code>的请求，我们自然希望捎带它，将其加入子请求表</li>
+</ul>
+<p>也就是说，<strong>空放方向与发出预约的请求的方向反向。</strong> 我们自然需要一个地方暂存这个预约请求；我选择通过<strong>继承</strong>的方法，<strong>将其存在状态内</strong>。</p>
+<p>具体而言：</p>
+<ul>
+<li>上面四个状态均属于一个<code>Status</code>类，内有一<code>enum Type</code>属性，记录当前状态类型</li>
+<li>若一个状态需要记录额外信息，则该状态作为<code>Status</code>的子类，<strong>额外信息作为子类的属性</strong>，存在子类中。</li>
+</ul>
+<p>我们此时只需对RESERVED，WAITING两个状态记录额外信息。</p>
+<p>RESERVED：</p>
+<ul>
+<li><code>allowPickUp</code>：中途是否允许捎带</li>
+<li><code>requester</code>：进行预约的请求。允许为null。</li>
+</ul>
+<p>WAITING：</p>
+<ul>
+<li><code>prevStatus</code>：进入WAITING前的状态。</li>
+</ul>
+<p>欲知为何如此，请继续看下文。</p>
+<h2 id="兼容SCHE请求"><a href="#兼容SCHE请求" class="headerlink" title="兼容SCHE请求"></a>兼容<code>SCHE</code>请求</h2><p>不知各位是否发现，在HW6引入的临时调度，跟我们上面提到的RESERVED略有相似之处？</p>
+<p>我们要让我们的现有设计兼容<code>SCHE</code>请求，只需做这么几件事情：</p>
+<ul>
+<li><code>SCHE-BEGIN</code>前，把途中无法捎带的请求赶回请求池；</li>
+<li>在临时调度至不同层时，<code>SCHE-BEGIN</code>对应转入一个 <strong><code>requester = null</code>，不允许捎带</strong>的RESERVED状态</li>
+<li>确保已有的RESERVED状态下的电梯运行规则，能够处理上述的<code>RESERVED</code>情况</li>
+</ul>
+<p>就这样，我们就做完了<code>SCHE</code>请求的电梯运行部分；剩下的，只需要实现指派电梯进<code>RESERVED</code>的逻辑，很省事吧！？</p>
+<h2 id="等待状态的转移规则"><a href="#等待状态的转移规则" class="headerlink" title="等待状态的转移规则"></a>等待状态的转移规则</h2><p>WAITING的状态转移规则如下：</p>
+<ul>
+<li>先前为<code>RUNNING</code>：<br>若仍有请求未到终点，则恢复RUNNING<br>若请求已全部满足，则进入IDLE</li>
+<li>先前为<code>RESERVED</code>：<br>若未到预约者起点，则恢复RESERVED<br>若到达了预约者起点，则进入RUNNING，同时<strong>将暂存的请求加入子请求表</strong></li>
+<li>先前为<code>IDLE</code>：<br>直接进入<code>RUNNING</code>，<br>因为我们保证，IDLE下的电梯被预约后，直接进入RESERVED状态，<br>此时必是因为，有一起点与IDLE状态下电梯所在位置的请求被分给了电梯。</li>
+</ul>
+<h1 id="调度算法"><a href="#调度算法" class="headerlink" title="调度算法"></a>调度算法</h1><p>交互方面，我采用的是一<code>Dispatcher</code>对多个<code>Elevator</code>的实现，与绝大多数做法一致。</p>
+<p>大家都知道影子电梯，不过它需要<strong>模拟电梯的整个运行过程</strong>，实现略显复杂；那么，有没有一个在复杂度和影子电梯的高效率之间折中的方案呢？</p>
+<p>是有的。我的这个策略在思路上与影子电梯有颇多相似之处，只不过：</p>
+<ul>
+<li>只需要计算（模拟）<strong>当前请求</strong>的运行时间</li>
+<li>已指派给电梯的其它请求的估计，<strong>利用优先级机制实现</strong></li>
+</ul>
+<h2 id="是否允许加入"><a href="#是否允许加入" class="headerlink" title="是否允许加入"></a>是否允许加入</h2><p>进行计算之前，<code>Dispatcher</code>需要得知当前正在评估的电梯，能否接受当前待加入的请求。</p>
+<p>可加入的规则如下：</p>
+<ul>
+<li>若电梯此时在IDLE状态下，直接允许加入，否则进行下述流程</li>
+<li>请求方向需与电梯当前运行方向一致；方向有关的说明见上文。</li>
+<li>电梯同向，且电梯此时没有超过请求的起点</li>
+<li>如果状态为（RESERVED）&#x2F;（WAITING，且前一个状态是RESERVED），则：<br>RESERVED状态需允许捎带<br>若预约请求方向与当前运行方向相反，则待加入请求的终点不得超过预约请求的起点</li>
+<li>加入后，不会出现电梯满员的情况</li>
+</ul>
+<p>“电梯满员”视个人实现不同，判断逻辑可能不同；我这里就以我的实现为例，谈谈我的判断逻辑。</p>
+<p>正如上文所述架构实现，我们一个电梯的子请求队列不仅包含了当前在电梯内的请求，还包含了将来电梯要捎带的请求；</p>
+<p>我们的判断逻辑是，假设请求加入了子请求表，<strong>得出各楼层处，最多同时出现的请求数；</strong> </p>
+<p>这一“同时出现的请求数”，反映了那一运行区间内，电梯内的人数。</p>
+<p><strong>若各区间的同时出现请求数的最大值，大于电梯容量，则认为此时加入请求会导致超员。</strong></p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250406214224.png" alt="Pasted image 20250406214224.png"></p>
+<p>如图所示，待加入请求在<code>F2-F3</code>区间会导致超员，故我们不应加入这一待加入请求。</p>
+<p>需要注意的是，如果采用了上文RESERVED状态的实现，若预约请求方向与电梯空放方向一致，此时还需将预约请求放进上面的图里进行比较。</p>
+<h2 id="计算评价指数"><a href="#计算评价指数" class="headerlink" title="计算评价指数"></a>计算评价指数</h2><p>在上述复杂的判断后，我们终于可以开始计算了…</p>
+<p>我们的计算公式如下：</p>
+<p>$$index &#x3D; index_{base} + priorityPenalty * elevStopTime$$</p>
+<h3 id="index-base"><a href="#index-base" class="headerlink" title="$index_{base}$"></a>$index_{base}$</h3><p>我们先需要得知：</p>
+<ul>
+<li>$dis$：电梯所在位置，与请求起点的楼层数</li>
+<li>$travel$：请求跨越的楼层数</li>
+<li>$stopCount$：请求沿途需要停靠，以让自己进电梯&#x2F;捎带其它请求；<code>stopCount</code>即中途停靠的次数</li>
+</ul>
+<p>随后即可算出当前请求的运行时间，作为我们评价指数计算的第一步；</p>
+<p>$$index_{base} &#x3D; (dis + travel)*elevSpeed + stopCount * elevStopTime $$</p>
+<h3 id="priorityPenalty"><a href="#priorityPenalty" class="headerlink" title="$priorityPenalty$"></a>$priorityPenalty$</h3><p>优先级惩罚，是所有请求的优先级惩罚之和：</p>
+<p>$$priorityPenalty &#x3D; \sum_{i&#x3D;1}^{n}{penalty_{R_i}}$$</p>
+<p>对于一个请求$R$，设其优先级为$priority$，楼层跨度为$travel$，则我们规定该请求允许的中途停靠次数$maxAllowedStops$如下：<br>$$maxAllowedStops &#x3D; round(travel * (1 - \frac{priority}{100}))$$<br>其中，$round(x)$取$x$最靠近的整数。</p>
+<p>在我们进行评价指数的计算时，我们先假设待加入请求已被加入；随后，对原有的请求$R_i$，算出加入后的<strong>总停靠次数</strong>$stops$。</p>
+<ul>
+<li>若$stops &lt;&#x3D; maxAllowedStops$：$penalty_{R_i} &#x3D; 0$</li>
+<li>否则：$penalty_{R_i} &#x3D; (stops - maxAllowedStops) * priority$</li>
+</ul>
+<h3 id="小总结"><a href="#小总结" class="headerlink" title="小总结"></a>小总结</h3><p>由此，我们就可以算出各个（可加入请求的）电梯的评价指数，选择评价指数最低者加入。</p>
+<p>上述是一个相对简单的模型，相信各位有更好的实现。</p>
+<h1 id="评测方案"><a href="#评测方案" class="headerlink" title="评测方案"></a>评测方案</h1><p>我选择构建评测机框架，<strong>留出随机数据生成器（dataGen）与正确性检查器（Checker）的接口</strong>。这样有利于提高不同题目下评测的灵活性。</p>
+<p>评测机框架方面，我构建了一个可以评测<strong>多程序、多测试点</strong>的多线程评测机，按照以下两种策略运行：</p>
+<ul>
+<li>测试深度优先：评测机优先对一个待测程序，测试多个测试点</li>
+<li>测试广度优先：评测机优先对一个测试点，测试多个程序</li>
+</ul>
+<p>评测机框架建议允许添加数据生成器生成的数据以外的数据，从而为人工构造高强度数据提供可能。</p>
+<p>运行测试程序方面，我选用了Python的<code>subprocess</code>库，其中的<code>POpen</code>方法十分有用，不仅可以指定子进程的工作目录，还可重定向子进程的输出。</p>
+<p>注意到，我们的数据投喂器读取的是**当前工作目录下的<code>stdin.txt</code>**；因此，我们可以通过指定不同工作目录的方法，来让投喂器同时测试多个样例。</p>
+<p>随后，我们即可使用数据投喂器+打包好的<code>.jar</code>进行评测；两个子进程需要用管道串起来，实现如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">input_process = subprocess.Popen(</span><br><span class="line">                [<span class="string">&#x27;input.exe&#x27;</span>],  <span class="comment"># input.exe 读取当前目录的 stdin.txt</span></span><br><span class="line">                cwd=case_dir,    <span class="comment"># 设置工作目录为测试用例目录</span></span><br><span class="line">                stdout=subprocess.PIPE,</span><br><span class="line">                stderr=subprocess.DEVNULL,</span><br><span class="line">                text=<span class="literal">True</span></span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">java_process = subprocess.Popen(</span><br><span class="line">                [<span class="string">&#x27;java&#x27;</span>, <span class="string">&#x27;-jar&#x27;</span>, os.path.join(target_dir, jar_file), <span class="string">f&quot;-Xmx<span class="subst">&#123;memLimit&#125;</span>&quot;</span>],</span><br><span class="line">                stdin=input_process.stdout,</span><br><span class="line">                stdout=fileout,</span><br><span class="line">                stderr=fileerr,</span><br><span class="line">                text=<span class="literal">True</span></span><br><span class="line">            )</span><br></pre></td></tr></table></figure>
+
+<p>据闻Python的<code>psutils</code>库有办法记录CPU使用时间，不过我的尝试没有成功，希望做过尝试的同学多多分享经验:P</p>
+<p>我两次作业的随机数据生成器与Checker均先由AI生成，再由人工进行细节修改。</p>
+<p>注意到，AI生成的Checker并不完全准确，在HW6时这一问题尤为显著，需要多处人工修正；<strong>在寻求AI工具的帮助，节省时间的同时，请务必仔细检查AI生成的工具是否能如预期般工作。</strong></p>
+<h1 id="之前写过的一些总结"><a href="#之前写过的一些总结" class="headerlink" title="之前写过的一些总结"></a>之前写过的一些总结</h1><ul>
+<li><a href="http://oo.e2.buaa.edu.cn/assignment/623/discussion/1684">使用ReentrantLock，实现更灵活的锁管理策略</a></li>
+<li><a href="http://oo.buaa.edu.cn/assignment/621/discussion/1682">在IDEA内部，进行更高效的死锁调试</a></li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li><p>本单元，我感觉最需要的其实是细心，不然线程间交互很容易出现问题。</p>
+</li>
+<li><p>架构设计同样起到了关键的作用。本人架构中<code>RESERVED</code>状态的抽象，大大节省了本单元的开发时间。</p>
+<p>我认为，只要架构：</p>
+<ul>
+<li>易于维护；</li>
+<li>复杂度低（可以归进上条）；</li>
+<li>运行效率在可接受范围内；</li>
+</ul>
+<p>就可以算一个好设计。</p>
+<p>不过，我自己不得不承认，我本单元架构在不少实现细节上的复杂度实在太高，因此带来的BUG与维护的不便不在少数。</p>
+</li>
+<li><p>本单元亦让我直观地感受到了<strong>算法和数学模型，于程序的重要性何在。</strong> </p>
+<p>本人实现中，判断电梯是否满员的问题，可以抽象为计算一个二维空间内，所有线段的最多重叠次数；没有算法的帮助，计算效率很难提升。</p>
+<p>处理优先级问题的方法，其实就是简单的数学建模。</p>
+</li>
+<li><p>感受到了AI的力量。使用AI生成<code>checker</code>+人工修改的效率，远比纯手搓要高。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>课程相关</category>
+      </categories>
+      <tags>
+        <tag>面向对象</tag>
       </tags>
   </entry>
   <entry>
@@ -1072,23 +1002,118 @@
       </tags>
   </entry>
   <entry>
-    <title>建站第一日</title>
-    <url>/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/</url>
-    <content><![CDATA[<p>今天做成的事情不多，主要是做了一下侧边栏的结构，改了个色，加了个favicon，然后基本就没了。</p>
-<p>上述工作的确很简单，但为何忙了一天，却只完成了这几件事呢？问题出在评论区功能和图床的实现上。</p>
+    <title>在IDEA内部，进行更高效的死锁调试</title>
+    <url>/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是对OO第二单元总结的一部分。</p>
+</blockquote>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><a href="https://mp.weixin.qq.com/s/xbVZPRuHR_Dl39O4S6ny0w">oolens最近发的多线程文章中</a>介绍了两套调试工具，但个人认为二者功能相互独立，且二者使用起来都不大方便。<strong>这两个工具还是太吃操作了，有没有什么更简单又强势的工具推荐一下呢？</strong></p>
+<p><strong>有的兄弟，有的！</strong> 使用IDEA本身就够了！我们主要利用的，是它的<code>Dump Threads（获取线程转储）</code>功能。</p>
 <span id="more"></span>
-
-<p>先说图床。<br>这个Blog显然不会是一个纯文字的博客，后续放图进文章的问题肯定要考虑到。<br>Github Pages没记错的话，库大小似乎是有限制的（1GB？），把所有文章的图片直接存库里固然不现实。找了一天，暂时还没有找到一个成本为0或接近0的方案，基本都要涉及到买域名&#x2F;配置云服务。目前看到一个PicGo + Github的方案似乎可行，之后有空再试。</p>
-<p>再说评论系统。<br>为了和各位读者相互交流，评论区肯定是少不了的。<br>但是，正是在评论区实现的方案选择上，我近乎浪费了一整个早上。为什么呢？还请继续往下看：</p>
-<p>NexT主题集成了几个评论系统：disqus, 畅言，livere，gitalk和utterances。<br>disqus在国内访问速率堪忧，甚至大概率打不开，不在考虑范围内；<br>livere在国内倒是能用，但是必须要社交平台账号登录，不大符合我允许匿名留言的想法；<br>gitalk和utterances必须要求Github登录后才能评论，门槛之高不言而喻，且同样无法实现匿名评论。<br>那畅言呢？要求登录是其一，其美观程度之差是其二，本着不妥协的原则，这个方案也行不通。</p>
-<p>在上述方案都不符合预期的情况下，只得求助各路教程，而各路教程都不约而同地指向了valine。valine允许匿名，外观简洁，看起来就是最佳之选了。在一番了解后，发现valine原本被集成在NexT内，但出于不再开源和安全问题的原因被移除，以单独插件形式存在。安装并配置好后，却发现其无法正常使用：起初是出现401报错，后变为不报错，但评论无法正常发表，点下发表后毫无反应。</p>
-<p>一番折腾后，评论区的建设仍毫无进展，只得暂时作罢。</p>
-<p>Blog的基本框架现在已经成型。接下来的建设任务，我想就是攻克下这两个难题了。至于小细节，留到日后吧。</p>
+<h1 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h1><p>这个Community版本也能用，没搞到Ultimate版的同学不用担心。</p>
+<p>在你使用IDEA运行程序的时候，你是否好奇过，这个照相机是个什么玩意？这其实就是我们今天的主角<code>Dump Threads</code>了。</p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20233738.png" alt="Screenshot 2025-03-30 233738.png"></p>
+<p>直接左键选中，会进入一个菜单。<strong>这个选项可以抓取当前时刻程序运行状态的快照</strong>，记录了当前程序下所有线程：</p>
+<ul>
+<li>是否等待</li>
+<li>等待类型</li>
+<li>在代码运行到何处等待</li>
+<li>调用栈<br>等详尽的信息，为我们的调试带来了极大的便利。</li>
+</ul>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250330234106.png" alt="Pasted image 20250330234106.png"></p>
+<p>直接点开超链接，甚至可以直接定位到代码处：</p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250330234144.png" alt="Pasted image 20250330234144.png"></p>
+<p>妈妈再也不用担心我找不到死锁了！</p>
+<p>Debug处也有这个入口，在更多选项里：</p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20235054.png" alt="Screenshot 2025-03-30 235054.png"></p>
+<p>要这么做有一个局限性，<strong>就是当前程序必须在IDEA内运行</strong>，可能需要配合<a href="http://oo.e2.buaa.edu.cn/assignment/621/discussion/1673">更好用的数据投喂器</a>使用。当然，如果能用下面提到的方法，这个局限就不存在。</p>
+<h1 id="更进一步-使用IDEA-Profiler"><a href="#更进一步-使用IDEA-Profiler" class="headerlink" title="更进一步 - 使用IDEA Profiler"></a>更进一步 - 使用IDEA Profiler</h1><p><em>（需要IDEA Ultimate，如果手上没有，获取方法还请自行探索 :D）</em></p>
+<p>显然，我们一般跑程序，不可能全部放在IDEA里面跑；有没有什么像oolens里介绍的工具一样，找出当前运行的所有Java程序，并选取要分析的程序进行分析的方法呢？</p>
+<p><strong>是有的，要用到IDEA Profiler。就是上个单元，我们分析运行时间接触到的那个IDEA Profiler。</strong> 他除了分析运行时间以外，还可以查看选中进程的运行状态。</p>
+<p>要打开它，我们需要点开菜单栏中这个仪表盘图标：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20231301.png" alt="Screenshot 2025-03-30 231301.png"></p>
+<p>点开之后，菜单里会列出正在运行的所有Java程序。如果我们此时的程序正在运行的话，我们可以在下面的选单里找到我们的程序：</p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20231405.png" alt="Screenshot 2025-03-30 231405.png"></p>
+<p>随后直接左键选中，发现里面有个选项叫”Get Thread Dump”，跟我们上面的<code>Dump Threads</code>得到的效果是一样的。</p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20231410.png" alt="Screenshot 2025-03-30 231410.png"></p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250330232124.png" alt="Pasted image 20250330232124.png"></p>
+<p>如果我们此时拥有上述调用的源码，我们一样可以点开超链接，直接定位到代码对应位置；没有的话，IDEA甚至会帮你反编译：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250330232231.png" alt="Pasted image 20250330232231.png"></p>
+<p>整体效果跟oolens提到的<code>jconsole</code>基本一致，甚至比它还好用。</p>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>没什么好总结的，大家手上有IDEA的快去试试吧！:D</p>
+]]></content>
+      <categories>
+        <category>课程相关</category>
+      </categories>
+      <tags>
+        <tag>面向对象</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>图床测试</title>
+    <url>/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</url>
+    <content><![CDATA[<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/%7B433FA560-1033-4134-A91E-3F4E0C6D3AC2%7D.png" alt="{433FA560-1033-4134-A91E-3F4E0C6D3AC2}.png"></p>
+<p>通过阿里云OSS+PicGo的方案，本博客成功实现了图床功能。</p>
+<p>Github在国内访问速度太慢，为了实现图片快速加载，只能加点钱上阿里云了 :(</p>
+<p>不过一个月也就6块钱，也就约等于一个月少喝一瓶东方树叶嘛😋</p>
 ]]></content>
       <categories>
         <category>建站历程</category>
       </categories>
       <tags>
+        <tag>测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自己的碎碎念</title>
+    <url>/2024/08/07/casualTalk/</url>
+    <content><![CDATA[<p>在给各位塞的私货里面，我大段写了一些经验，自己这部分提的不多；故这里再多闲聊一点，让各位能对我大一经历了什么有点了解（笑）</p>
+<span id="more"></span>
+<h1 id="学业"><a href="#学业" class="headerlink" title="学业"></a>学业</h1><p>本人现就读与计算机学院（6系）的计算机科学与技术专业。</p>
+<p>那么，我是大佬吗？<strong>我不是。</strong> 专业分流时，本人成绩<strong>年级排名491&#x2F;1034，分进6系的时候排名是171&#x2F;190+。</strong> 成绩就自爆到下面吧，大家感兴趣可以看（bian）看（shi）:<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240807211353.png" alt="image.png"></p>
+<p>如各位所见，真不行。</p>
+<p>真要反思是怎么回事的话，<strong>可能</strong>是大一上&#x2F;大一下的前半学期过于放纵，<strong>天天都抽时间打电动导致的</strong>。这就导致时间不大充足，数分&#x2F;基物<strong>作业写不及只能抄</strong>，引起了一系列后果。各位<strong>如果十分重视学业，千万引以为戒，</strong> 北航这个<strong>大一</strong>虽然可以比高中放松一点，但还是可以当<strong>高四</strong>读的。（唉大类招生）</p>
+<p><strong>但也侧面说明了，其实现在大类招生也理性了很多，不用太“卷”就能整到自己想要的专业。</strong></p>
+<p>说来也惭愧，本人这几科里最亮眼的是<strong>英语</strong>。算是唯一可以吹嘘的资本（笑）</p>
+<h1 id="为什么选6系？"><a href="#为什么选6系？" class="headerlink" title="为什么选6系？"></a>为什么选6系？</h1><p><strong>兴趣使然居多。</strong> 主要是，孩子从小学就一路在打电脑兼折腾电脑，这方面兴趣浓郁不说，有关计算机的大部分术语我也算熟悉。</p>
+<p><strong>编程严谨而言不在我的兴趣范围内</strong>，就当是系统学习计算机知识必须要承担的代价吧。因此各位在大一觉得对编程没兴趣的话，也不要因此对选6系有所顾虑。</p>
+<p>我是一开始就决定报6系的吗？<strong>算是，也算不是。</strong> 算是的原因是，我高考填志愿的时候确实是奔着6系的名头，把信息类放到了第一志愿；算不是的原因是，我在大一的时候，对选哪个专业的思想有非常严重的波动。</p>
+<p>这里就谈谈这个波动吧。也算是一点分流经验分享？</p>
+<p>一开始是因为参观了41系的微纳中心，又看到学校方面的资源给的非常足，加上自己<strong>某种意义上也算是对计算机硬件感兴趣，而对软件不感兴趣</strong>而有了选41的想法。</p>
+<p>提到41就不能不提2。为什么2不在考虑范围？因为我的认知是，41偏重CPU之类的大型芯片工程（这里姑且忽略一下41的器（cai）件（liao）和工艺装备系），而2偏重的是MEMS，FPGA之类的小器件，这个我不感兴趣。而且我觉得MEMS这类的市场早就饱和了（虽说需求还是旺的）</p>
+<p>2还有个方向是电磁场。由于大一下我基物学得比较痛苦（某种意义也可以怪当时上电磁场这部分的zy老师上得过于无趣），加上数学不好，这个我觉得不行。</p>
+<p>而且，打算去41&#x2F;2，我为啥不在高考填志愿的时候填UESTC？</p>
+<p>然后有了<strong>编程激发不了自己兴趣，之后学着估计吃力的想法</strong>。在这个想法的驱使下，我拷问了自己报北航的目的是什么：说起来你可能不信，我最开始萌生报北航的意愿，<strong>是航空！</strong> <strong>欸！恰好我自己对航空的兴趣这么多年还真没减退，要不我准备大二转去隔壁5系吧！</strong> <strong>听起来确实很荒谬，但我当时确实就是这么想的！连假期补上工图之类的计划都做了。</strong></p>
+<p>这个影响还是有点大的。其一就是转专业的分数要求只要加权平均达到80即可，我有一段时间的学习方针就是<strong>不要太卷，能把平均分保住80分以上就可以了，到时候转去5系即可。当然这个方针对我后续的学习有不小的影响，间接促成了数分、离散、基物比较糟糕的成绩。</strong></p>
+<p>最后是怎么想的呢？住七年沙河算是一个劝退点（<strong>实话实说，我觉得沙河校区内的各项环境其实都不错，北京城逛个两三次基本就腻了，沙河的确是潜心治学的一个好去处</strong>）。还有就是转专业太麻烦的问题。</p>
+<p>还有一个，就是我觉得我国在航空方面已经够先进了。C919的翼型我认为已经足够完美，歼20的气动设计等等都足够先进，读5系毕业之后，以后估计没我的事。<em>换句话说，喜欢坐冷板凳，但航空的板凳已经够热了？233333</em></p>
+<p><strong>还有就是我数学不行。航空对数学要求还是高的，不信请自行了解一个叫Navier-Stokes方程的东西。</strong></p>
+<p>然后我又把目光投向了3系，准确来说是305。为什么呢？因为它们说是自动化，实际上飞控，无人机基本就是他们在干。师资力量也雄厚，而且航天口的活也有在干。控制工程我觉得也是个足够吸引我的领域。<strong>进3系算是可以把我的计算机+航空两个爱好能有机地联系起来。</strong></p>
+<p><strong>顺带一提，各位选专业的时候，不妨进各学院的官网，看看博士生&#x2F;硕士生导师的师资团队，对学院各个老师的大致研究方向有个概念。当时我就是这么了解41&#x2F;3系的。当时看到305老师的研究课题很多契合我兴趣的时候，我那叫一个激动啊（</strong></p>
+<p>那最后为什么不去？还是数学的锅，自动控制原理我觉得对我来说还是有点挑战…</p>
+<p>其实我最后还是在3跟6之间摇摆不定，想的就是靠专业系统抽奖。第一志愿考虑初心写的是计算机，第二志愿就是自动化，然后系统抽到了计算机。<strong>嗯，就这样吧</strong></p>
+<p>对了，说到志愿、计算机等等，又想起一个事情，<strong>我为什么要选北航？</strong></p>
+<p>高考填志愿的时候，我是可以挑战一下南大计算机的。但是，<strong>一是自己对航空的兴趣，二是北京的地理位置，三是危险的可能</strong>促成了我选北航。</p>
+<p>第一个就不在这细说了，我们谈第二个。南京我以前去玩过，吃的真不行，鸭血粉丝汤之类的我真吃不惯，而且据说南大食堂也不行；北京能吃的就多得多。<strong>而且有一个重要影响因素，就是北京是全国拍飞机最好的地方之一（其它还有上海、成都等），而南京就没什么好拍的。</strong> <strong>北京人文等方面的优势就不说了，不言自明。</strong></p>
+<p>危险的可能是什么呢？当时南大的计算机和天坑专业是放在一起的（好像是环境？），而且我的分数也是刚够到南大的门槛。考虑到这种危险性，我还是放弃填报南大的计算机，选择了北航。</p>
+<p>现在我后悔吗？<strong>我不后悔。</strong> 倒是从铁了心读计算机的角度，还是有点后悔的。个人觉得6系开课的质量不如南大。南大的计算机教学我感觉还真优于6。要举例的话我就举南大的计算机系统基础课（PA）吧。<strong>我觉得那个才是我心目中读CS该上的课。</strong></p>
+<p><strong>当然，上述仅供吐槽，大家看看乐子就好！千万不要跟着后悔啊23333，况且6系放眼全国而言也很不错了</strong></p>
+<h1 id="有关英语"><a href="#有关英语" class="headerlink" title="有关英语"></a>有关英语</h1><p>既然是闲聊，那就多聊点吧233333</p>
+<p>我觉得英语这方面我还是可以聊一点的，这里就分享一点我学英语的经历吧</p>
+<p><strong>我其实没怎么刻意学过英语。我英语真的全靠打游戏学的。</strong> </p>
+<p>这方面要从一个叫未转变者（Unturned）的游戏说起，我在小学四年级-六年级的时候玩得很多。当时这个游戏没有官方中文，<strong>汉化全靠民间汉化补丁。</strong> 但是！这个游戏经常更新新内容（好事），民间汉化自然是更不上更新的进度的，然后就会出现游戏界面<strong>中英掺杂的混乱情况。</strong></p>
+<p>这TM能忍？某种意义上，我是有强迫症的，比如中英掺杂我看着就不爽 <em>（可能是这个的原因，我看着导员等天天说ddl这个词就非常的不爽，好好说截止日期会死？）</em> ，于是我一怒之下卸载了汉化，且不管当时的我看得懂不，直接<strong>上英语原版！</strong>影响其实也不大，因为各个功能的布局我都记着的。自此孩子打开了新世界的大门，在眼前看到的英语界面和记忆里汉化界面的中英对照下，我记下了不少有用的词。**</p>
+<p>这个习惯延续到了我后面五年级开始打彩6的时候。<strong>某种意义上，是彩6把这个习惯发扬光大的。</strong> 因为当时的彩6中文字体有问题（尤其是数字），看着那叫一个难看；英语的字体就没问题。然后我就顺手把彩6的界面也调成全英了。<strong>欸！彩六这边有旁白且也是英语（旁白甚至还提供多种语言），旁白还带字幕，还有干员小故事，顺手学英语的条件那叫一个优越啊！</strong></p>
+<p>后面就成瘾了。能调英语的界面我都尽量调（Windows这边，微软式中文功不可没）。硬要说原理就是创造一个能每天用英语的环境。<em>当然国产软件我不调，以微信等腾讯应用为例，那个英文翻的tm什么玩意</em></p>
+<p>由于我复杂的成分，我无聊还有看Linus Tech Tips（加拿大白嫖王，在此顺便向NixieSub致敬一下），LGR，The 8-bit Guy之类的频道，现在想起来也对学英语有帮助？</p>
+<p>然后再加上自己看到不认识的词就顺便记一下的习惯，还有看到东西就无聊想想英语对应什么词的神奇习惯，这英语就这么学会了（</p>
+<p>说到背单词？初中轶事：当时我们英语课不准上课整英语以外的事情，我手上<strong>恰好有一本牛津高阶词典</strong>，然后我没事干就拿它翻着玩，看到我感兴趣且不认识的词就顺便记一下；某种意义上，这就等于背没难度上限的乱序版词汇书（<em>更直白一点，这不就tm背词典吗？</em>），词汇量确实是这么来的，2333333。当然现在没干了，也没这个时间和机会干了</p>
+<p>另有一份写得稍微正式点的主观经验分享，详见博客，欢迎围观&#x2F;吐槽&#x2F;围攻（误）</p>
+<p>就写到这吧。 </p>
+]]></content>
+      <categories>
+        <category>梦拓相关</category>
+      </categories>
+      <tags>
+        <tag>梦拓</tag>
         <tag>心得</tag>
       </tags>
   </entry>
@@ -1174,6 +1199,27 @@
       <tags>
         <tag>心得</tag>
         <tag>计组</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>建站第一日</title>
+    <url>/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/</url>
+    <content><![CDATA[<p>今天做成的事情不多，主要是做了一下侧边栏的结构，改了个色，加了个favicon，然后基本就没了。</p>
+<p>上述工作的确很简单，但为何忙了一天，却只完成了这几件事呢？问题出在评论区功能和图床的实现上。</p>
+<span id="more"></span>
+
+<p>先说图床。<br>这个Blog显然不会是一个纯文字的博客，后续放图进文章的问题肯定要考虑到。<br>Github Pages没记错的话，库大小似乎是有限制的（1GB？），把所有文章的图片直接存库里固然不现实。找了一天，暂时还没有找到一个成本为0或接近0的方案，基本都要涉及到买域名&#x2F;配置云服务。目前看到一个PicGo + Github的方案似乎可行，之后有空再试。</p>
+<p>再说评论系统。<br>为了和各位读者相互交流，评论区肯定是少不了的。<br>但是，正是在评论区实现的方案选择上，我近乎浪费了一整个早上。为什么呢？还请继续往下看：</p>
+<p>NexT主题集成了几个评论系统：disqus, 畅言，livere，gitalk和utterances。<br>disqus在国内访问速率堪忧，甚至大概率打不开，不在考虑范围内；<br>livere在国内倒是能用，但是必须要社交平台账号登录，不大符合我允许匿名留言的想法；<br>gitalk和utterances必须要求Github登录后才能评论，门槛之高不言而喻，且同样无法实现匿名评论。<br>那畅言呢？要求登录是其一，其美观程度之差是其二，本着不妥协的原则，这个方案也行不通。</p>
+<p>在上述方案都不符合预期的情况下，只得求助各路教程，而各路教程都不约而同地指向了valine。valine允许匿名，外观简洁，看起来就是最佳之选了。在一番了解后，发现valine原本被集成在NexT内，但出于不再开源和安全问题的原因被移除，以单独插件形式存在。安装并配置好后，却发现其无法正常使用：起初是出现401报错，后变为不报错，但评论无法正常发表，点下发表后毫无反应。</p>
+<p>一番折腾后，评论区的建设仍毫无进展，只得暂时作罢。</p>
+<p>Blog的基本框架现在已经成型。接下来的建设任务，我想就是攻克下这两个难题了。至于小细节，留到日后吧。</p>
+]]></content>
+      <categories>
+        <category>建站历程</category>
+      </categories>
+      <tags>
+        <tag>心得</tag>
       </tags>
   </entry>
   <entry>
@@ -1416,52 +1462,6 @@
       <tags>
         <tag>心得</tag>
         <tag>计组</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>在IDEA内部，进行更高效的死锁调试</title>
-    <url>/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/</url>
-    <content><![CDATA[<blockquote>
-<p>本文是对OO第二单元总结的一部分。</p>
-</blockquote>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><a href="https://mp.weixin.qq.com/s/xbVZPRuHR_Dl39O4S6ny0w">oolens最近发的多线程文章中</a>介绍了两套调试工具，但个人认为二者功能相互独立，且二者使用起来都不大方便。<strong>这两个工具还是太吃操作了，有没有什么更简单又强势的工具推荐一下呢？</strong></p>
-<p><strong>有的兄弟，有的！</strong> 使用IDEA本身就够了！我们主要利用的，是它的<code>Dump Threads（获取线程转储）</code>功能。</p>
-<span id="more"></span>
-<h1 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h1><p>这个Community版本也能用，没搞到Ultimate版的同学不用担心。</p>
-<p>在你使用IDEA运行程序的时候，你是否好奇过，这个照相机是个什么玩意？这其实就是我们今天的主角<code>Dump Threads</code>了。</p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20233738.png" alt="Screenshot 2025-03-30 233738.png"></p>
-<p>直接左键选中，会进入一个菜单。<strong>这个选项可以抓取当前时刻程序运行状态的快照</strong>，记录了当前程序下所有线程：</p>
-<ul>
-<li>是否等待</li>
-<li>等待类型</li>
-<li>在代码运行到何处等待</li>
-<li>调用栈<br>等详尽的信息，为我们的调试带来了极大的便利。</li>
-</ul>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250330234106.png" alt="Pasted image 20250330234106.png"></p>
-<p>直接点开超链接，甚至可以直接定位到代码处：</p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250330234144.png" alt="Pasted image 20250330234144.png"></p>
-<p>妈妈再也不用担心我找不到死锁了！</p>
-<p>Debug处也有这个入口，在更多选项里：</p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20235054.png" alt="Screenshot 2025-03-30 235054.png"></p>
-<p>要这么做有一个局限性，<strong>就是当前程序必须在IDEA内运行</strong>，可能需要配合<a href="http://oo.e2.buaa.edu.cn/assignment/621/discussion/1673">更好用的数据投喂器</a>使用。当然，如果能用下面提到的方法，这个局限就不存在。</p>
-<h1 id="更进一步-使用IDEA-Profiler"><a href="#更进一步-使用IDEA-Profiler" class="headerlink" title="更进一步 - 使用IDEA Profiler"></a>更进一步 - 使用IDEA Profiler</h1><p><em>（需要IDEA Ultimate，如果手上没有，获取方法还请自行探索 :D）</em></p>
-<p>显然，我们一般跑程序，不可能全部放在IDEA里面跑；有没有什么像oolens里介绍的工具一样，找出当前运行的所有Java程序，并选取要分析的程序进行分析的方法呢？</p>
-<p><strong>是有的，要用到IDEA Profiler。就是上个单元，我们分析运行时间接触到的那个IDEA Profiler。</strong> 他除了分析运行时间以外，还可以查看选中进程的运行状态。</p>
-<p>要打开它，我们需要点开菜单栏中这个仪表盘图标：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20231301.png" alt="Screenshot 2025-03-30 231301.png"></p>
-<p>点开之后，菜单里会列出正在运行的所有Java程序。如果我们此时的程序正在运行的话，我们可以在下面的选单里找到我们的程序：</p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20231405.png" alt="Screenshot 2025-03-30 231405.png"></p>
-<p>随后直接左键选中，发现里面有个选项叫”Get Thread Dump”，跟我们上面的<code>Dump Threads</code>得到的效果是一样的。</p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20231410.png" alt="Screenshot 2025-03-30 231410.png"></p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250330232124.png" alt="Pasted image 20250330232124.png"></p>
-<p>如果我们此时拥有上述调用的源码，我们一样可以点开超链接，直接定位到代码对应位置；没有的话，IDEA甚至会帮你反编译：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250330232231.png" alt="Pasted image 20250330232231.png"></p>
-<p>整体效果跟oolens提到的<code>jconsole</code>基本一致，甚至比它还好用。</p>
-<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>没什么好总结的，大家手上有IDEA的快去试试吧！:D</p>
-]]></content>
-      <categories>
-        <category>课程相关</category>
-      </categories>
-      <tags>
-        <tag>面向对象</tag>
       </tags>
   </entry>
   <entry>
