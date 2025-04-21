@@ -11035,6 +11035,9 @@ footer.footer .level-end .field {
 }
 .post-navigation {
   color: #7a7a7a;
+  background-color: #fff;
+  padding: 20px 20px;
+  border-radius: 4px;
   flex-wrap: wrap;
   justify-content: space-around;
 }

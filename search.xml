@@ -201,166 +201,6 @@
       </tags>
   </entry>
   <entry>
-    <title>OO_U2 - HW5,6阶段性总结</title>
-    <url>/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
-<p>我的调度算法，与我的架构实现耦合度较高，因此我不得不先提一些我自己的电梯实现；不需要的同学，欢迎直接跳开“电梯实现”部分。</p>
-</blockquote>
-<p>这算是本人两周以来的一个总结吧，终于有时间写了…</p>
-<span id="more"></span>
-
-<h1 id="浅提电梯实现"><a href="#浅提电梯实现" class="headerlink" title="浅提电梯实现"></a>浅提电梯实现</h1><p>读前注意，本人的设计并非最佳，其中有不少会引起复杂度增加的设计，请各位参考时务必谨慎。</p>
-<h2 id="概况"><a href="#概况" class="headerlink" title="概况"></a>概况</h2><p>在完成HW6后，本人的整体架构如下：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250406221034.png" alt="Pasted image 20250406221034.png"></p>
-<p>其中，电梯信息与电梯运行进程分离，便于维护。</p>
-<p>我的电梯，将运行状态分为以下几类：</p>
-<ul>
-<li>IDLE：闲置，此处与常理理解中的闲置是一致的，不多赘述</li>
-<li><strong>RESERVED</strong>：<strong>预约</strong>，<strong>在闲置状态的电梯</strong>，收到<strong>起点与电梯当前所在位置不同楼的请求</strong>时，进入的<strong>移动状态</strong>。</li>
-<li>RUNNING：运行，电梯处在<strong>非预约状态</strong>时的正常移动状态。</li>
-<li>WAITING：等待，电梯停靠，进行上下客时进入的状态。停靠完成后，<strong>视情况</strong>转入RUNNING&#x2F;RESERVED&#x2F;IDLE状态。</li>
-</ul>
-<p>同时，我们还需要记录电梯的<strong>运行方向</strong>，现规定：</p>
-<ul>
-<li>1：上行</li>
-<li>-1：下行</li>
-<li>0：仅在进入IDLE时设为此值。</li>
-<li>在电梯进入WAITING时，<strong>方向将被设置为下一步要移动的方向</strong></li>
-</ul>
-<p>电梯内亦有一子请求表，记录满足以下条件的请求：</p>
-<ul>
-<li><strong>请求与电梯运行方向一致</strong></li>
-<li>记录当前方向的所有请求；比如，我们的电梯正在处理一个<code>F1-F3</code>的请求，现在处于<code>F2</code>；此时，若有一<code>F4-F5</code>的请求，则该请求可被指派给电梯，加入子请求表</li>
-</ul>
-<h2 id="存储状态的额外信息"><a href="#存储状态的额外信息" class="headerlink" title="存储状态的额外信息"></a>存储状态的额外信息</h2><p>上面提到，我们的子请求表只允许同向请求加入；在我们现在的实现下，这种情况当然会产生：</p>
-<ul>
-<li>电梯在<code>F3</code>，IDLE</li>
-<li>出现了一个<code>F1-F7</code>的请求，电梯进入RESERVED，空放到<code>F1</code></li>
-<li>电梯从<code>F3</code>空放去<code>F1</code>途中出现一个<code>F2-F1</code>的请求，我们自然希望捎带它，将其加入子请求表</li>
-</ul>
-<p>也就是说，<strong>空放方向与发出预约的请求的方向反向。</strong> 我们自然需要一个地方暂存这个预约请求；我选择通过<strong>继承</strong>的方法，<strong>将其存在状态内</strong>。</p>
-<p>具体而言：</p>
-<ul>
-<li>上面四个状态均属于一个<code>Status</code>类，内有一<code>enum Type</code>属性，记录当前状态类型</li>
-<li>若一个状态需要记录额外信息，则该状态作为<code>Status</code>的子类，<strong>额外信息作为子类的属性</strong>，存在子类中。</li>
-</ul>
-<p>我们此时只需对RESERVED，WAITING两个状态记录额外信息。</p>
-<p>RESERVED：</p>
-<ul>
-<li><code>allowPickUp</code>：中途是否允许捎带</li>
-<li><code>requester</code>：进行预约的请求。允许为null。</li>
-</ul>
-<p>WAITING：</p>
-<ul>
-<li><code>prevStatus</code>：进入WAITING前的状态。</li>
-</ul>
-<p>欲知为何如此，请继续看下文。</p>
-<h2 id="兼容SCHE请求"><a href="#兼容SCHE请求" class="headerlink" title="兼容SCHE请求"></a>兼容<code>SCHE</code>请求</h2><p>不知各位是否发现，在HW6引入的临时调度，跟我们上面提到的RESERVED略有相似之处？</p>
-<p>我们要让我们的现有设计兼容<code>SCHE</code>请求，只需做这么几件事情：</p>
-<ul>
-<li><code>SCHE-BEGIN</code>前，把途中无法捎带的请求赶回请求池；</li>
-<li>在临时调度至不同层时，<code>SCHE-BEGIN</code>对应转入一个 <strong><code>requester = null</code>，不允许捎带</strong>的RESERVED状态</li>
-<li>确保已有的RESERVED状态下的电梯运行规则，能够处理上述的<code>RESERVED</code>情况</li>
-</ul>
-<p>就这样，我们就做完了<code>SCHE</code>请求的电梯运行部分；剩下的，只需要实现指派电梯进<code>RESERVED</code>的逻辑，很省事吧！？</p>
-<h2 id="等待状态的转移规则"><a href="#等待状态的转移规则" class="headerlink" title="等待状态的转移规则"></a>等待状态的转移规则</h2><p>WAITING的状态转移规则如下：</p>
-<ul>
-<li>先前为<code>RUNNING</code>：<br>若仍有请求未到终点，则恢复RUNNING<br>若请求已全部满足，则进入IDLE</li>
-<li>先前为<code>RESERVED</code>：<br>若未到预约者起点，则恢复RESERVED<br>若到达了预约者起点，则进入RUNNING，同时<strong>将暂存的请求加入子请求表</strong></li>
-<li>先前为<code>IDLE</code>：<br>直接进入<code>RUNNING</code>，<br>因为我们保证，IDLE下的电梯被预约后，直接进入RESERVED状态，<br>此时必是因为，有一起点与IDLE状态下电梯所在位置的请求被分给了电梯。</li>
-</ul>
-<h1 id="调度算法"><a href="#调度算法" class="headerlink" title="调度算法"></a>调度算法</h1><p>交互方面，我采用的是一<code>Dispatcher</code>对多个<code>Elevator</code>的实现，与绝大多数做法一致。</p>
-<p>大家都知道影子电梯，不过它需要<strong>模拟电梯的整个运行过程</strong>，实现略显复杂；那么，有没有一个在复杂度和影子电梯的高效率之间折中的方案呢？</p>
-<p>是有的。我的这个策略在思路上与影子电梯有颇多相似之处，只不过：</p>
-<ul>
-<li>只需要计算（模拟）<strong>当前请求</strong>的运行时间</li>
-<li>已指派给电梯的其它请求的估计，<strong>利用优先级机制实现</strong></li>
-</ul>
-<h2 id="是否允许加入"><a href="#是否允许加入" class="headerlink" title="是否允许加入"></a>是否允许加入</h2><p>进行计算之前，<code>Dispatcher</code>需要得知当前正在评估的电梯，能否接受当前待加入的请求。</p>
-<p>可加入的规则如下：</p>
-<ul>
-<li>若电梯此时在IDLE状态下，直接允许加入，否则进行下述流程</li>
-<li>请求方向需与电梯当前运行方向一致；方向有关的说明见上文。</li>
-<li>电梯同向，且电梯此时没有超过请求的起点</li>
-<li>如果状态为（RESERVED）&#x2F;（WAITING，且前一个状态是RESERVED），则：<br>RESERVED状态需允许捎带<br>若预约请求方向与当前运行方向相反，则待加入请求的终点不得超过预约请求的起点</li>
-<li>加入后，不会出现电梯满员的情况</li>
-</ul>
-<p>“电梯满员”视个人实现不同，判断逻辑可能不同；我这里就以我的实现为例，谈谈我的判断逻辑。</p>
-<p>正如上文所述架构实现，我们一个电梯的子请求队列不仅包含了当前在电梯内的请求，还包含了将来电梯要捎带的请求；</p>
-<p>我们的判断逻辑是，假设请求加入了子请求表，<strong>得出各楼层处，最多同时出现的请求数；</strong> </p>
-<p>这一“同时出现的请求数”，反映了那一运行区间内，电梯内的人数。</p>
-<p><strong>若各区间的同时出现请求数的最大值，大于电梯容量，则认为此时加入请求会导致超员。</strong></p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250406214224.png" alt="Pasted image 20250406214224.png"></p>
-<p>如图所示，待加入请求在<code>F2-F3</code>区间会导致超员，故我们不应加入这一待加入请求。</p>
-<p>需要注意的是，如果采用了上文RESERVED状态的实现，若预约请求方向与电梯空放方向一致，此时还需将预约请求放进上面的图里进行比较。</p>
-<h2 id="计算评价指数"><a href="#计算评价指数" class="headerlink" title="计算评价指数"></a>计算评价指数</h2><p>在上述复杂的判断后，我们终于可以开始计算了…</p>
-<p>我们的计算公式如下：</p>
-<p>$$index &#x3D; index_{base} + priorityPenalty * elevStopTime$$</p>
-<h3 id="index-base"><a href="#index-base" class="headerlink" title="$index_{base}$"></a>$index_{base}$</h3><p>我们先需要得知：</p>
-<ul>
-<li>$dis$：电梯所在位置，与请求起点的楼层数</li>
-<li>$travel$：请求跨越的楼层数</li>
-<li>$stopCount$：请求沿途需要停靠，以让自己进电梯&#x2F;捎带其它请求；<code>stopCount</code>即中途停靠的次数</li>
-</ul>
-<p>随后即可算出当前请求的运行时间，作为我们评价指数计算的第一步；</p>
-<p>$$index_{base} &#x3D; (dis + travel)*elevSpeed + stopCount * elevStopTime $$</p>
-<h3 id="priorityPenalty"><a href="#priorityPenalty" class="headerlink" title="$priorityPenalty$"></a>$priorityPenalty$</h3><p>优先级惩罚，是所有请求的优先级惩罚之和：</p>
-<p>$$priorityPenalty &#x3D; \sum_{i&#x3D;1}^{n}{penalty_{R_i}}$$</p>
-<p>对于一个请求$R$，设其优先级为$priority$，楼层跨度为$travel$，则我们规定该请求允许的中途停靠次数$maxAllowedStops$如下：<br>$$maxAllowedStops &#x3D; round(travel * (1 - \frac{priority}{100}))$$<br>其中，$round(x)$取$x$最靠近的整数。</p>
-<p>在我们进行评价指数的计算时，我们先假设待加入请求已被加入；随后，对原有的请求$R_i$，算出加入后的<strong>总停靠次数</strong>$stops$。</p>
-<ul>
-<li>若$stops &lt;&#x3D; maxAllowedStops$：$penalty_{R_i} &#x3D; 0$</li>
-<li>否则：$penalty_{R_i} &#x3D; (stops - maxAllowedStops) * priority$</li>
-</ul>
-<h3 id="小总结"><a href="#小总结" class="headerlink" title="小总结"></a>小总结</h3><p>由此，我们就可以算出各个（可加入请求的）电梯的评价指数，选择评价指数最低者加入。</p>
-<p>上述是一个相对简单的模型，相信各位有更好的实现。</p>
-<h1 id="评测方案"><a href="#评测方案" class="headerlink" title="评测方案"></a>评测方案</h1><p>我选择构建评测机框架，<strong>留出随机数据生成器（dataGen）与正确性检查器（Checker）的接口</strong>。这样有利于提高不同题目下评测的灵活性。</p>
-<p>评测机框架方面，我构建了一个可以评测<strong>多程序、多测试点</strong>的多线程评测机，按照以下两种策略运行：</p>
-<ul>
-<li>测试深度优先：评测机优先对一个待测程序，测试多个测试点</li>
-<li>测试广度优先：评测机优先对一个测试点，测试多个程序</li>
-</ul>
-<p>评测机框架建议允许添加数据生成器生成的数据以外的数据，从而为人工构造高强度数据提供可能。</p>
-<p>运行测试程序方面，我选用了Python的<code>subprocess</code>库，其中的<code>POpen</code>方法十分有用，不仅可以指定子进程的工作目录，还可重定向子进程的输出。</p>
-<p>注意到，我们的数据投喂器读取的是**当前工作目录下的<code>stdin.txt</code>**；因此，我们可以通过指定不同工作目录的方法，来让投喂器同时测试多个样例。</p>
-<p>随后，我们即可使用数据投喂器+打包好的<code>.jar</code>进行评测；两个子进程需要用管道串起来，实现如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">input_process = subprocess.Popen(</span><br><span class="line">                [<span class="string">&#x27;input.exe&#x27;</span>],  <span class="comment"># input.exe 读取当前目录的 stdin.txt</span></span><br><span class="line">                cwd=case_dir,    <span class="comment"># 设置工作目录为测试用例目录</span></span><br><span class="line">                stdout=subprocess.PIPE,</span><br><span class="line">                stderr=subprocess.DEVNULL,</span><br><span class="line">                text=<span class="literal">True</span></span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">java_process = subprocess.Popen(</span><br><span class="line">                [<span class="string">&#x27;java&#x27;</span>, <span class="string">&#x27;-jar&#x27;</span>, os.path.join(target_dir, jar_file), <span class="string">f&quot;-Xmx<span class="subst">&#123;memLimit&#125;</span>&quot;</span>],</span><br><span class="line">                stdin=input_process.stdout,</span><br><span class="line">                stdout=fileout,</span><br><span class="line">                stderr=fileerr,</span><br><span class="line">                text=<span class="literal">True</span></span><br><span class="line">            )</span><br></pre></td></tr></table></figure>
-
-<p>据闻Python的<code>psutils</code>库有办法记录CPU使用时间，不过我的尝试没有成功，希望做过尝试的同学多多分享经验:P</p>
-<p>我两次作业的随机数据生成器与Checker均先由AI生成，再由人工进行细节修改。</p>
-<p>注意到，AI生成的Checker并不完全准确，在HW6时这一问题尤为显著，需要多处人工修正；<strong>在寻求AI工具的帮助，节省时间的同时，请务必仔细检查AI生成的工具是否能如预期般工作。</strong></p>
-<h1 id="之前写过的一些总结"><a href="#之前写过的一些总结" class="headerlink" title="之前写过的一些总结"></a>之前写过的一些总结</h1><ul>
-<li><a href="http://oo.e2.buaa.edu.cn/assignment/623/discussion/1684">使用ReentrantLock，实现更灵活的锁管理策略</a></li>
-<li><a href="http://oo.buaa.edu.cn/assignment/621/discussion/1682">在IDEA内部，进行更高效的死锁调试</a></li>
-</ul>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
-<li><p>本单元，我感觉最需要的其实是细心，不然线程间交互很容易出现问题。</p>
-</li>
-<li><p>架构设计同样起到了关键的作用。本人架构中<code>RESERVED</code>状态的抽象，大大节省了本单元的开发时间。</p>
-<p>我认为，只要架构：</p>
-<ul>
-<li>易于维护；</li>
-<li>复杂度低（可以归进上条）；</li>
-<li>运行效率在可接受范围内；</li>
-</ul>
-<p>就可以算一个好设计。</p>
-<p>不过，我自己不得不承认，我本单元架构在不少实现细节上的复杂度实在太高，因此带来的BUG与维护的不便不在少数。</p>
-</li>
-<li><p>本单元亦让我直观地感受到了<strong>算法和数学模型，于程序的重要性何在。</strong> </p>
-<p>本人实现中，判断电梯是否满员的问题，可以抽象为计算一个二维空间内，所有线段的最多重叠次数；没有算法的帮助，计算效率很难提升。</p>
-<p>处理优先级问题的方法，其实就是简单的数学建模。</p>
-</li>
-<li><p>感受到了AI的力量。使用AI生成<code>checker</code>+人工修改的效率，远比纯手搓要高。</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>课程相关</category>
-      </categories>
-      <tags>
-        <tag>面向对象</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OO_U1 - 数学表达式</title>
     <url>/2025/02/28/OO_U1%20-%20%E6%95%B0%E5%AD%A6%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
     <content><![CDATA[<h1 id="Hw1"><a href="#Hw1" class="headerlink" title="Hw1"></a>Hw1</h1><p>这本是一个描述本人思路的草稿，后决定还是整理一下，发到公屏交流一下））</p>
@@ -691,6 +531,166 @@
       </tags>
   </entry>
   <entry>
+    <title>OO_U2 - HW5,6阶段性总结</title>
+    <url>/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>我的调度算法，与我的架构实现耦合度较高，因此我不得不先提一些我自己的电梯实现；不需要的同学，欢迎直接跳开“电梯实现”部分。</p>
+</blockquote>
+<p>这算是本人两周以来的一个总结吧，终于有时间写了…</p>
+<span id="more"></span>
+
+<h1 id="浅提电梯实现"><a href="#浅提电梯实现" class="headerlink" title="浅提电梯实现"></a>浅提电梯实现</h1><p>读前注意，本人的设计并非最佳，其中有不少会引起复杂度增加的设计，请各位参考时务必谨慎。</p>
+<h2 id="概况"><a href="#概况" class="headerlink" title="概况"></a>概况</h2><p>在完成HW6后，本人的整体架构如下：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250406221034.png" alt="Pasted image 20250406221034.png"></p>
+<p>其中，电梯信息与电梯运行进程分离，便于维护。</p>
+<p>我的电梯，将运行状态分为以下几类：</p>
+<ul>
+<li>IDLE：闲置，此处与常理理解中的闲置是一致的，不多赘述</li>
+<li><strong>RESERVED</strong>：<strong>预约</strong>，<strong>在闲置状态的电梯</strong>，收到<strong>起点与电梯当前所在位置不同楼的请求</strong>时，进入的<strong>移动状态</strong>。</li>
+<li>RUNNING：运行，电梯处在<strong>非预约状态</strong>时的正常移动状态。</li>
+<li>WAITING：等待，电梯停靠，进行上下客时进入的状态。停靠完成后，<strong>视情况</strong>转入RUNNING&#x2F;RESERVED&#x2F;IDLE状态。</li>
+</ul>
+<p>同时，我们还需要记录电梯的<strong>运行方向</strong>，现规定：</p>
+<ul>
+<li>1：上行</li>
+<li>-1：下行</li>
+<li>0：仅在进入IDLE时设为此值。</li>
+<li>在电梯进入WAITING时，<strong>方向将被设置为下一步要移动的方向</strong></li>
+</ul>
+<p>电梯内亦有一子请求表，记录满足以下条件的请求：</p>
+<ul>
+<li><strong>请求与电梯运行方向一致</strong></li>
+<li>记录当前方向的所有请求；比如，我们的电梯正在处理一个<code>F1-F3</code>的请求，现在处于<code>F2</code>；此时，若有一<code>F4-F5</code>的请求，则该请求可被指派给电梯，加入子请求表</li>
+</ul>
+<h2 id="存储状态的额外信息"><a href="#存储状态的额外信息" class="headerlink" title="存储状态的额外信息"></a>存储状态的额外信息</h2><p>上面提到，我们的子请求表只允许同向请求加入；在我们现在的实现下，这种情况当然会产生：</p>
+<ul>
+<li>电梯在<code>F3</code>，IDLE</li>
+<li>出现了一个<code>F1-F7</code>的请求，电梯进入RESERVED，空放到<code>F1</code></li>
+<li>电梯从<code>F3</code>空放去<code>F1</code>途中出现一个<code>F2-F1</code>的请求，我们自然希望捎带它，将其加入子请求表</li>
+</ul>
+<p>也就是说，<strong>空放方向与发出预约的请求的方向反向。</strong> 我们自然需要一个地方暂存这个预约请求；我选择通过<strong>继承</strong>的方法，<strong>将其存在状态内</strong>。</p>
+<p>具体而言：</p>
+<ul>
+<li>上面四个状态均属于一个<code>Status</code>类，内有一<code>enum Type</code>属性，记录当前状态类型</li>
+<li>若一个状态需要记录额外信息，则该状态作为<code>Status</code>的子类，<strong>额外信息作为子类的属性</strong>，存在子类中。</li>
+</ul>
+<p>我们此时只需对RESERVED，WAITING两个状态记录额外信息。</p>
+<p>RESERVED：</p>
+<ul>
+<li><code>allowPickUp</code>：中途是否允许捎带</li>
+<li><code>requester</code>：进行预约的请求。允许为null。</li>
+</ul>
+<p>WAITING：</p>
+<ul>
+<li><code>prevStatus</code>：进入WAITING前的状态。</li>
+</ul>
+<p>欲知为何如此，请继续看下文。</p>
+<h2 id="兼容SCHE请求"><a href="#兼容SCHE请求" class="headerlink" title="兼容SCHE请求"></a>兼容<code>SCHE</code>请求</h2><p>不知各位是否发现，在HW6引入的临时调度，跟我们上面提到的RESERVED略有相似之处？</p>
+<p>我们要让我们的现有设计兼容<code>SCHE</code>请求，只需做这么几件事情：</p>
+<ul>
+<li><code>SCHE-BEGIN</code>前，把途中无法捎带的请求赶回请求池；</li>
+<li>在临时调度至不同层时，<code>SCHE-BEGIN</code>对应转入一个 <strong><code>requester = null</code>，不允许捎带</strong>的RESERVED状态</li>
+<li>确保已有的RESERVED状态下的电梯运行规则，能够处理上述的<code>RESERVED</code>情况</li>
+</ul>
+<p>就这样，我们就做完了<code>SCHE</code>请求的电梯运行部分；剩下的，只需要实现指派电梯进<code>RESERVED</code>的逻辑，很省事吧！？</p>
+<h2 id="等待状态的转移规则"><a href="#等待状态的转移规则" class="headerlink" title="等待状态的转移规则"></a>等待状态的转移规则</h2><p>WAITING的状态转移规则如下：</p>
+<ul>
+<li>先前为<code>RUNNING</code>：<br>若仍有请求未到终点，则恢复RUNNING<br>若请求已全部满足，则进入IDLE</li>
+<li>先前为<code>RESERVED</code>：<br>若未到预约者起点，则恢复RESERVED<br>若到达了预约者起点，则进入RUNNING，同时<strong>将暂存的请求加入子请求表</strong></li>
+<li>先前为<code>IDLE</code>：<br>直接进入<code>RUNNING</code>，<br>因为我们保证，IDLE下的电梯被预约后，直接进入RESERVED状态，<br>此时必是因为，有一起点与IDLE状态下电梯所在位置的请求被分给了电梯。</li>
+</ul>
+<h1 id="调度算法"><a href="#调度算法" class="headerlink" title="调度算法"></a>调度算法</h1><p>交互方面，我采用的是一<code>Dispatcher</code>对多个<code>Elevator</code>的实现，与绝大多数做法一致。</p>
+<p>大家都知道影子电梯，不过它需要<strong>模拟电梯的整个运行过程</strong>，实现略显复杂；那么，有没有一个在复杂度和影子电梯的高效率之间折中的方案呢？</p>
+<p>是有的。我的这个策略在思路上与影子电梯有颇多相似之处，只不过：</p>
+<ul>
+<li>只需要计算（模拟）<strong>当前请求</strong>的运行时间</li>
+<li>已指派给电梯的其它请求的估计，<strong>利用优先级机制实现</strong></li>
+</ul>
+<h2 id="是否允许加入"><a href="#是否允许加入" class="headerlink" title="是否允许加入"></a>是否允许加入</h2><p>进行计算之前，<code>Dispatcher</code>需要得知当前正在评估的电梯，能否接受当前待加入的请求。</p>
+<p>可加入的规则如下：</p>
+<ul>
+<li>若电梯此时在IDLE状态下，直接允许加入，否则进行下述流程</li>
+<li>请求方向需与电梯当前运行方向一致；方向有关的说明见上文。</li>
+<li>电梯同向，且电梯此时没有超过请求的起点</li>
+<li>如果状态为（RESERVED）&#x2F;（WAITING，且前一个状态是RESERVED），则：<br>RESERVED状态需允许捎带<br>若预约请求方向与当前运行方向相反，则待加入请求的终点不得超过预约请求的起点</li>
+<li>加入后，不会出现电梯满员的情况</li>
+</ul>
+<p>“电梯满员”视个人实现不同，判断逻辑可能不同；我这里就以我的实现为例，谈谈我的判断逻辑。</p>
+<p>正如上文所述架构实现，我们一个电梯的子请求队列不仅包含了当前在电梯内的请求，还包含了将来电梯要捎带的请求；</p>
+<p>我们的判断逻辑是，假设请求加入了子请求表，<strong>得出各楼层处，最多同时出现的请求数；</strong> </p>
+<p>这一“同时出现的请求数”，反映了那一运行区间内，电梯内的人数。</p>
+<p><strong>若各区间的同时出现请求数的最大值，大于电梯容量，则认为此时加入请求会导致超员。</strong></p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250406214224.png" alt="Pasted image 20250406214224.png"></p>
+<p>如图所示，待加入请求在<code>F2-F3</code>区间会导致超员，故我们不应加入这一待加入请求。</p>
+<p>需要注意的是，如果采用了上文RESERVED状态的实现，若预约请求方向与电梯空放方向一致，此时还需将预约请求放进上面的图里进行比较。</p>
+<h2 id="计算评价指数"><a href="#计算评价指数" class="headerlink" title="计算评价指数"></a>计算评价指数</h2><p>在上述复杂的判断后，我们终于可以开始计算了…</p>
+<p>我们的计算公式如下：</p>
+<p>$$index &#x3D; index_{base} + priorityPenalty * elevStopTime$$</p>
+<h3 id="index-base"><a href="#index-base" class="headerlink" title="$index_{base}$"></a>$index_{base}$</h3><p>我们先需要得知：</p>
+<ul>
+<li>$dis$：电梯所在位置，与请求起点的楼层数</li>
+<li>$travel$：请求跨越的楼层数</li>
+<li>$stopCount$：请求沿途需要停靠，以让自己进电梯&#x2F;捎带其它请求；<code>stopCount</code>即中途停靠的次数</li>
+</ul>
+<p>随后即可算出当前请求的运行时间，作为我们评价指数计算的第一步；</p>
+<p>$$index_{base} &#x3D; (dis + travel)*elevSpeed + stopCount * elevStopTime $$</p>
+<h3 id="priorityPenalty"><a href="#priorityPenalty" class="headerlink" title="$priorityPenalty$"></a>$priorityPenalty$</h3><p>优先级惩罚，是所有请求的优先级惩罚之和：</p>
+<p>$$priorityPenalty &#x3D; \sum_{i&#x3D;1}^{n}{penalty_{R_i}}$$</p>
+<p>对于一个请求$R$，设其优先级为$priority$，楼层跨度为$travel$，则我们规定该请求允许的中途停靠次数$maxAllowedStops$如下：<br>$$maxAllowedStops &#x3D; round(travel * (1 - \frac{priority}{100}))$$<br>其中，$round(x)$取$x$最靠近的整数。</p>
+<p>在我们进行评价指数的计算时，我们先假设待加入请求已被加入；随后，对原有的请求$R_i$，算出加入后的<strong>总停靠次数</strong>$stops$。</p>
+<ul>
+<li>若$stops &lt;&#x3D; maxAllowedStops$：$penalty_{R_i} &#x3D; 0$</li>
+<li>否则：$penalty_{R_i} &#x3D; (stops - maxAllowedStops) * priority$</li>
+</ul>
+<h3 id="小总结"><a href="#小总结" class="headerlink" title="小总结"></a>小总结</h3><p>由此，我们就可以算出各个（可加入请求的）电梯的评价指数，选择评价指数最低者加入。</p>
+<p>上述是一个相对简单的模型，相信各位有更好的实现。</p>
+<h1 id="评测方案"><a href="#评测方案" class="headerlink" title="评测方案"></a>评测方案</h1><p>我选择构建评测机框架，<strong>留出随机数据生成器（dataGen）与正确性检查器（Checker）的接口</strong>。这样有利于提高不同题目下评测的灵活性。</p>
+<p>评测机框架方面，我构建了一个可以评测<strong>多程序、多测试点</strong>的多线程评测机，按照以下两种策略运行：</p>
+<ul>
+<li>测试深度优先：评测机优先对一个待测程序，测试多个测试点</li>
+<li>测试广度优先：评测机优先对一个测试点，测试多个程序</li>
+</ul>
+<p>评测机框架建议允许添加数据生成器生成的数据以外的数据，从而为人工构造高强度数据提供可能。</p>
+<p>运行测试程序方面，我选用了Python的<code>subprocess</code>库，其中的<code>POpen</code>方法十分有用，不仅可以指定子进程的工作目录，还可重定向子进程的输出。</p>
+<p>注意到，我们的数据投喂器读取的是**当前工作目录下的<code>stdin.txt</code>**；因此，我们可以通过指定不同工作目录的方法，来让投喂器同时测试多个样例。</p>
+<p>随后，我们即可使用数据投喂器+打包好的<code>.jar</code>进行评测；两个子进程需要用管道串起来，实现如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">input_process = subprocess.Popen(</span><br><span class="line">                [<span class="string">&#x27;input.exe&#x27;</span>],  <span class="comment"># input.exe 读取当前目录的 stdin.txt</span></span><br><span class="line">                cwd=case_dir,    <span class="comment"># 设置工作目录为测试用例目录</span></span><br><span class="line">                stdout=subprocess.PIPE,</span><br><span class="line">                stderr=subprocess.DEVNULL,</span><br><span class="line">                text=<span class="literal">True</span></span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">java_process = subprocess.Popen(</span><br><span class="line">                [<span class="string">&#x27;java&#x27;</span>, <span class="string">&#x27;-jar&#x27;</span>, os.path.join(target_dir, jar_file), <span class="string">f&quot;-Xmx<span class="subst">&#123;memLimit&#125;</span>&quot;</span>],</span><br><span class="line">                stdin=input_process.stdout,</span><br><span class="line">                stdout=fileout,</span><br><span class="line">                stderr=fileerr,</span><br><span class="line">                text=<span class="literal">True</span></span><br><span class="line">            )</span><br></pre></td></tr></table></figure>
+
+<p>据闻Python的<code>psutils</code>库有办法记录CPU使用时间，不过我的尝试没有成功，希望做过尝试的同学多多分享经验:P</p>
+<p>我两次作业的随机数据生成器与Checker均先由AI生成，再由人工进行细节修改。</p>
+<p>注意到，AI生成的Checker并不完全准确，在HW6时这一问题尤为显著，需要多处人工修正；<strong>在寻求AI工具的帮助，节省时间的同时，请务必仔细检查AI生成的工具是否能如预期般工作。</strong></p>
+<h1 id="之前写过的一些总结"><a href="#之前写过的一些总结" class="headerlink" title="之前写过的一些总结"></a>之前写过的一些总结</h1><ul>
+<li><a href="http://oo.e2.buaa.edu.cn/assignment/623/discussion/1684">使用ReentrantLock，实现更灵活的锁管理策略</a></li>
+<li><a href="http://oo.buaa.edu.cn/assignment/621/discussion/1682">在IDEA内部，进行更高效的死锁调试</a></li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li><p>本单元，我感觉最需要的其实是细心，不然线程间交互很容易出现问题。</p>
+</li>
+<li><p>架构设计同样起到了关键的作用。本人架构中<code>RESERVED</code>状态的抽象，大大节省了本单元的开发时间。</p>
+<p>我认为，只要架构：</p>
+<ul>
+<li>易于维护；</li>
+<li>复杂度低（可以归进上条）；</li>
+<li>运行效率在可接受范围内；</li>
+</ul>
+<p>就可以算一个好设计。</p>
+<p>不过，我自己不得不承认，我本单元架构在不少实现细节上的复杂度实在太高，因此带来的BUG与维护的不便不在少数。</p>
+</li>
+<li><p>本单元亦让我直观地感受到了<strong>算法和数学模型，于程序的重要性何在。</strong> </p>
+<p>本人实现中，判断电梯是否满员的问题，可以抽象为计算一个二维空间内，所有线段的最多重叠次数；没有算法的帮助，计算效率很难提升。</p>
+<p>处理优先级问题的方法，其实就是简单的数学建模。</p>
+</li>
+<li><p>感受到了AI的力量。使用AI生成<code>checker</code>+人工修改的效率，远比纯手搓要高。</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>课程相关</category>
+      </categories>
+      <tags>
+        <tag>面向对象</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>自己的碎碎念</title>
     <url>/2024/08/07/casualTalk/</url>
     <content><![CDATA[<p>在给各位塞的私货里面，我大段写了一些经验，自己这部分提的不多；故这里再多闲聊一点，让各位能对我大一经历了什么有点了解（笑）</p>
@@ -743,84 +743,6 @@
       <tags>
         <tag>梦拓</tag>
         <tag>心得</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>“法律、科技与社会”课后思考题答案 - 2024</title>
-    <url>/2025/02/04/%E2%80%9C%E6%B3%95%E5%BE%8B%E3%80%81%E7%A7%91%E6%8A%80%E4%B8%8E%E7%A4%BE%E4%BC%9A%E2%80%9D%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%20-%202024/</url>
-    <content><![CDATA[<p>本文记录了本人复习“法律、科技与社会”课程时，对课后思考题给出的答案。</p>
-<p>众所周知，本课的期末考试就是从课后思考题中抽集体来考，怎么复习想必大家都知道了。当然，不知道这几个思考题之后会不会变。</p>
-<p>以下答案均为本人手搓，在考试获得了95分，当然这个给分可能有玄学成分在里面，仅供参考。</p>
-<h1 id="技术是中立的吗？为什么？"><a href="#技术是中立的吗？为什么？" class="headerlink" title="技术是中立的吗？为什么？"></a>技术是中立的吗？为什么？</h1><p>   不是。</p>
-<ul>
-<li>技术置身于社会中，具有社会性。</li>
-<li>技术是占有世界的媒介，同时也是人类活动的一种形式。其背后包含了人类思维结果。</li>
-</ul>
-<span id="more"></span>
-
-<h1 id="监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？"><a href="#监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？" class="headerlink" title="监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？"></a>监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？</h1><ul>
-<li>用户行为数据将为资本带来利益；从资本逐利的本质而言，监控资本主义的趋势不可避免。</li>
-<li>这一趋势可以被抑制。</li>
-<li>立法与管制</li>
-<li>提高公共意识与参与度</li>
-<li>探索技术向善路径，减少技术对个人隐私的侵害</li>
-</ul>
-<h1 id="学校是否有权使用人脸识别对学生进行考勤？为什么？"><a href="#学校是否有权使用人脸识别对学生进行考勤？为什么？" class="headerlink" title="学校是否有权使用人脸识别对学生进行考勤？为什么？"></a>学校是否有权使用人脸识别对学生进行考勤？为什么？</h1><ul>
-<li>自隐私方面：若学校方面明确了：1.收集的人脸识别信息仅用于考勤，2.且收集的信息将按照相关法律法规进行处理，3.并在事前提前征得了同学的同意，则这一方案可认为可行；</li>
-<li>然而，根据我国目前出台的相关法律法规，此时也需保证人脸识别不作为考勤的唯一方式。</li>
-<li>更严格而言，根据《个人信息保护法》，在公众场合所收集的身份信息只能用于维护公共安全目的，此时考勤并不在维护公共安全范围之内，故可以认为学校无权这么做。</li>
-</ul>
-<h1 id="什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？"><a href="#什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？" class="headerlink" title="什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？"></a>什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？</h1><ul>
-<li>自动驾驶系统在事故不可避免时，是优先保全车上人员安全，还是行人等车外人员的安全。</li>
-<li>首先是在技术上，要尽可能减少“不可避免事故”的发生；</li>
-<li>其次，在设计自动驾驶系统时，应注意伦理方面的考量，确保系统决策符合人类伦理。</li>
-</ul>
-<h1 id="是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？"><a href="#是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？" class="headerlink" title="是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？"></a>是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？</h1><ul>
-<li>是</li>
-<li>存在物化女性的风险</li>
-<li>有悖伦理</li>
-<li>存在因此引起的技术以来与奴隶问题。</li>
-<li>情感与亲密关系的简化。</li>
-</ul>
-<h1 id="什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？"><a href="#什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？" class="headerlink" title="什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？"></a>什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？</h1><p>   指无需有意义的人类控制即可选择目标并施加武力的系统。</p>
-<p>   应该。</p>
-<ul>
-<li>道义角度：其决策远离了人的判断，在道义上这无法接受。</li>
-<li>法律角度：其违背了《国际人权法案》和《武装冲突法》的精神，可能会对非作战人员产生杀伤。</li>
-<li>战略角度：研发出的致命自主武器可能会扩散到潜在敌人中。</li>
-</ul>
-<h1 id="什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？"><a href="#什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？" class="headerlink" title="什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？"></a><strong>什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？</strong></h1><p>   算法歧视是指算法在决策过程中，偏向特定人群或不公平对待某些群体的现象。</p>
-<p>   形成原因：</p>
-<ul>
-<li>数据偏差：算法主要依赖于测试数据；数据不全面，则算法可能会因此产生偏见。</li>
-<li>设计偏见：开发者在设计算法时融入了个人偏见。</li>
-<li>反馈循环：在一些算法系统中，用户行为会反馈到算法中，这可能扩大原有的偏见</li>
-</ul>
-<p>   改进方法：</p>
-<ul>
-<li>改进数据质量</li>
-<li>提高算法透明度与解释性</li>
-<li>引入公平性评估和偏差测试</li>
-<li>用户反馈与持续优化</li>
-</ul>
-<h1 id="在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？"><a href="#在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？" class="headerlink" title="在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？"></a>在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？</h1><ul>
-<li>存在。</li>
-<li>个人角度：提高个人隐私意识，以正当手段维护自己的个人隐私</li>
-<li>立法角度：完善相关法律法规，自法律角度约束个人敏感信息的使用</li>
-<li>数据收集者角度：尊重用户隐私，避免过度收集用户敏感信息；完善技术手段，减少敏感信息的使用，避免敏感信息的泄露</li>
-</ul>
-<h1 id="作为计算机专业的学生，你如何看待人工智能的未来？"><a href="#作为计算机专业的学生，你如何看待人工智能的未来？" class="headerlink" title="作为计算机专业的学生，你如何看待人工智能的未来？"></a>作为<strong>计算机专业</strong>的学生，你如何看待人工智能的未来？</h1><ul>
-<li>自生产工具的角度而言，人工智能将促进人类社会的生产力发展，从而促进人类社会的进步，我们应继续追求人工智能在技术层面的进步，从而进一步发展社会生产力；同时，我们也应积极接受并利用AI这一生产力工具。</li>
-<li>自道德伦理角度而言，人工智能的使用，可能出现潜在的道德伦理问题，当前也出现了深度伪造、AI合成假新闻等问题。这需要我们在技术层面加以防范，；</li>
-<li>自社会角度而言，人工智能必然会因人工智能的出现，对已有的部分人工进行替代。同时，人工智能的出现，也为我们带来了新的就业机会。因此，我们需要积极顺应这一变化，积极学习AI相关知识，同时提高自身创新能力与软实力。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>课程相关</category>
-      </categories>
-      <tags>
-        <tag>水课</tag>
-        <tag>FKS</tag>
       </tags>
   </entry>
   <entry>
@@ -916,6 +838,21 @@
       </categories>
       <tags>
         <tag>面向对象</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>图床测试</title>
+    <url>/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</url>
+    <content><![CDATA[<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/%7B433FA560-1033-4134-A91E-3F4E0C6D3AC2%7D.png" alt="{433FA560-1033-4134-A91E-3F4E0C6D3AC2}.png"></p>
+<p>通过阿里云OSS+PicGo的方案，本博客成功实现了图床功能。</p>
+<p>Github在国内访问速度太慢，为了实现图片快速加载，只能加点钱上阿里云了 :(</p>
+<p>不过一个月也就6块钱，也就约等于一个月少喝一瓶东方树叶嘛😋</p>
+]]></content>
+      <categories>
+        <category>建站历程</category>
+      </categories>
+      <tags>
+        <tag>测试</tag>
       </tags>
   </entry>
   <entry>
@@ -1057,58 +994,127 @@
       </tags>
   </entry>
   <entry>
-    <title>图床测试</title>
-    <url>/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</url>
-    <content><![CDATA[<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/%7B433FA560-1033-4134-A91E-3F4E0C6D3AC2%7D.png" alt="{433FA560-1033-4134-A91E-3F4E0C6D3AC2}.png"></p>
-<p>通过阿里云OSS+PicGo的方案，本博客成功实现了图床功能。</p>
-<p>Github在国内访问速度太慢，为了实现图片快速加载，只能加点钱上阿里云了 :(</p>
-<p>不过一个月也就6块钱，也就约等于一个月少喝一瓶东方树叶嘛😋</p>
+    <title>在IDEA内部，进行更高效的死锁调试</title>
+    <url>/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是对OO第二单元总结的一部分。</p>
+</blockquote>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><a href="https://mp.weixin.qq.com/s/xbVZPRuHR_Dl39O4S6ny0w">oolens最近发的多线程文章中</a>介绍了两套调试工具，但个人认为二者功能相互独立，且二者使用起来都不大方便。<strong>这两个工具还是太吃操作了，有没有什么更简单又强势的工具推荐一下呢？</strong></p>
+<p><strong>有的兄弟，有的！</strong> 使用IDEA本身就够了！我们主要利用的，是它的<code>Dump Threads（获取线程转储）</code>功能。</p>
+<span id="more"></span>
+<h1 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h1><p>这个Community版本也能用，没搞到Ultimate版的同学不用担心。</p>
+<p>在你使用IDEA运行程序的时候，你是否好奇过，这个照相机是个什么玩意？这其实就是我们今天的主角<code>Dump Threads</code>了。</p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20233738.png" alt="Screenshot 2025-03-30 233738.png"></p>
+<p>直接左键选中，会进入一个菜单。<strong>这个选项可以抓取当前时刻程序运行状态的快照</strong>，记录了当前程序下所有线程：</p>
+<ul>
+<li>是否等待</li>
+<li>等待类型</li>
+<li>在代码运行到何处等待</li>
+<li>调用栈<br>等详尽的信息，为我们的调试带来了极大的便利。</li>
+</ul>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250330234106.png" alt="Pasted image 20250330234106.png"></p>
+<p>直接点开超链接，甚至可以直接定位到代码处：</p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250330234144.png" alt="Pasted image 20250330234144.png"></p>
+<p>妈妈再也不用担心我找不到死锁了！</p>
+<p>Debug处也有这个入口，在更多选项里：</p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20235054.png" alt="Screenshot 2025-03-30 235054.png"></p>
+<p>要这么做有一个局限性，<strong>就是当前程序必须在IDEA内运行</strong>，可能需要配合<a href="http://oo.e2.buaa.edu.cn/assignment/621/discussion/1673">更好用的数据投喂器</a>使用。当然，如果能用下面提到的方法，这个局限就不存在。</p>
+<h1 id="更进一步-使用IDEA-Profiler"><a href="#更进一步-使用IDEA-Profiler" class="headerlink" title="更进一步 - 使用IDEA Profiler"></a>更进一步 - 使用IDEA Profiler</h1><p><em>（需要IDEA Ultimate，如果手上没有，获取方法还请自行探索 :D）</em></p>
+<p>显然，我们一般跑程序，不可能全部放在IDEA里面跑；有没有什么像oolens里介绍的工具一样，找出当前运行的所有Java程序，并选取要分析的程序进行分析的方法呢？</p>
+<p><strong>是有的，要用到IDEA Profiler。就是上个单元，我们分析运行时间接触到的那个IDEA Profiler。</strong> 他除了分析运行时间以外，还可以查看选中进程的运行状态。</p>
+<p>要打开它，我们需要点开菜单栏中这个仪表盘图标：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20231301.png" alt="Screenshot 2025-03-30 231301.png"></p>
+<p>点开之后，菜单里会列出正在运行的所有Java程序。如果我们此时的程序正在运行的话，我们可以在下面的选单里找到我们的程序：</p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20231405.png" alt="Screenshot 2025-03-30 231405.png"></p>
+<p>随后直接左键选中，发现里面有个选项叫”Get Thread Dump”，跟我们上面的<code>Dump Threads</code>得到的效果是一样的。</p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20231410.png" alt="Screenshot 2025-03-30 231410.png"></p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250330232124.png" alt="Pasted image 20250330232124.png"></p>
+<p>如果我们此时拥有上述调用的源码，我们一样可以点开超链接，直接定位到代码对应位置；没有的话，IDEA甚至会帮你反编译：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250330232231.png" alt="Pasted image 20250330232231.png"></p>
+<p>整体效果跟oolens提到的<code>jconsole</code>基本一致，甚至比它还好用。</p>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>没什么好总结的，大家手上有IDEA的快去试试吧！:D</p>
 ]]></content>
       <categories>
-        <category>建站历程</category>
+        <category>课程相关</category>
       </categories>
       <tags>
-        <tag>测试</tag>
+        <tag>面向对象</tag>
       </tags>
   </entry>
   <entry>
-    <title>建站第一日</title>
-    <url>/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/</url>
-    <content><![CDATA[<p>今天做成的事情不多，主要是做了一下侧边栏的结构，改了个色，加了个favicon，然后基本就没了。</p>
-<p>上述工作的确很简单，但为何忙了一天，却只完成了这几件事呢？问题出在评论区功能和图床的实现上。</p>
+    <title>“法律、科技与社会”课后思考题答案 - 2024</title>
+    <url>/2025/02/04/%E2%80%9C%E6%B3%95%E5%BE%8B%E3%80%81%E7%A7%91%E6%8A%80%E4%B8%8E%E7%A4%BE%E4%BC%9A%E2%80%9D%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%20-%202024/</url>
+    <content><![CDATA[<p>本文记录了本人复习“法律、科技与社会”课程时，对课后思考题给出的答案。</p>
+<p>众所周知，本课的期末考试就是从课后思考题中抽集体来考，怎么复习想必大家都知道了。当然，不知道这几个思考题之后会不会变。</p>
+<p>以下答案均为本人手搓，在考试获得了95分，当然这个给分可能有玄学成分在里面，仅供参考。</p>
+<h1 id="技术是中立的吗？为什么？"><a href="#技术是中立的吗？为什么？" class="headerlink" title="技术是中立的吗？为什么？"></a>技术是中立的吗？为什么？</h1><p>   不是。</p>
+<ul>
+<li>技术置身于社会中，具有社会性。</li>
+<li>技术是占有世界的媒介，同时也是人类活动的一种形式。其背后包含了人类思维结果。</li>
+</ul>
 <span id="more"></span>
 
-<p>先说图床。<br>这个Blog显然不会是一个纯文字的博客，后续放图进文章的问题肯定要考虑到。<br>Github Pages没记错的话，库大小似乎是有限制的（1GB？），把所有文章的图片直接存库里固然不现实。找了一天，暂时还没有找到一个成本为0或接近0的方案，基本都要涉及到买域名&#x2F;配置云服务。目前看到一个PicGo + Github的方案似乎可行，之后有空再试。</p>
-<p>再说评论系统。<br>为了和各位读者相互交流，评论区肯定是少不了的。<br>但是，正是在评论区实现的方案选择上，我近乎浪费了一整个早上。为什么呢？还请继续往下看：</p>
-<p>NexT主题集成了几个评论系统：disqus, 畅言，livere，gitalk和utterances。<br>disqus在国内访问速率堪忧，甚至大概率打不开，不在考虑范围内；<br>livere在国内倒是能用，但是必须要社交平台账号登录，不大符合我允许匿名留言的想法；<br>gitalk和utterances必须要求Github登录后才能评论，门槛之高不言而喻，且同样无法实现匿名评论。<br>那畅言呢？要求登录是其一，其美观程度之差是其二，本着不妥协的原则，这个方案也行不通。</p>
-<p>在上述方案都不符合预期的情况下，只得求助各路教程，而各路教程都不约而同地指向了valine。valine允许匿名，外观简洁，看起来就是最佳之选了。在一番了解后，发现valine原本被集成在NexT内，但出于不再开源和安全问题的原因被移除，以单独插件形式存在。安装并配置好后，却发现其无法正常使用：起初是出现401报错，后变为不报错，但评论无法正常发表，点下发表后毫无反应。</p>
-<p>一番折腾后，评论区的建设仍毫无进展，只得暂时作罢。</p>
-<p>Blog的基本框架现在已经成型。接下来的建设任务，我想就是攻克下这两个难题了。至于小细节，留到日后吧。</p>
+<h1 id="监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？"><a href="#监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？" class="headerlink" title="监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？"></a>监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？</h1><ul>
+<li>用户行为数据将为资本带来利益；从资本逐利的本质而言，监控资本主义的趋势不可避免。</li>
+<li>这一趋势可以被抑制。</li>
+<li>立法与管制</li>
+<li>提高公共意识与参与度</li>
+<li>探索技术向善路径，减少技术对个人隐私的侵害</li>
+</ul>
+<h1 id="学校是否有权使用人脸识别对学生进行考勤？为什么？"><a href="#学校是否有权使用人脸识别对学生进行考勤？为什么？" class="headerlink" title="学校是否有权使用人脸识别对学生进行考勤？为什么？"></a>学校是否有权使用人脸识别对学生进行考勤？为什么？</h1><ul>
+<li>自隐私方面：若学校方面明确了：1.收集的人脸识别信息仅用于考勤，2.且收集的信息将按照相关法律法规进行处理，3.并在事前提前征得了同学的同意，则这一方案可认为可行；</li>
+<li>然而，根据我国目前出台的相关法律法规，此时也需保证人脸识别不作为考勤的唯一方式。</li>
+<li>更严格而言，根据《个人信息保护法》，在公众场合所收集的身份信息只能用于维护公共安全目的，此时考勤并不在维护公共安全范围之内，故可以认为学校无权这么做。</li>
+</ul>
+<h1 id="什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？"><a href="#什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？" class="headerlink" title="什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？"></a>什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？</h1><ul>
+<li>自动驾驶系统在事故不可避免时，是优先保全车上人员安全，还是行人等车外人员的安全。</li>
+<li>首先是在技术上，要尽可能减少“不可避免事故”的发生；</li>
+<li>其次，在设计自动驾驶系统时，应注意伦理方面的考量，确保系统决策符合人类伦理。</li>
+</ul>
+<h1 id="是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？"><a href="#是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？" class="headerlink" title="是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？"></a>是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？</h1><ul>
+<li>是</li>
+<li>存在物化女性的风险</li>
+<li>有悖伦理</li>
+<li>存在因此引起的技术以来与奴隶问题。</li>
+<li>情感与亲密关系的简化。</li>
+</ul>
+<h1 id="什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？"><a href="#什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？" class="headerlink" title="什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？"></a>什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？</h1><p>   指无需有意义的人类控制即可选择目标并施加武力的系统。</p>
+<p>   应该。</p>
+<ul>
+<li>道义角度：其决策远离了人的判断，在道义上这无法接受。</li>
+<li>法律角度：其违背了《国际人权法案》和《武装冲突法》的精神，可能会对非作战人员产生杀伤。</li>
+<li>战略角度：研发出的致命自主武器可能会扩散到潜在敌人中。</li>
+</ul>
+<h1 id="什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？"><a href="#什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？" class="headerlink" title="什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？"></a><strong>什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？</strong></h1><p>   算法歧视是指算法在决策过程中，偏向特定人群或不公平对待某些群体的现象。</p>
+<p>   形成原因：</p>
+<ul>
+<li>数据偏差：算法主要依赖于测试数据；数据不全面，则算法可能会因此产生偏见。</li>
+<li>设计偏见：开发者在设计算法时融入了个人偏见。</li>
+<li>反馈循环：在一些算法系统中，用户行为会反馈到算法中，这可能扩大原有的偏见</li>
+</ul>
+<p>   改进方法：</p>
+<ul>
+<li>改进数据质量</li>
+<li>提高算法透明度与解释性</li>
+<li>引入公平性评估和偏差测试</li>
+<li>用户反馈与持续优化</li>
+</ul>
+<h1 id="在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？"><a href="#在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？" class="headerlink" title="在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？"></a>在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？</h1><ul>
+<li>存在。</li>
+<li>个人角度：提高个人隐私意识，以正当手段维护自己的个人隐私</li>
+<li>立法角度：完善相关法律法规，自法律角度约束个人敏感信息的使用</li>
+<li>数据收集者角度：尊重用户隐私，避免过度收集用户敏感信息；完善技术手段，减少敏感信息的使用，避免敏感信息的泄露</li>
+</ul>
+<h1 id="作为计算机专业的学生，你如何看待人工智能的未来？"><a href="#作为计算机专业的学生，你如何看待人工智能的未来？" class="headerlink" title="作为计算机专业的学生，你如何看待人工智能的未来？"></a>作为<strong>计算机专业</strong>的学生，你如何看待人工智能的未来？</h1><ul>
+<li>自生产工具的角度而言，人工智能将促进人类社会的生产力发展，从而促进人类社会的进步，我们应继续追求人工智能在技术层面的进步，从而进一步发展社会生产力；同时，我们也应积极接受并利用AI这一生产力工具。</li>
+<li>自道德伦理角度而言，人工智能的使用，可能出现潜在的道德伦理问题，当前也出现了深度伪造、AI合成假新闻等问题。这需要我们在技术层面加以防范，；</li>
+<li>自社会角度而言，人工智能必然会因人工智能的出现，对已有的部分人工进行替代。同时，人工智能的出现，也为我们带来了新的就业机会。因此，我们需要积极顺应这一变化，积极学习AI相关知识，同时提高自身创新能力与软实力。</li>
+</ul>
 ]]></content>
       <categories>
-        <category>建站历程</category>
+        <category>课程相关</category>
       </categories>
       <tags>
-        <tag>心得</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>第一次尝试</title>
-    <url>/2023/11/27/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95/</url>
-    <content><![CDATA[<pre><code>万事开头难。
-</code></pre>
-<p>有关建设个人博客这件事，本人其实早在2022年5月，就已按各路教程，用Hexo和Github Pages搭好了环境。苦于当时的学业压力，加上后续也没有任何写随笔的时间和欲望，这一项目就此搁浅，主页上也只留着默认的“hello world”。</p>
-<p>转眼，过了一年半，这个想法又被提上了日程。主要的推动力，我想是高宁老师在几周前《大国领袖》课程上的点醒。的确，写作使人深刻。思想在矛盾中产生进步，而若不以文字记录下所思所想，任何进步所获，都将被时间冲淡，最后终将导致自己寸步未进。听得此话，如醍醐灌顶。也许，真的是时候认真记录一下自己的所思所想了。</p>
-<p>初入大学数月，感受颇丰——无论是学业上，还是这几个月来自己学余的所见所闻。这几个月，有看完MyGo!!!!!、补完少歌之后的感动，有学业繁重、认识到自己与各路大神差距的压力，有对自己选择信息类，而非三年前自己所热爱的航空学的怀疑，更有初中以后，自己的精神支柱长期空缺的反思。上述种种，我想，绝非只是自己心里想想，然后任其随时间逝去就能过去的。用文字记录下自己的感受，并在写作中反思，我想才是正解。</p>
-<p>当然，自己搭建Blog，也绝非易事。在您观看这篇文章时，本人可能还在潜心研究NexT主题的各类复杂设置，这个博客也大概率还只是一个刚搭好的毛胚房。这也算是我第一次真正使用Github开发自己的项目，要学习的东西自然也是很多。</p>
-<p>写到这里，已然词穷。本人Blog的第一篇文章，就到此草草作结吧。</p>
-<p>但愿写完这篇文章之后，我还能记得继续写吧（笑</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>心得</tag>
+        <tag>水课</tag>
+        <tag>FKS</tag>
       </tags>
   </entry>
   <entry>
@@ -1261,80 +1267,6 @@
       </tags>
   </entry>
   <entry>
-    <title>航砖祭祖后日谈</title>
-    <url>/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</url>
-    <content><![CDATA[<p>本文将对BUAA_CO_2024进行简要回顾，并给出自己的一些主观建议，仅供参考。</p>
-<span id="more"></span>
-
-<h1 id="预习建议"><a href="#预习建议" class="headerlink" title="预习建议"></a>预习建议</h1><p>主要针对实验部分进行预习。理论部分听课&#x2F;考前看408资料即可。有简单&#x2F;复杂两个预习方法。</p>
-<p>简单玩法，我推荐游玩图灵完备（Turing Complete）。玩到汇编之前基本就差不多了，当然能打完是最好，2333</p>
-<p>复杂玩法（<strong>地狱难度！！</strong>），我力推<a href="https://ysyx.oscc.cc/">“一生一芯”项目</a>。做到B阶段，在体系结构方面的理解就足够薄纱课程组给的实验方案了；课上测试另说（笑）</p>
-<p>要完成“一生一芯”，请预留至少两个月时间。<strong>难度真的很高，做之前做好思想觉悟！！</strong></p>
-<p>只不过，一生一芯用的指令集是RISC-V，跟课程组选用的MIPS有所不同。二者都属于RISC，不过有一些实现细节的不同，我认为影响不大。</p>
-<p>哪怕你在大二上上完了计组，如果你对体系结构感兴趣，我还是推荐你抽时间做一做一生一芯这个项目。因为在你上完后（至少我上完后），你会发现，本校的计组在硬件实现方面的知识实在欠缺，想不到吧？</p>
-<h1 id="课程概况"><a href="#课程概况" class="headerlink" title="课程概况"></a>课程概况</h1><p>最终目标：要求实现支持数条MIPS指令，以及异常、中断的五级流水线处理器。</p>
-<p>要求实现的指令集十分精简，具体可看本人P7的设计文档。</p>
-<p>课程分为理论课与实验课两部分。理论课讲述的是正常的计组课程内容。理论课部分的资料，出于课件版权问题，不在此放出。在课程正式开始时，建议咨询各路学长&#x2F;学姐获取资料。</p>
-<p>实验课即是各个Project。</p>
-<ul>
-<li>P0~P1：利用Logisim构建一些简单电路</li>
-<li>P2：利用MARS编写MIPS汇编程序</li>
-<li>P3：使用Logisim搭建单周期MIPS处理器</li>
-<li>P4：使用Verilog实现单周期MIPS处理器</li>
-<li>P5：实现五级流水线，处理各类冒险（数据冒险等）</li>
-<li>P6：进一步完善P5的设计，主要是添加MDU与新指令</li>
-<li>P7：支持异常与中断</li>
-</ul>
-<p>实验部分，在线上测试平台(cscore.buaa.edu.cn)，对各位的设计进行测试。</p>
-<h1 id="细说实验部分"><a href="#细说实验部分" class="headerlink" title="细说实验部分"></a>细说实验部分</h1><p>包含机房上机、课下作业两环节。</p>
-<p>对每一Project，需完成课下提交，方有上机测试资格；在完成上机测试之后，该Project才视为通过。各Project实行闯关制，唯有前一Project通过才可进行下一Project。</p>
-<p>在本届中，闯关制在P3才正式启动；也就是说，P0-P2课下&#x2F;课上未通过，也不会影响后续进度，到P3开始才影响。<strong>但考虑到实验部分成绩会算入最终成绩，我仍然建议尽力而为。</strong></p>
-<p>在学期的第1-3周为Pre阶段；同学在此期间在课程网站的教程部分，学习后续要用到的知识。其中有一些习题，<strong>由于判分标准始终不明，我还是建议尽力而为。</strong></p>
-<p>4-15周则是实验正式开始阶段。期间，你需要完成“一周一P，打下计组Project那些事”（P7例外，给了两周）。12周对8个Project（0-7），还包括P0-P2的保送，容错其实还行。</p>
-<p>课下测试是<strong>弱测</strong>，仅对你的实现是否基本正确进行测试，在边界条件下的正确性可能不会测试。在线上测试时，除对你的新加指令进行测试外，还会对你的课下提交进行<strong>强测</strong>，覆盖更多的边界条件。</p>
-<p>若你课下没考虑周全，看到课下提交通过就认为完事的话，那你很有可能会在课上满脸痛苦的找bug，还找不出，最后喜提再来一次…</p>
-<p>这也是为什么，我们需要在课下造评测机，数据生成器等等，自行尽可能全面测试。</p>
-<p>机房上机类似于考试，在本届设在每周一晚7点开始，共持续2小时，<strong>闭卷</strong>。</p>
-<p>每次上机考三个题，三个过两个记为通过，全过记为优秀。<strong>过两题和过三题的给分区别至今无人明确，我继续建议尽力而为。同时，在时间不够的时候，切勿盲目追求三题全过。</strong></p>
-<p>P0-P2就是做一下Pre练习类似的题目，有一定难度；</p>
-<p>P3-P6是三个加指令题。<strong>这部分就有意思了</strong>，这里加的不是MIPS指令集中的指令，而是课程组自行编写的新指令。具体题型建议参考往届学长&#x2F;学姐博客。</p>
-<p>P7则是对课下提交进行强测，并附带一个异常有关的加指令题。只要课下写得好，P7其实更简单。</p>
-<p>在每次上机完成后，还要简要回答一些问题。这部分就是助教挑几个问题问，大家基本都能答上，不用担心。</p>
-<h1 id="讨论区"><a href="#讨论区" class="headerlink" title="讨论区"></a>讨论区</h1><p>课程平台设有讨论区。在此鼓励各位积极水帖，积极分享交流经验。</p>
-<p>你可以分享：</p>
-<ul>
-<li>解题思路</li>
-<li>架构搭建经验</li>
-<li>数据生成思路&#x2F;实现</li>
-<li>评测机搭建思路&#x2F;实现</li>
-<li>其它可以提高效率的窍门：比如我自己就找到了命令行调用ISE的办法，直接抛弃臃肿的GUI🤤</li>
-</ul>
-<h1 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h1><h2 id="有关硬件实现"><a href="#有关硬件实现" class="headerlink" title="有关硬件实现"></a>有关硬件实现</h2><p>前面有稍微提到，本课程设计在硬件实现方面有所欠缺。何出此言？</p>
-<p>在P6时，我们要求加入MDU，以支持乘除操作。但是，课程组给出的要求是用<code>*</code>、<code>/</code>、<code>%</code>行为级描述乘、除、取余操作，其硬件实现在实验教材中并未提及（在我这一届）。在理论课那边呢？这要看老师，有些老师可能会提，也有不提的，这是一点。</p>
-<p>第二点，自2023年（我的上一届），课程设计去掉了P8 - FPGA实验。自此，实验设计中唯一跟硬件沾边的部分被砍没了。</p>
-<p>因此，只看实验教程，你不会知道：</p>
-<ul>
-<li>怎么把自己的设计搬上FPGA</li>
-<li>时序约束文件怎么写</li>
-<li>FPGA上怎么调用IP核，用上板载DRAM&#x2F;SRAM</li>
-<li>自己设计的时序情况如何，怎么进行时序优化</li>
-</ul>
-<p>第三点，课上测试。有一些指令逻辑对应的电路设计很难实现，且需要搭建专门模块，在我看来不大符合“通用处理器”的设计初衷。有些题目，在我看来，考察的其实是面向过程编程能力和读题能力，跟体系结构没什么关系。但从考察对自己架构的熟悉程度而言，这种设计也合理。</p>
-<p>因此，如果你实在对体系结构感兴趣，我推荐你课下自己多花时间了解，不要窘于课程设计。当然，如果你对体系结构不感兴趣，这种课程设计也确实足够了。</p>
-<h2 id="和理论课的脱节"><a href="#和理论课的脱节" class="headerlink" title="和理论课的脱节"></a>和理论课的脱节</h2><p>这个情况主要对2306。对于高工的同学（2318）是另外一个故事，我看他们的实验性实验设计挺不错的。</p>
-<p>主要是，理论课讲了Cache，实验课没有考察实现。这个问题在高工部分的新版实验解决了，那个实验有考察Cache部分的内容，不知道这个实验2406会不会采用。</p>
-<p>还有就是，理论课进度取决于老师。比如，P5实验开始，有的老师可能已经讲完了流水线和冒险有关知识，而有的老师还没开始，这就会导致实验进度与理论课进度的脱节。这问题没啥好解法，自己看往年课件吧。</p>
-<p>在这两点以外，其实就没什么好吐槽的了，挺好的。</p>
-]]></content>
-      <categories>
-        <category>课程相关</category>
-      </categories>
-      <tags>
-        <tag>心得</tag>
-        <tag>计组</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>技术演示 - 并发执行的多测试数据对拍脚本</title>
     <url>/2025/02/04/%E6%8A%80%E6%9C%AF%E6%BC%94%E7%A4%BA%20-%20%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C%E7%9A%84%E5%A4%9A%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%E5%AF%B9%E6%8B%8D%E8%84%9A%E6%9C%AC/</url>
     <content><![CDATA[<blockquote>
@@ -1409,6 +1341,99 @@
 <h1 id="演示下载"><a href="#演示下载" class="headerlink" title="演示下载"></a>演示下载</h1><p>技术演示 - <a href="https://bhpan.buaa.edu.cn/link/AA86CF06932380478FBD0AB8D9A22178D8">https://bhpan.buaa.edu.cn/link/AA86CF06932380478FBD0AB8D9A22178D8</a><br>文件名：experiment_parallel.zip<br>有效期限：永久有效<br>提取码：9eXL</p>
 <p><strong>！！在运行前，请先配置好xilinx用户环境变量，具体见：<a href="http://cscore.buaa.edu.cn/#/discussion_area/1461/1777/posts">http://cscore.buaa.edu.cn/#/discussion_area/1461/1777/posts</a> ！！</strong></p>
 <p>点击<code>!make.bat</code>运行，运行前先在<code>/src</code>里放好Verilog源码，在<code>/code</code>里放好待对拍<code>.asm</code>。</p>
+]]></content>
+      <categories>
+        <category>课程相关</category>
+      </categories>
+      <tags>
+        <tag>心得</tag>
+        <tag>计组</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第一次尝试</title>
+    <url>/2023/11/27/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95/</url>
+    <content><![CDATA[<pre><code>万事开头难。
+</code></pre>
+<p>有关建设个人博客这件事，本人其实早在2022年5月，就已按各路教程，用Hexo和Github Pages搭好了环境。苦于当时的学业压力，加上后续也没有任何写随笔的时间和欲望，这一项目就此搁浅，主页上也只留着默认的“hello world”。</p>
+<p>转眼，过了一年半，这个想法又被提上了日程。主要的推动力，我想是高宁老师在几周前《大国领袖》课程上的点醒。的确，写作使人深刻。思想在矛盾中产生进步，而若不以文字记录下所思所想，任何进步所获，都将被时间冲淡，最后终将导致自己寸步未进。听得此话，如醍醐灌顶。也许，真的是时候认真记录一下自己的所思所想了。</p>
+<p>初入大学数月，感受颇丰——无论是学业上，还是这几个月来自己学余的所见所闻。这几个月，有看完MyGo!!!!!、补完少歌之后的感动，有学业繁重、认识到自己与各路大神差距的压力，有对自己选择信息类，而非三年前自己所热爱的航空学的怀疑，更有初中以后，自己的精神支柱长期空缺的反思。上述种种，我想，绝非只是自己心里想想，然后任其随时间逝去就能过去的。用文字记录下自己的感受，并在写作中反思，我想才是正解。</p>
+<p>当然，自己搭建Blog，也绝非易事。在您观看这篇文章时，本人可能还在潜心研究NexT主题的各类复杂设置，这个博客也大概率还只是一个刚搭好的毛胚房。这也算是我第一次真正使用Github开发自己的项目，要学习的东西自然也是很多。</p>
+<p>写到这里，已然词穷。本人Blog的第一篇文章，就到此草草作结吧。</p>
+<p>但愿写完这篇文章之后，我还能记得继续写吧（笑</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>心得</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>航砖祭祖后日谈</title>
+    <url>/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</url>
+    <content><![CDATA[<p>本文将对BUAA_CO_2024进行简要回顾，并给出自己的一些主观建议，仅供参考。</p>
+<span id="more"></span>
+
+<h1 id="预习建议"><a href="#预习建议" class="headerlink" title="预习建议"></a>预习建议</h1><p>主要针对实验部分进行预习。理论部分听课&#x2F;考前看408资料即可。有简单&#x2F;复杂两个预习方法。</p>
+<p>简单玩法，我推荐游玩图灵完备（Turing Complete）。玩到汇编之前基本就差不多了，当然能打完是最好，2333</p>
+<p>复杂玩法（<strong>地狱难度！！</strong>），我力推<a href="https://ysyx.oscc.cc/">“一生一芯”项目</a>。做到B阶段，在体系结构方面的理解就足够薄纱课程组给的实验方案了；课上测试另说（笑）</p>
+<p>要完成“一生一芯”，请预留至少两个月时间。<strong>难度真的很高，做之前做好思想觉悟！！</strong></p>
+<p>只不过，一生一芯用的指令集是RISC-V，跟课程组选用的MIPS有所不同。二者都属于RISC，不过有一些实现细节的不同，我认为影响不大。</p>
+<p>哪怕你在大二上上完了计组，如果你对体系结构感兴趣，我还是推荐你抽时间做一做一生一芯这个项目。因为在你上完后（至少我上完后），你会发现，本校的计组在硬件实现方面的知识实在欠缺，想不到吧？</p>
+<h1 id="课程概况"><a href="#课程概况" class="headerlink" title="课程概况"></a>课程概况</h1><p>最终目标：要求实现支持数条MIPS指令，以及异常、中断的五级流水线处理器。</p>
+<p>要求实现的指令集十分精简，具体可看本人P7的设计文档。</p>
+<p>课程分为理论课与实验课两部分。理论课讲述的是正常的计组课程内容。理论课部分的资料，出于课件版权问题，不在此放出。在课程正式开始时，建议咨询各路学长&#x2F;学姐获取资料。</p>
+<p>实验课即是各个Project。</p>
+<ul>
+<li>P0~P1：利用Logisim构建一些简单电路</li>
+<li>P2：利用MARS编写MIPS汇编程序</li>
+<li>P3：使用Logisim搭建单周期MIPS处理器</li>
+<li>P4：使用Verilog实现单周期MIPS处理器</li>
+<li>P5：实现五级流水线，处理各类冒险（数据冒险等）</li>
+<li>P6：进一步完善P5的设计，主要是添加MDU与新指令</li>
+<li>P7：支持异常与中断</li>
+</ul>
+<p>实验部分，在线上测试平台(cscore.buaa.edu.cn)，对各位的设计进行测试。</p>
+<h1 id="细说实验部分"><a href="#细说实验部分" class="headerlink" title="细说实验部分"></a>细说实验部分</h1><p>包含机房上机、课下作业两环节。</p>
+<p>对每一Project，需完成课下提交，方有上机测试资格；在完成上机测试之后，该Project才视为通过。各Project实行闯关制，唯有前一Project通过才可进行下一Project。</p>
+<p>在本届中，闯关制在P3才正式启动；也就是说，P0-P2课下&#x2F;课上未通过，也不会影响后续进度，到P3开始才影响。<strong>但考虑到实验部分成绩会算入最终成绩，我仍然建议尽力而为。</strong></p>
+<p>在学期的第1-3周为Pre阶段；同学在此期间在课程网站的教程部分，学习后续要用到的知识。其中有一些习题，<strong>由于判分标准始终不明，我还是建议尽力而为。</strong></p>
+<p>4-15周则是实验正式开始阶段。期间，你需要完成“一周一P，打下计组Project那些事”（P7例外，给了两周）。12周对8个Project（0-7），还包括P0-P2的保送，容错其实还行。</p>
+<p>课下测试是<strong>弱测</strong>，仅对你的实现是否基本正确进行测试，在边界条件下的正确性可能不会测试。在线上测试时，除对你的新加指令进行测试外，还会对你的课下提交进行<strong>强测</strong>，覆盖更多的边界条件。</p>
+<p>若你课下没考虑周全，看到课下提交通过就认为完事的话，那你很有可能会在课上满脸痛苦的找bug，还找不出，最后喜提再来一次…</p>
+<p>这也是为什么，我们需要在课下造评测机，数据生成器等等，自行尽可能全面测试。</p>
+<p>机房上机类似于考试，在本届设在每周一晚7点开始，共持续2小时，<strong>闭卷</strong>。</p>
+<p>每次上机考三个题，三个过两个记为通过，全过记为优秀。<strong>过两题和过三题的给分区别至今无人明确，我继续建议尽力而为。同时，在时间不够的时候，切勿盲目追求三题全过。</strong></p>
+<p>P0-P2就是做一下Pre练习类似的题目，有一定难度；</p>
+<p>P3-P6是三个加指令题。<strong>这部分就有意思了</strong>，这里加的不是MIPS指令集中的指令，而是课程组自行编写的新指令。具体题型建议参考往届学长&#x2F;学姐博客。</p>
+<p>P7则是对课下提交进行强测，并附带一个异常有关的加指令题。只要课下写得好，P7其实更简单。</p>
+<p>在每次上机完成后，还要简要回答一些问题。这部分就是助教挑几个问题问，大家基本都能答上，不用担心。</p>
+<h1 id="讨论区"><a href="#讨论区" class="headerlink" title="讨论区"></a>讨论区</h1><p>课程平台设有讨论区。在此鼓励各位积极水帖，积极分享交流经验。</p>
+<p>你可以分享：</p>
+<ul>
+<li>解题思路</li>
+<li>架构搭建经验</li>
+<li>数据生成思路&#x2F;实现</li>
+<li>评测机搭建思路&#x2F;实现</li>
+<li>其它可以提高效率的窍门：比如我自己就找到了命令行调用ISE的办法，直接抛弃臃肿的GUI🤤</li>
+</ul>
+<h1 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h1><h2 id="有关硬件实现"><a href="#有关硬件实现" class="headerlink" title="有关硬件实现"></a>有关硬件实现</h2><p>前面有稍微提到，本课程设计在硬件实现方面有所欠缺。何出此言？</p>
+<p>在P6时，我们要求加入MDU，以支持乘除操作。但是，课程组给出的要求是用<code>*</code>、<code>/</code>、<code>%</code>行为级描述乘、除、取余操作，其硬件实现在实验教材中并未提及（在我这一届）。在理论课那边呢？这要看老师，有些老师可能会提，也有不提的，这是一点。</p>
+<p>第二点，自2023年（我的上一届），课程设计去掉了P8 - FPGA实验。自此，实验设计中唯一跟硬件沾边的部分被砍没了。</p>
+<p>因此，只看实验教程，你不会知道：</p>
+<ul>
+<li>怎么把自己的设计搬上FPGA</li>
+<li>时序约束文件怎么写</li>
+<li>FPGA上怎么调用IP核，用上板载DRAM&#x2F;SRAM</li>
+<li>自己设计的时序情况如何，怎么进行时序优化</li>
+</ul>
+<p>第三点，课上测试。有一些指令逻辑对应的电路设计很难实现，且需要搭建专门模块，在我看来不大符合“通用处理器”的设计初衷。有些题目，在我看来，考察的其实是面向过程编程能力和读题能力，跟体系结构没什么关系。但从考察对自己架构的熟悉程度而言，这种设计也合理。</p>
+<p>因此，如果你实在对体系结构感兴趣，我推荐你课下自己多花时间了解，不要窘于课程设计。当然，如果你对体系结构不感兴趣，这种课程设计也确实足够了。</p>
+<h2 id="和理论课的脱节"><a href="#和理论课的脱节" class="headerlink" title="和理论课的脱节"></a>和理论课的脱节</h2><p>这个情况主要对2306。对于高工的同学（2318）是另外一个故事，我看他们的实验性实验设计挺不错的。</p>
+<p>主要是，理论课讲了Cache，实验课没有考察实现。这个问题在高工部分的新版实验解决了，那个实验有考察Cache部分的内容，不知道这个实验2406会不会采用。</p>
+<p>还有就是，理论课进度取决于老师。比如，P5实验开始，有的老师可能已经讲完了流水线和冒险有关知识，而有的老师还没开始，这就会导致实验进度与理论课进度的脱节。这问题没啥好解法，自己看往年课件吧。</p>
+<p>在这两点以外，其实就没什么好吐槽的了，挺好的。</p>
 ]]></content>
       <categories>
         <category>课程相关</category>
@@ -1579,49 +1604,24 @@
       </tags>
   </entry>
   <entry>
-    <title>在IDEA内部，进行更高效的死锁调试</title>
-    <url>/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/</url>
-    <content><![CDATA[<blockquote>
-<p>本文是对OO第二单元总结的一部分。</p>
-</blockquote>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><a href="https://mp.weixin.qq.com/s/xbVZPRuHR_Dl39O4S6ny0w">oolens最近发的多线程文章中</a>介绍了两套调试工具，但个人认为二者功能相互独立，且二者使用起来都不大方便。<strong>这两个工具还是太吃操作了，有没有什么更简单又强势的工具推荐一下呢？</strong></p>
-<p><strong>有的兄弟，有的！</strong> 使用IDEA本身就够了！我们主要利用的，是它的<code>Dump Threads（获取线程转储）</code>功能。</p>
+    <title>建站第一日</title>
+    <url>/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/</url>
+    <content><![CDATA[<p>今天做成的事情不多，主要是做了一下侧边栏的结构，改了个色，加了个favicon，然后基本就没了。</p>
+<p>上述工作的确很简单，但为何忙了一天，却只完成了这几件事呢？问题出在评论区功能和图床的实现上。</p>
 <span id="more"></span>
-<h1 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h1><p>这个Community版本也能用，没搞到Ultimate版的同学不用担心。</p>
-<p>在你使用IDEA运行程序的时候，你是否好奇过，这个照相机是个什么玩意？这其实就是我们今天的主角<code>Dump Threads</code>了。</p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20233738.png" alt="Screenshot 2025-03-30 233738.png"></p>
-<p>直接左键选中，会进入一个菜单。<strong>这个选项可以抓取当前时刻程序运行状态的快照</strong>，记录了当前程序下所有线程：</p>
-<ul>
-<li>是否等待</li>
-<li>等待类型</li>
-<li>在代码运行到何处等待</li>
-<li>调用栈<br>等详尽的信息，为我们的调试带来了极大的便利。</li>
-</ul>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250330234106.png" alt="Pasted image 20250330234106.png"></p>
-<p>直接点开超链接，甚至可以直接定位到代码处：</p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250330234144.png" alt="Pasted image 20250330234144.png"></p>
-<p>妈妈再也不用担心我找不到死锁了！</p>
-<p>Debug处也有这个入口，在更多选项里：</p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20235054.png" alt="Screenshot 2025-03-30 235054.png"></p>
-<p>要这么做有一个局限性，<strong>就是当前程序必须在IDEA内运行</strong>，可能需要配合<a href="http://oo.e2.buaa.edu.cn/assignment/621/discussion/1673">更好用的数据投喂器</a>使用。当然，如果能用下面提到的方法，这个局限就不存在。</p>
-<h1 id="更进一步-使用IDEA-Profiler"><a href="#更进一步-使用IDEA-Profiler" class="headerlink" title="更进一步 - 使用IDEA Profiler"></a>更进一步 - 使用IDEA Profiler</h1><p><em>（需要IDEA Ultimate，如果手上没有，获取方法还请自行探索 :D）</em></p>
-<p>显然，我们一般跑程序，不可能全部放在IDEA里面跑；有没有什么像oolens里介绍的工具一样，找出当前运行的所有Java程序，并选取要分析的程序进行分析的方法呢？</p>
-<p><strong>是有的，要用到IDEA Profiler。就是上个单元，我们分析运行时间接触到的那个IDEA Profiler。</strong> 他除了分析运行时间以外，还可以查看选中进程的运行状态。</p>
-<p>要打开它，我们需要点开菜单栏中这个仪表盘图标：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20231301.png" alt="Screenshot 2025-03-30 231301.png"></p>
-<p>点开之后，菜单里会列出正在运行的所有Java程序。如果我们此时的程序正在运行的话，我们可以在下面的选单里找到我们的程序：</p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20231405.png" alt="Screenshot 2025-03-30 231405.png"></p>
-<p>随后直接左键选中，发现里面有个选项叫”Get Thread Dump”，跟我们上面的<code>Dump Threads</code>得到的效果是一样的。</p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot%202025-03-30%20231410.png" alt="Screenshot 2025-03-30 231410.png"></p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250330232124.png" alt="Pasted image 20250330232124.png"></p>
-<p>如果我们此时拥有上述调用的源码，我们一样可以点开超链接，直接定位到代码对应位置；没有的话，IDEA甚至会帮你反编译：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250330232231.png" alt="Pasted image 20250330232231.png"></p>
-<p>整体效果跟oolens提到的<code>jconsole</code>基本一致，甚至比它还好用。</p>
-<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>没什么好总结的，大家手上有IDEA的快去试试吧！:D</p>
+
+<p>先说图床。<br>这个Blog显然不会是一个纯文字的博客，后续放图进文章的问题肯定要考虑到。<br>Github Pages没记错的话，库大小似乎是有限制的（1GB？），把所有文章的图片直接存库里固然不现实。找了一天，暂时还没有找到一个成本为0或接近0的方案，基本都要涉及到买域名&#x2F;配置云服务。目前看到一个PicGo + Github的方案似乎可行，之后有空再试。</p>
+<p>再说评论系统。<br>为了和各位读者相互交流，评论区肯定是少不了的。<br>但是，正是在评论区实现的方案选择上，我近乎浪费了一整个早上。为什么呢？还请继续往下看：</p>
+<p>NexT主题集成了几个评论系统：disqus, 畅言，livere，gitalk和utterances。<br>disqus在国内访问速率堪忧，甚至大概率打不开，不在考虑范围内；<br>livere在国内倒是能用，但是必须要社交平台账号登录，不大符合我允许匿名留言的想法；<br>gitalk和utterances必须要求Github登录后才能评论，门槛之高不言而喻，且同样无法实现匿名评论。<br>那畅言呢？要求登录是其一，其美观程度之差是其二，本着不妥协的原则，这个方案也行不通。</p>
+<p>在上述方案都不符合预期的情况下，只得求助各路教程，而各路教程都不约而同地指向了valine。valine允许匿名，外观简洁，看起来就是最佳之选了。在一番了解后，发现valine原本被集成在NexT内，但出于不再开源和安全问题的原因被移除，以单独插件形式存在。安装并配置好后，却发现其无法正常使用：起初是出现401报错，后变为不报错，但评论无法正常发表，点下发表后毫无反应。</p>
+<p>一番折腾后，评论区的建设仍毫无进展，只得暂时作罢。</p>
+<p>Blog的基本框架现在已经成型。接下来的建设任务，我想就是攻克下这两个难题了。至于小细节，留到日后吧。</p>
 ]]></content>
       <categories>
-        <category>课程相关</category>
+        <category>建站历程</category>
       </categories>
       <tags>
-        <tag>面向对象</tag>
+        <tag>心得</tag>
       </tags>
   </entry>
 </search>
