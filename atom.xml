@@ -6,7 +6,7 @@
   <link href="http://lajipz.top/atom.xml" rel="self"/>
   
   <link href="http://lajipz.top/"/>
-  <updated>2025-04-21T06:39:05.077Z</updated>
+  <updated>2025-04-21T06:32:23.121Z</updated>
   <id>http://lajipz.top/</id>
   
   <author>
@@ -17,16 +17,17 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>OO_U2 - HW7简要总结</title>
-    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/"/>
-    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/</id>
+    <title>OO_U2 - HW5,6阶段性总结</title>
+    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/"/>
+    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/</id>
     <published>2025-04-17T15:00:00.000Z</published>
-    <updated>2025-04-21T06:39:05.077Z</updated>
+    <updated>2025-04-21T06:32:23.121Z</updated>
     
     
-    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;讨论区已有一众仙人分享了自己的实现，但我认为我有在降低修改复杂度上更进一步的办法。&lt;/p&gt;
-&lt;p&gt;考虑到本次作业为本单元的最后一次作业，我的修改方法更注重于&lt;strong&gt;降低修改的复杂度，可能存在部分性能的牺牲。&lt;/strong&gt; 在各位进行参考时，请注意这一点。&lt;/p&gt;
-&lt;p&gt;本人实现的亮点在于：UPDATE请求的处理，与双轿厢目标楼层的规避，&lt;strong&gt;全部利用线程交互实现&lt;/strong&gt;。&lt;/p&gt;</summary>
+    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;我的调度算法，与我的架构实现耦合度较高，因此我不得不先提一些我自己的电梯实现；不需要的同学，欢迎直接跳开“电梯实现”部分。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这算是本人两周以来的一个总结吧，终于有时间写了…&lt;/p&gt;</summary>
     
     
     
@@ -42,7 +43,7 @@
     <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20%E7%94%B5%E6%A2%AF/"/>
     <id>http://lajipz.top/2025/04/17/OO_U2%20-%20%E7%94%B5%E6%A2%AF/</id>
     <published>2025-04-17T15:00:00.000Z</published>
-    <updated>2025-04-21T06:38:53.691Z</updated>
+    <updated>2025-04-21T06:50:49.284Z</updated>
     
     
     <summary type="html">&lt;p&gt;这是一篇导航帖。&lt;/p&gt;
@@ -53,8 +54,8 @@
 &lt;li&gt;&lt;a href=&quot;https://bbs.csdn.net/topics/619679170?spm=1001.2014.3001.6377&quot;&gt;CSDN上的博客周作业&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/&quot;&gt;HW5，6总结&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/&quot;&gt;HW7总结&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;%5Bhttp://lajipz.top/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/%5D(http://lajipz.top/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/)&quot;&gt;ReentrantLock使用&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;%5Bhttp://lajipz.top/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/%5D(http://lajipz.top/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/)&quot;&gt;利用IDEA查死锁&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://lajipz.top/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/&quot;&gt;ReentrantLock使用&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://lajipz.top/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/&quot;&gt;利用IDEA查死锁&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</summary>
     
     
@@ -67,17 +68,16 @@
   </entry>
   
   <entry>
-    <title>OO_U2 - HW5,6阶段性总结</title>
-    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/"/>
-    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/</id>
+    <title>OO_U2 - HW7简要总结</title>
+    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/"/>
+    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/</id>
     <published>2025-04-17T15:00:00.000Z</published>
-    <updated>2025-04-21T06:32:23.121Z</updated>
+    <updated>2025-04-21T06:39:05.077Z</updated>
     
     
-    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;我的调度算法，与我的架构实现耦合度较高，因此我不得不先提一些我自己的电梯实现；不需要的同学，欢迎直接跳开“电梯实现”部分。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;这算是本人两周以来的一个总结吧，终于有时间写了…&lt;/p&gt;</summary>
+    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;讨论区已有一众仙人分享了自己的实现，但我认为我有在降低修改复杂度上更进一步的办法。&lt;/p&gt;
+&lt;p&gt;考虑到本次作业为本单元的最后一次作业，我的修改方法更注重于&lt;strong&gt;降低修改的复杂度，可能存在部分性能的牺牲。&lt;/strong&gt; 在各位进行参考时，请注意这一点。&lt;/p&gt;
+&lt;p&gt;本人实现的亮点在于：UPDATE请求的处理，与双轿厢目标楼层的规避，&lt;strong&gt;全部利用线程交互实现&lt;/strong&gt;。&lt;/p&gt;</summary>
     
     
     
