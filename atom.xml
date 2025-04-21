@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Position 0 - LajiPZ的随想屋</title>
+  <icon>http://lajipz.top/icon.png</icon>
+  <subtitle>Position 0 - LajiPZ的随想屋</subtitle>
+  <link href="http://lajipz.top/atom.xml" rel="self"/>
+  
+  <link href="http://lajipz.top/"/>
+  <updated>2025-04-21T06:39:05.077Z</updated>
+  <id>http://lajipz.top/</id>
+  
+  <author>
+    <name>LajiPZ</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>OO_U2 - HW7简要总结</title>
+    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/"/>
+    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/</id>
+    <published>2025-04-17T15:00:00.000Z</published>
+    <updated>2025-04-21T06:39:05.077Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;讨论区已有一众仙人分享了自己的实现，但我认为我有在降低修改复杂度上更进一步的办法。&lt;/p&gt;
+&lt;p&gt;考虑到本次作业为本单元的最后一次作业，我的修改方法更注重于&lt;strong&gt;降低修改的复杂度，可能存在部分性能的牺牲。&lt;/strong&gt; 在各位进行参考时，请注意这一点。&lt;/p&gt;
+&lt;p&gt;本人实现的亮点在于：UPDATE请求的处理，与双轿厢目标楼层的规避，&lt;strong&gt;全部利用线程交互实现&lt;/strong&gt;。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OO_U2 - 电梯</title>
+    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20%E7%94%B5%E6%A2%AF/"/>
+    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20%E7%94%B5%E6%A2%AF/</id>
+    <published>2025-04-17T15:00:00.000Z</published>
+    <updated>2025-04-21T06:38:53.691Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这是一篇导航帖。&lt;/p&gt;
+&lt;p&gt;本单元任务较忙，故我没有时间整合出一篇概括所有内容的文章。&lt;/p&gt;
+&lt;p&gt;博客周作业做了一些概括，但是我觉得里面我自己省掉了不小好玩的细节。&lt;/p&gt;
+&lt;p&gt;以下文章均与本单元有关，欢迎各位按需查阅：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://bbs.csdn.net/topics/619679170?spm=1001.2014.3001.6377&quot;&gt;CSDN上的博客周作业&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/&quot;&gt;HW5，6总结&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/&quot;&gt;HW7总结&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;%5Bhttp://lajipz.top/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/%5D(http://lajipz.top/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/)&quot;&gt;ReentrantLock使用&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;%5Bhttp://lajipz.top/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/%5D(http://lajipz.top/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/)&quot;&gt;利用IDEA查死锁&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OO_U2 - HW5,6阶段性总结</title>
+    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/"/>
+    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/</id>
+    <published>2025-04-17T15:00:00.000Z</published>
+    <updated>2025-04-21T06:32:23.121Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;我的调度算法，与我的架构实现耦合度较高，因此我不得不先提一些我自己的电梯实现；不需要的同学，欢迎直接跳开“电梯实现”部分。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这算是本人两周以来的一个总结吧，终于有时间写了…&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用ReentrantLock，实现更灵活的锁管理策略</title>
+    <link href="http://lajipz.top/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/"/>
+    <id>http://lajipz.top/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/</id>
+    <published>2025-04-17T15:00:00.000Z</published>
+    <updated>2025-04-21T06:32:29.342Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;本文是对OO第二单元总结的一部分。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;众所周知，我们可以通过&lt;code&gt;synchronized&lt;/code&gt;方法，以及&lt;code&gt;synchronized&lt;/code&gt;代码块获取对象的锁；但是，你是否发现，这一做法有时并不灵活？&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在IDEA内部，进行更高效的死锁调试</title>
+    <link href="http://lajipz.top/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/"/>
+    <id>http://lajipz.top/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/</id>
+    <published>2025-04-17T15:00:00.000Z</published>
+    <updated>2025-04-21T06:32:34.501Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;本文是对OO第二单元总结的一部分。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s/xbVZPRuHR_Dl39O4S6ny0w&quot;&gt;oolens最近发的多线程文章中&lt;/a&gt;介绍了两套调试工具，但个人认为二者功能相互独立，且二者使用起来都不大方便。&lt;strong&gt;这两个工具还是太吃操作了，有没有什么更简单又强势的工具推荐一下呢？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;有的兄弟，有的！&lt;/strong&gt; 使用IDEA本身就够了！我们主要利用的，是它的&lt;code&gt;Dump Threads（获取线程转储）&lt;/code&gt;功能。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OO_U1 - 数学表达式</title>
+    <link href="http://lajipz.top/2025/02/28/OO_U1%20-%20%E6%95%B0%E5%AD%A6%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    <id>http://lajipz.top/2025/02/28/OO_U1%20-%20%E6%95%B0%E5%AD%A6%E8%A1%A8%E8%BE%BE%E5%BC%8F/</id>
+    <published>2025-02-28T02:44:00.000Z</published>
+    <updated>2025-04-14T15:43:59.656Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;Hw1&quot;&gt;&lt;a href=&quot;#Hw1&quot; class=&quot;headerlink&quot; title=&quot;Hw1&quot;&gt;&lt;/a&gt;Hw1&lt;/h1&gt;&lt;p&gt;这本是一个描述本人思路的草稿，后决定还是整理一下，发到公屏交流一下））&lt;/p&gt;
+&lt;h2 id=&quot;要求&quot;&gt;&lt;a href=&quot;#要求&quot; class=&quot;headerlink&quot; title=&quot;要求&quot;&gt;&lt;/a&gt;要求&lt;/h2&gt;&lt;p&gt;读入一个含：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;加，减&lt;/li&gt;
+&lt;li&gt;乘&lt;/li&gt;
+&lt;li&gt;乘方&lt;/li&gt;
+&lt;li&gt;至多一层括号（建议考虑多层的拓展）&lt;br&gt;的 &lt;strong&gt;单变量（e.g. 字母x）&lt;/strong&gt; 表达式。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;输出：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;展开所有括号&lt;/li&gt;
+&lt;li&gt;结果尽可能短</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>技术演示 - 并发执行的多测试数据对拍脚本</title>
+    <link href="http://lajipz.top/2025/02/04/%E6%8A%80%E6%9C%AF%E6%BC%94%E7%A4%BA%20-%20%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C%E7%9A%84%E5%A4%9A%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%E5%AF%B9%E6%8B%8D%E8%84%9A%E6%9C%AC/"/>
+    <id>http://lajipz.top/2025/02/04/%E6%8A%80%E6%9C%AF%E6%BC%94%E7%A4%BA%20-%20%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C%E7%9A%84%E5%A4%9A%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%E5%AF%B9%E6%8B%8D%E8%84%9A%E6%9C%AC/</id>
+    <published>2025-02-04T13:23:00.000Z</published>
+    <updated>2025-02-21T05:50:09.321Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;归档于250204，供后来者参考。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;读前须知：本文针对Windows环境；Linux仙人参考思路即可…&lt;/p&gt;
+&lt;h1 id=&quot;需求：针对多组测试数据的评测&quot;&gt;&lt;a href=&quot;#需求：针对多组测试数据的评测&quot; class=&quot;headerlink&quot; title=&quot;需求：针对多组测试数据的评测&quot;&gt;&lt;/a&gt;需求：针对多组测试数据的评测&lt;/h1&gt;&lt;p&gt;为尽可能追求测试覆盖率，且方便测试程序的编写，我们往往会选择构造多组测试数据进行测试。&lt;/p&gt;
+&lt;p&gt;回顾本人先前构造，且至今一直使用的对拍脚本，每次仅可对拍一组测试数据。要进行多组数据的测试，需要每次对待测数据进行手动替换，效率实在太低。&lt;/p&gt;
+&lt;p&gt;因此，我决定对我的对拍脚本进行完善，使之支持多组数据的评测。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    
+    <category term="计组" scheme="http://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>航砖祭祖后日谈</title>
+    <link href="http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/"/>
+    <id>http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</id>
+    <published>2025-02-04T13:23:00.000Z</published>
+    <updated>2025-02-21T05:50:09.322Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;本文将对BUAA_CO_2024进行简要回顾，并给出自己的一些主观建议，仅供参考。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    
+    <category term="计组" scheme="http://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>通过命令行，更优雅地利用ISE进行开发</title>
+    <link href="http://lajipz.top/2025/02/04/%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E6%9B%B4%E4%BC%98%E9%9B%85%E5%9C%B0%E5%88%A9%E7%94%A8ISE%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91/"/>
+    <id>http://lajipz.top/2025/02/04/%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E6%9B%B4%E4%BC%98%E9%9B%85%E5%9C%B0%E5%88%A9%E7%94%A8ISE%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91/</id>
+    <published>2025-02-04T13:23:00.000Z</published>
+    <updated>2025-02-21T05:50:09.322Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;归档于250204，供后来者参考。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;众所周知，在使用ISE进行开发的时候，您可能会遇到以下问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;每次开干，都要手动创建一个新项目&lt;/li&gt;
+&lt;li&gt;创建文件的操作极为繁琐&lt;/li&gt;
+&lt;li&gt;仿真一次需要多次操作鼠标&lt;/li&gt;
+&lt;li&gt;ISE项目文件内文件繁多，文件管理堪称灾难&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;但在本文的方法下，以上问题均可一一化解！&lt;/p&gt;
+&lt;p&gt;本文是教程中&lt;a href=&quot;http://cscore.buaa.edu.cn/tutorial/verilog/verilog-6/verilog-6-6/&quot;&gt;ISE、VCS 与自动化测试&lt;/a&gt;的一小点拓展。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    
+    <category term="计组" scheme="http://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>“法律、科技与社会”课后思考题答案 - 2024</title>
+    <link href="http://lajipz.top/2025/02/04/%E2%80%9C%E6%B3%95%E5%BE%8B%E3%80%81%E7%A7%91%E6%8A%80%E4%B8%8E%E7%A4%BE%E4%BC%9A%E2%80%9D%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%20-%202024/"/>
+    <id>http://lajipz.top/2025/02/04/%E2%80%9C%E6%B3%95%E5%BE%8B%E3%80%81%E7%A7%91%E6%8A%80%E4%B8%8E%E7%A4%BE%E4%BC%9A%E2%80%9D%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%20-%202024/</id>
+    <published>2025-02-04T00:47:00.000Z</published>
+    <updated>2025-02-21T05:50:09.320Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;本文记录了本人复习“法律、科技与社会”课程时，对课后思考题给出的答案。&lt;/p&gt;
+&lt;p&gt;众所周知，本课的期末考试就是从课后思考题中抽集体来考，怎么复习想必大家都知道了。当然，不知道这几个思考题之后会不会变。&lt;/p&gt;
+&lt;p&gt;以下答案均为本人手搓，在考试获得了95分，当然这个给分可能有玄学成分在里面，仅供参考。&lt;/p&gt;
+&lt;h1 id=&quot;技术是中立的吗？为什么？&quot;&gt;&lt;a href=&quot;#技术是中立的吗？为什么？&quot; class=&quot;headerlink&quot; title=&quot;技术是中立的吗？为什么？&quot;&gt;&lt;/a&gt;技术是中立的吗？为什么？&lt;/h1&gt;&lt;p&gt;   不是。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;技术置身于社会中，具有社会性。&lt;/li&gt;
+&lt;li&gt;技术是占有世界的媒介，同时也是人类活动的一种形式。其背后包含了人类思维结果。&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="水课" scheme="http://lajipz.top/tags/%E6%B0%B4%E8%AF%BE/"/>
+    
+    <category term="FKS" scheme="http://lajipz.top/tags/FKS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>本人背单词的粗劣经验</title>
+    <link href="http://lajipz.top/2024/08/08/%E6%9C%AC%E4%BA%BA%E8%83%8C%E5%8D%95%E8%AF%8D%E7%9A%84%E7%B2%97%E5%8A%A3%E7%BB%8F%E9%AA%8C/"/>
+    <id>http://lajipz.top/2024/08/08/%E6%9C%AC%E4%BA%BA%E8%83%8C%E5%8D%95%E8%AF%8D%E7%9A%84%E7%B2%97%E5%8A%A3%E7%BB%8F%E9%AA%8C/</id>
+    <published>2024-08-08T03:45:14.000Z</published>
+    <updated>2025-02-21T05:50:09.321Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;写在前面：本文本来是写给本人一位英语学着有些吃力的好友的一篇私货；但由于自己在给梦拓学弟们写闲聊的时候扯到了我自己学英语的经历，索性就把我自己写的这篇烂文发出来给各位参考（或公开处刑）吧。&lt;br&gt;如果本文有不足&amp;#x2F;误导&amp;#x2F;错误之处，欢迎您在本文的评论区中直接指出（更是欢迎语言学相关的朋友给予专业的指导），小弟必感激不尽！&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    <category term="随笔" scheme="http://lajipz.top/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    
+    <category term="英语" scheme="http://lajipz.top/tags/%E8%8B%B1%E8%AF%AD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>自己的碎碎念</title>
+    <link href="http://lajipz.top/2024/08/07/casualTalk/"/>
+    <id>http://lajipz.top/2024/08/07/casualTalk/</id>
+    <published>2024-08-07T12:58:06.000Z</published>
+    <updated>2025-04-21T06:32:04.566Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;在给各位塞的私货里面，我大段写了一些经验，自己这部分提的不多；故这里再多闲聊一点，让各位能对我大一经历了什么有点了解（笑）&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="梦拓相关" scheme="http://lajipz.top/categories/%E6%A2%A6%E6%8B%93%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="梦拓" scheme="http://lajipz.top/tags/%E6%A2%A6%E6%8B%93/"/>
+    
+    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>送给组内信类新生的一点点私货</title>
+    <link href="http://lajipz.top/2024/08/04/BUAA-freshman-FAQ/"/>
+    <id>http://lajipz.top/2024/08/04/BUAA-freshman-FAQ/</id>
+    <published>2024-08-04T13:11:00.000Z</published>
+    <updated>2025-02-21T05:50:09.308Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;序&quot;&gt;&lt;a href=&quot;#序&quot; class=&quot;headerlink&quot; title=&quot;序&quot;&gt;&lt;/a&gt;序&lt;/h2&gt;&lt;p&gt;首先，欢迎各位成为北航士谔书院的一员，也很荣幸能与大家共处同一梦拓小组！&lt;/p&gt;
+&lt;p&gt;本文将尝试对大家初入大一可能遇到的部分问题进行解答，以备各位不时之需；同时夹带大量私货，欢迎各位参考😋&lt;/p&gt;
+&lt;p&gt;本文是按苯人自己一年来的经验，想到什么写什么写成的，应该能涵盖各位可能碰到的不少问题。若有其它没有覆盖到的问题，欢迎各位联系交流！🤗&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="梦拓相关" scheme="http://lajipz.top/categories/%E6%A2%A6%E6%8B%93%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="梦拓" scheme="http://lajipz.top/tags/%E6%A2%A6%E6%8B%93/"/>
+    
+    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>图床测试</title>
+    <link href="http://lajipz.top/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/"/>
+    <id>http://lajipz.top/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</id>
+    <published>2023-11-30T05:47:18.000Z</published>
+    <updated>2025-04-21T06:27:40.420Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/%7B433FA560-1033-4134-A91E-3F4E0C6D3AC2%7D.png&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="建站历程" scheme="http://lajipz.top/categories/%E5%BB%BA%E7%AB%99%E5%8E%86%E7%A8%8B/"/>
+    
+    
+    <category term="测试" scheme="http://lajipz.top/tags/%E6%B5%8B%E8%AF%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>建站第一日</title>
+    <link href="http://lajipz.top/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/"/>
+    <id>http://lajipz.top/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/</id>
+    <published>2023-11-28T14:36:21.000Z</published>
+    <updated>2025-04-21T06:27:41.141Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;今天做成的事情不多，主要是做了一下侧边栏的结构，改了个色，加了个favicon，然后基本就没了。&lt;/p&gt;
+&lt;p&gt;上述工作的确很简单，但为何忙了一天，却只完成了这几件事呢？问题出在评论区功能和图床的实现上。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="建站历程" scheme="http://lajipz.top/categories/%E5%BB%BA%E7%AB%99%E5%8E%86%E7%A8%8B/"/>
+    
+    
+    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>第一次尝试</title>
+    <link href="http://lajipz.top/2023/11/27/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95/"/>
+    <id>http://lajipz.top/2023/11/27/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95/</id>
+    <published>2023-11-27T03:30:00.000Z</published>
+    <updated>2025-02-21T05:50:09.322Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;pre&gt;&lt;code&gt;万事开头难。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;有关建设个人博客这件事，本人其实早在2022年5月，就已按各路教程，用Hexo和Github</summary>
+        
+      
+    
+    
+    
+    <category term="随笔" scheme="http://lajipz.top/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    
+  </entry>
+  
+</feed>

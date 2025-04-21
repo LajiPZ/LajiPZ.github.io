@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>OO_U2 - HW5,6阶段性总结 - Position 0 - LajiPZ的随想屋</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Position 0 - LajiPZ的随想屋"><meta name="msapplication-TileImage" content="/img/pz13.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Position 0 - LajiPZ的随想屋"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="前言 我的调度算法，与我的架构实现耦合度较高，因此我不得不先提一些我自己的电梯实现；不需要的同学，欢迎直接跳开“电梯实现”部分。  这算是本人两周以来的一个总结吧，终于有时间写了…"><meta property="og:type" content="blog"><meta property="og:title" content="OO_U2 - HW5,6阶段性总结"><meta property="og:url" content="http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/"><meta property="og:site_name" content="Position 0 - LajiPZ的随想屋"><meta property="og:description" content="前言 我的调度算法，与我的架构实现耦合度较高，因此我不得不先提一些我自己的电梯实现；不需要的同学，欢迎直接跳开“电梯实现”部分。  这算是本人两周以来的一个总结吧，终于有时间写了…"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250406221034.png"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250406214224.png"><meta property="article:published_time" content="2025-04-17T15:00:00.000Z"><meta property="article:modified_time" content="2025-04-21T06:32:23.121Z"><meta property="article:author" content="LajiPZ"><meta property="article:tag" content="面向对象"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250406221034.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/"},"headline":"OO_U2 - HW5,6阶段性总结","image":["https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250406221034.png","https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250406214224.png"],"datePublished":"2025-04-17T15:00:00.000Z","dateModified":"2025-04-21T06:32:23.121Z","author":{"@type":"Person","name":"LajiPZ"},"publisher":{"@type":"Organization","name":"Position 0 - LajiPZ的随想屋","logo":{"@type":"ImageObject","url":"http://lajipz.top/img/pz13.png"}},"description":"前言 我的调度算法，与我的架构实现耦合度较高，因此我不得不先提一些我自己的电梯实现；不需要的同学，欢迎直接跳开“电梯实现”部分。  这算是本人两周以来的一个总结吧，终于有时间写了…"}</script><link rel="canonical" href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/"><link rel="icon" href="/img/pz13.png"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/6.0.0/css/all.min.css"><link data-pjax rel="stylesheet" href="https://unpkg.com/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://unpkg.com/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://unpkg.com/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Position 0 - LajiPZ的随想屋" type="application/atom+xml">
+</head><body class="is-$3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-04-17T15:00:00.000Z" title="4/17/2025, 11:00:00 PM">2025-04-17</time>发表</span><span class="level-item"><time dateTime="2025-04-21T06:32:23.121Z" title="4/21/2025, 2:32:23 PM">2025-04-21</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a></span><span class="level-item">21 分钟读完 (大约3224个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">OO_U2 - HW5,6阶段性总结</h1><div class="content"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>我的调度算法，与我的架构实现耦合度较高，因此我不得不先提一些我自己的电梯实现；不需要的同学，欢迎直接跳开“电梯实现”部分。</p>
+</blockquote>
+<p>这算是本人两周以来的一个总结吧，终于有时间写了…</p>
+<span id="more"></span>
+
+<h1 id="浅提电梯实现"><a href="#浅提电梯实现" class="headerlink" title="浅提电梯实现"></a>浅提电梯实现</h1><p>读前注意，本人的设计并非最佳，其中有不少会引起复杂度增加的设计，请各位参考时务必谨慎。</p>
+<h2 id="概况"><a href="#概况" class="headerlink" title="概况"></a>概况</h2><p>在完成HW6后，本人的整体架构如下：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250406221034.png" alt="Pasted image 20250406221034.png"></p>
+<p>其中，电梯信息与电梯运行进程分离，便于维护。</p>
+<p>我的电梯，将运行状态分为以下几类：</p>
+<ul>
+<li>IDLE：闲置，此处与常理理解中的闲置是一致的，不多赘述</li>
+<li><strong>RESERVED</strong>：<strong>预约</strong>，<strong>在闲置状态的电梯</strong>，收到<strong>起点与电梯当前所在位置不同楼的请求</strong>时，进入的<strong>移动状态</strong>。</li>
+<li>RUNNING：运行，电梯处在<strong>非预约状态</strong>时的正常移动状态。</li>
+<li>WAITING：等待，电梯停靠，进行上下客时进入的状态。停靠完成后，<strong>视情况</strong>转入RUNNING&#x2F;RESERVED&#x2F;IDLE状态。</li>
+</ul>
+<p>同时，我们还需要记录电梯的<strong>运行方向</strong>，现规定：</p>
+<ul>
+<li>1：上行</li>
+<li>-1：下行</li>
+<li>0：仅在进入IDLE时设为此值。</li>
+<li>在电梯进入WAITING时，<strong>方向将被设置为下一步要移动的方向</strong></li>
+</ul>
+<p>电梯内亦有一子请求表，记录满足以下条件的请求：</p>
+<ul>
+<li><strong>请求与电梯运行方向一致</strong></li>
+<li>记录当前方向的所有请求；比如，我们的电梯正在处理一个<code>F1-F3</code>的请求，现在处于<code>F2</code>；此时，若有一<code>F4-F5</code>的请求，则该请求可被指派给电梯，加入子请求表</li>
+</ul>
+<h2 id="存储状态的额外信息"><a href="#存储状态的额外信息" class="headerlink" title="存储状态的额外信息"></a>存储状态的额外信息</h2><p>上面提到，我们的子请求表只允许同向请求加入；在我们现在的实现下，这种情况当然会产生：</p>
+<ul>
+<li>电梯在<code>F3</code>，IDLE</li>
+<li>出现了一个<code>F1-F7</code>的请求，电梯进入RESERVED，空放到<code>F1</code></li>
+<li>电梯从<code>F3</code>空放去<code>F1</code>途中出现一个<code>F2-F1</code>的请求，我们自然希望捎带它，将其加入子请求表</li>
+</ul>
+<p>也就是说，<strong>空放方向与发出预约的请求的方向反向。</strong> 我们自然需要一个地方暂存这个预约请求；我选择通过<strong>继承</strong>的方法，<strong>将其存在状态内</strong>。</p>
+<p>具体而言：</p>
+<ul>
+<li>上面四个状态均属于一个<code>Status</code>类，内有一<code>enum Type</code>属性，记录当前状态类型</li>
+<li>若一个状态需要记录额外信息，则该状态作为<code>Status</code>的子类，<strong>额外信息作为子类的属性</strong>，存在子类中。</li>
+</ul>
+<p>我们此时只需对RESERVED，WAITING两个状态记录额外信息。</p>
+<p>RESERVED：</p>
+<ul>
+<li><code>allowPickUp</code>：中途是否允许捎带</li>
+<li><code>requester</code>：进行预约的请求。允许为null。</li>
+</ul>
+<p>WAITING：</p>
+<ul>
+<li><code>prevStatus</code>：进入WAITING前的状态。</li>
+</ul>
+<p>欲知为何如此，请继续看下文。</p>
+<h2 id="兼容SCHE请求"><a href="#兼容SCHE请求" class="headerlink" title="兼容SCHE请求"></a>兼容<code>SCHE</code>请求</h2><p>不知各位是否发现，在HW6引入的临时调度，跟我们上面提到的RESERVED略有相似之处？</p>
+<p>我们要让我们的现有设计兼容<code>SCHE</code>请求，只需做这么几件事情：</p>
+<ul>
+<li><code>SCHE-BEGIN</code>前，把途中无法捎带的请求赶回请求池；</li>
+<li>在临时调度至不同层时，<code>SCHE-BEGIN</code>对应转入一个 <strong><code>requester = null</code>，不允许捎带</strong>的RESERVED状态</li>
+<li>确保已有的RESERVED状态下的电梯运行规则，能够处理上述的<code>RESERVED</code>情况</li>
+</ul>
+<p>就这样，我们就做完了<code>SCHE</code>请求的电梯运行部分；剩下的，只需要实现指派电梯进<code>RESERVED</code>的逻辑，很省事吧！？</p>
+<h2 id="等待状态的转移规则"><a href="#等待状态的转移规则" class="headerlink" title="等待状态的转移规则"></a>等待状态的转移规则</h2><p>WAITING的状态转移规则如下：</p>
+<ul>
+<li>先前为<code>RUNNING</code>：<br>若仍有请求未到终点，则恢复RUNNING<br>若请求已全部满足，则进入IDLE</li>
+<li>先前为<code>RESERVED</code>：<br>若未到预约者起点，则恢复RESERVED<br>若到达了预约者起点，则进入RUNNING，同时<strong>将暂存的请求加入子请求表</strong></li>
+<li>先前为<code>IDLE</code>：<br>直接进入<code>RUNNING</code>，<br>因为我们保证，IDLE下的电梯被预约后，直接进入RESERVED状态，<br>此时必是因为，有一起点与IDLE状态下电梯所在位置的请求被分给了电梯。</li>
+</ul>
+<h1 id="调度算法"><a href="#调度算法" class="headerlink" title="调度算法"></a>调度算法</h1><p>交互方面，我采用的是一<code>Dispatcher</code>对多个<code>Elevator</code>的实现，与绝大多数做法一致。</p>
+<p>大家都知道影子电梯，不过它需要<strong>模拟电梯的整个运行过程</strong>，实现略显复杂；那么，有没有一个在复杂度和影子电梯的高效率之间折中的方案呢？</p>
+<p>是有的。我的这个策略在思路上与影子电梯有颇多相似之处，只不过：</p>
+<ul>
+<li>只需要计算（模拟）<strong>当前请求</strong>的运行时间</li>
+<li>已指派给电梯的其它请求的估计，<strong>利用优先级机制实现</strong></li>
+</ul>
+<h2 id="是否允许加入"><a href="#是否允许加入" class="headerlink" title="是否允许加入"></a>是否允许加入</h2><p>进行计算之前，<code>Dispatcher</code>需要得知当前正在评估的电梯，能否接受当前待加入的请求。</p>
+<p>可加入的规则如下：</p>
+<ul>
+<li>若电梯此时在IDLE状态下，直接允许加入，否则进行下述流程</li>
+<li>请求方向需与电梯当前运行方向一致；方向有关的说明见上文。</li>
+<li>电梯同向，且电梯此时没有超过请求的起点</li>
+<li>如果状态为（RESERVED）&#x2F;（WAITING，且前一个状态是RESERVED），则：<br>RESERVED状态需允许捎带<br>若预约请求方向与当前运行方向相反，则待加入请求的终点不得超过预约请求的起点</li>
+<li>加入后，不会出现电梯满员的情况</li>
+</ul>
+<p>“电梯满员”视个人实现不同，判断逻辑可能不同；我这里就以我的实现为例，谈谈我的判断逻辑。</p>
+<p>正如上文所述架构实现，我们一个电梯的子请求队列不仅包含了当前在电梯内的请求，还包含了将来电梯要捎带的请求；</p>
+<p>我们的判断逻辑是，假设请求加入了子请求表，<strong>得出各楼层处，最多同时出现的请求数；</strong> </p>
+<p>这一“同时出现的请求数”，反映了那一运行区间内，电梯内的人数。</p>
+<p><strong>若各区间的同时出现请求数的最大值，大于电梯容量，则认为此时加入请求会导致超员。</strong></p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250406214224.png" alt="Pasted image 20250406214224.png"></p>
+<p>如图所示，待加入请求在<code>F2-F3</code>区间会导致超员，故我们不应加入这一待加入请求。</p>
+<p>需要注意的是，如果采用了上文RESERVED状态的实现，若预约请求方向与电梯空放方向一致，此时还需将预约请求放进上面的图里进行比较。</p>
+<h2 id="计算评价指数"><a href="#计算评价指数" class="headerlink" title="计算评价指数"></a>计算评价指数</h2><p>在上述复杂的判断后，我们终于可以开始计算了…</p>
+<p>我们的计算公式如下：</p>
+<p>$$index &#x3D; index_{base} + priorityPenalty * elevStopTime$$</p>
+<h3 id="index-base"><a href="#index-base" class="headerlink" title="$index_{base}$"></a>$index_{base}$</h3><p>我们先需要得知：</p>
+<ul>
+<li>$dis$：电梯所在位置，与请求起点的楼层数</li>
+<li>$travel$：请求跨越的楼层数</li>
+<li>$stopCount$：请求沿途需要停靠，以让自己进电梯&#x2F;捎带其它请求；<code>stopCount</code>即中途停靠的次数</li>
+</ul>
+<p>随后即可算出当前请求的运行时间，作为我们评价指数计算的第一步；</p>
+<p>$$index_{base} &#x3D; (dis + travel)*elevSpeed + stopCount * elevStopTime $$</p>
+<h3 id="priorityPenalty"><a href="#priorityPenalty" class="headerlink" title="$priorityPenalty$"></a>$priorityPenalty$</h3><p>优先级惩罚，是所有请求的优先级惩罚之和：</p>
+<p>$$priorityPenalty &#x3D; \sum_{i&#x3D;1}^{n}{penalty_{R_i}}$$</p>
+<p>对于一个请求$R$，设其优先级为$priority$，楼层跨度为$travel$，则我们规定该请求允许的中途停靠次数$maxAllowedStops$如下：<br>$$maxAllowedStops &#x3D; round(travel * (1 - \frac{priority}{100}))$$<br>其中，$round(x)$取$x$最靠近的整数。</p>
+<p>在我们进行评价指数的计算时，我们先假设待加入请求已被加入；随后，对原有的请求$R_i$，算出加入后的<strong>总停靠次数</strong>$stops$。</p>
+<ul>
+<li>若$stops &lt;&#x3D; maxAllowedStops$：$penalty_{R_i} &#x3D; 0$</li>
+<li>否则：$penalty_{R_i} &#x3D; (stops - maxAllowedStops) * priority$</li>
+</ul>
+<h3 id="小总结"><a href="#小总结" class="headerlink" title="小总结"></a>小总结</h3><p>由此，我们就可以算出各个（可加入请求的）电梯的评价指数，选择评价指数最低者加入。</p>
+<p>上述是一个相对简单的模型，相信各位有更好的实现。</p>
+<h1 id="评测方案"><a href="#评测方案" class="headerlink" title="评测方案"></a>评测方案</h1><p>我选择构建评测机框架，<strong>留出随机数据生成器（dataGen）与正确性检查器（Checker）的接口</strong>。这样有利于提高不同题目下评测的灵活性。</p>
+<p>评测机框架方面，我构建了一个可以评测<strong>多程序、多测试点</strong>的多线程评测机，按照以下两种策略运行：</p>
+<ul>
+<li>测试深度优先：评测机优先对一个待测程序，测试多个测试点</li>
+<li>测试广度优先：评测机优先对一个测试点，测试多个程序</li>
+</ul>
+<p>评测机框架建议允许添加数据生成器生成的数据以外的数据，从而为人工构造高强度数据提供可能。</p>
+<p>运行测试程序方面，我选用了Python的<code>subprocess</code>库，其中的<code>POpen</code>方法十分有用，不仅可以指定子进程的工作目录，还可重定向子进程的输出。</p>
+<p>注意到，我们的数据投喂器读取的是**当前工作目录下的<code>stdin.txt</code>**；因此，我们可以通过指定不同工作目录的方法，来让投喂器同时测试多个样例。</p>
+<p>随后，我们即可使用数据投喂器+打包好的<code>.jar</code>进行评测；两个子进程需要用管道串起来，实现如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">input_process = subprocess.Popen(</span><br><span class="line">                [<span class="string">&#x27;input.exe&#x27;</span>],  <span class="comment"># input.exe 读取当前目录的 stdin.txt</span></span><br><span class="line">                cwd=case_dir,    <span class="comment"># 设置工作目录为测试用例目录</span></span><br><span class="line">                stdout=subprocess.PIPE,</span><br><span class="line">                stderr=subprocess.DEVNULL,</span><br><span class="line">                text=<span class="literal">True</span></span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">java_process = subprocess.Popen(</span><br><span class="line">                [<span class="string">&#x27;java&#x27;</span>, <span class="string">&#x27;-jar&#x27;</span>, os.path.join(target_dir, jar_file), <span class="string">f&quot;-Xmx<span class="subst">&#123;memLimit&#125;</span>&quot;</span>],</span><br><span class="line">                stdin=input_process.stdout,</span><br><span class="line">                stdout=fileout,</span><br><span class="line">                stderr=fileerr,</span><br><span class="line">                text=<span class="literal">True</span></span><br><span class="line">            )</span><br></pre></td></tr></table></figure>
+
+<p>据闻Python的<code>psutils</code>库有办法记录CPU使用时间，不过我的尝试没有成功，希望做过尝试的同学多多分享经验:P</p>
+<p>我两次作业的随机数据生成器与Checker均先由AI生成，再由人工进行细节修改。</p>
+<p>注意到，AI生成的Checker并不完全准确，在HW6时这一问题尤为显著，需要多处人工修正；<strong>在寻求AI工具的帮助，节省时间的同时，请务必仔细检查AI生成的工具是否能如预期般工作。</strong></p>
+<h1 id="之前写过的一些总结"><a href="#之前写过的一些总结" class="headerlink" title="之前写过的一些总结"></a>之前写过的一些总结</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://oo.e2.buaa.edu.cn/assignment/623/discussion/1684">使用ReentrantLock，实现更灵活的锁管理策略</a></li>
+<li><a target="_blank" rel="noopener" href="http://oo.buaa.edu.cn/assignment/621/discussion/1682">在IDEA内部，进行更高效的死锁调试</a></li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li><p>本单元，我感觉最需要的其实是细心，不然线程间交互很容易出现问题。</p>
+</li>
+<li><p>架构设计同样起到了关键的作用。本人架构中<code>RESERVED</code>状态的抽象，大大节省了本单元的开发时间。</p>
+<p>我认为，只要架构：</p>
+<ul>
+<li>易于维护；</li>
+<li>复杂度低（可以归进上条）；</li>
+<li>运行效率在可接受范围内；</li>
+</ul>
+<p>就可以算一个好设计。</p>
+<p>不过，我自己不得不承认，我本单元架构在不少实现细节上的复杂度实在太高，因此带来的BUG与维护的不便不在少数。</p>
+</li>
+<li><p>本单元亦让我直观地感受到了<strong>算法和数学模型，于程序的重要性何在。</strong> </p>
+<p>本人实现中，判断电梯是否满员的问题，可以抽象为计算一个二维空间内，所有线段的最多重叠次数；没有算法的帮助，计算效率很难提升。</p>
+<p>处理优先级问题的方法，其实就是简单的数学建模。</p>
+</li>
+<li><p>感受到了AI的力量。使用AI生成<code>checker</code>+人工修改的效率，远比纯手搓要高。</p>
+</li>
+</ul>
+</div><div class="article-licensing box"><div class="licensing-title"><p>OO_U2 - HW5,6阶段性总结</p><p><a href="http://lajipz.top/2025/04/17/OO_U2 - HW5,6阶段性总结/">http://lajipz.top/2025/04/17/OO_U2 - HW5,6阶段性总结/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>LajiPZ</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2025-04-17</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-21</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">面向对象</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=671eeccad01e2b00125527bf&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2025/04/17/OO_U2%20-%20%E7%94%B5%E6%A2%AF/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">OO_U2 - 电梯</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/"><span class="level-item">使用ReentrantLock，实现更灵活的锁管理策略</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="waline-thread"></div><link rel="stylesheet" href="https://unpkg.com/@waline/client@2/dist/waline.css"><script src="https://unpkg.com/@waline/client@2/dist/waline.js"></script><script>Waline.init({
+            el: '#waline-thread',
+            serverURL: "https://comments.lajipz.top/",
+            path: window.location.pathname,
+            lang: "zh-CN",
+            
+            emoji: ["https://unpkg.com/@waline/emojis@1.2.0/tieba","https://unpkg.com/@waline/emojis@1.2.0/weibo","https://unpkg.com/@waline/emojis@1.2.0/bilibili"],
+            
+            meta: ["nick","mail","link"],
+            requiredMeta: [],
+            login: "enable",
+            
+            pageSize: 10,
+            imageUploader: false,
+            highlighter: false,
+            texRenderer: false,
+            search: false,
+            pageview: false,
+            comment: false,
+            copyright: true,
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#前言"><span class="level-left"><span class="level-item">1</span><span class="level-item">前言</span></span></a></li><li><a class="level is-mobile" href="#浅提电梯实现"><span class="level-left"><span class="level-item">2</span><span class="level-item">浅提电梯实现</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#概况"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">概况</span></span></a></li><li><a class="level is-mobile" href="#存储状态的额外信息"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">存储状态的额外信息</span></span></a></li><li><a class="level is-mobile" href="#兼容SCHE请求"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">兼容SCHE请求</span></span></a></li><li><a class="level is-mobile" href="#等待状态的转移规则"><span class="level-left"><span class="level-item">2.4</span><span class="level-item">等待状态的转移规则</span></span></a></li></ul></li><li><a class="level is-mobile" href="#调度算法"><span class="level-left"><span class="level-item">3</span><span class="level-item">调度算法</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#是否允许加入"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">是否允许加入</span></span></a></li><li><a class="level is-mobile" href="#计算评价指数"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">计算评价指数</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#index-base"><span class="level-left"><span class="level-item">3.2.1</span><span class="level-item">$index_{base}$</span></span></a></li><li><a class="level is-mobile" href="#priorityPenalty"><span class="level-left"><span class="level-item">3.2.2</span><span class="level-item">$priorityPenalty$</span></span></a></li><li><a class="level is-mobile" href="#小总结"><span class="level-left"><span class="level-item">3.2.3</span><span class="level-item">小总结</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#评测方案"><span class="level-left"><span class="level-item">4</span><span class="level-item">评测方案</span></span></a></li><li><a class="level is-mobile" href="#之前写过的一些总结"><span class="level-left"><span class="level-item">5</span><span class="level-item">之前写过的一些总结</span></span></a></li><li><a class="level is-mobile" href="#总结"><span class="level-left"><span class="level-item">6</span><span class="level-item">总结</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a><p class="is-size-7"><span>&copy; 2025 LajiPZ</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">Background by @katorei</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://unpkg.com/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://unpkg.com/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://unpkg.com/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://unpkg.com/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script src="https://unpkg.com/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

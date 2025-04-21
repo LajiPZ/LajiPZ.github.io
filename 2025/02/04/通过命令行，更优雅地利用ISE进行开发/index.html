@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>通过命令行，更优雅地利用ISE进行开发 - Position 0 - LajiPZ的随想屋</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Position 0 - LajiPZ的随想屋"><meta name="msapplication-TileImage" content="/img/pz13.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Position 0 - LajiPZ的随想屋"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="归档于250204，供后来者参考。  众所周知，在使用ISE进行开发的时候，您可能会遇到以下问题：  每次开干，都要手动创建一个新项目 创建文件的操作极为繁琐 仿真一次需要多次操作鼠标 ISE项目文件内文件繁多，文件管理堪称灾难  但在本文的方法下，以上问题均可一一化解！ 本文是教程中ISE、VCS 与自动化测试的一小点拓展。"><meta property="og:type" content="blog"><meta property="og:title" content="通过命令行，更优雅地利用ISE进行开发"><meta property="og:url" content="http://lajipz.top/2025/02/04/%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E6%9B%B4%E4%BC%98%E9%9B%85%E5%9C%B0%E5%88%A9%E7%94%A8ISE%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91/"><meta property="og:site_name" content="Position 0 - LajiPZ的随想屋"><meta property="og:description" content="归档于250204，供后来者参考。  众所周知，在使用ISE进行开发的时候，您可能会遇到以下问题：  每次开干，都要手动创建一个新项目 创建文件的操作极为繁琐 仿真一次需要多次操作鼠标 ISE项目文件内文件繁多，文件管理堪称灾难  但在本文的方法下，以上问题均可一一化解！ 本文是教程中ISE、VCS 与自动化测试的一小点拓展。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_225602.png"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_231741.png"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_232153.png"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_233234.png"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/image.png"><meta property="article:published_time" content="2025-02-04T13:23:00.000Z"><meta property="article:modified_time" content="2025-02-21T05:50:09.322Z"><meta property="article:author" content="LajiPZ"><meta property="article:tag" content="心得"><meta property="article:tag" content="计组"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_225602.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lajipz.top/2025/02/04/%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E6%9B%B4%E4%BC%98%E9%9B%85%E5%9C%B0%E5%88%A9%E7%94%A8ISE%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91/"},"headline":"通过命令行，更优雅地利用ISE进行开发","image":["https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_225602.png","https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_231741.png","https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_232153.png","https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_233234.png","https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/image.png"],"datePublished":"2025-02-04T13:23:00.000Z","dateModified":"2025-02-21T05:50:09.322Z","author":{"@type":"Person","name":"LajiPZ"},"publisher":{"@type":"Organization","name":"Position 0 - LajiPZ的随想屋","logo":{"@type":"ImageObject","url":"http://lajipz.top/img/pz13.png"}},"description":"归档于250204，供后来者参考。  众所周知，在使用ISE进行开发的时候，您可能会遇到以下问题：  每次开干，都要手动创建一个新项目 创建文件的操作极为繁琐 仿真一次需要多次操作鼠标 ISE项目文件内文件繁多，文件管理堪称灾难  但在本文的方法下，以上问题均可一一化解！ 本文是教程中ISE、VCS 与自动化测试的一小点拓展。"}</script><link rel="canonical" href="http://lajipz.top/2025/02/04/%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E6%9B%B4%E4%BC%98%E9%9B%85%E5%9C%B0%E5%88%A9%E7%94%A8ISE%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91/"><link rel="icon" href="/img/pz13.png"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/6.0.0/css/all.min.css"><link data-pjax rel="stylesheet" href="https://unpkg.com/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://unpkg.com/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://unpkg.com/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Position 0 - LajiPZ的随想屋" type="application/atom+xml">
+</head><body class="is-$3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-02-04T13:23:00.000Z" title="2/4/2025, 9:23:00 PM">2025-02-04</time>发表</span><span class="level-item"><time dateTime="2025-02-21T05:50:09.322Z" title="2/21/2025, 1:50:09 PM">2025-02-21</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a></span><span class="level-item">27 分钟读完 (大约4056个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">通过命令行，更优雅地利用ISE进行开发</h1><div class="content"><blockquote>
+<p>归档于250204，供后来者参考。</p>
+</blockquote>
+<p>众所周知，在使用ISE进行开发的时候，您可能会遇到以下问题：</p>
+<ul>
+<li>每次开干，都要手动创建一个新项目</li>
+<li>创建文件的操作极为繁琐</li>
+<li>仿真一次需要多次操作鼠标</li>
+<li>ISE项目文件内文件繁多，文件管理堪称灾难</li>
+</ul>
+<p>但在本文的方法下，以上问题均可一一化解！</p>
+<p>本文是教程中<a target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/tutorial/verilog/verilog-6/verilog-6-6/">ISE、VCS 与自动化测试</a>的一小点拓展。</p>
+<span id="more"></span>
+
+<h1 id="摆脱ISE的项目文件夹"><a href="#摆脱ISE的项目文件夹" class="headerlink" title="摆脱ISE的项目文件夹"></a>摆脱ISE的项目文件夹</h1><p>在教程中，我们发现：在通过命令行使用ISE时，我们实际需要的只有<code>.prj, .tcl, （模块名）.v</code>这些文件；</p>
+<p><strong>也就是说，我们完全可以在ISE项目文件夹外新开一个文件夹，存储我们的源代码，并利用命令行调用ISE！</strong></p>
+<p>观察<code>.prj</code>的内部结构，发现它其实是支持相对路径的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">verilog work &quot;./src/NPC.v&quot;</span><br><span class="line">verilog work &quot;./src/IFU.v&quot;</span><br><span class="line">verilog work &quot;./src/GRF.v&quot;</span><br><span class="line">verilog work &quot;./src/EXT.v&quot;</span><br><span class="line">verilog work &quot;./src/DM.v&quot;</span><br><span class="line">verilog work &quot;./src/CTRL.v&quot;</span><br><span class="line">verilog work &quot;./src/CMP.v&quot;</span><br><span class="line">verilog work &quot;./src/ALU.v&quot;</span><br><span class="line">verilog work &quot;./src/mips.v&quot;</span><br><span class="line">verilog work &quot;./src/mips_tb.v&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意！在ISE自动生成的<code>.prj</code>中，是没有将testbench包含在内的；若想使用本文中方法进行开发，请务必如上文所示，将testbench顺路包含在<code>.prj</code>文件内！</p>
+</blockquote>
+<p>于是，我们就可以把所有的<code>.v</code>源代码统一放进工作目录下的一个文件夹内进行管理。</p>
+<p>在工作目录下，我们必须放好<code>.prj, .tcl</code>文件，以及读入<code>IFU</code>的机器码<code>code.txt</code>。 最后结构如下所示。</p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_225602.png" alt="Screenshot_2024-10-30_225602.png"></p>
+<p>这样就实现了项目目录的有效管理，开新模块的时候也不会有烦人的对话框了。</p>
+<p>这也为我们纯使用VSCode+插件等外部编辑器方案提供了极大的便利。</p>
+<h2 id="241103更新：自动生成-prj"><a href="#241103更新：自动生成-prj" class="headerlink" title="241103更新：自动生成.prj"></a>241103更新：自动生成<code>.prj</code></h2><p>自己手动敲<code>prj</code>还是难受，还是自动生成吧！</p>
+<p>要做到这点也很简单，利用<code>cmd</code>的<code>dir</code>指令和<code>for</code>指令，在进行编译前生成一下<code>mips.prj</code>即可：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> /f <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">dir</span> /b src&#x27;) <span class="keyword">do</span> <span class="built_in">echo</span> verilog work &quot;./src/<span class="variable">%%i</span>&quot; &gt;&gt; mips.prj </span><br></pre></td></tr></table></figure>
+
+<p>实验证明，包含<code>include</code>的宏定义文件包含进去不会出问题，使用了这一写法的各位大可不用顾虑。</p>
+<p>但需要注意的是，请确保执行之前，目录之内没有已存在的<code>mips.prj</code>文件。</p>
+<h1 id="小事：利用设置好的环境变量"><a href="#小事：利用设置好的环境变量" class="headerlink" title="小事：利用设置好的环境变量"></a>小事：利用设置好的环境变量</h1><blockquote>
+<p>此处主要针对Windows用户，相信用Linux看这部分的仙人都知道在Linux上怎么做</p>
+</blockquote>
+<p>在教程内，我们已经知道了自动化运行的指令了；但是，前面跟一大串目录，不觉得很烦人吗？</p>
+<p>恰巧，教程里已经提示过你，要将ISE的安装目录加入环境变量了。我们在这部分不妨再说说，怎么利用设置好的环境变量，简化掉指令前面那一大串难看的安装目录。</p>
+<p>在正式开始前，我们不妨先Win+R一下，输入<code>%windir%</code>，发现他会自动跳转到你的Windows系统目录内。<strong>这说明，Windows（至少cmd）是支持由环境变量名进行目录跳转的</strong>！</p>
+<p>要做的事情也很简单了；添加一个值为<code>（ISE安装目录，如C:\Xilinx\14.7\ISE_DS\ISE）</code>，名为<code>xilinx</code>的环境变量（系统还是用户环境变量均可，实验下来这里都可以）。</p>
+<p>然后，我们就可以把命令改写为<code>%xilinx%\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb</code>，更加美观。</p>
+<h1 id="使用命令行生成波形"><a href="#使用命令行生成波形" class="headerlink" title="使用命令行生成波形"></a>使用命令行生成波形</h1><p>教程这部分有所欠缺，实际上是可以通过命令行看波形的。</p>
+<h2 id="小事：有关-tcl"><a href="#小事：有关-tcl" class="headerlink" title="小事：有关.tcl"></a>小事：有关<code>.tcl</code></h2><p>正式开始之前，我们先多说一点<code>.tcl</code>相关的事。</p>
+<p><strong>教程内提到的<code>.tcl</code>，其实就是给ISE的ISim用的一个脚本;编译出来的<code>mips.exe</code>其实就是ISim的一个实例。</strong></p>
+<p>我们不加入任何参数执行<code>mips.exe</code>，会进入iSim的命令行模式：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_231741.png" alt="Screenshot_2024-10-30_231741.png"></p>
+<p><code>.tcl</code>里写入的指令，其实就是在这个命令行程序下执行的！</p>
+<p>此时我们自然一头雾水，遂输入<code>help</code>查看帮助：<br>![image.png](.&#x2F;assets&#x2F;Screenshot 2024-10-30 231837.png)</p>
+<p>猛然发现，有一条<code>wave</code>指令，可能跟我们生成波形的需求有关！</p>
+<p>查询后得知，<code>wave log</code>指令最有帮助，帮助文档说明如下：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_232153.png" alt="Screenshot_2024-10-30_232153.png"></p>
+<p>回顾我们编译时执行的指令：<code>%xilinx%\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb</code>，此时我们实际上是把<code>mips_tb</code>当作了顶层模块。</p>
+<p>值得注意的是，此时的<code>object_name</code><strong>是对于模块内（即此时的<code>mips_tb</code>）的实例的</strong>。</p>
+<p>众所周知，ISE自动生成的testbench，待测模块实例默认为<code>uut</code>，故我们将其作为<code>object_name</code>传入，同时带上<code>-r</code>参数递归包含所有子模块，我们就可以在波形文件中得到所有子模块的端口，<code>wire</code>等信号的波形。</p>
+<p>最后，经修改后的<code>.tcl</code>如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wave log -r uut </span><br><span class="line">run 200us;</span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
+
+<p>在执行了<code>mips.exe -nolog -tclbatch mips.tcl</code>后，我们会发现工作目录里多了一个<code>isim.wdb</code>文件，这就是我们仿真所得到的波形。</p>
+<h1 id="查看波形"><a href="#查看波形" class="headerlink" title="查看波形"></a>查看波形</h1><p>一番搜索后，使用这一命令即可查看生成的波形：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%xilinx%\bin\nt64\isimgui.exe -view isim.wdb</span><br></pre></td></tr></table></figure>
+
+<p>通过上述操作，我们的确得到了满意的效果：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Screenshot_2024-10-30_233234.png" alt="Screenshot_2024-10-30_233234.png"></p>
+<p>此时，你大可将当前视图内的信号全选，全部删除，然后再在UI左侧的<code>Instances and Processes</code>与<code>Objects</code>里，选择自己感兴趣的信号加入视图。<strong>此时删掉再加信号，并不需要重新仿真才能得到波形，即加即有！！</strong></p>
+<blockquote>
+<p>你问为什么GUI里不是即加即有？因为我们执行的<code>wave log -r uut </code>实际上记录了所有的信号，而在GUI里，若你不将要观察的特定信号加入视图，iSim是不会记录这个信号的波形的。</p>
+</blockquote>
+<blockquote>
+<p>事实上，不加<code>wave log -r uut</code>也会生成波形文件，不过里面没有记录任何波形</p>
+</blockquote>
+<h1 id="编写一键仿真脚本"><a href="#编写一键仿真脚本" class="headerlink" title="编写一键仿真脚本"></a>编写一键仿真脚本</h1><blockquote>
+<p>小白向，各路仙人可以直接跳过</p>
+</blockquote>
+<p>要做的事情很简单，写个批处理文件就行了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%xilinx%\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb</span><br><span class="line">mips.exe -nolog -tclbatch mips.tcl</span><br><span class="line">%xilinx%\bin\nt64\isimgui.exe -view isim.wdb</span><br></pre></td></tr></table></figure>
+
+<p>将我们要执行的这三条指令写入一个.bat文件，双击即可执行，一键完成<code>编译-仿真-查看波形</code>三个步骤。</p>
+<p>对于<code>$display</code>输出的文本，此时将在弹出的命令行窗口内显示。</p>
+<h2 id="241103更新：更完善的自动化脚本run-bat"><a href="#241103更新：更完善的自动化脚本run-bat" class="headerlink" title="241103更新：更完善的自动化脚本run.bat"></a><del>241103更新：更完善的自动化脚本<code>run.bat</code></del></h2><p><strong>！！请注意，此处除<code>clear.bat</code>外的实现可能存在问题，请看下文241130的更新版本！！</strong></p>
+<blockquote>
+<p>241110：针对P5以后的输出格式，进行了输出过滤正则表达式的完善，再次感谢姜宇墨同学的提醒</p>
+</blockquote>
+<p>主要进行了以下完善：</p>
+<ul>
+<li>考虑到波形查看并不必要，故<code>run.bat</code>默认不打开波形视图，另给出一打开波形试图的<code>run_waveform.bat</code></li>
+<li>自动生成<code>mips.prj</code></li>
+<li>添加了编译错误的判断（感谢<a target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/#/discussion_area/1474/1732/posts">罗浩宇同学的帖子</a>给出的脚本编写思路）</li>
+<li>在运行后自动进行缓存文件的清理。为此，引入了另一脚本<code>clear.bat</code></li>
+<li>对输出进行了简单的过滤</li>
+<li>在命令行内直接查看输出</li>
+</ul>
+<p><code>run.bat</code>:</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="keyword">for</span> /f <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">dir</span> /b src&#x27;) <span class="keyword">do</span> <span class="built_in">echo</span> verilog work &quot;./src/<span class="variable">%%i</span>&quot; &gt;&gt; mips.prj </span><br><span class="line"><span class="variable">%xilinx%</span>\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb &gt;<span class="built_in">nul</span></span><br><span class="line"><span class="keyword">IF</span> <span class="keyword">ERRORLEVEL</span> <span class="number">1</span> (</span><br><span class="line">    <span class="built_in">echo</span> An error occurred when compiling.</span><br><span class="line">    <span class="built_in">pause</span></span><br><span class="line">    .\clear.bat</span><br><span class="line">    <span class="keyword">exit</span></span><br><span class="line">)</span><br><span class="line">mips.exe -nolog -tclbatch mips.tcl &gt; isim_out.temp</span><br><span class="line"><span class="built_in">findstr</span> &quot;@&quot; isim_out.temp &gt; isim_out.txt</span><br><span class="line"><span class="built_in">type</span> isim_out.txt</span><br><span class="line"><span class="built_in">pause</span></span><br><span class="line">.\clear.bat</span><br></pre></td></tr></table></figure>
+
+<p><code>run_waveform.bat</code>:</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="keyword">for</span> /f <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">dir</span> /b src&#x27;) <span class="keyword">do</span> <span class="built_in">echo</span> verilog work &quot;./src/<span class="variable">%%i</span>&quot; &gt;&gt; mips.prj </span><br><span class="line"><span class="variable">%xilinx%</span>\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb &gt;<span class="built_in">nul</span></span><br><span class="line"><span class="keyword">IF</span> <span class="keyword">ERRORLEVEL</span> <span class="number">1</span> (</span><br><span class="line">    <span class="built_in">echo</span> An error occurred when compiling.</span><br><span class="line">    <span class="built_in">pause</span></span><br><span class="line">    .\clear.bat</span><br><span class="line">    <span class="keyword">exit</span></span><br><span class="line">)</span><br><span class="line">mips.exe -nolog -tclbatch mips.tcl &gt; isim_out.temp</span><br><span class="line"><span class="built_in">findstr</span> &quot;@&quot; isim_out.temp &gt; isim_out.txt</span><br><span class="line"><span class="built_in">type</span> isim_out.txt</span><br><span class="line"><span class="built_in">pause</span></span><br><span class="line"><span class="variable">%xilinx%</span>\bin\nt64\isimgui.exe -view isim.wdb</span><br><span class="line">.\clear.bat</span><br></pre></td></tr></table></figure>
+
+<p><code>clear.bat</code></p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="built_in">rmdir</span> isim /s /q</span><br><span class="line"><span class="built_in">del</span> mips.exe fuseRelaunch.<span class="built_in">cmd</span> fuse.* isim.wdb isim_out.temp mips.prj</span><br></pre></td></tr></table></figure>
+
+<p>注意，在<code>run.bat</code>意外中断时，若缓存文件未成功清理，请手动点击<code>clear.bat</code>进行清理，以免后续再次仿真时出现问题。</p>
+<h2 id="241105更新：上机实践经验"><a href="#241105更新：上机实践经验" class="headerlink" title="241105更新：上机实践经验"></a>241105更新：上机实践经验</h2><p>在上机过程中，孩子对这一方法进行了实验，确定了上机时这一方案的可用性。不过，注意到有同学反馈上机时使用存在问题。一番总结发现，在使用的时候，需要注意以下几点：</p>
+<ul>
+<li><p><strong>目录中不能出现中文字符或特殊符号</strong>，cmd对其支持可谓极差，出现了会导致找不到当前目录下生成的<code>mips.exe</code>的问题</p>
+</li>
+<li><p>上机的时候，请先提前手动配置好环境变量。ISE的安装目录，可通过对桌面快捷方式右键-打开文件所在的位置找到。</p>
+<p><strong>需要注意的是，快捷方式指向的目录并不是我们最终要找的ISE安装目录。我们要找的安装目录，是快捷方式指向的文件夹内，那个叫ISE的文件夹。</strong></p>
+<p>上机环境的环境变量，请使用<code>桌面“此电脑”快捷方式-右键菜单，属性-“设置”页中的“高级系统设置”选项-“高级”选项卡中的“环境变量...”</code>进行编辑。</p>
+</li>
+<li><p><strong>运行目录请务必放在D盘，切勿放在C盘。</strong> 因为上机环境的C盘有读写权限限制，在C盘运行脚本会导致<code>mips.exe</code>无法生成，导致运行失败；</p>
+</li>
+<li><p>运行时可能会弹出烦人的SmartScreen弹窗。<del>由于这部分我手上没有Win10环境进行测试，这里可能需要各位自行搜索关闭SmartScreen的方法</del> &#x2F;&#x2F; 上机环境下，由于权限设置，SmartScreen无法关闭。要规避这个问题，建议在打包脚本的时候，先以.txt的格式保存脚本内容，再在上机时，将.txt中脚本，粘贴到<strong>用机房电脑创建的.bat文件里</strong>。你问怎么写？新建.txt，粘贴内容，改扩展名就行了</p>
+</li>
+</ul>
+<h1 id="241110更新"><a href="#241110更新" class="headerlink" title="241110更新"></a>241110更新</h1><blockquote>
+<p>感谢姜宇墨同学的提醒…</p>
+</blockquote>
+<p>在P5开始，输出格式发生了变化，每一行以当前运行的时间数为开头，本文先前使用的正则表达式匹配方法存在问题，现已修正。</p>
+<h1 id="241118-两次上机实验发现的问题"><a href="#241118-两次上机实验发现的问题" class="headerlink" title="241118:两次上机实验发现的问题"></a>241118:两次上机实验发现的问题</h1><p>这部分我实在没有头绪，希望各位能给出一些完善的思路。</p>
+<p>在本人两次于三号机房肝P5时，我没有一次成功查看波形，但是输出正常。查看未过滤的mips.exe输出，发现在执行波形输出时，出现了FATAL ERROR；</p>
+<p>但此前在4号实验室时考P4时，波形输出并没有问题。</p>
+<p>初步怀疑是cmd并行执行指令引起的问题；如各位有解决这一问题的办法，欢迎私发本人&#x2F;在评论区提出，万分感谢！</p>
+<h1 id="241130：上机遇到问题的临时解法"><a href="#241130：上机遇到问题的临时解法" class="headerlink" title="241130：上机遇到问题的临时解法"></a>241130：上机遇到问题的临时解法</h1><h2 id="bat导致SmartScreen拦截"><a href="#bat导致SmartScreen拦截" class="headerlink" title=".bat导致SmartScreen拦截"></a>.bat导致SmartScreen拦截</h2><p>在上交文件前，把拓展名.bat改成.txt；此后，要么直接把拓展名改回来，要么将.txt中内容，复制到另一份用机房电脑创建的.bat文件中。我个人倾向后者，因为理论而言后者能最稳妥地绕开SmartScreen。</p>
+<h2 id="并发执行，导致波形无法查看"><a href="#并发执行，导致波形无法查看" class="headerlink" title="并发执行，导致波形无法查看"></a>并发执行，导致波形无法查看</h2><p>利用<code>call</code>使得各指令顺序执行，尝试避免并行执行引起的问题。<strong>注意，这一改法尚未上机实验，请不要把其作为上机时使用的唯一方法；也欢迎各位上机后反馈使用效果！</strong></p>
+<p><code>run.bat</code>:</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="keyword">for</span> /f <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">dir</span> /b src&#x27;) <span class="keyword">do</span> <span class="built_in">echo</span> verilog work &quot;./src/<span class="variable">%%i</span>&quot; &gt;&gt; mips.prj </span><br><span class="line"><span class="keyword">call</span> <span class="variable">%xilinx%</span>\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb &gt;<span class="built_in">nul</span></span><br><span class="line"><span class="keyword">IF</span> <span class="keyword">ERRORLEVEL</span> <span class="number">1</span> (</span><br><span class="line">    <span class="built_in">echo</span> An error occurred when compiling.</span><br><span class="line">    <span class="built_in">pause</span></span><br><span class="line">    .\clear.bat</span><br><span class="line">    <span class="keyword">exit</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">call</span> mips.exe -nolog -tclbatch mips.tcl &gt; isim_out.temp</span><br><span class="line"><span class="keyword">call</span> <span class="built_in">findstr</span> &quot;@&quot; isim_out.temp &gt; isim_out.txt</span><br><span class="line"><span class="keyword">call</span> <span class="built_in">type</span> isim_out.txt</span><br><span class="line"><span class="keyword">call</span> <span class="built_in">pause</span></span><br><span class="line"><span class="keyword">call</span> .\clear.bat</span><br></pre></td></tr></table></figure>
+
+<p><code>run_waveform.bat</code>:</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@<span class="built_in">echo</span> off</span><br><span class="line"><span class="keyword">for</span> /f <span class="variable">%%i</span> <span class="keyword">in</span> (&#x27;<span class="built_in">dir</span> /b src&#x27;) <span class="keyword">do</span> <span class="built_in">echo</span> verilog work &quot;./src/<span class="variable">%%i</span>&quot; &gt;&gt; mips.prj </span><br><span class="line"><span class="keyword">call</span> <span class="variable">%xilinx%</span>\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb &gt;<span class="built_in">nul</span></span><br><span class="line"><span class="keyword">IF</span> <span class="keyword">ERRORLEVEL</span> <span class="number">1</span> (</span><br><span class="line">    <span class="built_in">echo</span> An error occurred when compiling.</span><br><span class="line">    <span class="built_in">pause</span></span><br><span class="line">    .\clear.bat</span><br><span class="line">    <span class="keyword">exit</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">call</span> mips.exe -nolog -tclbatch mips.tcl &gt; isim_out.temp</span><br><span class="line"><span class="keyword">call</span> <span class="built_in">findstr</span> &quot;@&quot; isim_out.temp &gt; isim_out.txt</span><br><span class="line"><span class="keyword">call</span> <span class="built_in">type</span> isim_out.txt</span><br><span class="line"><span class="keyword">call</span> <span class="built_in">pause</span></span><br><span class="line"><span class="keyword">call</span> <span class="variable">%xilinx%</span>\bin\nt64\isimgui.exe -view isim.wdb</span><br><span class="line"><span class="keyword">call</span> .\clear.bat</span><br></pre></td></tr></table></figure>
+
+<p><code>clear.bat</code>不用修改，按上面的实现就可以了。</p>
+<h1 id="241209：确认问题解决"><a href="#241209：确认问题解决" class="headerlink" title="241209：确认问题解决"></a>241209：确认问题解决</h1><p>在两次试验241130中的修改后，波形已确保可以稳定生成。本方法自此可确认可靠。</p>
+<p>在上机使用时，仍需注意SmartScreen引起的问题，解法见上文。</p>
+<h1 id="TL-DR：上机怎么用？"><a href="#TL-DR：上机怎么用？" class="headerlink" title="TL;DR：上机怎么用？"></a>TL;DR：上机怎么用？</h1><p>这里针对直接使用Windows环境，Linux仙人可能需要自己钻研一下（当然用Linux的一般也不用看这个教程吧，笑）…</p>
+<h2 id="课下准备"><a href="#课下准备" class="headerlink" title="课下准备"></a>课下准备</h2><p>把脚本改成<code>.txt</code>后缀，再塞进自己的提交里</p>
+<h2 id="课上：配置名为xilinx的环境变量"><a href="#课上：配置名为xilinx的环境变量" class="headerlink" title="课上：配置名为xilinx的环境变量"></a>课上：<strong>配置名为<code>xilinx</code>的环境变量</strong></h2><blockquote>
+<p>为适应不同ISE安装目录而开发。若觉得配置环境变量太麻烦，建议直接把脚本里的<code>%xilinx%</code>直接换成ISE的安装目录，因为ISE的默认安装目录应该都是一样的。</p>
+</blockquote>
+<p><code>此电脑-属性-高级系统设置-环境变量-（新建用户环境变量）</code></p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/image.png" alt="image.png"></p>
+<p>其中，ISE的目录在上机时应该也是<code>C:\Xilinx\14.7\ISE_DS\ISE</code>；</p>
+<p>最保险的方法是，<code>对着ISE的桌面快捷方式右键-打开文件位置-打开弹出的&quot;ISE_DS&quot;文件夹内的&quot;ISE&quot;文件夹-复制路径</code> 。</p>
+<p><strong>注意！ISE快捷方式直接打开的文件夹不是我们要的目标！！要多点进一个文件夹，不要忘了！</strong></p>
+<h2 id="课上：用机房电脑创建脚本"><a href="#课上：用机房电脑创建脚本" class="headerlink" title="课上：用机房电脑创建脚本"></a>课上：用机房电脑创建脚本</h2><p><strong>机房电脑由于权限设置，不可能关掉SmartScreen。</strong> 为了绕开这个当前场景无用的安全检查，我们只能这么绕一下。</p>
+<p>这里主要针对要双击运行的<code>run.bat</code>。<code>clear.bat</code>由于在<code>run.bat</code>内间接调用，这个安全机制无效，可以不用处理。</p>
+<ul>
+<li>用机房电脑，创建跟你的脚本同名的<code>.bat</code>（创.txt再改后缀，这里不赘述了）。</li>
+<li>等到开始考试时，把你的脚本.txt内容拷贝进刚刚创建的.bat。</li>
+<li>把准备好的.bat放进你的源码文件夹（结构见上文），即可绕开SmartScreen，双击即可直接运行。</li>
+</ul>
+<p>本文就到此结束了，速速实践，摆脱ISE臃肿的GUI吧！🤤</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>通过命令行，更优雅地利用ISE进行开发</p><p><a href="http://lajipz.top/2025/02/04/通过命令行，更优雅地利用ISE进行开发/">http://lajipz.top/2025/02/04/通过命令行，更优雅地利用ISE进行开发/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>LajiPZ</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2025-02-04</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-02-21</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E5%BF%83%E5%BE%97/">心得</a><a class="link-muted mr-2" rel="tag" href="/tags/%E8%AE%A1%E7%BB%84/">计组</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=671eeccad01e2b00125527bf&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">航砖祭祖后日谈</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/02/04/%E2%80%9C%E6%B3%95%E5%BE%8B%E3%80%81%E7%A7%91%E6%8A%80%E4%B8%8E%E7%A4%BE%E4%BC%9A%E2%80%9D%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%20-%202024/"><span class="level-item">“法律、科技与社会”课后思考题答案 - 2024</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="waline-thread"></div><link rel="stylesheet" href="https://unpkg.com/@waline/client@2/dist/waline.css"><script src="https://unpkg.com/@waline/client@2/dist/waline.js"></script><script>Waline.init({
+            el: '#waline-thread',
+            serverURL: "https://comments.lajipz.top/",
+            path: window.location.pathname,
+            lang: "zh-CN",
+            
+            emoji: ["https://unpkg.com/@waline/emojis@1.2.0/tieba","https://unpkg.com/@waline/emojis@1.2.0/weibo","https://unpkg.com/@waline/emojis@1.2.0/bilibili"],
+            
+            meta: ["nick","mail","link"],
+            requiredMeta: [],
+            login: "enable",
+            
+            pageSize: 10,
+            imageUploader: false,
+            highlighter: false,
+            texRenderer: false,
+            search: false,
+            pageview: false,
+            comment: false,
+            copyright: true,
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#摆脱ISE的项目文件夹"><span class="level-left"><span class="level-item">1</span><span class="level-item">摆脱ISE的项目文件夹</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#241103更新：自动生成-prj"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">241103更新：自动生成.prj</span></span></a></li></ul></li><li><a class="level is-mobile" href="#小事：利用设置好的环境变量"><span class="level-left"><span class="level-item">2</span><span class="level-item">小事：利用设置好的环境变量</span></span></a></li><li><a class="level is-mobile" href="#使用命令行生成波形"><span class="level-left"><span class="level-item">3</span><span class="level-item">使用命令行生成波形</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#小事：有关-tcl"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">小事：有关.tcl</span></span></a></li></ul></li><li><a class="level is-mobile" href="#查看波形"><span class="level-left"><span class="level-item">4</span><span class="level-item">查看波形</span></span></a></li><li><a class="level is-mobile" href="#编写一键仿真脚本"><span class="level-left"><span class="level-item">5</span><span class="level-item">编写一键仿真脚本</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#241103更新：更完善的自动化脚本run-bat"><span class="level-left"><span class="level-item">5.1</span><span class="level-item">241103更新：更完善的自动化脚本run.bat</span></span></a></li><li><a class="level is-mobile" href="#241105更新：上机实践经验"><span class="level-left"><span class="level-item">5.2</span><span class="level-item">241105更新：上机实践经验</span></span></a></li></ul></li><li><a class="level is-mobile" href="#241110更新"><span class="level-left"><span class="level-item">6</span><span class="level-item">241110更新</span></span></a></li><li><a class="level is-mobile" href="#241118-两次上机实验发现的问题"><span class="level-left"><span class="level-item">7</span><span class="level-item">241118:两次上机实验发现的问题</span></span></a></li><li><a class="level is-mobile" href="#241130：上机遇到问题的临时解法"><span class="level-left"><span class="level-item">8</span><span class="level-item">241130：上机遇到问题的临时解法</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#bat导致SmartScreen拦截"><span class="level-left"><span class="level-item">8.1</span><span class="level-item">.bat导致SmartScreen拦截</span></span></a></li><li><a class="level is-mobile" href="#并发执行，导致波形无法查看"><span class="level-left"><span class="level-item">8.2</span><span class="level-item">并发执行，导致波形无法查看</span></span></a></li></ul></li><li><a class="level is-mobile" href="#241209：确认问题解决"><span class="level-left"><span class="level-item">9</span><span class="level-item">241209：确认问题解决</span></span></a></li><li><a class="level is-mobile" href="#TL-DR：上机怎么用？"><span class="level-left"><span class="level-item">10</span><span class="level-item">TL;DR：上机怎么用？</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#课下准备"><span class="level-left"><span class="level-item">10.1</span><span class="level-item">课下准备</span></span></a></li><li><a class="level is-mobile" href="#课上：配置名为xilinx的环境变量"><span class="level-left"><span class="level-item">10.2</span><span class="level-item">课上：配置名为xilinx的环境变量</span></span></a></li><li><a class="level is-mobile" href="#课上：用机房电脑创建脚本"><span class="level-left"><span class="level-item">10.3</span><span class="level-item">课上：用机房电脑创建脚本</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a><p class="is-size-7"><span>&copy; 2025 LajiPZ</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">Background by @katorei</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://unpkg.com/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://unpkg.com/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://unpkg.com/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://unpkg.com/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script src="https://unpkg.com/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>OO_U2 - HW7简要总结 - Position 0 - LajiPZ的随想屋</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Position 0 - LajiPZ的随想屋"><meta name="msapplication-TileImage" content="/img/pz13.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Position 0 - LajiPZ的随想屋"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="前言讨论区已有一众仙人分享了自己的实现，但我认为我有在降低修改复杂度上更进一步的办法。 考虑到本次作业为本单元的最后一次作业，我的修改方法更注重于降低修改的复杂度，可能存在部分性能的牺牲。 在各位进行参考时，请注意这一点。 本人实现的亮点在于：UPDATE请求的处理，与双轿厢目标楼层的规避，全部利用线程交互实现。"><meta property="og:type" content="blog"><meta property="og:title" content="OO_U2 - HW7简要总结"><meta property="og:url" content="http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/"><meta property="og:site_name" content="Position 0 - LajiPZ的随想屋"><meta property="og:description" content="前言讨论区已有一众仙人分享了自己的实现，但我认为我有在降低修改复杂度上更进一步的办法。 考虑到本次作业为本单元的最后一次作业，我的修改方法更注重于降低修改的复杂度，可能存在部分性能的牺牲。 在各位进行参考时，请注意这一点。 本人实现的亮点在于：UPDATE请求的处理，与双轿厢目标楼层的规避，全部利用线程交互实现。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://lajipz.top/img/og_image.png"><meta property="article:published_time" content="2025-04-17T15:00:00.000Z"><meta property="article:modified_time" content="2025-04-21T06:39:05.077Z"><meta property="article:author" content="LajiPZ"><meta property="article:tag" content="面向对象"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://lajipz.top/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/"},"headline":"OO_U2 - HW7简要总结","image":["http://lajipz.top/img/og_image.png"],"datePublished":"2025-04-17T15:00:00.000Z","dateModified":"2025-04-21T06:39:05.077Z","author":{"@type":"Person","name":"LajiPZ"},"publisher":{"@type":"Organization","name":"Position 0 - LajiPZ的随想屋","logo":{"@type":"ImageObject","url":"http://lajipz.top/img/pz13.png"}},"description":"前言讨论区已有一众仙人分享了自己的实现，但我认为我有在降低修改复杂度上更进一步的办法。 考虑到本次作业为本单元的最后一次作业，我的修改方法更注重于降低修改的复杂度，可能存在部分性能的牺牲。 在各位进行参考时，请注意这一点。 本人实现的亮点在于：UPDATE请求的处理，与双轿厢目标楼层的规避，全部利用线程交互实现。"}</script><link rel="canonical" href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/"><link rel="icon" href="/img/pz13.png"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/6.0.0/css/all.min.css"><link data-pjax rel="stylesheet" href="https://unpkg.com/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://unpkg.com/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://unpkg.com/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Position 0 - LajiPZ的随想屋" type="application/atom+xml">
+</head><body class="is-$3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-04-17T15:00:00.000Z" title="4/17/2025, 11:00:00 PM">2025-04-17</time>发表</span><span class="level-item"><time dateTime="2025-04-21T06:39:05.077Z" title="4/21/2025, 2:39:05 PM">2025-04-21</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a></span><span class="level-item">25 分钟读完 (大约3823个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">OO_U2 - HW7简要总结</h1><div class="content"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>讨论区已有一众仙人分享了自己的实现，但我认为我有在降低修改复杂度上更进一步的办法。</p>
+<p>考虑到本次作业为本单元的最后一次作业，我的修改方法更注重于<strong>降低修改的复杂度，可能存在部分性能的牺牲。</strong> 在各位进行参考时，请注意这一点。</p>
+<p>本人实现的亮点在于：UPDATE请求的处理，与双轿厢目标楼层的规避，<strong>全部利用线程交互实现</strong>。</p>
+<span id="more"></span>
+<h1 id="支持UPDATE请求"><a href="#支持UPDATE请求" class="headerlink" title="支持UPDATE请求"></a>支持UPDATE请求</h1><h2 id="特殊请求由谁分给电梯？"><a href="#特殊请求由谁分给电梯？" class="headerlink" title="特殊请求由谁分给电梯？"></a>特殊请求由谁分给电梯？</h2><p>针对上一单元的SCHE请求与本单元的UPDATE请求，<strong>我都选择交由<code>Dispatcher</code>实例进行处理。</strong></p>
+<p>原因无他，为了减少进程交互的复杂性。 我的电梯运行线程<code>Scheduler</code>与电梯信息类<code>Elevator</code>是分离的，我希望<code>Elevator</code>只有<code>Dispatcher</code>与<code>Scheduler</code>两者在竞争。</p>
+<p>这两类特殊请求都将直接加入请求池。那我们怎么保证Dispatcher优先处理这两种特殊请求呢？</p>
+<p>答案是，将请求池改为用<strong>优先队列</strong>实现。这是因为，<strong>优先队列的比较条件（提供了Comparator接口）可以自行实现</strong>，这为我们当前情况的需求提供了极大的便利。</p>
+<p>我们需要保证：</p>
+<ul>
+<li>SCHE&#x2F;UPDATE请求在优先队列的首位</li>
+<li>剩下的普通请求在后面。</li>
+</ul>
+<p>示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Comparator;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RequestComparator</span> <span class="keyword">implements</span> <span class="title class_">Comparator</span>&lt;SubRequest&gt; &#123;  </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(SubRequest o1, SubRequest o2)</span> &#123;  </span><br><span class="line">        <span class="type">int</span> <span class="variable">o1Index</span> <span class="operator">=</span> calcIndex(o1);  </span><br><span class="line">        <span class="type">int</span> <span class="variable">o2Index</span> <span class="operator">=</span> calcIndex(o2);  </span><br><span class="line">        <span class="keyword">return</span> o1Index - o2Index;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">calcIndex</span><span class="params">(SubRequest subRequest)</span> &#123;  </span><br><span class="line">        <span class="keyword">if</span> (subRequest.isSche()) &#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;  </span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (subRequest.isUpdate()) &#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;  </span><br><span class="line">        <span class="keyword">else</span> &#123;  </span><br><span class="line">            <span class="comment">// 按你自己的方法，处理普通请求！</span></span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在Dispatcher从头遍历优先队列时，我们此时即可保证特殊请求被优先处理。</p>
+<h2 id="UPDATE请求的处理"><a href="#UPDATE请求的处理" class="headerlink" title="UPDATE请求的处理"></a>UPDATE请求的处理</h2><p>现在，我们的UPDATE请求放在了Dispatcher处理；此时，聪明的你不难发现一些问题：</p>
+<ul>
+<li>在UPDATE请求处理完成前，Dispatcher是不是会被阻塞，不能分配其他请求？</li>
+<li>UPDATE显然需要一个<strong>类似总控的东西，来控制有关的交互</strong>；这个总控难道就是Dispatcher线程本身？</li>
+</ul>
+<p>这样肯定不对。<strong>因此，我们在Dispatcher内引入一个子进程，作为UPDATE请求处理的“总控”。</strong></p>
+<p>这个子线程怎么创建呢？<strong>使用Lambda表达式，可以快速创建新线程</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Thread</span> <span class="variable">th</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;  </span><br><span class="line">    <span class="comment">// Do something!</span></span><br><span class="line">&#125;);  </span><br><span class="line">th.start();</span><br></pre></td></tr></table></figure>
+
+<p>这样，Dispatcher线程就可在处理升级请求的过程中，继续分配其他可分配的请求，而不会发生阻塞。</p>
+<p>如果你不放心，还可以用<code>th.join()</code>，在Dispatcher线程的某处，强制处理UPDATE请求的子线程完成后，再继续执行。</p>
+<p>总控与两台待升级的电梯的整体交互逻辑如下：</p>
+<ul>
+<li>告知两台电梯需要升级，<strong>等待两电梯就绪</strong></li>
+<li><code>Scheduler</code>读取<code>Elevator</code>中信息，得知电梯需要升级，进行疏散乘客等“预处理”操作</li>
+<li>处理完成后，通知总控该电梯已就绪，<strong>等待总控对其进行升级</strong></li>
+<li>总控在两台电梯均就绪后，输出<code>UPDATE-BEGIN</code>，随后修改电梯的运行属性，完成升级</li>
+</ul>
+<p>具体实现上，我的电梯信息类<code>Elevator</code>采用了<code>ReentrantLock</code>实现锁管理，上文中的两个等待，我们通过创建两个<code>Elevator</code>锁的<code>Condition</code>实现。</p>
+<p>电梯如何指示自己已就绪？我采取给电梯增加一个<code>UPDATE</code>运行状态；在电梯完成了“预处理”后，电梯就将进入这一运行状态，并使用<code>Condition.signal()</code>唤醒总控。</p>
+<p>下述伪代码仅作示意之用。更进一步的细节，需要各位根据自己的架构实现。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// Elevator</span><br><span class="line">ReentrantLock lock;</span><br><span class="line">Condition schedulerUpdateCond = lock.newCondition()</span><br><span class="line">Condition dispatcherUpdateCond = lock.newCondition()</span><br><span class="line"></span><br><span class="line">setUpdateStatus() &#123;</span><br><span class="line">		this.status = new Status(&quot;UPDATE&quot;);</span><br><span class="line">		this.dispatcherUpdateCond.signal();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">updateA() &#123; // updateB()同理</span><br><span class="line">	// 修改属性，并将电梯运行状态设为IDLE</span><br><span class="line">	this.schedulerUpdateCond.signal()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// Scheduler</span><br><span class="line">elevator.lock.lock();</span><br><span class="line">...</span><br><span class="line">if (elevator.shouldUpdate()) &#123;</span><br><span class="line">	evacuatePassengers();</span><br><span class="line">	elevator.setUpdateStatus;</span><br><span class="line">	elevator.schedulerUpdateCond.await();</span><br><span class="line">	elevator.respondUpdate; // 解除指示电梯需要升级的flag</span><br><span class="line">	// await()结束后，电梯已被更新为新的状态，按照原有的运行逻辑运行即可！</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// Dispatcher</span><br><span class="line">Thread th = new Thread(() -&gt; &#123;  </span><br><span class="line">    Elevator elevA, elevB;</span><br><span class="line"></span><br><span class="line">	// 由两层await()，实现两电梯均就绪后再继续</span><br><span class="line">    elevA.lock.lock();</span><br><span class="line">    if(elevA.getStatus() != &quot;UPDATE&quot;) &#123;</span><br><span class="line">	    elevA.dispatcherUpdateCond.await();</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	elevB.lock.lock();</span><br><span class="line">    if(elevB.getStatus() != &quot;UPDATE&quot;) &#123;</span><br><span class="line">	    elevB.dispatcherUpdateCond.await();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	// UPDATE-BEGIN</span><br><span class="line">		//重新分配被取消RECEIVE的请求</span><br><span class="line">		elevA.updateA();</span><br><span class="line">		elevB.updateB();</span><br><span class="line">	// UPDATE-END</span><br><span class="line"></span><br><span class="line">	// 放elevA/B的锁</span><br><span class="line">&#125;);  </span><br><span class="line">th.start();</span><br></pre></td></tr></table></figure>
+
+<h2 id="“三角死锁关系？”"><a href="#“三角死锁关系？”" class="headerlink" title="“三角死锁关系？”"></a>“三角死锁关系？”</h2><p>看到上面的实现后，聪明的你不难发现，这一实现中，如果调度策略是影子电梯，总控、<code>Scheduler</code>、<code>Dispatcher</code>三者都可能争夺<code>Elevator</code>的锁，很容易出现死锁，不是吗？</p>
+<p>事实上，只要锁管理得够好，这个问题仍然是可以避免的。下面，我将从这三个竞争者在处理UPDATE请求的情况下，分析如何避免“三角死锁”。</p>
+<ul>
+<li>Dispatcher:（事实上，关键的只有这一处）<br>在进行普通请求分配时，先判断当前电梯的是否仍在响应UPDATE请求（<strong>这一判断不获取电梯的锁</strong>），再获取锁</li>
+<li>Scheduler&#x2F;总控：<code>await()</code>在开始等待前会自动放锁，等待结束后会自动重新获得锁；仔细观看上面的实现，你会发现，冲突此时并不存在！</li>
+</ul>
+<h1 id="楼层冲突规避"><a href="#楼层冲突规避" class="headerlink" title="楼层冲突规避"></a>楼层冲突规避</h1><h2 id="基本分析"><a href="#基本分析" class="headerlink" title="基本分析"></a>基本分析</h2><p>很遗憾，我们不能通过不到“目标楼层”的方法，规避楼层冲突的问题，否则全部都被改造成双轿厢，且目标楼层均在同一层时，会导致跨越目标楼层的请求全部无法完成。</p>
+<p>产生冲突的情况，我们大致可以分为三类：</p>
+<ul>
+<li>相向而行：两电梯同时将要到达目标楼层</li>
+<li>同向而行：一个电梯尚未完全离开目标楼层，而另一电梯即将到达</li>
+<li>一动一静：一个电梯闲置于目标楼层，或正在目标楼层下客，而另一电梯即将到达</li>
+</ul>
+<p>在我的实现中，与电梯移动有关的逻辑是这样，相信各位的实现与其大同小异：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">// Scheduler </span><br><span class="line">while (true) &#123;</span><br><span class="line">	elevator.lock.lock;</span><br><span class="line">	try &#123;</span><br><span class="line">		if (/*一般情况*/) &#123;</span><br><span class="line">			normSchedule();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; finally &#123;</span><br><span class="line">		// 以防中途开锁</span><br><span class="line">		if(elevator.lock.isHeldByCurrentThread()) &#123; elevator.lock.unlock(); &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">normSchedule() &#123;</span><br><span class="line">	if (elevator.status == RUNNING)</span><br><span class="line">		runningSchedule;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">runningSchedule() &#123;</span><br><span class="line">	elevator.lock.unlock();</span><br><span class="line">	// 唤醒Dispatcher；开锁是为了允许Dispatcher此时为其分配可加入的请求</span><br><span class="line">	sleep(speed);</span><br><span class="line">	elevator.lock.lock();</span><br><span class="line">	// 更改楼层</span><br><span class="line">	// 输出ARRIVE</span><br><span class="line">	// 判断下一步状态：是下客的WAITING，还是继续RUNNING？</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了防止不必要的判断，这一判断只应在<strong>当前电梯即将进入目标楼层时进行。</strong></p>
+<p>在判断之前，我们自然<strong>要获取对方电梯的锁，以免对方电梯的状态在判断时改变。</strong></p>
+<p>观察我们上面实现的锁管理情况，我们不难发现：</p>
+<ul>
+<li>为了避免死锁，我们尽量确保一个线程一次只拿一把锁；</li>
+<li><code>runningSchedule()</code>中恰好有一个开锁的窗口，为一次只拿一把锁提供了可能</li>
+<li>对方电梯正前往目标楼层时，由于我们上面的锁机制，<strong>读取到的对方当前楼层，一定是目标楼层的前一层</strong></li>
+<li>在对方电梯的当前楼层为目标楼层时，读出的状态不可能为<code>RUNNING</code>，只可能为闲置的<code>IDLE</code>，或正在下客的<code>WAITING</code></li>
+</ul>
+<p>因此，上述三种冲突情况，我们只需要对“相向而行”这一情况特殊考虑；其余情况，都可以通过判断对方当前位置是否为目标楼层判断。</p>
+<p>“相向而行”特殊在哪呢？特殊在<strong>无法直接确定需要等待的电梯</strong>。其他两种情况中，我们可以确定等待的是当前不在目标楼层的电梯，这一情况不行。</p>
+<p>对此，我规定：<strong>下方的电梯，规避上方的电梯。</strong></p>
+<p>为了减少复杂度，我并没有考虑轿厢中乘客的问题，性能可能因此下降；如各位希望争取这一部分性能，可以以这一条件为最低级条件，将轿厢内请求加入判断条件中。</p>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>自然，为了避免死锁，我们的判断放在在<code>runningSchedule()</code>那一开锁的窗口内。</p>
+<p>下文中以<code>cooper</code>称呼对方电梯。（coop-er，能想出的最简洁称号就这个了，笑）</p>
+<p>为双轿厢电梯单独写一套运行逻辑自然不大明治。我们将这一判断逻辑融入原有的运行逻辑中，判断<strong>只在电梯已被改造为双轿厢（对方电梯<code>cooper !=null</code>）时</strong>进行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">runningSchedule() &#123;</span><br><span class="line">	elevator.lock.unlock();</span><br><span class="line">	// 唤醒Dispatcher；开锁是为了允许Dispatcher此时为其分配可加入的请求</span><br><span class="line">	</span><br><span class="line">	if (elevator.willEnterTargetFloor &amp;&amp; cooper != null) &#123;</span><br><span class="line">		cooper.lock.lock();// 获取对方的锁</span><br><span class="line">		judge(); // 判断</span><br><span class="line">		// 放锁；这样放锁当然有目的，详见下文</span><br><span class="line">		if(cooper.lock.isHeldByCurrentThread()) &#123;cooper.lock.unlock(); &#125; </span><br><span class="line">	&#125;</span><br><span class="line">	sleep(speed);</span><br><span class="line">	elevator.lock.lock();</span><br></pre></td></tr></table></figure>
+
+<p>电梯避让的等待&#x2F;唤醒，使用挂在电梯信息类<code>Elevator</code>的锁上的Condition实现，命名为<code>conflictCond</code>。</p>
+<p>整体交互如下：</p>
+<ul>
+<li>在判断出我方需要等待后，我方执行<code>conflictCond.await()</code>，同时通知对方需要规避</li>
+<li>通知对方规避时，唤醒对方的Scheduler，以处理对方正处在IDLE，Scheduler正休眠的问题</li>
+<li>每当对方<strong>远离目标楼层</strong>时，就让对方执行我方方法<code>conflictCond.signalAll()</code>，唤醒等待冲突解除的我方。</li>
+</ul>
+<p>随后，我们就可得出如下判断逻辑：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">judge() &#123;</span><br><span class="line">	if (elevator.isElevB()) &#123; // 是在下方的B电梯  </span><br><span class="line">	    switch (cooper.getStatus().getStatusType()) &#123;  </span><br><span class="line">	        case RUNNING:  </span><br><span class="line">		        // 相向而行</span><br><span class="line">	            if (cooper.getFloorBeforeTargetFloor() == cooper.getCurrentFloor() </span><br><span class="line">	                &amp;&amp; cooper.towardsTargetFloor()) &#123;  </span><br><span class="line">	                cooper.setAvoid();  // 通知对方规避</span><br><span class="line">	                cooper.lock.unlock();  // 避免同时获取两把锁</span><br><span class="line">	                elevator.lock.lock(); // 没锁就await()，会发生什么？ </span><br><span class="line">	                elevator.conflictCond.await();  </span><br><span class="line">	                elevator.lock.unlock();  </span><br><span class="line">	            &#125;  </span><br><span class="line">	            break;  </span><br><span class="line">	        default: break;  </span><br><span class="line">	    &#125;  </span><br><span class="line">	&#125;  </span><br><span class="line">	// 其他情况</span><br><span class="line">	if (cooper.getCurrentFloor() == cooper.getTargetFloor()) &#123;  </span><br><span class="line">	    cooper.setAvoid();  </span><br><span class="line">	    cooper.setUnlock();  </span><br><span class="line">	    elevator.lock.lock(); </span><br><span class="line">	    elevator.conflictHangUp();  </span><br><span class="line">	    elevator.lock.unlock();  </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>判断写好之后，该通知对方规避了，响应机制当然也得有：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// Elevator</span><br><span class="line">public void setAvoid() &#123;  </span><br><span class="line">    this.awaitingAvoid = true;  </span><br><span class="line">    this.idleCall();  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void respondAvoid() &#123;  </span><br><span class="line">    this.awaitingAvoid = false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>改完这些还不够，我们需要对WAITING&#x2F;IDLE两个状态的转移规则稍加修改，使得在一动一静的情况下，两种状态转移后，可以响应规避请求：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">waitingSchedule():</span><br><span class="line"></span><br><span class="line">... // 原有实现</span><br><span class="line">// 接在原有实现之后</span><br><span class="line"></span><br><span class="line">if (entersIdle) &#123;</span><br><span class="line">	if(shouldAvoid) &#123;</span><br><span class="line">		/*让电梯移动到下一层，类似SCHE，但到了之后不开门*/</span><br><span class="line">		respondAvoid()</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		setIdle()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">idleSchedule(): </span><br><span class="line">if (keepsIdle) &#123;</span><br><span class="line">	if (shouldAvoid) &#123;</span><br><span class="line">		/*让电梯移动到下一层，类似SCHE，但到了之后不开门*/</span><br><span class="line">		respondAvoid()</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		// 原逻辑</span><br><span class="line">	&#125;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于同向而行的情况，我们还需要继续修改RUNNING下的运行逻辑，使得避让请求被正确响应：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">runningSchedule() &#123;</span><br><span class="line">	... // sleep()完成</span><br><span class="line">	/*更改楼层*/</span><br><span class="line">	/*在楼层更改时，若远离了目标楼层，暂存一个flag*/</span><br><span class="line">	.... // 状态转移</span><br><span class="line">	// normSche原有逻辑结束</span><br><span class="line">	if (flag) &#123;</span><br><span class="line">		elevator.setUnlock(); // 同样，此处开锁是为了保证一个线程只拿一把锁</span><br><span class="line">		respondAvoid()</span><br><span class="line">		cooper.lock.lock();</span><br><span class="line">		cooper.conflictCond.signal();</span><br><span class="line">		cooper.lock.unlock();</span><br><span class="line">	&#125;</span><br><span class="line">	// 需要Scheduler线程的`while(true)`处能够正确处理中途开锁的锁释放问题，可以看看本文前面的实现</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>做到这里，我们就成功的使用纯线程交互的方法，完成了楼层冲突的处理，<strong>不需要引入任何新的类来进行管理。</strong></p>
+<h1 id="调度"><a href="#调度" class="headerlink" title="调度"></a>调度</h1><p>再次，我们本单元求稳为先，选择的方法<strong>不一定最优</strong>。</p>
+<p>我的原调度逻辑（见<a href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/">HW5，6总结</a>）类似影子电梯，在出现双轿厢的时候也犯了难。比起编写新逻辑，我选择最大程度复用原有的调度逻辑。</p>
+<p>在原有的调度基础上，我们<strong>需要添加是否在运营范围内的判断。</strong></p>
+<p>调度第一步，沿用原有逻辑，<strong>对所有电梯</strong>评估请求是否可分配，选评价指数最低者。</p>
+<p>同时，在这一步中，<strong>记录下所有的双轿厢电梯。</strong> </p>
+<p><strong>此处记录的并不是双轿厢电梯对，而是其中的每一个电梯。</strong> 例如：2、3是一对双轿厢电梯，我们这里记录的是：<code>电梯2、电梯3</code>，而不是<code>[电梯2，电梯3]</code>。</p>
+<p>若第一步未能分配，则进行第二步，<strong>“拆请求”</strong>。在第二步中，我们只对<strong>双轿厢</strong>电梯进行评估。</p>
+<ul>
+<li>将原有请求，以当前评估电梯的目标楼层为节点，按先后顺序分成两段；</li>
+<li>在第一段请求完成后，再由Dispatcher分配第二段请求。</li>
+</ul>
+<p>“拆请求”如何实现？我们需要修改我们已有的乘客请求类<code>passengerRequest</code>，在其属性中加一个<code>passengerRequest followingRequest</code>，存储当前请求的后半段。</p>
+<p>在下电梯的时候，需要判断是否包含后续请求，有则<code>OUT-F</code>，并将后续请求放回请求池，没有则<code>OUT-S</code>。</p>
+<p><strong>判断是否可加入，与计算代价指数的逻辑不变。</strong> 不过，我们选取电梯的逻辑发生了变化，选取优先级如下：</p>
+<ul>
+<li>可行楼层跨度最大</li>
+<li>原设计中，评估指数最小者</li>
+</ul>
+<p>选取楼层跨度最大者，是因为，我们无法保证后续换乘的次数；换乘可能会造成额外的等待时间，且额外等待时间难以预知。楼层跨度尽可能大，可以尽可能减少换乘次数，一定程度缓解这一问题。</p>
+<h1 id="线程交互"><a href="#线程交互" class="headerlink" title="线程交互"></a>线程交互</h1><p>不难注意到，对于双轿厢电梯对的其中一个电梯，在IDLE，无请求，且closed的条件下就结束，在这里肯定不对劲。不这样的话，目标楼层的冲突没法规避。</p>
+<p>我采取了一个相对粗糙的办法：</p>
+<ul>
+<li>电梯的<code>close()</code>由Dispatcher调用，这是我的原有设计</li>
+<li>在close时，Dispatcher用一<strong>不加锁的方法</strong>，获取当前所有电梯的状态；只在所有电梯都处在IDLE状态时，才将所有电梯<code>close()</code>，否则<code>wait()</code></li>
+<li>保证电梯在进入IDLE时，会唤醒Dispatcher</li>
+</ul>
+<p>至此，我们完成了HW7所需的所有改造。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>OO_U2 - HW7简要总结</p><p><a href="http://lajipz.top/2025/04/17/OO_U2 - HW7简要总结/">http://lajipz.top/2025/04/17/OO_U2 - HW7简要总结/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>LajiPZ</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2025-04-17</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-04-21</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">面向对象</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=671eeccad01e2b00125527bf&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/04/17/OO_U2%20-%20%E7%94%B5%E6%A2%AF/"><span class="level-item">OO_U2 - 电梯</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="waline-thread"></div><link rel="stylesheet" href="https://unpkg.com/@waline/client@2/dist/waline.css"><script src="https://unpkg.com/@waline/client@2/dist/waline.js"></script><script>Waline.init({
+            el: '#waline-thread',
+            serverURL: "https://comments.lajipz.top/",
+            path: window.location.pathname,
+            lang: "zh-CN",
+            
+            emoji: ["https://unpkg.com/@waline/emojis@1.2.0/tieba","https://unpkg.com/@waline/emojis@1.2.0/weibo","https://unpkg.com/@waline/emojis@1.2.0/bilibili"],
+            
+            meta: ["nick","mail","link"],
+            requiredMeta: [],
+            login: "enable",
+            
+            pageSize: 10,
+            imageUploader: false,
+            highlighter: false,
+            texRenderer: false,
+            search: false,
+            pageview: false,
+            comment: false,
+            copyright: true,
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#前言"><span class="level-left"><span class="level-item">1</span><span class="level-item">前言</span></span></a></li><li><a class="level is-mobile" href="#支持UPDATE请求"><span class="level-left"><span class="level-item">2</span><span class="level-item">支持UPDATE请求</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#特殊请求由谁分给电梯？"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">特殊请求由谁分给电梯？</span></span></a></li><li><a class="level is-mobile" href="#UPDATE请求的处理"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">UPDATE请求的处理</span></span></a></li><li><a class="level is-mobile" href="#“三角死锁关系？”"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">“三角死锁关系？”</span></span></a></li></ul></li><li><a class="level is-mobile" href="#楼层冲突规避"><span class="level-left"><span class="level-item">3</span><span class="level-item">楼层冲突规避</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#基本分析"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">基本分析</span></span></a></li><li><a class="level is-mobile" href="#具体实现"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">具体实现</span></span></a></li></ul></li><li><a class="level is-mobile" href="#调度"><span class="level-left"><span class="level-item">4</span><span class="level-item">调度</span></span></a></li><li><a class="level is-mobile" href="#线程交互"><span class="level-left"><span class="level-item">5</span><span class="level-item">线程交互</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a><p class="is-size-7"><span>&copy; 2025 LajiPZ</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">Background by @katorei</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://unpkg.com/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://unpkg.com/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://unpkg.com/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://unpkg.com/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script src="https://unpkg.com/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
