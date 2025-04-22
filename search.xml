@@ -490,6 +490,144 @@
       </tags>
   </entry>
   <entry>
+    <title>OO_U2 - HW7简要总结</title>
+    <url>/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>讨论区已有一众仙人分享了自己的实现，但我认为我有在降低修改复杂度上更进一步的办法。</p>
+<p>考虑到本次作业为本单元的最后一次作业，我的修改方法更注重于<strong>降低修改的复杂度，可能存在部分性能的牺牲。</strong> 在各位进行参考时，请注意这一点。</p>
+<p>本人实现的亮点在于：UPDATE请求的处理，与双轿厢目标楼层的规避，<strong>全部利用线程交互实现</strong>。</p>
+<span id="more"></span>
+<h1 id="支持UPDATE请求"><a href="#支持UPDATE请求" class="headerlink" title="支持UPDATE请求"></a>支持UPDATE请求</h1><h2 id="特殊请求由谁分给电梯？"><a href="#特殊请求由谁分给电梯？" class="headerlink" title="特殊请求由谁分给电梯？"></a>特殊请求由谁分给电梯？</h2><p>针对上一单元的SCHE请求与本单元的UPDATE请求，<strong>我都选择交由<code>Dispatcher</code>实例进行处理。</strong></p>
+<p>原因无他，为了减少进程交互的复杂性。 我的电梯运行线程<code>Scheduler</code>与电梯信息类<code>Elevator</code>是分离的，我希望<code>Elevator</code>只有<code>Dispatcher</code>与<code>Scheduler</code>两者在竞争。</p>
+<p>这两类特殊请求都将直接加入请求池。那我们怎么保证Dispatcher优先处理这两种特殊请求呢？</p>
+<p>答案是，将请求池改为用<strong>优先队列</strong>实现。这是因为，<strong>优先队列的比较条件（提供了Comparator接口）可以自行实现</strong>，这为我们当前情况的需求提供了极大的便利。</p>
+<p>我们需要保证：</p>
+<ul>
+<li>SCHE&#x2F;UPDATE请求在优先队列的首位</li>
+<li>剩下的普通请求在后面。</li>
+</ul>
+<p>示例如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Comparator;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RequestComparator</span> <span class="keyword">implements</span> <span class="title class_">Comparator</span>&lt;SubRequest&gt; &#123;  </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(SubRequest o1, SubRequest o2)</span> &#123;  </span><br><span class="line">        <span class="type">int</span> <span class="variable">o1Index</span> <span class="operator">=</span> calcIndex(o1);  </span><br><span class="line">        <span class="type">int</span> <span class="variable">o2Index</span> <span class="operator">=</span> calcIndex(o2);  </span><br><span class="line">        <span class="keyword">return</span> o1Index - o2Index;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">calcIndex</span><span class="params">(SubRequest subRequest)</span> &#123;  </span><br><span class="line">        <span class="keyword">if</span> (subRequest.isSche()) &#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;  </span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (subRequest.isUpdate()) &#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;  </span><br><span class="line">        <span class="keyword">else</span> &#123;  </span><br><span class="line">            <span class="comment">// 按你自己的方法，处理普通请求！</span></span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在Dispatcher从头遍历优先队列时，我们此时即可保证特殊请求被优先处理。</p>
+<h2 id="UPDATE请求的处理"><a href="#UPDATE请求的处理" class="headerlink" title="UPDATE请求的处理"></a>UPDATE请求的处理</h2><p>现在，我们的UPDATE请求放在了Dispatcher处理；此时，聪明的你不难发现一些问题：</p>
+<ul>
+<li>在UPDATE请求处理完成前，Dispatcher是不是会被阻塞，不能分配其他请求？</li>
+<li>UPDATE显然需要一个<strong>类似总控的东西，来控制有关的交互</strong>；这个总控难道就是Dispatcher线程本身？</li>
+</ul>
+<p>这样肯定不对。<strong>因此，我们在Dispatcher内引入一个子进程，作为UPDATE请求处理的“总控”。</strong></p>
+<p>这个子线程怎么创建呢？<strong>使用Lambda表达式，可以快速创建新线程</strong>：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Thread</span> <span class="variable">th</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;  </span><br><span class="line">    <span class="comment">// Do something!</span></span><br><span class="line">&#125;);  </span><br><span class="line">th.start();</span><br></pre></td></tr></table></figure>
+
+<p>这样，Dispatcher线程就可在处理升级请求的过程中，继续分配其他可分配的请求，而不会发生阻塞。</p>
+<p>如果你不放心，还可以用<code>th.join()</code>，在Dispatcher线程的某处，强制处理UPDATE请求的子线程完成后，再继续执行。</p>
+<p>总控与两台待升级的电梯的整体交互逻辑如下：</p>
+<ul>
+<li>告知两台电梯需要升级，<strong>等待两电梯就绪</strong></li>
+<li><code>Scheduler</code>读取<code>Elevator</code>中信息，得知电梯需要升级，进行疏散乘客等“预处理”操作</li>
+<li>处理完成后，通知总控该电梯已就绪，<strong>等待总控对其进行升级</strong></li>
+<li>总控在两台电梯均就绪后，输出<code>UPDATE-BEGIN</code>，随后修改电梯的运行属性，完成升级</li>
+</ul>
+<p>具体实现上，我的电梯信息类<code>Elevator</code>采用了<code>ReentrantLock</code>实现锁管理，上文中的两个等待，我们通过创建两个<code>Elevator</code>锁的<code>Condition</code>实现。</p>
+<p>电梯如何指示自己已就绪？我采取给电梯增加一个<code>UPDATE</code>运行状态；在电梯完成了“预处理”后，电梯就将进入这一运行状态，并使用<code>Condition.signal()</code>唤醒总控。</p>
+<p>下述伪代码仅作示意之用。更进一步的细节，需要各位根据自己的架构实现。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Elevator</span><br><span class="line">ReentrantLock lock;</span><br><span class="line">Condition schedulerUpdateCond = lock.newCondition()</span><br><span class="line">Condition dispatcherUpdateCond = lock.newCondition()</span><br><span class="line"></span><br><span class="line">setUpdateStatus() &#123;</span><br><span class="line">		this.status = new Status(&quot;UPDATE&quot;);</span><br><span class="line">		this.dispatcherUpdateCond.signal();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">updateA() &#123; // updateB()同理</span><br><span class="line">	// 修改属性，并将电梯运行状态设为IDLE</span><br><span class="line">	this.schedulerUpdateCond.signal()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Scheduler</span><br><span class="line">elevator.lock.lock();</span><br><span class="line">...</span><br><span class="line">if (elevator.shouldUpdate()) &#123;</span><br><span class="line">	evacuatePassengers();</span><br><span class="line">	elevator.setUpdateStatus;</span><br><span class="line">	elevator.schedulerUpdateCond.await();</span><br><span class="line">	elevator.respondUpdate; // 解除指示电梯需要升级的flag</span><br><span class="line">	// await()结束后，电梯已被更新为新的状态，按照原有的运行逻辑运行即可！</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Dispatcher</span><br><span class="line">Thread th = new Thread(() -&gt; &#123;  </span><br><span class="line">    Elevator elevA, elevB;</span><br><span class="line"></span><br><span class="line">	// 由两层await()，实现两电梯均就绪后再继续</span><br><span class="line">    elevA.lock.lock();</span><br><span class="line">    if(elevA.getStatus() != &quot;UPDATE&quot;) &#123;</span><br><span class="line">	    elevA.dispatcherUpdateCond.await();</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	elevB.lock.lock();</span><br><span class="line">    if(elevB.getStatus() != &quot;UPDATE&quot;) &#123;</span><br><span class="line">	    elevB.dispatcherUpdateCond.await();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	// UPDATE-BEGIN</span><br><span class="line">		//重新分配被取消RECEIVE的请求</span><br><span class="line">		elevA.updateA();</span><br><span class="line">		elevB.updateB();</span><br><span class="line">	// UPDATE-END</span><br><span class="line"></span><br><span class="line">	// 放elevA/B的锁</span><br><span class="line">&#125;);  </span><br><span class="line">th.start();</span><br></pre></td></tr></table></figure>
+
+<h2 id="“三角死锁关系？”"><a href="#“三角死锁关系？”" class="headerlink" title="“三角死锁关系？”"></a>“三角死锁关系？”</h2><p>看到上面的实现后，聪明的你不难发现，这一实现中，如果调度策略是影子电梯，总控、<code>Scheduler</code>、<code>Dispatcher</code>三者都可能争夺<code>Elevator</code>的锁，很容易出现死锁，不是吗？</p>
+<p>事实上，只要锁管理得够好，这个问题仍然是可以避免的。下面，我将从这三个竞争者在处理UPDATE请求的情况下，分析如何避免“三角死锁”。</p>
+<ul>
+<li>Dispatcher:（事实上，关键的只有这一处）<br>在进行普通请求分配时，先判断当前电梯的是否仍在响应UPDATE请求（<strong>这一判断不获取电梯的锁</strong>），再获取锁</li>
+<li>Scheduler&#x2F;总控：<code>await()</code>在开始等待前会自动放锁，等待结束后会自动重新获得锁；仔细观看上面的实现，你会发现，冲突此时并不存在！</li>
+</ul>
+<h1 id="楼层冲突规避"><a href="#楼层冲突规避" class="headerlink" title="楼层冲突规避"></a>楼层冲突规避</h1><h2 id="基本分析"><a href="#基本分析" class="headerlink" title="基本分析"></a>基本分析</h2><p>很遗憾，我们不能通过不到“目标楼层”的方法，规避楼层冲突的问题，否则全部都被改造成双轿厢，且目标楼层均在同一层时，会导致跨越目标楼层的请求全部无法完成。</p>
+<p>产生冲突的情况，我们大致可以分为三类：</p>
+<ul>
+<li>相向而行：两电梯同时将要到达目标楼层</li>
+<li>同向而行：一个电梯尚未完全离开目标楼层，而另一电梯即将到达</li>
+<li>一动一静：一个电梯闲置于目标楼层，或正在目标楼层下客，而另一电梯即将到达</li>
+</ul>
+<p>在我的实现中，与电梯移动有关的逻辑是这样，相信各位的实现与其大同小异：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Scheduler </span><br><span class="line">while (true) &#123;</span><br><span class="line">	elevator.lock.lock;</span><br><span class="line">	try &#123;</span><br><span class="line">		if (/*一般情况*/) &#123;</span><br><span class="line">			normSchedule();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; finally &#123;</span><br><span class="line">		// 以防中途开锁</span><br><span class="line">		if(elevator.lock.isHeldByCurrentThread()) &#123; elevator.lock.unlock(); &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">normSchedule() &#123;</span><br><span class="line">	if (elevator.status == RUNNING)</span><br><span class="line">		runningSchedule;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">runningSchedule() &#123;</span><br><span class="line">	elevator.lock.unlock();</span><br><span class="line">	// 唤醒Dispatcher；开锁是为了允许Dispatcher此时为其分配可加入的请求</span><br><span class="line">	sleep(speed);</span><br><span class="line">	elevator.lock.lock();</span><br><span class="line">	// 更改楼层</span><br><span class="line">	// 输出ARRIVE</span><br><span class="line">	// 判断下一步状态：是下客的WAITING，还是继续RUNNING？</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了防止不必要的判断，这一判断只应在<strong>当前电梯即将进入目标楼层时进行。</strong></p>
+<p>在判断之前，我们自然<strong>要获取对方电梯的锁，以免对方电梯的状态在判断时改变。</strong></p>
+<p>观察我们上面实现的锁管理情况，我们不难发现：</p>
+<ul>
+<li>为了避免死锁，我们尽量确保一个线程一次只拿一把锁；</li>
+<li><code>runningSchedule()</code>中恰好有一个开锁的窗口，为一次只拿一把锁提供了可能</li>
+<li>对方电梯正前往目标楼层时，由于我们上面的锁机制，<strong>读取到的对方当前楼层，一定是目标楼层的前一层</strong></li>
+<li>在对方电梯的当前楼层为目标楼层时，读出的状态不可能为<code>RUNNING</code>，只可能为闲置的<code>IDLE</code>，或正在下客的<code>WAITING</code></li>
+</ul>
+<p>因此，上述三种冲突情况，我们只需要对“相向而行”这一情况特殊考虑；其余情况，都可以通过判断对方当前位置是否为目标楼层判断。</p>
+<p>“相向而行”特殊在哪呢？特殊在<strong>无法直接确定需要等待的电梯</strong>。其他两种情况中，我们可以确定等待的是当前不在目标楼层的电梯，这一情况不行。</p>
+<p>对此，我规定：<strong>下方的电梯，规避上方的电梯。</strong></p>
+<p>为了减少复杂度，我并没有考虑轿厢中乘客的问题，性能可能因此下降；如各位希望争取这一部分性能，可以以这一条件为最低级条件，将轿厢内请求加入判断条件中。</p>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>自然，为了避免死锁，我们的判断放在在<code>runningSchedule()</code>那一开锁的窗口内。</p>
+<p>下文中以<code>cooper</code>称呼对方电梯。（coop-er，能想出的最简洁称号就这个了，笑）</p>
+<p>为双轿厢电梯单独写一套运行逻辑自然不大明治。我们将这一判断逻辑融入原有的运行逻辑中，判断<strong>只在电梯已被改造为双轿厢（对方电梯<code>cooper !=null</code>）时</strong>进行。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">runningSchedule() &#123;</span><br><span class="line">	elevator.lock.unlock();</span><br><span class="line">	// 唤醒Dispatcher；开锁是为了允许Dispatcher此时为其分配可加入的请求</span><br><span class="line">	</span><br><span class="line">	if (elevator.willEnterTargetFloor &amp;&amp; cooper != null) &#123;</span><br><span class="line">		cooper.lock.lock();// 获取对方的锁</span><br><span class="line">		judge(); // 判断</span><br><span class="line">		// 放锁；这样放锁当然有目的，详见下文</span><br><span class="line">		if(cooper.lock.isHeldByCurrentThread()) &#123;cooper.lock.unlock(); &#125; </span><br><span class="line">	&#125;</span><br><span class="line">	sleep(speed);</span><br><span class="line">	elevator.lock.lock();</span><br></pre></td></tr></table></figure>
+
+<p>电梯避让的等待&#x2F;唤醒，使用挂在电梯信息类<code>Elevator</code>的锁上的Condition实现，命名为<code>conflictCond</code>。</p>
+<p>整体交互如下：</p>
+<ul>
+<li>在判断出我方需要等待后，我方执行<code>conflictCond.await()</code>，同时通知对方需要规避</li>
+<li>通知对方规避时，唤醒对方的Scheduler，以处理对方正处在IDLE，Scheduler正休眠的问题</li>
+<li>每当对方<strong>远离目标楼层</strong>时，就让对方执行我方方法<code>conflictCond.signalAll()</code>，唤醒等待冲突解除的我方。</li>
+</ul>
+<p>随后，我们就可得出如下判断逻辑：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">judge() &#123;</span><br><span class="line">	if (elevator.isElevB()) &#123; // 是在下方的B电梯  </span><br><span class="line">	    switch (cooper.getStatus().getStatusType()) &#123;  </span><br><span class="line">	        case RUNNING:  </span><br><span class="line">		        // 相向而行</span><br><span class="line">	            if (cooper.getFloorBeforeTargetFloor() == cooper.getCurrentFloor() </span><br><span class="line">	                &amp;&amp; cooper.towardsTargetFloor()) &#123;  </span><br><span class="line">	                cooper.setAvoid();  // 通知对方规避</span><br><span class="line">	                cooper.lock.unlock();  // 避免同时获取两把锁</span><br><span class="line">	                elevator.lock.lock(); // 没锁就await()，会发生什么？ </span><br><span class="line">	                elevator.conflictCond.await();  </span><br><span class="line">	                elevator.lock.unlock();  </span><br><span class="line">	            &#125;  </span><br><span class="line">	            break;  </span><br><span class="line">	        default: break;  </span><br><span class="line">	    &#125;  </span><br><span class="line">	&#125;  </span><br><span class="line">	// 其他情况</span><br><span class="line">	if (cooper.getCurrentFloor() == cooper.getTargetFloor()) &#123;  </span><br><span class="line">	    cooper.setAvoid();  </span><br><span class="line">	    cooper.setUnlock();  </span><br><span class="line">	    elevator.lock.lock(); </span><br><span class="line">	    elevator.conflictHangUp();  </span><br><span class="line">	    elevator.lock.unlock();  </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>判断写好之后，该通知对方规避了，响应机制当然也得有：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Elevator</span><br><span class="line">public void setAvoid() &#123;  </span><br><span class="line">    this.awaitingAvoid = true;  </span><br><span class="line">    this.idleCall();  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void respondAvoid() &#123;  </span><br><span class="line">    this.awaitingAvoid = false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>改完这些还不够，我们需要对WAITING&#x2F;IDLE两个状态的转移规则稍加修改，使得在一动一静的情况下，两种状态转移后，可以响应规避请求：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">waitingSchedule():</span><br><span class="line"></span><br><span class="line">... // 原有实现</span><br><span class="line">// 接在原有实现之后</span><br><span class="line"></span><br><span class="line">if (entersIdle) &#123;</span><br><span class="line">	if(shouldAvoid) &#123;</span><br><span class="line">		/*让电梯移动到下一层，类似SCHE，但到了之后不开门*/</span><br><span class="line">		respondAvoid()</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		setIdle()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">idleSchedule(): </span><br><span class="line">if (keepsIdle) &#123;</span><br><span class="line">	if (shouldAvoid) &#123;</span><br><span class="line">		/*让电梯移动到下一层，类似SCHE，但到了之后不开门*/</span><br><span class="line">		respondAvoid()</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		// 原逻辑</span><br><span class="line">	&#125;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于同向而行的情况，我们还需要继续修改RUNNING下的运行逻辑，使得避让请求被正确响应：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">runningSchedule() &#123;</span><br><span class="line">	... // sleep()完成</span><br><span class="line">	/*更改楼层*/</span><br><span class="line">	/*在楼层更改时，若远离了目标楼层，暂存一个flag*/</span><br><span class="line">	.... // 状态转移</span><br><span class="line">	// normSche原有逻辑结束</span><br><span class="line">	if (flag) &#123;</span><br><span class="line">		elevator.setUnlock(); // 同样，此处开锁是为了保证一个线程只拿一把锁</span><br><span class="line">		respondAvoid()</span><br><span class="line">		cooper.lock.lock();</span><br><span class="line">		cooper.conflictCond.signal();</span><br><span class="line">		cooper.lock.unlock();</span><br><span class="line">	&#125;</span><br><span class="line">	// 需要Scheduler线程的`while(true)`处能够正确处理中途开锁的锁释放问题，可以看看本文前面的实现</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>做到这里，我们就成功的使用纯线程交互的方法，完成了楼层冲突的处理，<strong>不需要引入任何新的类来进行管理。</strong></p>
+<h1 id="调度"><a href="#调度" class="headerlink" title="调度"></a>调度</h1><p>再次，我们本单元求稳为先，选择的方法<strong>不一定最优</strong>。</p>
+<p>我的原调度逻辑（见<a href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/">HW5，6总结</a>）类似影子电梯，在出现双轿厢的时候也犯了难。比起编写新逻辑，我选择最大程度复用原有的调度逻辑。</p>
+<p>在原有的调度基础上，我们<strong>需要添加是否在运营范围内的判断。</strong></p>
+<p>调度第一步，沿用原有逻辑，<strong>对所有电梯</strong>评估请求是否可分配，选评价指数最低者。</p>
+<p>同时，在这一步中，<strong>记录下所有的双轿厢电梯。</strong> </p>
+<p><strong>此处记录的并不是双轿厢电梯对，而是其中的每一个电梯。</strong> 例如：2、3是一对双轿厢电梯，我们这里记录的是：<code>电梯2、电梯3</code>，而不是<code>[电梯2，电梯3]</code>。</p>
+<p>若第一步未能分配，则进行第二步，<strong>“拆请求”</strong>。在第二步中，我们只对<strong>双轿厢</strong>电梯进行评估。</p>
+<ul>
+<li>将原有请求，以当前评估电梯的目标楼层为节点，按先后顺序分成两段；</li>
+<li>在第一段请求完成后，再由Dispatcher分配第二段请求。</li>
+</ul>
+<p>“拆请求”如何实现？我们需要修改我们已有的乘客请求类<code>passengerRequest</code>，在其属性中加一个<code>passengerRequest followingRequest</code>，存储当前请求的后半段。</p>
+<p>在下电梯的时候，需要判断是否包含后续请求，有则<code>OUT-F</code>，并将后续请求放回请求池，没有则<code>OUT-S</code>。</p>
+<p><strong>判断是否可加入，与计算代价指数的逻辑不变。</strong> 不过，我们选取电梯的逻辑发生了变化，选取优先级如下：</p>
+<ul>
+<li>可行楼层跨度最大</li>
+<li>原设计中，评估指数最小者</li>
+</ul>
+<p>选取楼层跨度最大者，是因为，我们无法保证后续换乘的次数；换乘可能会造成额外的等待时间，且额外等待时间难以预知。楼层跨度尽可能大，可以尽可能减少换乘次数，一定程度缓解这一问题。</p>
+<h1 id="线程交互"><a href="#线程交互" class="headerlink" title="线程交互"></a>线程交互</h1><p>不难注意到，对于双轿厢电梯对的其中一个电梯，在IDLE，无请求，且closed的条件下就结束，在这里肯定不对劲。不这样的话，目标楼层的冲突没法规避。</p>
+<p>我采取了一个相对粗糙的办法：</p>
+<ul>
+<li>电梯的<code>close()</code>由Dispatcher调用，这是我的原有设计</li>
+<li>在close时，Dispatcher用一<strong>不加锁的方法</strong>，获取当前所有电梯的状态；只在所有电梯都处在IDLE状态时，才将所有电梯<code>close()</code>，否则<code>wait()</code></li>
+<li>保证电梯在进入IDLE时，会唤醒Dispatcher</li>
+</ul>
+<p>至此，我们完成了HW7所需的所有改造。</p>
+]]></content>
+      <categories>
+        <category>课程相关</category>
+      </categories>
+      <tags>
+        <tag>面向对象</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OO_U2 - 电梯</title>
     <url>/2025/04/17/OO_U2%20-%20%E7%94%B5%E6%A2%AF/</url>
     <content><![CDATA[<p>这是一篇导航帖。</p>
@@ -746,6 +884,84 @@
       </tags>
   </entry>
   <entry>
+    <title>“法律、科技与社会”课后思考题答案 - 2024</title>
+    <url>/2025/02/04/%E2%80%9C%E6%B3%95%E5%BE%8B%E3%80%81%E7%A7%91%E6%8A%80%E4%B8%8E%E7%A4%BE%E4%BC%9A%E2%80%9D%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%20-%202024/</url>
+    <content><![CDATA[<p>本文记录了本人复习“法律、科技与社会”课程时，对课后思考题给出的答案。</p>
+<p>众所周知，本课的期末考试就是从课后思考题中抽集体来考，怎么复习想必大家都知道了。当然，不知道这几个思考题之后会不会变。</p>
+<p>以下答案均为本人手搓，在考试获得了95分，当然这个给分可能有玄学成分在里面，仅供参考。</p>
+<h1 id="技术是中立的吗？为什么？"><a href="#技术是中立的吗？为什么？" class="headerlink" title="技术是中立的吗？为什么？"></a>技术是中立的吗？为什么？</h1><p>   不是。</p>
+<ul>
+<li>技术置身于社会中，具有社会性。</li>
+<li>技术是占有世界的媒介，同时也是人类活动的一种形式。其背后包含了人类思维结果。</li>
+</ul>
+<span id="more"></span>
+
+<h1 id="监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？"><a href="#监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？" class="headerlink" title="监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？"></a>监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？</h1><ul>
+<li>用户行为数据将为资本带来利益；从资本逐利的本质而言，监控资本主义的趋势不可避免。</li>
+<li>这一趋势可以被抑制。</li>
+<li>立法与管制</li>
+<li>提高公共意识与参与度</li>
+<li>探索技术向善路径，减少技术对个人隐私的侵害</li>
+</ul>
+<h1 id="学校是否有权使用人脸识别对学生进行考勤？为什么？"><a href="#学校是否有权使用人脸识别对学生进行考勤？为什么？" class="headerlink" title="学校是否有权使用人脸识别对学生进行考勤？为什么？"></a>学校是否有权使用人脸识别对学生进行考勤？为什么？</h1><ul>
+<li>自隐私方面：若学校方面明确了：1.收集的人脸识别信息仅用于考勤，2.且收集的信息将按照相关法律法规进行处理，3.并在事前提前征得了同学的同意，则这一方案可认为可行；</li>
+<li>然而，根据我国目前出台的相关法律法规，此时也需保证人脸识别不作为考勤的唯一方式。</li>
+<li>更严格而言，根据《个人信息保护法》，在公众场合所收集的身份信息只能用于维护公共安全目的，此时考勤并不在维护公共安全范围之内，故可以认为学校无权这么做。</li>
+</ul>
+<h1 id="什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？"><a href="#什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？" class="headerlink" title="什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？"></a>什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？</h1><ul>
+<li>自动驾驶系统在事故不可避免时，是优先保全车上人员安全，还是行人等车外人员的安全。</li>
+<li>首先是在技术上，要尽可能减少“不可避免事故”的发生；</li>
+<li>其次，在设计自动驾驶系统时，应注意伦理方面的考量，确保系统决策符合人类伦理。</li>
+</ul>
+<h1 id="是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？"><a href="#是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？" class="headerlink" title="是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？"></a>是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？</h1><ul>
+<li>是</li>
+<li>存在物化女性的风险</li>
+<li>有悖伦理</li>
+<li>存在因此引起的技术以来与奴隶问题。</li>
+<li>情感与亲密关系的简化。</li>
+</ul>
+<h1 id="什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？"><a href="#什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？" class="headerlink" title="什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？"></a>什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？</h1><p>   指无需有意义的人类控制即可选择目标并施加武力的系统。</p>
+<p>   应该。</p>
+<ul>
+<li>道义角度：其决策远离了人的判断，在道义上这无法接受。</li>
+<li>法律角度：其违背了《国际人权法案》和《武装冲突法》的精神，可能会对非作战人员产生杀伤。</li>
+<li>战略角度：研发出的致命自主武器可能会扩散到潜在敌人中。</li>
+</ul>
+<h1 id="什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？"><a href="#什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？" class="headerlink" title="什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？"></a><strong>什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？</strong></h1><p>   算法歧视是指算法在决策过程中，偏向特定人群或不公平对待某些群体的现象。</p>
+<p>   形成原因：</p>
+<ul>
+<li>数据偏差：算法主要依赖于测试数据；数据不全面，则算法可能会因此产生偏见。</li>
+<li>设计偏见：开发者在设计算法时融入了个人偏见。</li>
+<li>反馈循环：在一些算法系统中，用户行为会反馈到算法中，这可能扩大原有的偏见</li>
+</ul>
+<p>   改进方法：</p>
+<ul>
+<li>改进数据质量</li>
+<li>提高算法透明度与解释性</li>
+<li>引入公平性评估和偏差测试</li>
+<li>用户反馈与持续优化</li>
+</ul>
+<h1 id="在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？"><a href="#在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？" class="headerlink" title="在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？"></a>在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？</h1><ul>
+<li>存在。</li>
+<li>个人角度：提高个人隐私意识，以正当手段维护自己的个人隐私</li>
+<li>立法角度：完善相关法律法规，自法律角度约束个人敏感信息的使用</li>
+<li>数据收集者角度：尊重用户隐私，避免过度收集用户敏感信息；完善技术手段，减少敏感信息的使用，避免敏感信息的泄露</li>
+</ul>
+<h1 id="作为计算机专业的学生，你如何看待人工智能的未来？"><a href="#作为计算机专业的学生，你如何看待人工智能的未来？" class="headerlink" title="作为计算机专业的学生，你如何看待人工智能的未来？"></a>作为<strong>计算机专业</strong>的学生，你如何看待人工智能的未来？</h1><ul>
+<li>自生产工具的角度而言，人工智能将促进人类社会的生产力发展，从而促进人类社会的进步，我们应继续追求人工智能在技术层面的进步，从而进一步发展社会生产力；同时，我们也应积极接受并利用AI这一生产力工具。</li>
+<li>自道德伦理角度而言，人工智能的使用，可能出现潜在的道德伦理问题，当前也出现了深度伪造、AI合成假新闻等问题。这需要我们在技术层面加以防范，；</li>
+<li>自社会角度而言，人工智能必然会因人工智能的出现，对已有的部分人工进行替代。同时，人工智能的出现，也为我们带来了新的就业机会。因此，我们需要积极顺应这一变化，积极学习AI相关知识，同时提高自身创新能力与软实力。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>课程相关</category>
+      </categories>
+      <tags>
+        <tag>水课</tag>
+        <tag>FKS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用ReentrantLock，实现更灵活的锁管理策略</title>
     <url>/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/</url>
     <content><![CDATA[<blockquote>
@@ -841,159 +1057,6 @@
       </tags>
   </entry>
   <entry>
-    <title>图床测试</title>
-    <url>/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</url>
-    <content><![CDATA[<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/%7B433FA560-1033-4134-A91E-3F4E0C6D3AC2%7D.png" alt="{433FA560-1033-4134-A91E-3F4E0C6D3AC2}.png"></p>
-<p>通过阿里云OSS+PicGo的方案，本博客成功实现了图床功能。</p>
-<p>Github在国内访问速度太慢，为了实现图片快速加载，只能加点钱上阿里云了 :(</p>
-<p>不过一个月也就6块钱，也就约等于一个月少喝一瓶东方树叶嘛😋</p>
-]]></content>
-      <categories>
-        <category>建站历程</category>
-      </categories>
-      <tags>
-        <tag>测试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OO_U2 - HW7简要总结</title>
-    <url>/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>讨论区已有一众仙人分享了自己的实现，但我认为我有在降低修改复杂度上更进一步的办法。</p>
-<p>考虑到本次作业为本单元的最后一次作业，我的修改方法更注重于<strong>降低修改的复杂度，可能存在部分性能的牺牲。</strong> 在各位进行参考时，请注意这一点。</p>
-<p>本人实现的亮点在于：UPDATE请求的处理，与双轿厢目标楼层的规避，<strong>全部利用线程交互实现</strong>。</p>
-<span id="more"></span>
-<h1 id="支持UPDATE请求"><a href="#支持UPDATE请求" class="headerlink" title="支持UPDATE请求"></a>支持UPDATE请求</h1><h2 id="特殊请求由谁分给电梯？"><a href="#特殊请求由谁分给电梯？" class="headerlink" title="特殊请求由谁分给电梯？"></a>特殊请求由谁分给电梯？</h2><p>针对上一单元的SCHE请求与本单元的UPDATE请求，<strong>我都选择交由<code>Dispatcher</code>实例进行处理。</strong></p>
-<p>原因无他，为了减少进程交互的复杂性。 我的电梯运行线程<code>Scheduler</code>与电梯信息类<code>Elevator</code>是分离的，我希望<code>Elevator</code>只有<code>Dispatcher</code>与<code>Scheduler</code>两者在竞争。</p>
-<p>这两类特殊请求都将直接加入请求池。那我们怎么保证Dispatcher优先处理这两种特殊请求呢？</p>
-<p>答案是，将请求池改为用<strong>优先队列</strong>实现。这是因为，<strong>优先队列的比较条件（提供了Comparator接口）可以自行实现</strong>，这为我们当前情况的需求提供了极大的便利。</p>
-<p>我们需要保证：</p>
-<ul>
-<li>SCHE&#x2F;UPDATE请求在优先队列的首位</li>
-<li>剩下的普通请求在后面。</li>
-</ul>
-<p>示例如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Comparator;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RequestComparator</span> <span class="keyword">implements</span> <span class="title class_">Comparator</span>&lt;SubRequest&gt; &#123;  </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(SubRequest o1, SubRequest o2)</span> &#123;  </span><br><span class="line">        <span class="type">int</span> <span class="variable">o1Index</span> <span class="operator">=</span> calcIndex(o1);  </span><br><span class="line">        <span class="type">int</span> <span class="variable">o2Index</span> <span class="operator">=</span> calcIndex(o2);  </span><br><span class="line">        <span class="keyword">return</span> o1Index - o2Index;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">calcIndex</span><span class="params">(SubRequest subRequest)</span> &#123;  </span><br><span class="line">        <span class="keyword">if</span> (subRequest.isSche()) &#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;  </span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (subRequest.isUpdate()) &#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;  </span><br><span class="line">        <span class="keyword">else</span> &#123;  </span><br><span class="line">            <span class="comment">// 按你自己的方法，处理普通请求！</span></span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在Dispatcher从头遍历优先队列时，我们此时即可保证特殊请求被优先处理。</p>
-<h2 id="UPDATE请求的处理"><a href="#UPDATE请求的处理" class="headerlink" title="UPDATE请求的处理"></a>UPDATE请求的处理</h2><p>现在，我们的UPDATE请求放在了Dispatcher处理；此时，聪明的你不难发现一些问题：</p>
-<ul>
-<li>在UPDATE请求处理完成前，Dispatcher是不是会被阻塞，不能分配其他请求？</li>
-<li>UPDATE显然需要一个<strong>类似总控的东西，来控制有关的交互</strong>；这个总控难道就是Dispatcher线程本身？</li>
-</ul>
-<p>这样肯定不对。<strong>因此，我们在Dispatcher内引入一个子进程，作为UPDATE请求处理的“总控”。</strong></p>
-<p>这个子线程怎么创建呢？<strong>使用Lambda表达式，可以快速创建新线程</strong>：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Thread</span> <span class="variable">th</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(() -&gt; &#123;  </span><br><span class="line">    <span class="comment">// Do something!</span></span><br><span class="line">&#125;);  </span><br><span class="line">th.start();</span><br></pre></td></tr></table></figure>
-
-<p>这样，Dispatcher线程就可在处理升级请求的过程中，继续分配其他可分配的请求，而不会发生阻塞。</p>
-<p>如果你不放心，还可以用<code>th.join()</code>，在Dispatcher线程的某处，强制处理UPDATE请求的子线程完成后，再继续执行。</p>
-<p>总控与两台待升级的电梯的整体交互逻辑如下：</p>
-<ul>
-<li>告知两台电梯需要升级，<strong>等待两电梯就绪</strong></li>
-<li><code>Scheduler</code>读取<code>Elevator</code>中信息，得知电梯需要升级，进行疏散乘客等“预处理”操作</li>
-<li>处理完成后，通知总控该电梯已就绪，<strong>等待总控对其进行升级</strong></li>
-<li>总控在两台电梯均就绪后，输出<code>UPDATE-BEGIN</code>，随后修改电梯的运行属性，完成升级</li>
-</ul>
-<p>具体实现上，我的电梯信息类<code>Elevator</code>采用了<code>ReentrantLock</code>实现锁管理，上文中的两个等待，我们通过创建两个<code>Elevator</code>锁的<code>Condition</code>实现。</p>
-<p>电梯如何指示自己已就绪？我采取给电梯增加一个<code>UPDATE</code>运行状态；在电梯完成了“预处理”后，电梯就将进入这一运行状态，并使用<code>Condition.signal()</code>唤醒总控。</p>
-<p>下述伪代码仅作示意之用。更进一步的细节，需要各位根据自己的架构实现。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Elevator</span><br><span class="line">ReentrantLock lock;</span><br><span class="line">Condition schedulerUpdateCond = lock.newCondition()</span><br><span class="line">Condition dispatcherUpdateCond = lock.newCondition()</span><br><span class="line"></span><br><span class="line">setUpdateStatus() &#123;</span><br><span class="line">		this.status = new Status(&quot;UPDATE&quot;);</span><br><span class="line">		this.dispatcherUpdateCond.signal();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">updateA() &#123; // updateB()同理</span><br><span class="line">	// 修改属性，并将电梯运行状态设为IDLE</span><br><span class="line">	this.schedulerUpdateCond.signal()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Scheduler</span><br><span class="line">elevator.lock.lock();</span><br><span class="line">...</span><br><span class="line">if (elevator.shouldUpdate()) &#123;</span><br><span class="line">	evacuatePassengers();</span><br><span class="line">	elevator.setUpdateStatus;</span><br><span class="line">	elevator.schedulerUpdateCond.await();</span><br><span class="line">	elevator.respondUpdate; // 解除指示电梯需要升级的flag</span><br><span class="line">	// await()结束后，电梯已被更新为新的状态，按照原有的运行逻辑运行即可！</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Dispatcher</span><br><span class="line">Thread th = new Thread(() -&gt; &#123;  </span><br><span class="line">    Elevator elevA, elevB;</span><br><span class="line"></span><br><span class="line">	// 由两层await()，实现两电梯均就绪后再继续</span><br><span class="line">    elevA.lock.lock();</span><br><span class="line">    if(elevA.getStatus() != &quot;UPDATE&quot;) &#123;</span><br><span class="line">	    elevA.dispatcherUpdateCond.await();</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	elevB.lock.lock();</span><br><span class="line">    if(elevB.getStatus() != &quot;UPDATE&quot;) &#123;</span><br><span class="line">	    elevB.dispatcherUpdateCond.await();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	// UPDATE-BEGIN</span><br><span class="line">		//重新分配被取消RECEIVE的请求</span><br><span class="line">		elevA.updateA();</span><br><span class="line">		elevB.updateB();</span><br><span class="line">	// UPDATE-END</span><br><span class="line"></span><br><span class="line">	// 放elevA/B的锁</span><br><span class="line">&#125;);  </span><br><span class="line">th.start();</span><br></pre></td></tr></table></figure>
-
-<h2 id="“三角死锁关系？”"><a href="#“三角死锁关系？”" class="headerlink" title="“三角死锁关系？”"></a>“三角死锁关系？”</h2><p>看到上面的实现后，聪明的你不难发现，这一实现中，如果调度策略是影子电梯，总控、<code>Scheduler</code>、<code>Dispatcher</code>三者都可能争夺<code>Elevator</code>的锁，很容易出现死锁，不是吗？</p>
-<p>事实上，只要锁管理得够好，这个问题仍然是可以避免的。下面，我将从这三个竞争者在处理UPDATE请求的情况下，分析如何避免“三角死锁”。</p>
-<ul>
-<li>Dispatcher:（事实上，关键的只有这一处）<br>在进行普通请求分配时，先判断当前电梯的是否仍在响应UPDATE请求（<strong>这一判断不获取电梯的锁</strong>），再获取锁</li>
-<li>Scheduler&#x2F;总控：<code>await()</code>在开始等待前会自动放锁，等待结束后会自动重新获得锁；仔细观看上面的实现，你会发现，冲突此时并不存在！</li>
-</ul>
-<h1 id="楼层冲突规避"><a href="#楼层冲突规避" class="headerlink" title="楼层冲突规避"></a>楼层冲突规避</h1><h2 id="基本分析"><a href="#基本分析" class="headerlink" title="基本分析"></a>基本分析</h2><p>很遗憾，我们不能通过不到“目标楼层”的方法，规避楼层冲突的问题，否则全部都被改造成双轿厢，且目标楼层均在同一层时，会导致跨越目标楼层的请求全部无法完成。</p>
-<p>产生冲突的情况，我们大致可以分为三类：</p>
-<ul>
-<li>相向而行：两电梯同时将要到达目标楼层</li>
-<li>同向而行：一个电梯尚未完全离开目标楼层，而另一电梯即将到达</li>
-<li>一动一静：一个电梯闲置于目标楼层，或正在目标楼层下客，而另一电梯即将到达</li>
-</ul>
-<p>在我的实现中，与电梯移动有关的逻辑是这样，相信各位的实现与其大同小异：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Scheduler </span><br><span class="line">while (true) &#123;</span><br><span class="line">	elevator.lock.lock;</span><br><span class="line">	try &#123;</span><br><span class="line">		if (/*一般情况*/) &#123;</span><br><span class="line">			normSchedule();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; finally &#123;</span><br><span class="line">		// 以防中途开锁</span><br><span class="line">		if(elevator.lock.isHeldByCurrentThread()) &#123; elevator.lock.unlock(); &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">normSchedule() &#123;</span><br><span class="line">	if (elevator.status == RUNNING)</span><br><span class="line">		runningSchedule;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">runningSchedule() &#123;</span><br><span class="line">	elevator.lock.unlock();</span><br><span class="line">	// 唤醒Dispatcher；开锁是为了允许Dispatcher此时为其分配可加入的请求</span><br><span class="line">	sleep(speed);</span><br><span class="line">	elevator.lock.lock();</span><br><span class="line">	// 更改楼层</span><br><span class="line">	// 输出ARRIVE</span><br><span class="line">	// 判断下一步状态：是下客的WAITING，还是继续RUNNING？</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>为了防止不必要的判断，这一判断只应在<strong>当前电梯即将进入目标楼层时进行。</strong></p>
-<p>在判断之前，我们自然<strong>要获取对方电梯的锁，以免对方电梯的状态在判断时改变。</strong></p>
-<p>观察我们上面实现的锁管理情况，我们不难发现：</p>
-<ul>
-<li>为了避免死锁，我们尽量确保一个线程一次只拿一把锁；</li>
-<li><code>runningSchedule()</code>中恰好有一个开锁的窗口，为一次只拿一把锁提供了可能</li>
-<li>对方电梯正前往目标楼层时，由于我们上面的锁机制，<strong>读取到的对方当前楼层，一定是目标楼层的前一层</strong></li>
-<li>在对方电梯的当前楼层为目标楼层时，读出的状态不可能为<code>RUNNING</code>，只可能为闲置的<code>IDLE</code>，或正在下客的<code>WAITING</code></li>
-</ul>
-<p>因此，上述三种冲突情况，我们只需要对“相向而行”这一情况特殊考虑；其余情况，都可以通过判断对方当前位置是否为目标楼层判断。</p>
-<p>“相向而行”特殊在哪呢？特殊在<strong>无法直接确定需要等待的电梯</strong>。其他两种情况中，我们可以确定等待的是当前不在目标楼层的电梯，这一情况不行。</p>
-<p>对此，我规定：<strong>下方的电梯，规避上方的电梯。</strong></p>
-<p>为了减少复杂度，我并没有考虑轿厢中乘客的问题，性能可能因此下降；如各位希望争取这一部分性能，可以以这一条件为最低级条件，将轿厢内请求加入判断条件中。</p>
-<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>自然，为了避免死锁，我们的判断放在在<code>runningSchedule()</code>那一开锁的窗口内。</p>
-<p>下文中以<code>cooper</code>称呼对方电梯。（coop-er，能想出的最简洁称号就这个了，笑）</p>
-<p>为双轿厢电梯单独写一套运行逻辑自然不大明治。我们将这一判断逻辑融入原有的运行逻辑中，判断<strong>只在电梯已被改造为双轿厢（对方电梯<code>cooper !=null</code>）时</strong>进行。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">runningSchedule() &#123;</span><br><span class="line">	elevator.lock.unlock();</span><br><span class="line">	// 唤醒Dispatcher；开锁是为了允许Dispatcher此时为其分配可加入的请求</span><br><span class="line">	</span><br><span class="line">	if (elevator.willEnterTargetFloor &amp;&amp; cooper != null) &#123;</span><br><span class="line">		cooper.lock.lock();// 获取对方的锁</span><br><span class="line">		judge(); // 判断</span><br><span class="line">		// 放锁；这样放锁当然有目的，详见下文</span><br><span class="line">		if(cooper.lock.isHeldByCurrentThread()) &#123;cooper.lock.unlock(); &#125; </span><br><span class="line">	&#125;</span><br><span class="line">	sleep(speed);</span><br><span class="line">	elevator.lock.lock();</span><br></pre></td></tr></table></figure>
-
-<p>电梯避让的等待&#x2F;唤醒，使用挂在电梯信息类<code>Elevator</code>的锁上的Condition实现，命名为<code>conflictCond</code>。</p>
-<p>整体交互如下：</p>
-<ul>
-<li>在判断出我方需要等待后，我方执行<code>conflictCond.await()</code>，同时通知对方需要规避</li>
-<li>通知对方规避时，唤醒对方的Scheduler，以处理对方正处在IDLE，Scheduler正休眠的问题</li>
-<li>每当对方<strong>远离目标楼层</strong>时，就让对方执行我方方法<code>conflictCond.signalAll()</code>，唤醒等待冲突解除的我方。</li>
-</ul>
-<p>随后，我们就可得出如下判断逻辑：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">judge() &#123;</span><br><span class="line">	if (elevator.isElevB()) &#123; // 是在下方的B电梯  </span><br><span class="line">	    switch (cooper.getStatus().getStatusType()) &#123;  </span><br><span class="line">	        case RUNNING:  </span><br><span class="line">		        // 相向而行</span><br><span class="line">	            if (cooper.getFloorBeforeTargetFloor() == cooper.getCurrentFloor() </span><br><span class="line">	                &amp;&amp; cooper.towardsTargetFloor()) &#123;  </span><br><span class="line">	                cooper.setAvoid();  // 通知对方规避</span><br><span class="line">	                cooper.lock.unlock();  // 避免同时获取两把锁</span><br><span class="line">	                elevator.lock.lock(); // 没锁就await()，会发生什么？ </span><br><span class="line">	                elevator.conflictCond.await();  </span><br><span class="line">	                elevator.lock.unlock();  </span><br><span class="line">	            &#125;  </span><br><span class="line">	            break;  </span><br><span class="line">	        default: break;  </span><br><span class="line">	    &#125;  </span><br><span class="line">	&#125;  </span><br><span class="line">	// 其他情况</span><br><span class="line">	if (cooper.getCurrentFloor() == cooper.getTargetFloor()) &#123;  </span><br><span class="line">	    cooper.setAvoid();  </span><br><span class="line">	    cooper.setUnlock();  </span><br><span class="line">	    elevator.lock.lock(); </span><br><span class="line">	    elevator.conflictHangUp();  </span><br><span class="line">	    elevator.lock.unlock();  </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>判断写好之后，该通知对方规避了，响应机制当然也得有：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Elevator</span><br><span class="line">public void setAvoid() &#123;  </span><br><span class="line">    this.awaitingAvoid = true;  </span><br><span class="line">    this.idleCall();  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void respondAvoid() &#123;  </span><br><span class="line">    this.awaitingAvoid = false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>改完这些还不够，我们需要对WAITING&#x2F;IDLE两个状态的转移规则稍加修改，使得在一动一静的情况下，两种状态转移后，可以响应规避请求：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">waitingSchedule():</span><br><span class="line"></span><br><span class="line">... // 原有实现</span><br><span class="line">// 接在原有实现之后</span><br><span class="line"></span><br><span class="line">if (entersIdle) &#123;</span><br><span class="line">	if(shouldAvoid) &#123;</span><br><span class="line">		/*让电梯移动到下一层，类似SCHE，但到了之后不开门*/</span><br><span class="line">		respondAvoid()</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		setIdle()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">idleSchedule(): </span><br><span class="line">if (keepsIdle) &#123;</span><br><span class="line">	if (shouldAvoid) &#123;</span><br><span class="line">		/*让电梯移动到下一层，类似SCHE，但到了之后不开门*/</span><br><span class="line">		respondAvoid()</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		// 原逻辑</span><br><span class="line">	&#125;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对于同向而行的情况，我们还需要继续修改RUNNING下的运行逻辑，使得避让请求被正确响应：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">runningSchedule() &#123;</span><br><span class="line">	... // sleep()完成</span><br><span class="line">	/*更改楼层*/</span><br><span class="line">	/*在楼层更改时，若远离了目标楼层，暂存一个flag*/</span><br><span class="line">	.... // 状态转移</span><br><span class="line">	// normSche原有逻辑结束</span><br><span class="line">	if (flag) &#123;</span><br><span class="line">		elevator.setUnlock(); // 同样，此处开锁是为了保证一个线程只拿一把锁</span><br><span class="line">		respondAvoid()</span><br><span class="line">		cooper.lock.lock();</span><br><span class="line">		cooper.conflictCond.signal();</span><br><span class="line">		cooper.lock.unlock();</span><br><span class="line">	&#125;</span><br><span class="line">	// 需要Scheduler线程的`while(true)`处能够正确处理中途开锁的锁释放问题，可以看看本文前面的实现</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>做到这里，我们就成功的使用纯线程交互的方法，完成了楼层冲突的处理，<strong>不需要引入任何新的类来进行管理。</strong></p>
-<h1 id="调度"><a href="#调度" class="headerlink" title="调度"></a>调度</h1><p>再次，我们本单元求稳为先，选择的方法<strong>不一定最优</strong>。</p>
-<p>我的原调度逻辑（见<a href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/">HW5，6总结</a>）类似影子电梯，在出现双轿厢的时候也犯了难。比起编写新逻辑，我选择最大程度复用原有的调度逻辑。</p>
-<p>在原有的调度基础上，我们<strong>需要添加是否在运营范围内的判断。</strong></p>
-<p>调度第一步，沿用原有逻辑，<strong>对所有电梯</strong>评估请求是否可分配，选评价指数最低者。</p>
-<p>同时，在这一步中，<strong>记录下所有的双轿厢电梯。</strong> </p>
-<p><strong>此处记录的并不是双轿厢电梯对，而是其中的每一个电梯。</strong> 例如：2、3是一对双轿厢电梯，我们这里记录的是：<code>电梯2、电梯3</code>，而不是<code>[电梯2，电梯3]</code>。</p>
-<p>若第一步未能分配，则进行第二步，<strong>“拆请求”</strong>。在第二步中，我们只对<strong>双轿厢</strong>电梯进行评估。</p>
-<ul>
-<li>将原有请求，以当前评估电梯的目标楼层为节点，按先后顺序分成两段；</li>
-<li>在第一段请求完成后，再由Dispatcher分配第二段请求。</li>
-</ul>
-<p>“拆请求”如何实现？我们需要修改我们已有的乘客请求类<code>passengerRequest</code>，在其属性中加一个<code>passengerRequest followingRequest</code>，存储当前请求的后半段。</p>
-<p>在下电梯的时候，需要判断是否包含后续请求，有则<code>OUT-F</code>，并将后续请求放回请求池，没有则<code>OUT-S</code>。</p>
-<p><strong>判断是否可加入，与计算代价指数的逻辑不变。</strong> 不过，我们选取电梯的逻辑发生了变化，选取优先级如下：</p>
-<ul>
-<li>可行楼层跨度最大</li>
-<li>原设计中，评估指数最小者</li>
-</ul>
-<p>选取楼层跨度最大者，是因为，我们无法保证后续换乘的次数；换乘可能会造成额外的等待时间，且额外等待时间难以预知。楼层跨度尽可能大，可以尽可能减少换乘次数，一定程度缓解这一问题。</p>
-<h1 id="线程交互"><a href="#线程交互" class="headerlink" title="线程交互"></a>线程交互</h1><p>不难注意到，对于双轿厢电梯对的其中一个电梯，在IDLE，无请求，且closed的条件下就结束，在这里肯定不对劲。不这样的话，目标楼层的冲突没法规避。</p>
-<p>我采取了一个相对粗糙的办法：</p>
-<ul>
-<li>电梯的<code>close()</code>由Dispatcher调用，这是我的原有设计</li>
-<li>在close时，Dispatcher用一<strong>不加锁的方法</strong>，获取当前所有电梯的状态；只在所有电梯都处在IDLE状态时，才将所有电梯<code>close()</code>，否则<code>wait()</code></li>
-<li>保证电梯在进入IDLE时，会唤醒Dispatcher</li>
-</ul>
-<p>至此，我们完成了HW7所需的所有改造。</p>
-]]></content>
-      <categories>
-        <category>课程相关</category>
-      </categories>
-      <tags>
-        <tag>面向对象</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>在IDEA内部，进行更高效的死锁调试</title>
     <url>/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/</url>
     <content><![CDATA[<blockquote>
@@ -1040,81 +1103,123 @@
       </tags>
   </entry>
   <entry>
-    <title>“法律、科技与社会”课后思考题答案 - 2024</title>
-    <url>/2025/02/04/%E2%80%9C%E6%B3%95%E5%BE%8B%E3%80%81%E7%A7%91%E6%8A%80%E4%B8%8E%E7%A4%BE%E4%BC%9A%E2%80%9D%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%20-%202024/</url>
-    <content><![CDATA[<p>本文记录了本人复习“法律、科技与社会”课程时，对课后思考题给出的答案。</p>
-<p>众所周知，本课的期末考试就是从课后思考题中抽集体来考，怎么复习想必大家都知道了。当然，不知道这几个思考题之后会不会变。</p>
-<p>以下答案均为本人手搓，在考试获得了95分，当然这个给分可能有玄学成分在里面，仅供参考。</p>
-<h1 id="技术是中立的吗？为什么？"><a href="#技术是中立的吗？为什么？" class="headerlink" title="技术是中立的吗？为什么？"></a>技术是中立的吗？为什么？</h1><p>   不是。</p>
-<ul>
-<li>技术置身于社会中，具有社会性。</li>
-<li>技术是占有世界的媒介，同时也是人类活动的一种形式。其背后包含了人类思维结果。</li>
-</ul>
+    <title>建站第一日</title>
+    <url>/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/</url>
+    <content><![CDATA[<p>今天做成的事情不多，主要是做了一下侧边栏的结构，改了个色，加了个favicon，然后基本就没了。</p>
+<p>上述工作的确很简单，但为何忙了一天，却只完成了这几件事呢？问题出在评论区功能和图床的实现上。</p>
 <span id="more"></span>
 
-<h1 id="监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？"><a href="#监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？" class="headerlink" title="监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？"></a>监控资本主义是一个不可避免的趋势吗？还是我们有什么办法改变它？</h1><ul>
-<li>用户行为数据将为资本带来利益；从资本逐利的本质而言，监控资本主义的趋势不可避免。</li>
-<li>这一趋势可以被抑制。</li>
-<li>立法与管制</li>
-<li>提高公共意识与参与度</li>
-<li>探索技术向善路径，减少技术对个人隐私的侵害</li>
-</ul>
-<h1 id="学校是否有权使用人脸识别对学生进行考勤？为什么？"><a href="#学校是否有权使用人脸识别对学生进行考勤？为什么？" class="headerlink" title="学校是否有权使用人脸识别对学生进行考勤？为什么？"></a>学校是否有权使用人脸识别对学生进行考勤？为什么？</h1><ul>
-<li>自隐私方面：若学校方面明确了：1.收集的人脸识别信息仅用于考勤，2.且收集的信息将按照相关法律法规进行处理，3.并在事前提前征得了同学的同意，则这一方案可认为可行；</li>
-<li>然而，根据我国目前出台的相关法律法规，此时也需保证人脸识别不作为考勤的唯一方式。</li>
-<li>更严格而言，根据《个人信息保护法》，在公众场合所收集的身份信息只能用于维护公共安全目的，此时考勤并不在维护公共安全范围之内，故可以认为学校无权这么做。</li>
-</ul>
-<h1 id="什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？"><a href="#什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？" class="headerlink" title="什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？"></a>什么是自动驾驶的电车难题？自动驾驶系统应该如何应对电车难题？</h1><ul>
-<li>自动驾驶系统在事故不可避免时，是优先保全车上人员安全，还是行人等车外人员的安全。</li>
-<li>首先是在技术上，要尽可能减少“不可避免事故”的发生；</li>
-<li>其次，在设计自动驾驶系统时，应注意伦理方面的考量，确保系统决策符合人类伦理。</li>
-</ul>
-<h1 id="是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？"><a href="#是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？" class="headerlink" title="是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？"></a>是否应该禁止或限制性爱机器人的研发、生产与销售？为什么？</h1><ul>
-<li>是</li>
-<li>存在物化女性的风险</li>
-<li>有悖伦理</li>
-<li>存在因此引起的技术以来与奴隶问题。</li>
-<li>情感与亲密关系的简化。</li>
-</ul>
-<h1 id="什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？"><a href="#什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？" class="headerlink" title="什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？"></a>什么是致命性自主武器？是否应该禁止或限制致命性自主武器的研发和使用？为什么？</h1><p>   指无需有意义的人类控制即可选择目标并施加武力的系统。</p>
-<p>   应该。</p>
+<p>先说图床。<br>这个Blog显然不会是一个纯文字的博客，后续放图进文章的问题肯定要考虑到。<br>Github Pages没记错的话，库大小似乎是有限制的（1GB？），把所有文章的图片直接存库里固然不现实。找了一天，暂时还没有找到一个成本为0或接近0的方案，基本都要涉及到买域名&#x2F;配置云服务。目前看到一个PicGo + Github的方案似乎可行，之后有空再试。</p>
+<p>再说评论系统。<br>为了和各位读者相互交流，评论区肯定是少不了的。<br>但是，正是在评论区实现的方案选择上，我近乎浪费了一整个早上。为什么呢？还请继续往下看：</p>
+<p>NexT主题集成了几个评论系统：disqus, 畅言，livere，gitalk和utterances。<br>disqus在国内访问速率堪忧，甚至大概率打不开，不在考虑范围内；<br>livere在国内倒是能用，但是必须要社交平台账号登录，不大符合我允许匿名留言的想法；<br>gitalk和utterances必须要求Github登录后才能评论，门槛之高不言而喻，且同样无法实现匿名评论。<br>那畅言呢？要求登录是其一，其美观程度之差是其二，本着不妥协的原则，这个方案也行不通。</p>
+<p>在上述方案都不符合预期的情况下，只得求助各路教程，而各路教程都不约而同地指向了valine。valine允许匿名，外观简洁，看起来就是最佳之选了。在一番了解后，发现valine原本被集成在NexT内，但出于不再开源和安全问题的原因被移除，以单独插件形式存在。安装并配置好后，却发现其无法正常使用：起初是出现401报错，后变为不报错，但评论无法正常发表，点下发表后毫无反应。</p>
+<p>一番折腾后，评论区的建设仍毫无进展，只得暂时作罢。</p>
+<p>Blog的基本框架现在已经成型。接下来的建设任务，我想就是攻克下这两个难题了。至于小细节，留到日后吧。</p>
+]]></content>
+      <categories>
+        <category>建站历程</category>
+      </categories>
+      <tags>
+        <tag>心得</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>技术演示 - 并发执行的多测试数据对拍脚本</title>
+    <url>/2025/02/04/%E6%8A%80%E6%9C%AF%E6%BC%94%E7%A4%BA%20-%20%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C%E7%9A%84%E5%A4%9A%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%E5%AF%B9%E6%8B%8D%E8%84%9A%E6%9C%AC/</url>
+    <content><![CDATA[<blockquote>
+<p>归档于250204，供后来者参考。</p>
+</blockquote>
+<p>读前须知：本文针对Windows环境；Linux仙人参考思路即可…</p>
+<h1 id="需求：针对多组测试数据的评测"><a href="#需求：针对多组测试数据的评测" class="headerlink" title="需求：针对多组测试数据的评测"></a>需求：针对多组测试数据的评测</h1><p>为尽可能追求测试覆盖率，且方便测试程序的编写，我们往往会选择构造多组测试数据进行测试。</p>
+<p>回顾本人先前构造，且至今一直使用的对拍脚本，每次仅可对拍一组测试数据。要进行多组数据的测试，需要每次对待测数据进行手动替换，效率实在太低。</p>
+<p>因此，我决定对我的对拍脚本进行完善，使之支持多组数据的评测。</p>
+<span id="more"></span>
+
+<h1 id="已有评测机存在的问题-效率太低"><a href="#已有评测机存在的问题-效率太低" class="headerlink" title="已有评测机存在的问题 - 效率太低"></a>已有评测机存在的问题 - 效率太低</h1><p>考察了当前已有的<code>COKiller</code>等支持多数据评测的评测机，发现存在以下问题：</p>
 <ul>
-<li>道义角度：其决策远离了人的判断，在道义上这无法接受。</li>
-<li>法律角度：其违背了《国际人权法案》和《武装冲突法》的精神，可能会对非作战人员产生杀伤。</li>
-<li>战略角度：研发出的致命自主武器可能会扩散到潜在敌人中。</li>
+<li>对多组测试数据的测试均是<strong>串行进行</strong></li>
+<li>有重复编译的现象产生</li>
 </ul>
-<h1 id="什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？"><a href="#什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？" class="headerlink" title="什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？"></a><strong>什么是算法歧视？形成的原因是什么？如果解决算法歧视问题？</strong></h1><p>   算法歧视是指算法在决策过程中，偏向特定人群或不公平对待某些群体的现象。</p>
-<p>   形成原因：</p>
+<p>上述两个问题会大幅降低评测效率。</p>
+<p>我们都知道，我们的Verilog代码是由fuse编译成iSim实例来运行的；对于一次对拍，我们只需要编译一次。</p>
+<p>串行评测多组数据就不用说了，效率低自是当然。</p>
+<h1 id="本方法的实现"><a href="#本方法的实现" class="headerlink" title="本方法的实现"></a>本方法的实现</h1><h2 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h2><p>以支持延迟槽对拍的脚本为例。P7的除了多加几个.py处理.ktext外，没啥区别…</p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted_image_20241211212224.png" alt="Pasted_image_20241211212224.png"></p>
 <ul>
-<li>数据偏差：算法主要依赖于测试数据；数据不全面，则算法可能会因此产生偏见。</li>
-<li>设计偏见：开发者在设计算法时融入了个人偏见。</li>
-<li>反馈循环：在一些算法系统中，用户行为会反馈到算法中，这可能扩大原有的偏见</li>
+<li><code>!make.bat</code>：对拍程序入口；</li>
+<li><code>atom.bat</code>：对一个测试数据进行对拍；</li>
+<li><code>clear.bat</code>：清理临时文件；</li>
+<li><code>/code</code>：存放各组测试数据</li>
+<li><code>/src</code>：存放Verilog源码</li>
+<li><code>/temp</code>：临时存放编译结果</li>
+<li><code>result</code>：存储各数据的对拍结果：输出与波形</li>
+<li><code>*_filter.py</code>：过滤输出，避免输出出现版权信息&#x2F;向<code>$0</code>写入的信息</li>
+<li><code>mips.tcl</code>：配置是否产生波形&#x2F;仿真上限时间用；具体见教程自动化测试相关内容</li>
+<li><code>mars.jar</code>：<strong>带输出的MARS</strong>。需要注意的是，各版本MARS运行时需要的参数可能不同，需要手动进入<code>atom.bat</code>进行修改；这个当然可以通过造接口解决，我图省事没做…</li>
 </ul>
-<p>   改进方法：</p>
-<ul>
-<li>改进数据质量</li>
-<li>提高算法透明度与解释性</li>
-<li>引入公平性评估和偏差测试</li>
-<li>用户反馈与持续优化</li>
+<h2 id="make-bat"><a href="#make-bat" class="headerlink" title="!make.bat"></a><code>!make.bat</code></h2><p>完成Verilog代码的编译工作，同时开始调度，让<code>atom.bat</code>对每组数据进行处理。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">@echo off</span><br><span class="line"></span><br><span class="line">%运行前，先清一遍临时文件，以防没清干净%</span><br><span class="line">	rmdir /s /q result <span class="number">2</span>&gt; nul</span><br><span class="line">	rmdir /s /q temp <span class="number">2</span>&gt; nul</span><br><span class="line"></span><br><span class="line">%开始编译%</span><br><span class="line"></span><br><span class="line">	md temp</span><br><span class="line">	cd temp</span><br><span class="line"></span><br><span class="line">	%根据src下源码，自动生成.prj文件%</span><br><span class="line">	<span class="keyword">for</span> /f %%i <span class="title function_">in</span> <span class="params">(<span class="string">&#x27;dir /b ..\src&#x27;</span>)</span> <span class="keyword">do</span> echo verilog work &quot;..\src\%%i&quot; &gt;&gt; mips.prj </span><br><span class="line">	</span><br><span class="line">	%xilinx%\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb &gt;nul</span><br><span class="line">	IF ERRORLEVEL 1 <span class="params">(</span></span><br><span class="line"><span class="params">	    echo An error occurred when compiling.</span></span><br><span class="line"><span class="params">	    pause</span></span><br><span class="line"><span class="params">	    <span class="built_in">exit</span></span></span><br><span class="line"><span class="params">	)</span></span><br><span class="line"></span><br><span class="line">%编译结束，退回上级目录%</span><br><span class="line">	cd ..</span><br><span class="line"></span><br><span class="line">%创建result文件夹，方便组织输出% </span><br><span class="line">	md result</span><br><span class="line">	cd result</span><br><span class="line"></span><br><span class="line">%开始调度：以result为工作目录，对每个测试数据调用atom.bat进行处理%</span><br><span class="line">	<span class="keyword">for</span> /f %%i <span class="title function_">in</span> <span class="params">(<span class="string">&#x27;dir /b ..\code&#x27;</span>)</span> <span class="title function_">do</span> <span class="params">( </span></span><br><span class="line"><span class="params">	</span></span><br><span class="line"><span class="params">	start ..\atom.bat %%i</span></span><br><span class="line"><span class="params">	</span></span><br><span class="line"><span class="params">	)</span></span><br><span class="line">%处理完成，退回上级目录%</span><br><span class="line">	cd ..</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">%输出提示：只有在所有测试都完成，即上面start指令弹出的窗口都关闭时，才可按键继续，开始比较；否则会出现找不到文件的情况%</span><br><span class="line"></span><br><span class="line">	echo Please <span class="keyword">continue</span> only when EVERY TEST IS DONE.</span><br><span class="line">	pause</span><br><span class="line"></span><br><span class="line">%进行对拍比较%</span><br><span class="line"></span><br><span class="line">	echo Performing comparison...</span><br><span class="line">	</span><br><span class="line">	cd result</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span> /f %%i <span class="title function_">in</span> <span class="params">(<span class="string">&#x27;dir /b ..\code&#x27;</span>)</span> <span class="title function_">do</span> <span class="params">( </span></span><br><span class="line"><span class="params">	</span></span><br><span class="line"><span class="params">	echo %%i</span></span><br><span class="line"><span class="params">	</span></span><br><span class="line"><span class="params">	cd %%i</span></span><br><span class="line"><span class="params">	fc /<span class="number">3</span> isim_out.txt mars_out.txt</span></span><br><span class="line"><span class="params">	cd..</span></span><br><span class="line"><span class="params">	</span></span><br><span class="line"><span class="params">	)</span></span><br><span class="line"></span><br><span class="line">%比较结束，退回上级目录，方便后面clear.bat执行%	</span><br><span class="line">	cd ..</span><br><span class="line"></span><br><span class="line">%暂停，方便查看输出%</span><br><span class="line">	pause</span><br><span class="line"></span><br><span class="line">%结束时，清除一下编译产生的临时文件%</span><br><span class="line">	clear.bat</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h2 id="atom-bat"><a href="#atom-bat" class="headerlink" title="atom.bat"></a><code>atom.bat</code></h2><p>每组数据的实际处理程序。</p>
+<p>由于iSim的运行限制，为了实现并发执行，<strong>我们不得不把编译好的程序，复制到每个测试数据的输出目录下，在得到输出后再将其删除。这显然会带来存储空间带来压力，但真的没有更好的办法了。</strong></p>
+<p>我对P7的编译结果进行了查看，总大小是3mb左右；正常测试点数量规模下，占用还是能控制到1gb以下的；况且我们最后还是要给它删掉的嘛…</p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted_image_20241211213111.png" alt="Pasted_image_20241211213111.png"></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">@echo off</span><br><span class="line"></span><br><span class="line">%提示在处理哪组数据%</span><br><span class="line">	echo %<span class="number">1</span></span><br><span class="line">%在result目录下建立各组数据的输出文件夹%</span><br><span class="line">	md %<span class="number">1</span></span><br><span class="line">	cd %<span class="number">1</span></span><br><span class="line">%获取机器码和mars输出%</span><br><span class="line">	java -jar ..\..\mars.jar db mc CompactDataAtZero a dump .text HexText code.txt ..\..\code\%<span class="number">1</span> &gt; nul</span><br><span class="line">	java -jar ..\..\mars.jar db mc CompactDataAtZero nc ig coL1 ..\..\code\%<span class="number">1</span>  &gt; mars_out.temp</span><br><span class="line"></span><br><span class="line">%复制编译结果%</span><br><span class="line">	md temp</span><br><span class="line">	call xcopy /s /e /y ..\..\temp\ .\temp &gt; nul</span><br><span class="line"></span><br><span class="line">%获取行为仿真结果%</span><br><span class="line">	cd temp</span><br><span class="line">	copy ..\code.txt code.txt &gt; nul</span><br><span class="line">	call mips.exe -nolog -tclbatch ..\..\..\mips.tcl &gt; ..\isim_out.temp</span><br><span class="line">	%获取波形（如果有必要...）%</span><br><span class="line">	copy isim.wdb ..\isim.wdb &gt; nul</span><br><span class="line">%完事，退回上一级%</span><br><span class="line">	cd ..</span><br><span class="line">	</span><br><span class="line">%过滤输出%</span><br><span class="line">	python ..\..\isim_filter.py &gt; nul</span><br><span class="line">	python ..\..\mars_filter.py &gt; nul</span><br><span class="line">	</span><br><span class="line">%删除输出临时文件%</span><br><span class="line">	del *.temp</span><br><span class="line">	</span><br><span class="line">%删除复制的编译结果%</span><br><span class="line">	rmdir /s /q temp</span><br><span class="line"></span><br><span class="line">%完成，退回result%</span><br><span class="line">	cd ..</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="clear-bat"><a href="#clear-bat" class="headerlink" title="clear.bat"></a><code>clear.bat</code></h2><p>只用清掉最开始的编译结果就行了。结果在下次执行时自动删除。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">@echo off</span><br><span class="line">rmdir /s /q temp</span><br></pre></td></tr></table></figure>
+
+
+
+<p>其余的就不必说明了。</p>
+<h1 id="本方法未完善之处"><a href="#本方法未完善之处" class="headerlink" title="本方法未完善之处"></a>本方法未完善之处</h1><h2 id="不大好解决的"><a href="#不大好解决的" class="headerlink" title="不大好解决的"></a>不大好解决的</h2><ul>
+<li><p><strong>在数据组数较大的情况下，生成的临时文件总大小过大。</strong> 这个在上面已经说过了，<em>欢迎有解决办法的朋友积极指出，在此本人感激不尽！</em></p>
+</li>
+<li><p><strong>start一次，开一个窗口。</strong> 这好像也可以算特性了？</p>
+<p>我对这个结果不大满意。在我的设想里，并行调用<code>atom.bat</code>时<strong>应该没有任何反应</strong>。在所有并发任务都结束之后，再自动进入比较环节。<strong>在座的各位一定有更好的办法。</strong></p>
+</li>
+<li><p><strong>调度策略过于鲁莽。</strong> 在本实现中，我们运用批处理的<code>start</code>来实现并行；读了上面的实现，我们不难发现，我们此时**有多少个测试点，就会同时开多少个<code>atom.bat</code>；若测试规模足够大，恐怕没有电脑能吃得消（看下面的分析，甚至8个就够呛）…</p>
+<p>我的优化想法，是在<code>make.bat</code>里调用<code>atom.bat</code>的时候，不直接用<code>start</code>+循环调用，而是<strong>调用一个任务分配程序</strong>，由它按照配置好的最大并行数，进行数据测试任务的分配。<em>再次，欢迎有解决办法的朋友积极指出，在此本人感激不尽！</em></p>
+<p>同时，由于我对Windows的批处理并行稍微熟悉，这部分我选择用.bat来写；<strong>相信<code>python</code>等在并行方面有更好的办法。</strong></p>
+</li>
 </ul>
-<h1 id="在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？"><a href="#在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？" class="headerlink" title="在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？"></a>在人工智能和大数据时代，个人隐私还存在吗？如何才能更好地保护隐私？</h1><ul>
-<li>存在。</li>
-<li>个人角度：提高个人隐私意识，以正当手段维护自己的个人隐私</li>
-<li>立法角度：完善相关法律法规，自法律角度约束个人敏感信息的使用</li>
-<li>数据收集者角度：尊重用户隐私，避免过度收集用户敏感信息；完善技术手段，减少敏感信息的使用，避免敏感信息的泄露</li>
+<h2 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h2><p>这里，我选择同时测试3组P7的测试点来进行性能分析。</p>
+<p>我的电脑配置如下：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted_image_20241211214558.png" alt="Pasted_image_20241211214558.png"></p>
+<p>在CPU占用上，<strong>每一个</strong><code>mips.exe</code>的CPU占用<strong>就已在10~20%左右波动</strong>；这也是为什么我上面说，现在的调度策略行不通：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted_image_20241211214616.png" alt="Pasted_image_20241211214616.png"></p>
+<p>内存占用其实还好，算上命令行和mips.exe的，总体还在可接受范围：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted_image_20241211214957.png" alt="Pasted_image_20241211214957.png"></p>
+<h1 id="好解决的"><a href="#好解决的" class="headerlink" title="好解决的"></a>好解决的</h1><ul>
+<li><strong>必须人为判断各测试是否已完成（即start调用的窗口是否已经全部关闭）后，才能进行比较。</strong> 各路仙人的评测机已经有不少解决方案了。</li>
+<li><strong>比较方法较为原始。</strong> 这个可以用python的difflib等解决，不赘述了。</li>
 </ul>
-<h1 id="作为计算机专业的学生，你如何看待人工智能的未来？"><a href="#作为计算机专业的学生，你如何看待人工智能的未来？" class="headerlink" title="作为计算机专业的学生，你如何看待人工智能的未来？"></a>作为<strong>计算机专业</strong>的学生，你如何看待人工智能的未来？</h1><ul>
-<li>自生产工具的角度而言，人工智能将促进人类社会的生产力发展，从而促进人类社会的进步，我们应继续追求人工智能在技术层面的进步，从而进一步发展社会生产力；同时，我们也应积极接受并利用AI这一生产力工具。</li>
-<li>自道德伦理角度而言，人工智能的使用，可能出现潜在的道德伦理问题，当前也出现了深度伪造、AI合成假新闻等问题。这需要我们在技术层面加以防范，；</li>
-<li>自社会角度而言，人工智能必然会因人工智能的出现，对已有的部分人工进行替代。同时，人工智能的出现，也为我们带来了新的就业机会。因此，我们需要积极顺应这一变化，积极学习AI相关知识，同时提高自身创新能力与软实力。</li>
-</ul>
+<h1 id="演示下载"><a href="#演示下载" class="headerlink" title="演示下载"></a>演示下载</h1><p>技术演示 - <a href="https://bhpan.buaa.edu.cn/link/AA86CF06932380478FBD0AB8D9A22178D8">https://bhpan.buaa.edu.cn/link/AA86CF06932380478FBD0AB8D9A22178D8</a><br>文件名：experiment_parallel.zip<br>有效期限：永久有效<br>提取码：9eXL</p>
+<p><strong>！！在运行前，请先配置好xilinx用户环境变量，具体见：<a href="http://cscore.buaa.edu.cn/#/discussion_area/1461/1777/posts">http://cscore.buaa.edu.cn/#/discussion_area/1461/1777/posts</a> ！！</strong></p>
+<p>点击<code>!make.bat</code>运行，运行前先在<code>/src</code>里放好Verilog源码，在<code>/code</code>里放好待对拍<code>.asm</code>。</p>
 ]]></content>
       <categories>
         <category>课程相关</category>
       </categories>
       <tags>
-        <tag>水课</tag>
-        <tag>FKS</tag>
+        <tag>心得</tag>
+        <tag>计组</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>图床测试</title>
+    <url>/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</url>
+    <content><![CDATA[<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/%7B433FA560-1033-4134-A91E-3F4E0C6D3AC2%7D.png" alt="{433FA560-1033-4134-A91E-3F4E0C6D3AC2}.png"></p>
+<p>通过阿里云OSS+PicGo的方案，本博客成功实现了图床功能。</p>
+<p>Github在国内访问速度太慢，为了实现图片快速加载，只能加点钱上阿里云了 :(</p>
+<p>不过一个月也就6块钱，也就约等于一个月少喝一瓶东方树叶嘛😋</p>
+]]></content>
+      <categories>
+        <category>建站历程</category>
+      </categories>
+      <tags>
+        <tag>测试</tag>
       </tags>
   </entry>
   <entry>
@@ -1264,183 +1369,6 @@
       <tags>
         <tag>心得</tag>
         <tag>英语</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>技术演示 - 并发执行的多测试数据对拍脚本</title>
-    <url>/2025/02/04/%E6%8A%80%E6%9C%AF%E6%BC%94%E7%A4%BA%20-%20%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C%E7%9A%84%E5%A4%9A%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%E5%AF%B9%E6%8B%8D%E8%84%9A%E6%9C%AC/</url>
-    <content><![CDATA[<blockquote>
-<p>归档于250204，供后来者参考。</p>
-</blockquote>
-<p>读前须知：本文针对Windows环境；Linux仙人参考思路即可…</p>
-<h1 id="需求：针对多组测试数据的评测"><a href="#需求：针对多组测试数据的评测" class="headerlink" title="需求：针对多组测试数据的评测"></a>需求：针对多组测试数据的评测</h1><p>为尽可能追求测试覆盖率，且方便测试程序的编写，我们往往会选择构造多组测试数据进行测试。</p>
-<p>回顾本人先前构造，且至今一直使用的对拍脚本，每次仅可对拍一组测试数据。要进行多组数据的测试，需要每次对待测数据进行手动替换，效率实在太低。</p>
-<p>因此，我决定对我的对拍脚本进行完善，使之支持多组数据的评测。</p>
-<span id="more"></span>
-
-<h1 id="已有评测机存在的问题-效率太低"><a href="#已有评测机存在的问题-效率太低" class="headerlink" title="已有评测机存在的问题 - 效率太低"></a>已有评测机存在的问题 - 效率太低</h1><p>考察了当前已有的<code>COKiller</code>等支持多数据评测的评测机，发现存在以下问题：</p>
-<ul>
-<li>对多组测试数据的测试均是<strong>串行进行</strong></li>
-<li>有重复编译的现象产生</li>
-</ul>
-<p>上述两个问题会大幅降低评测效率。</p>
-<p>我们都知道，我们的Verilog代码是由fuse编译成iSim实例来运行的；对于一次对拍，我们只需要编译一次。</p>
-<p>串行评测多组数据就不用说了，效率低自是当然。</p>
-<h1 id="本方法的实现"><a href="#本方法的实现" class="headerlink" title="本方法的实现"></a>本方法的实现</h1><h2 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h2><p>以支持延迟槽对拍的脚本为例。P7的除了多加几个.py处理.ktext外，没啥区别…</p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted_image_20241211212224.png" alt="Pasted_image_20241211212224.png"></p>
-<ul>
-<li><code>!make.bat</code>：对拍程序入口；</li>
-<li><code>atom.bat</code>：对一个测试数据进行对拍；</li>
-<li><code>clear.bat</code>：清理临时文件；</li>
-<li><code>/code</code>：存放各组测试数据</li>
-<li><code>/src</code>：存放Verilog源码</li>
-<li><code>/temp</code>：临时存放编译结果</li>
-<li><code>result</code>：存储各数据的对拍结果：输出与波形</li>
-<li><code>*_filter.py</code>：过滤输出，避免输出出现版权信息&#x2F;向<code>$0</code>写入的信息</li>
-<li><code>mips.tcl</code>：配置是否产生波形&#x2F;仿真上限时间用；具体见教程自动化测试相关内容</li>
-<li><code>mars.jar</code>：<strong>带输出的MARS</strong>。需要注意的是，各版本MARS运行时需要的参数可能不同，需要手动进入<code>atom.bat</code>进行修改；这个当然可以通过造接口解决，我图省事没做…</li>
-</ul>
-<h2 id="make-bat"><a href="#make-bat" class="headerlink" title="!make.bat"></a><code>!make.bat</code></h2><p>完成Verilog代码的编译工作，同时开始调度，让<code>atom.bat</code>对每组数据进行处理。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">@echo off</span><br><span class="line"></span><br><span class="line">%运行前，先清一遍临时文件，以防没清干净%</span><br><span class="line">	rmdir /s /q result <span class="number">2</span>&gt; nul</span><br><span class="line">	rmdir /s /q temp <span class="number">2</span>&gt; nul</span><br><span class="line"></span><br><span class="line">%开始编译%</span><br><span class="line"></span><br><span class="line">	md temp</span><br><span class="line">	cd temp</span><br><span class="line"></span><br><span class="line">	%根据src下源码，自动生成.prj文件%</span><br><span class="line">	<span class="keyword">for</span> /f %%i <span class="title function_">in</span> <span class="params">(<span class="string">&#x27;dir /b ..\src&#x27;</span>)</span> <span class="keyword">do</span> echo verilog work &quot;..\src\%%i&quot; &gt;&gt; mips.prj </span><br><span class="line">	</span><br><span class="line">	%xilinx%\bin\nt64\fuse.exe -nodebug -prj mips.prj -o mips.exe mips_tb &gt;nul</span><br><span class="line">	IF ERRORLEVEL 1 <span class="params">(</span></span><br><span class="line"><span class="params">	    echo An error occurred when compiling.</span></span><br><span class="line"><span class="params">	    pause</span></span><br><span class="line"><span class="params">	    <span class="built_in">exit</span></span></span><br><span class="line"><span class="params">	)</span></span><br><span class="line"></span><br><span class="line">%编译结束，退回上级目录%</span><br><span class="line">	cd ..</span><br><span class="line"></span><br><span class="line">%创建result文件夹，方便组织输出% </span><br><span class="line">	md result</span><br><span class="line">	cd result</span><br><span class="line"></span><br><span class="line">%开始调度：以result为工作目录，对每个测试数据调用atom.bat进行处理%</span><br><span class="line">	<span class="keyword">for</span> /f %%i <span class="title function_">in</span> <span class="params">(<span class="string">&#x27;dir /b ..\code&#x27;</span>)</span> <span class="title function_">do</span> <span class="params">( </span></span><br><span class="line"><span class="params">	</span></span><br><span class="line"><span class="params">	start ..\atom.bat %%i</span></span><br><span class="line"><span class="params">	</span></span><br><span class="line"><span class="params">	)</span></span><br><span class="line">%处理完成，退回上级目录%</span><br><span class="line">	cd ..</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">%输出提示：只有在所有测试都完成，即上面start指令弹出的窗口都关闭时，才可按键继续，开始比较；否则会出现找不到文件的情况%</span><br><span class="line"></span><br><span class="line">	echo Please <span class="keyword">continue</span> only when EVERY TEST IS DONE.</span><br><span class="line">	pause</span><br><span class="line"></span><br><span class="line">%进行对拍比较%</span><br><span class="line"></span><br><span class="line">	echo Performing comparison...</span><br><span class="line">	</span><br><span class="line">	cd result</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span> /f %%i <span class="title function_">in</span> <span class="params">(<span class="string">&#x27;dir /b ..\code&#x27;</span>)</span> <span class="title function_">do</span> <span class="params">( </span></span><br><span class="line"><span class="params">	</span></span><br><span class="line"><span class="params">	echo %%i</span></span><br><span class="line"><span class="params">	</span></span><br><span class="line"><span class="params">	cd %%i</span></span><br><span class="line"><span class="params">	fc /<span class="number">3</span> isim_out.txt mars_out.txt</span></span><br><span class="line"><span class="params">	cd..</span></span><br><span class="line"><span class="params">	</span></span><br><span class="line"><span class="params">	)</span></span><br><span class="line"></span><br><span class="line">%比较结束，退回上级目录，方便后面clear.bat执行%	</span><br><span class="line">	cd ..</span><br><span class="line"></span><br><span class="line">%暂停，方便查看输出%</span><br><span class="line">	pause</span><br><span class="line"></span><br><span class="line">%结束时，清除一下编译产生的临时文件%</span><br><span class="line">	clear.bat</span><br></pre></td></tr></table></figure>
-
-
-
-
-<h2 id="atom-bat"><a href="#atom-bat" class="headerlink" title="atom.bat"></a><code>atom.bat</code></h2><p>每组数据的实际处理程序。</p>
-<p>由于iSim的运行限制，为了实现并发执行，<strong>我们不得不把编译好的程序，复制到每个测试数据的输出目录下，在得到输出后再将其删除。这显然会带来存储空间带来压力，但真的没有更好的办法了。</strong></p>
-<p>我对P7的编译结果进行了查看，总大小是3mb左右；正常测试点数量规模下，占用还是能控制到1gb以下的；况且我们最后还是要给它删掉的嘛…</p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted_image_20241211213111.png" alt="Pasted_image_20241211213111.png"></p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">@echo off</span><br><span class="line"></span><br><span class="line">%提示在处理哪组数据%</span><br><span class="line">	echo %<span class="number">1</span></span><br><span class="line">%在result目录下建立各组数据的输出文件夹%</span><br><span class="line">	md %<span class="number">1</span></span><br><span class="line">	cd %<span class="number">1</span></span><br><span class="line">%获取机器码和mars输出%</span><br><span class="line">	java -jar ..\..\mars.jar db mc CompactDataAtZero a dump .text HexText code.txt ..\..\code\%<span class="number">1</span> &gt; nul</span><br><span class="line">	java -jar ..\..\mars.jar db mc CompactDataAtZero nc ig coL1 ..\..\code\%<span class="number">1</span>  &gt; mars_out.temp</span><br><span class="line"></span><br><span class="line">%复制编译结果%</span><br><span class="line">	md temp</span><br><span class="line">	call xcopy /s /e /y ..\..\temp\ .\temp &gt; nul</span><br><span class="line"></span><br><span class="line">%获取行为仿真结果%</span><br><span class="line">	cd temp</span><br><span class="line">	copy ..\code.txt code.txt &gt; nul</span><br><span class="line">	call mips.exe -nolog -tclbatch ..\..\..\mips.tcl &gt; ..\isim_out.temp</span><br><span class="line">	%获取波形（如果有必要...）%</span><br><span class="line">	copy isim.wdb ..\isim.wdb &gt; nul</span><br><span class="line">%完事，退回上一级%</span><br><span class="line">	cd ..</span><br><span class="line">	</span><br><span class="line">%过滤输出%</span><br><span class="line">	python ..\..\isim_filter.py &gt; nul</span><br><span class="line">	python ..\..\mars_filter.py &gt; nul</span><br><span class="line">	</span><br><span class="line">%删除输出临时文件%</span><br><span class="line">	del *.temp</span><br><span class="line">	</span><br><span class="line">%删除复制的编译结果%</span><br><span class="line">	rmdir /s /q temp</span><br><span class="line"></span><br><span class="line">%完成，退回result%</span><br><span class="line">	cd ..</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="clear-bat"><a href="#clear-bat" class="headerlink" title="clear.bat"></a><code>clear.bat</code></h2><p>只用清掉最开始的编译结果就行了。结果在下次执行时自动删除。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">@echo off</span><br><span class="line">rmdir /s /q temp</span><br></pre></td></tr></table></figure>
-
-
-
-<p>其余的就不必说明了。</p>
-<h1 id="本方法未完善之处"><a href="#本方法未完善之处" class="headerlink" title="本方法未完善之处"></a>本方法未完善之处</h1><h2 id="不大好解决的"><a href="#不大好解决的" class="headerlink" title="不大好解决的"></a>不大好解决的</h2><ul>
-<li><p><strong>在数据组数较大的情况下，生成的临时文件总大小过大。</strong> 这个在上面已经说过了，<em>欢迎有解决办法的朋友积极指出，在此本人感激不尽！</em></p>
-</li>
-<li><p><strong>start一次，开一个窗口。</strong> 这好像也可以算特性了？</p>
-<p>我对这个结果不大满意。在我的设想里，并行调用<code>atom.bat</code>时<strong>应该没有任何反应</strong>。在所有并发任务都结束之后，再自动进入比较环节。<strong>在座的各位一定有更好的办法。</strong></p>
-</li>
-<li><p><strong>调度策略过于鲁莽。</strong> 在本实现中，我们运用批处理的<code>start</code>来实现并行；读了上面的实现，我们不难发现，我们此时**有多少个测试点，就会同时开多少个<code>atom.bat</code>；若测试规模足够大，恐怕没有电脑能吃得消（看下面的分析，甚至8个就够呛）…</p>
-<p>我的优化想法，是在<code>make.bat</code>里调用<code>atom.bat</code>的时候，不直接用<code>start</code>+循环调用，而是<strong>调用一个任务分配程序</strong>，由它按照配置好的最大并行数，进行数据测试任务的分配。<em>再次，欢迎有解决办法的朋友积极指出，在此本人感激不尽！</em></p>
-<p>同时，由于我对Windows的批处理并行稍微熟悉，这部分我选择用.bat来写；<strong>相信<code>python</code>等在并行方面有更好的办法。</strong></p>
-</li>
-</ul>
-<h2 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h2><p>这里，我选择同时测试3组P7的测试点来进行性能分析。</p>
-<p>我的电脑配置如下：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted_image_20241211214558.png" alt="Pasted_image_20241211214558.png"></p>
-<p>在CPU占用上，<strong>每一个</strong><code>mips.exe</code>的CPU占用<strong>就已在10~20%左右波动</strong>；这也是为什么我上面说，现在的调度策略行不通：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted_image_20241211214616.png" alt="Pasted_image_20241211214616.png"></p>
-<p>内存占用其实还好，算上命令行和mips.exe的，总体还在可接受范围：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted_image_20241211214957.png" alt="Pasted_image_20241211214957.png"></p>
-<h1 id="好解决的"><a href="#好解决的" class="headerlink" title="好解决的"></a>好解决的</h1><ul>
-<li><strong>必须人为判断各测试是否已完成（即start调用的窗口是否已经全部关闭）后，才能进行比较。</strong> 各路仙人的评测机已经有不少解决方案了。</li>
-<li><strong>比较方法较为原始。</strong> 这个可以用python的difflib等解决，不赘述了。</li>
-</ul>
-<h1 id="演示下载"><a href="#演示下载" class="headerlink" title="演示下载"></a>演示下载</h1><p>技术演示 - <a href="https://bhpan.buaa.edu.cn/link/AA86CF06932380478FBD0AB8D9A22178D8">https://bhpan.buaa.edu.cn/link/AA86CF06932380478FBD0AB8D9A22178D8</a><br>文件名：experiment_parallel.zip<br>有效期限：永久有效<br>提取码：9eXL</p>
-<p><strong>！！在运行前，请先配置好xilinx用户环境变量，具体见：<a href="http://cscore.buaa.edu.cn/#/discussion_area/1461/1777/posts">http://cscore.buaa.edu.cn/#/discussion_area/1461/1777/posts</a> ！！</strong></p>
-<p>点击<code>!make.bat</code>运行，运行前先在<code>/src</code>里放好Verilog源码，在<code>/code</code>里放好待对拍<code>.asm</code>。</p>
-]]></content>
-      <categories>
-        <category>课程相关</category>
-      </categories>
-      <tags>
-        <tag>心得</tag>
-        <tag>计组</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>第一次尝试</title>
-    <url>/2023/11/27/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95/</url>
-    <content><![CDATA[<pre><code>万事开头难。
-</code></pre>
-<p>有关建设个人博客这件事，本人其实早在2022年5月，就已按各路教程，用Hexo和Github Pages搭好了环境。苦于当时的学业压力，加上后续也没有任何写随笔的时间和欲望，这一项目就此搁浅，主页上也只留着默认的“hello world”。</p>
-<p>转眼，过了一年半，这个想法又被提上了日程。主要的推动力，我想是高宁老师在几周前《大国领袖》课程上的点醒。的确，写作使人深刻。思想在矛盾中产生进步，而若不以文字记录下所思所想，任何进步所获，都将被时间冲淡，最后终将导致自己寸步未进。听得此话，如醍醐灌顶。也许，真的是时候认真记录一下自己的所思所想了。</p>
-<p>初入大学数月，感受颇丰——无论是学业上，还是这几个月来自己学余的所见所闻。这几个月，有看完MyGo!!!!!、补完少歌之后的感动，有学业繁重、认识到自己与各路大神差距的压力，有对自己选择信息类，而非三年前自己所热爱的航空学的怀疑，更有初中以后，自己的精神支柱长期空缺的反思。上述种种，我想，绝非只是自己心里想想，然后任其随时间逝去就能过去的。用文字记录下自己的感受，并在写作中反思，我想才是正解。</p>
-<p>当然，自己搭建Blog，也绝非易事。在您观看这篇文章时，本人可能还在潜心研究NexT主题的各类复杂设置，这个博客也大概率还只是一个刚搭好的毛胚房。这也算是我第一次真正使用Github开发自己的项目，要学习的东西自然也是很多。</p>
-<p>写到这里，已然词穷。本人Blog的第一篇文章，就到此草草作结吧。</p>
-<p>但愿写完这篇文章之后，我还能记得继续写吧（笑</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>心得</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>航砖祭祖后日谈</title>
-    <url>/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</url>
-    <content><![CDATA[<p>本文将对BUAA_CO_2024进行简要回顾，并给出自己的一些主观建议，仅供参考。</p>
-<span id="more"></span>
-
-<h1 id="预习建议"><a href="#预习建议" class="headerlink" title="预习建议"></a>预习建议</h1><p>主要针对实验部分进行预习。理论部分听课&#x2F;考前看408资料即可。有简单&#x2F;复杂两个预习方法。</p>
-<p>简单玩法，我推荐游玩图灵完备（Turing Complete）。玩到汇编之前基本就差不多了，当然能打完是最好，2333</p>
-<p>复杂玩法（<strong>地狱难度！！</strong>），我力推<a href="https://ysyx.oscc.cc/">“一生一芯”项目</a>。做到B阶段，在体系结构方面的理解就足够薄纱课程组给的实验方案了；课上测试另说（笑）</p>
-<p>要完成“一生一芯”，请预留至少两个月时间。<strong>难度真的很高，做之前做好思想觉悟！！</strong></p>
-<p>只不过，一生一芯用的指令集是RISC-V，跟课程组选用的MIPS有所不同。二者都属于RISC，不过有一些实现细节的不同，我认为影响不大。</p>
-<p>哪怕你在大二上上完了计组，如果你对体系结构感兴趣，我还是推荐你抽时间做一做一生一芯这个项目。因为在你上完后（至少我上完后），你会发现，本校的计组在硬件实现方面的知识实在欠缺，想不到吧？</p>
-<h1 id="课程概况"><a href="#课程概况" class="headerlink" title="课程概况"></a>课程概况</h1><p>最终目标：要求实现支持数条MIPS指令，以及异常、中断的五级流水线处理器。</p>
-<p>要求实现的指令集十分精简，具体可看本人P7的设计文档。</p>
-<p>课程分为理论课与实验课两部分。理论课讲述的是正常的计组课程内容。理论课部分的资料，出于课件版权问题，不在此放出。在课程正式开始时，建议咨询各路学长&#x2F;学姐获取资料。</p>
-<p>实验课即是各个Project。</p>
-<ul>
-<li>P0~P1：利用Logisim构建一些简单电路</li>
-<li>P2：利用MARS编写MIPS汇编程序</li>
-<li>P3：使用Logisim搭建单周期MIPS处理器</li>
-<li>P4：使用Verilog实现单周期MIPS处理器</li>
-<li>P5：实现五级流水线，处理各类冒险（数据冒险等）</li>
-<li>P6：进一步完善P5的设计，主要是添加MDU与新指令</li>
-<li>P7：支持异常与中断</li>
-</ul>
-<p>实验部分，在线上测试平台(cscore.buaa.edu.cn)，对各位的设计进行测试。</p>
-<h1 id="细说实验部分"><a href="#细说实验部分" class="headerlink" title="细说实验部分"></a>细说实验部分</h1><p>包含机房上机、课下作业两环节。</p>
-<p>对每一Project，需完成课下提交，方有上机测试资格；在完成上机测试之后，该Project才视为通过。各Project实行闯关制，唯有前一Project通过才可进行下一Project。</p>
-<p>在本届中，闯关制在P3才正式启动；也就是说，P0-P2课下&#x2F;课上未通过，也不会影响后续进度，到P3开始才影响。<strong>但考虑到实验部分成绩会算入最终成绩，我仍然建议尽力而为。</strong></p>
-<p>在学期的第1-3周为Pre阶段；同学在此期间在课程网站的教程部分，学习后续要用到的知识。其中有一些习题，<strong>由于判分标准始终不明，我还是建议尽力而为。</strong></p>
-<p>4-15周则是实验正式开始阶段。期间，你需要完成“一周一P，打下计组Project那些事”（P7例外，给了两周）。12周对8个Project（0-7），还包括P0-P2的保送，容错其实还行。</p>
-<p>课下测试是<strong>弱测</strong>，仅对你的实现是否基本正确进行测试，在边界条件下的正确性可能不会测试。在线上测试时，除对你的新加指令进行测试外，还会对你的课下提交进行<strong>强测</strong>，覆盖更多的边界条件。</p>
-<p>若你课下没考虑周全，看到课下提交通过就认为完事的话，那你很有可能会在课上满脸痛苦的找bug，还找不出，最后喜提再来一次…</p>
-<p>这也是为什么，我们需要在课下造评测机，数据生成器等等，自行尽可能全面测试。</p>
-<p>机房上机类似于考试，在本届设在每周一晚7点开始，共持续2小时，<strong>闭卷</strong>。</p>
-<p>每次上机考三个题，三个过两个记为通过，全过记为优秀。<strong>过两题和过三题的给分区别至今无人明确，我继续建议尽力而为。同时，在时间不够的时候，切勿盲目追求三题全过。</strong></p>
-<p>P0-P2就是做一下Pre练习类似的题目，有一定难度；</p>
-<p>P3-P6是三个加指令题。<strong>这部分就有意思了</strong>，这里加的不是MIPS指令集中的指令，而是课程组自行编写的新指令。具体题型建议参考往届学长&#x2F;学姐博客。</p>
-<p>P7则是对课下提交进行强测，并附带一个异常有关的加指令题。只要课下写得好，P7其实更简单。</p>
-<p>在每次上机完成后，还要简要回答一些问题。这部分就是助教挑几个问题问，大家基本都能答上，不用担心。</p>
-<h1 id="讨论区"><a href="#讨论区" class="headerlink" title="讨论区"></a>讨论区</h1><p>课程平台设有讨论区。在此鼓励各位积极水帖，积极分享交流经验。</p>
-<p>你可以分享：</p>
-<ul>
-<li>解题思路</li>
-<li>架构搭建经验</li>
-<li>数据生成思路&#x2F;实现</li>
-<li>评测机搭建思路&#x2F;实现</li>
-<li>其它可以提高效率的窍门：比如我自己就找到了命令行调用ISE的办法，直接抛弃臃肿的GUI🤤</li>
-</ul>
-<h1 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h1><h2 id="有关硬件实现"><a href="#有关硬件实现" class="headerlink" title="有关硬件实现"></a>有关硬件实现</h2><p>前面有稍微提到，本课程设计在硬件实现方面有所欠缺。何出此言？</p>
-<p>在P6时，我们要求加入MDU，以支持乘除操作。但是，课程组给出的要求是用<code>*</code>、<code>/</code>、<code>%</code>行为级描述乘、除、取余操作，其硬件实现在实验教材中并未提及（在我这一届）。在理论课那边呢？这要看老师，有些老师可能会提，也有不提的，这是一点。</p>
-<p>第二点，自2023年（我的上一届），课程设计去掉了P8 - FPGA实验。自此，实验设计中唯一跟硬件沾边的部分被砍没了。</p>
-<p>因此，只看实验教程，你不会知道：</p>
-<ul>
-<li>怎么把自己的设计搬上FPGA</li>
-<li>时序约束文件怎么写</li>
-<li>FPGA上怎么调用IP核，用上板载DRAM&#x2F;SRAM</li>
-<li>自己设计的时序情况如何，怎么进行时序优化</li>
-</ul>
-<p>第三点，课上测试。有一些指令逻辑对应的电路设计很难实现，且需要搭建专门模块，在我看来不大符合“通用处理器”的设计初衷。有些题目，在我看来，考察的其实是面向过程编程能力和读题能力，跟体系结构没什么关系。但从考察对自己架构的熟悉程度而言，这种设计也合理。</p>
-<p>因此，如果你实在对体系结构感兴趣，我推荐你课下自己多花时间了解，不要窘于课程设计。当然，如果你对体系结构不感兴趣，这种课程设计也确实足够了。</p>
-<h2 id="和理论课的脱节"><a href="#和理论课的脱节" class="headerlink" title="和理论课的脱节"></a>和理论课的脱节</h2><p>这个情况主要对2306。对于高工的同学（2318）是另外一个故事，我看他们的实验性实验设计挺不错的。</p>
-<p>主要是，理论课讲了Cache，实验课没有考察实现。这个问题在高工部分的新版实验解决了，那个实验有考察Cache部分的内容，不知道这个实验2406会不会采用。</p>
-<p>还有就是，理论课进度取决于老师。比如，P5实验开始，有的老师可能已经讲完了流水线和冒险有关知识，而有的老师还没开始，这就会导致实验进度与理论课进度的脱节。这问题没啥好解法，自己看往年课件吧。</p>
-<p>在这两点以外，其实就没什么好吐槽的了，挺好的。</p>
-]]></content>
-      <categories>
-        <category>课程相关</category>
-      </categories>
-      <tags>
-        <tag>心得</tag>
-        <tag>计组</tag>
       </tags>
   </entry>
   <entry>
@@ -1604,21 +1532,93 @@
       </tags>
   </entry>
   <entry>
-    <title>建站第一日</title>
-    <url>/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/</url>
-    <content><![CDATA[<p>今天做成的事情不多，主要是做了一下侧边栏的结构，改了个色，加了个favicon，然后基本就没了。</p>
-<p>上述工作的确很简单，但为何忙了一天，却只完成了这几件事呢？问题出在评论区功能和图床的实现上。</p>
+    <title>航砖祭祖后日谈</title>
+    <url>/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</url>
+    <content><![CDATA[<p>本文将对BUAA_CO_2024进行简要回顾，并给出自己的一些主观建议，仅供参考。</p>
 <span id="more"></span>
 
-<p>先说图床。<br>这个Blog显然不会是一个纯文字的博客，后续放图进文章的问题肯定要考虑到。<br>Github Pages没记错的话，库大小似乎是有限制的（1GB？），把所有文章的图片直接存库里固然不现实。找了一天，暂时还没有找到一个成本为0或接近0的方案，基本都要涉及到买域名&#x2F;配置云服务。目前看到一个PicGo + Github的方案似乎可行，之后有空再试。</p>
-<p>再说评论系统。<br>为了和各位读者相互交流，评论区肯定是少不了的。<br>但是，正是在评论区实现的方案选择上，我近乎浪费了一整个早上。为什么呢？还请继续往下看：</p>
-<p>NexT主题集成了几个评论系统：disqus, 畅言，livere，gitalk和utterances。<br>disqus在国内访问速率堪忧，甚至大概率打不开，不在考虑范围内；<br>livere在国内倒是能用，但是必须要社交平台账号登录，不大符合我允许匿名留言的想法；<br>gitalk和utterances必须要求Github登录后才能评论，门槛之高不言而喻，且同样无法实现匿名评论。<br>那畅言呢？要求登录是其一，其美观程度之差是其二，本着不妥协的原则，这个方案也行不通。</p>
-<p>在上述方案都不符合预期的情况下，只得求助各路教程，而各路教程都不约而同地指向了valine。valine允许匿名，外观简洁，看起来就是最佳之选了。在一番了解后，发现valine原本被集成在NexT内，但出于不再开源和安全问题的原因被移除，以单独插件形式存在。安装并配置好后，却发现其无法正常使用：起初是出现401报错，后变为不报错，但评论无法正常发表，点下发表后毫无反应。</p>
-<p>一番折腾后，评论区的建设仍毫无进展，只得暂时作罢。</p>
-<p>Blog的基本框架现在已经成型。接下来的建设任务，我想就是攻克下这两个难题了。至于小细节，留到日后吧。</p>
+<h1 id="预习建议"><a href="#预习建议" class="headerlink" title="预习建议"></a>预习建议</h1><p>主要针对实验部分进行预习。理论部分听课&#x2F;考前看408资料即可。有简单&#x2F;复杂两个预习方法。</p>
+<p>简单玩法，我推荐游玩图灵完备（Turing Complete）。玩到汇编之前基本就差不多了，当然能打完是最好，2333</p>
+<p>复杂玩法（<strong>地狱难度！！</strong>），我力推<a href="https://ysyx.oscc.cc/">“一生一芯”项目</a>。做到B阶段，在体系结构方面的理解就足够薄纱课程组给的实验方案了；课上测试另说（笑）</p>
+<p>要完成“一生一芯”，请预留至少两个月时间。<strong>难度真的很高，做之前做好思想觉悟！！</strong></p>
+<p>只不过，一生一芯用的指令集是RISC-V，跟课程组选用的MIPS有所不同。二者都属于RISC，不过有一些实现细节的不同，我认为影响不大。</p>
+<p>哪怕你在大二上上完了计组，如果你对体系结构感兴趣，我还是推荐你抽时间做一做一生一芯这个项目。因为在你上完后（至少我上完后），你会发现，本校的计组在硬件实现方面的知识实在欠缺，想不到吧？</p>
+<h1 id="课程概况"><a href="#课程概况" class="headerlink" title="课程概况"></a>课程概况</h1><p>最终目标：要求实现支持数条MIPS指令，以及异常、中断的五级流水线处理器。</p>
+<p>要求实现的指令集十分精简，具体可看本人P7的设计文档。</p>
+<p>课程分为理论课与实验课两部分。理论课讲述的是正常的计组课程内容。理论课部分的资料，出于课件版权问题，不在此放出。在课程正式开始时，建议咨询各路学长&#x2F;学姐获取资料。</p>
+<p>实验课即是各个Project。</p>
+<ul>
+<li>P0~P1：利用Logisim构建一些简单电路</li>
+<li>P2：利用MARS编写MIPS汇编程序</li>
+<li>P3：使用Logisim搭建单周期MIPS处理器</li>
+<li>P4：使用Verilog实现单周期MIPS处理器</li>
+<li>P5：实现五级流水线，处理各类冒险（数据冒险等）</li>
+<li>P6：进一步完善P5的设计，主要是添加MDU与新指令</li>
+<li>P7：支持异常与中断</li>
+</ul>
+<p>实验部分，在线上测试平台(cscore.buaa.edu.cn)，对各位的设计进行测试。</p>
+<h1 id="细说实验部分"><a href="#细说实验部分" class="headerlink" title="细说实验部分"></a>细说实验部分</h1><p>包含机房上机、课下作业两环节。</p>
+<p>对每一Project，需完成课下提交，方有上机测试资格；在完成上机测试之后，该Project才视为通过。各Project实行闯关制，唯有前一Project通过才可进行下一Project。</p>
+<p>在本届中，闯关制在P3才正式启动；也就是说，P0-P2课下&#x2F;课上未通过，也不会影响后续进度，到P3开始才影响。<strong>但考虑到实验部分成绩会算入最终成绩，我仍然建议尽力而为。</strong></p>
+<p>在学期的第1-3周为Pre阶段；同学在此期间在课程网站的教程部分，学习后续要用到的知识。其中有一些习题，<strong>由于判分标准始终不明，我还是建议尽力而为。</strong></p>
+<p>4-15周则是实验正式开始阶段。期间，你需要完成“一周一P，打下计组Project那些事”（P7例外，给了两周）。12周对8个Project（0-7），还包括P0-P2的保送，容错其实还行。</p>
+<p>课下测试是<strong>弱测</strong>，仅对你的实现是否基本正确进行测试，在边界条件下的正确性可能不会测试。在线上测试时，除对你的新加指令进行测试外，还会对你的课下提交进行<strong>强测</strong>，覆盖更多的边界条件。</p>
+<p>若你课下没考虑周全，看到课下提交通过就认为完事的话，那你很有可能会在课上满脸痛苦的找bug，还找不出，最后喜提再来一次…</p>
+<p>这也是为什么，我们需要在课下造评测机，数据生成器等等，自行尽可能全面测试。</p>
+<p>机房上机类似于考试，在本届设在每周一晚7点开始，共持续2小时，<strong>闭卷</strong>。</p>
+<p>每次上机考三个题，三个过两个记为通过，全过记为优秀。<strong>过两题和过三题的给分区别至今无人明确，我继续建议尽力而为。同时，在时间不够的时候，切勿盲目追求三题全过。</strong></p>
+<p>P0-P2就是做一下Pre练习类似的题目，有一定难度；</p>
+<p>P3-P6是三个加指令题。<strong>这部分就有意思了</strong>，这里加的不是MIPS指令集中的指令，而是课程组自行编写的新指令。具体题型建议参考往届学长&#x2F;学姐博客。</p>
+<p>P7则是对课下提交进行强测，并附带一个异常有关的加指令题。只要课下写得好，P7其实更简单。</p>
+<p>在每次上机完成后，还要简要回答一些问题。这部分就是助教挑几个问题问，大家基本都能答上，不用担心。</p>
+<h1 id="讨论区"><a href="#讨论区" class="headerlink" title="讨论区"></a>讨论区</h1><p>课程平台设有讨论区。在此鼓励各位积极水帖，积极分享交流经验。</p>
+<p>你可以分享：</p>
+<ul>
+<li>解题思路</li>
+<li>架构搭建经验</li>
+<li>数据生成思路&#x2F;实现</li>
+<li>评测机搭建思路&#x2F;实现</li>
+<li>其它可以提高效率的窍门：比如我自己就找到了命令行调用ISE的办法，直接抛弃臃肿的GUI🤤</li>
+</ul>
+<h1 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h1><h2 id="有关硬件实现"><a href="#有关硬件实现" class="headerlink" title="有关硬件实现"></a>有关硬件实现</h2><p>前面有稍微提到，本课程设计在硬件实现方面有所欠缺。何出此言？</p>
+<p>在P6时，我们要求加入MDU，以支持乘除操作。但是，课程组给出的要求是用<code>*</code>、<code>/</code>、<code>%</code>行为级描述乘、除、取余操作，其硬件实现在实验教材中并未提及（在我这一届）。在理论课那边呢？这要看老师，有些老师可能会提，也有不提的，这是一点。</p>
+<p>第二点，自2023年（我的上一届），课程设计去掉了P8 - FPGA实验。自此，实验设计中唯一跟硬件沾边的部分被砍没了。</p>
+<p>因此，只看实验教程，你不会知道：</p>
+<ul>
+<li>怎么把自己的设计搬上FPGA</li>
+<li>时序约束文件怎么写</li>
+<li>FPGA上怎么调用IP核，用上板载DRAM&#x2F;SRAM</li>
+<li>自己设计的时序情况如何，怎么进行时序优化</li>
+</ul>
+<p>第三点，课上测试。有一些指令逻辑对应的电路设计很难实现，且需要搭建专门模块，在我看来不大符合“通用处理器”的设计初衷。有些题目，在我看来，考察的其实是面向过程编程能力和读题能力，跟体系结构没什么关系。但从考察对自己架构的熟悉程度而言，这种设计也合理。</p>
+<p>因此，如果你实在对体系结构感兴趣，我推荐你课下自己多花时间了解，不要窘于课程设计。当然，如果你对体系结构不感兴趣，这种课程设计也确实足够了。</p>
+<h2 id="和理论课的脱节"><a href="#和理论课的脱节" class="headerlink" title="和理论课的脱节"></a>和理论课的脱节</h2><p>这个情况主要对2306。对于高工的同学（2318）是另外一个故事，我看他们的实验性实验设计挺不错的。</p>
+<p>主要是，理论课讲了Cache，实验课没有考察实现。这个问题在高工部分的新版实验解决了，那个实验有考察Cache部分的内容，不知道这个实验2406会不会采用。</p>
+<p>还有就是，理论课进度取决于老师。比如，P5实验开始，有的老师可能已经讲完了流水线和冒险有关知识，而有的老师还没开始，这就会导致实验进度与理论课进度的脱节。这问题没啥好解法，自己看往年课件吧。</p>
+<p>在这两点以外，其实就没什么好吐槽的了，挺好的。</p>
 ]]></content>
       <categories>
-        <category>建站历程</category>
+        <category>课程相关</category>
+      </categories>
+      <tags>
+        <tag>心得</tag>
+        <tag>计组</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第一次尝试</title>
+    <url>/2023/11/27/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95/</url>
+    <content><![CDATA[<pre><code>万事开头难。
+</code></pre>
+<p>有关建设个人博客这件事，本人其实早在2022年5月，就已按各路教程，用Hexo和Github Pages搭好了环境。苦于当时的学业压力，加上后续也没有任何写随笔的时间和欲望，这一项目就此搁浅，主页上也只留着默认的“hello world”。</p>
+<p>转眼，过了一年半，这个想法又被提上了日程。主要的推动力，我想是高宁老师在几周前《大国领袖》课程上的点醒。的确，写作使人深刻。思想在矛盾中产生进步，而若不以文字记录下所思所想，任何进步所获，都将被时间冲淡，最后终将导致自己寸步未进。听得此话，如醍醐灌顶。也许，真的是时候认真记录一下自己的所思所想了。</p>
+<p>初入大学数月，感受颇丰——无论是学业上，还是这几个月来自己学余的所见所闻。这几个月，有看完MyGo!!!!!、补完少歌之后的感动，有学业繁重、认识到自己与各路大神差距的压力，有对自己选择信息类，而非三年前自己所热爱的航空学的怀疑，更有初中以后，自己的精神支柱长期空缺的反思。上述种种，我想，绝非只是自己心里想想，然后任其随时间逝去就能过去的。用文字记录下自己的感受，并在写作中反思，我想才是正解。</p>
+<p>当然，自己搭建Blog，也绝非易事。在您观看这篇文章时，本人可能还在潜心研究NexT主题的各类复杂设置，这个博客也大概率还只是一个刚搭好的毛胚房。这也算是我第一次真正使用Github开发自己的项目，要学习的东西自然也是很多。</p>
+<p>写到这里，已然词穷。本人Blog的第一篇文章，就到此草草作结吧。</p>
+<p>但愿写完这篇文章之后，我还能记得继续写吧（笑</p>
+]]></content>
+      <categories>
+        <category>随笔</category>
       </categories>
       <tags>
         <tag>心得</tag>
