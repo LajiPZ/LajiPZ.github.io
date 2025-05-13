@@ -1,203 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>送给组内信类新生的一点点私货</title>
-    <url>/2024/08/04/BUAA-freshman-FAQ/</url>
-    <content><![CDATA[<h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>首先，欢迎各位成为北航士谔书院的一员，也很荣幸能与大家共处同一梦拓小组！</p>
-<p>本文将尝试对大家初入大一可能遇到的部分问题进行解答，以备各位不时之需；同时夹带大量私货，欢迎各位参考😋</p>
-<p>本文是按苯人自己一年来的经验，想到什么写什么写成的，应该能涵盖各位可能碰到的不少问题。若有其它没有覆盖到的问题，欢迎各位联系交流！🤗</p>
+    <title>OO_U2 - HW5,6阶段性总结</title>
+    <url>/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>我的调度算法，与我的架构实现耦合度较高，因此我不得不先提一些我自己的电梯实现；不需要的同学，欢迎直接跳开“电梯实现”部分。</p>
+</blockquote>
+<p>这算是本人两周以来的一个总结吧，终于有时间写了…</p>
 <span id="more"></span>
 
-<p>同时推荐一份民间编写的学生指南，供各位参考；<strong>由于这个指南全靠民间热心的各位大神自发更新，里面的消息可能有不少未及时更新或不准确，仅供参考，真有拿不准的问题欢迎问导员或者梦拓！</strong>：</p>
-<p>【腾讯文档】北京航空航天大学学生手册<br><a href="https://docs.qq.com/aio/DQXdSc0hXYlFVcnVY">https://docs.qq.com/aio/DQXdSc0hXYlFVcnVY</a></p>
-<p>另有一个比较抽象的新生指南：<a href="https://github.com/BUAA-Wjay/BUAANew">https://github.com/BUAA-Wjay/BUAANew</a><br>（可能需要翻墙），里面消息<strong>可能需要自己甄别一下，</strong> 尤其是各类非官方群，毕竟那里通常是<strong>卖课、推销、诈骗的高发区</strong>。</p>
-<h2 id="英语课程选A，还是选B？"><a href="#英语课程选A，还是选B？" class="headerlink" title="英语课程选A，还是选B？"></a>英语课程选A，还是选B？</h2><p>在各位联系到作为梦拓的我的不久之后，相信大家已经对英语课程的分级考有所耳闻了。虽说会参考分班考成绩来分，但这个还是需要各位填选A班还是B班的志愿；那么，选哪个呢？</p>
-<p>可能有同学担心，两个班的课业压力差别较大；又或者是在各类吹水群里，听说了前一届甚至前几届前辈对A&#x2F;B班的评价，对A&#x2F;B班的学习状态已有了刻板印象……自然，课业上的压力，两个班的区别<strong>当然是存在的</strong>。<strong>但是！A&#x2F;B班的课业压力孰轻孰重，各届的情况存在巨大的差别</strong>，前人的经验或许有帮助，但在这<strong>很有可能不具参考价值</strong>。</p>
-<p>比如，我的 <strong>上一届（2022级）</strong> 普遍反映A班的作业和杂事都很多，难度大云云，B班就很轻松；然而！在我的<strong>这一届（2023级），情况却恰恰相反</strong>。我选择的A班反而每周十分轻松。课堂氛围轻松不说，除了课堂展示以外的杂事与作业真不多，作业检查程度也不算太严；反观同寝室另外3位选择了B班的同学，<strong>每周</strong>都会同各类神奇的英语作业（比如：假设自己要留学，做留学的出行等一系列计划）斗智斗勇不说，据其描述课上也很忙……</p>
-<p>而且，两个班最后的期末考试考的都是同一套卷子。从只看成绩的角度而言，选两个班的差别可谓是没有。</p>
-<p>因此，个人认为，各位<strong>按照自己的实际英语能力进行选择</strong>就好。<em>如果硬要用量化指标界定能力好坏的话，各位前辈得出的经验是：高考英语140分以上，进A班应该就没问题了。这一点我认为还是可以参考的。</em></p>
-<h2 id="学习方法要转变吗？"><a href="#学习方法要转变吗？" class="headerlink" title="学习方法要转变吗？"></a>学习方法要转变吗？</h2><p>一个字：<strong>要</strong>。<strong>上大学必须自学为主。</strong></p>
-<p>在高中的时候，各位都习惯的是听老师讲课，自己照单全收即可；但是，在大学，<strong>这个想法是非常危险的</strong>！</p>
-<p>且不谈当下大学的本科教育质量之差，现在<strong>照念ppt上课的方式已是常态。</strong> 不自己课下深入学习，只靠课上听讲是不可能学好的！</p>
-<p>更何况，现在不少老师（包括北航）只管自己讲自己的，完全不管自己讲的时候台下的同学是否能听懂。<strong>我不觉得这种情况下，听课效果能有多理想，这样真不如自学。</strong></p>
-<p>我就是在大一上的时候仍然心存听老师上课的幻想，直到大一下才“放弃幻想，准备斗争”，最后成绩并不亮眼；当然，这部分在最后扯有关我的事的时候再说。</p>
-<p>总之，<strong>自学为主，这真的很关键！！</strong></p>
-<h2 id="有什么办法预习吗？"><a href="#有什么办法预习吗？" class="headerlink" title="有什么办法预习吗？"></a>有什么办法预习吗？</h2><p>有！办法还不少！这里稍微分享一点经验，<em>同时也会简要掺一点各课程的上课概况的私货</em></p>
-<p><em>宇宙安全申明：据说培养方案有改，课程开设方案和上课状况可能都有差别，仅供参考！</em></p>
-<p>进入信息大类，各位大一上学起来要花点功夫的主要就是<strong>工科数学分析、工科高等代数、C语言程序设计</strong>三门课程。剩下的基本没预习的必要。</p>
-<h3 id="两个学习资料的来源"><a href="#两个学习资料的来源" class="headerlink" title="两个学习资料的来源"></a>两个学习资料的来源</h3><p>开始之前，个人先推荐两个学习资料的来源渠道。</p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806124149.png" alt="image.png"><br>一个是<strong>北航士谔书院的学业支持中心</strong>的北航网盘资料库。里面包含了大一整个学年可能用到的<strong>往年题，课件</strong>等可能有用的学习资料，同时也有一部分竞赛四六级资料。如果各位对预习有所兴趣，完全可以看着里面的课件ppt来预习 <strong>（事实上，大学，至少北航，上课基本不看教材，而基本只看ppt，知识点等等都在上面；更有甚者是念ppt上课，这也很常见）</strong> 。</p>
-<p>里面的资料，相信对各位一定有所帮助：<br><a href="https://bhpan.buaa.edu.cn/anyshare/en-us/link/AAE382BC57552F47C3963B94EA8821E684/8432FD008DFD4F3D9256370735A84832/8EA3C8E70B7941ED9AA164501F0950D2/2E077C8617154E118896618A7C295703/8C5F58E5D4F94DD39151E336665D507B/7A3FF43284484037A2515529D9B0478F?_tb=none">https://bhpan.buaa.edu.cn/anyshare/en-us/link/AAE382BC57552F47C3963B94EA8821E684/8432FD008DFD4F3D9256370735A84832/8EA3C8E70B7941ED9AA164501F0950D2/2E077C8617154E118896618A7C295703/8C5F58E5D4F94DD39151E336665D507B/7A3FF43284484037A2515529D9B0478F?_tb=none</a></p>
-<p>   <img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806131618.png" alt="image.png"></p>
-<p>另一个是一个往届前辈运营的一个微信公众号：<strong>三文鱼卷。</strong> <em>（以防各位顾虑，纯推荐，没接广，23333）</em> </p>
-<p>这里面可以查到 <strong>包括但不限于信息类</strong> 的大一学习指南，里面整理的资料也挺全。<em>但是里面整理的资料难免出现分类混乱，质量参差不齐等问题，大家打包下载之后自己注意一下就可以了</em></p>
-<p>但是，这个公众号能提供的资料不止信类大一上、下的学习指南。搜索航类大一上、下的学习资料，你又能获得另一份数分、高代的学习资料。这是因为，两个大类的同学除了少数课程，大部分课程都是相近的。（<strong>注意，用之前还是要核对一下，比如航类大一上的线性代数，大一下的物理教材就和信类不一样</strong>）这时，您不妨在航类的资料库里翻一翻，说不定能够补足信类资料库里缺乏的东西。（比如说，电子版教材，这个我只在航类的资料库里看到过）</p>
-<h3 id="C语言程序设计"><a href="#C语言程序设计" class="headerlink" title="C语言程序设计"></a>C语言程序设计</h3><h4 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h4><p>先从程序设计（下称<strong>程设</strong>）开始吧。这一门课程主要教授C语言（纯C，没有C++&#x2F;C#）的基本使用，教的程度大概也是知道基本常用知识，能用但不知道背后原理 <em>（事实上，也没多少学校会在课上耐心教背后有趣的底层原理，比如头文件是怎么回事）</em> 的水平，并不算太深入。因此，不要对此有太大的心理压力。</p>
-<p>如果您<strong>恰好是前oier</strong>，大佬接我一拜😭🛐，这门课您根本不用担心！</p>
-<p>这一部分打好C语言的基础就可以了，后面大一下的数据结构课程就是建立在这门课的基础上的。</p>
-<p>预习这一部分课程，看 <strong>《C Primer Plus》</strong> 这本经典的C语言教材即可。在各位上课的时候，也可以把这本书当作自己的正式教材。</p>
-<p>又或者，试试这个：《Learn C the Hard Way》（<a href="https://wizardforcel.gitbooks.io/lcthw/content/preface.html%EF%BC%89%E3%80%82">https://wizardforcel.gitbooks.io/lcthw/content/preface.html）。</a></p>
-<p>只不过，这个教材涉及到Unix&#x2F;Linux，可能更适合对Unix&#x2F;Linux已经有所了解的同学。不熟悉也没关系，如果目的只是学C语言的话，碰到涉及Linux和valgrind等工具的部分跳掉即可，用vscode等IDE就行。至于vscode怎么配置C语言开发环境，网上自行搜索即可，教程挺多的。<br><em>（当然，这个教材对IDE不是很认可。从 <strong>只学C语言的角度，</strong> 可以姑且忽略这个反对的声音，23333）</em></p>
-<p>想多练手的话，<strong>力扣（LeetCode）</strong> 和<strong>洛谷</strong>可以考虑做一下。</p>
-<h4 id="个人感受"><a href="#个人感受" class="headerlink" title="个人感受"></a>个人感受</h4><ul>
-<li><p>这门课的<strong>作业</strong>，和每周上完课后的<strong>上机小测</strong>和<strong>考试</strong>都是在课程组的<strong>AC编程平台（<a href="https://accoding.buaa.edu.cn/%EF%BC%89">https://accoding.buaa.edu.cn/）</a></strong> 上进行的。形式效仿的是IOI赛制。<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806162926.png" alt="image.png"></p>
-</li>
-<li><p>一次典型的练习或上机会有 A-J 10个题。<strong>尽力而为就好，千万不要苛求做全，之前没接触过编程的同学很难做到。</strong> 作为参考，本人一般能做A-G题，有时可以接触到H、I题。</p>
-</li>
-<li><p>平台上出的题目多为前几届的优秀前辈编写。<em>可以把这个当成题目难度离谱的原因</em>，但也正因此，这门课程给的题目<strong>玩的梗奇多！</strong> 相信在看到自己熟悉的梗的时候，你也会会心一笑！</p>
-</li>
-<li><p><strong>对于第一次接触编程的同学，对这门课程感到压力是再正常不过的事。</strong> 放平心态，不要放弃！</p>
-</li>
-<li><p>部分题目的测试数据比较偏（但也确实应该在考虑范围内），经常会出现样例能过，但最后得到的测试结果是结果错误（WA）的情况。<strong>做题不要局限于样例数据，多想想题目给的数据范围，还有各种可能看似不可能的可能。</strong></p>
-</li>
-<li><p>以我的接触，这门课的助教都还算友好。<strong>有关题目</strong>的问题交流一般都会耐心解答，但是<strong>助教</strong>也是各位前辈兼任的，耐心自然也有限，<strong>不建议一遇到问题就直接找助教，也不应该上来就找助教帮忙debug，而是自己多次尝试无解后再去求助。</strong></p>
-</li>
-<li><p>视助教的友好程度，如果自己实在找不出问题，且不愿过度麻烦助教，可以向助教要题目的测试数据。<strong>但是这是万不得已的办法，不要轻易尝试，就算要到了也千万不要外传题目数据。对自己负责，同时也要对他人负责。更何况，有人可能要到数据就直接打表过关；打表这种做法对能力的锻炼一点好处都没有，后患无穷。要到数据，旨在用数据找到自己没考虑到的可能，然后在对自己的代码进行修改，而不是偷懒。</strong></p>
-</li>
-<li><p>一些题目可能会涉及不少高阶算法。欢迎网上自行搜索，提高自己的知识水平</p>
-</li>
-<li><p>助教一般会在每次上机&#x2F;练习&#x2F;考试后在课程群里发题解，<strong>里面助教会分享不少能提高自己能力的知识，值得一看。</strong></p>
-</li>
-<li><p>Github是个好地方，要学会在上面找参考代码（不限代码，其实什么都有）之类的资料。如果上不去的话，<strong>建议顺便学学怎么科学上网（特殊义）</strong>。</p>
-</li>
-<li><p>该课程<strong>只上8周</strong>，也就是说在期中那会这课就考完了。当时这节课是我们周四唯一要上的课，上完之后，下半学期的周四一节课都没有，那叫一个舒服啊😋相信各位也有机会享受这种福利（</p>
-</li>
-</ul>
-<h3 id="工科数学分析（一）"><a href="#工科数学分析（一）" class="headerlink" title="工科数学分析（一）"></a>工科数学分析（一）</h3><p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/c3a458bf4308d96022967f7e6b759be0.jpg" alt="c3a458bf4308d96022967f7e6b759be0.jpg"></p>
-<h4 id="正文-1"><a href="#正文-1" class="headerlink" title="正文"></a>正文</h4><p><strong>数分</strong>可谓大一除程序设计外的第二大难关。课程难度自然存在，但是还是能学好的。预习无非以下几个手段：</p>
+<h1 id="浅提电梯实现"><a href="#浅提电梯实现" class="headerlink" title="浅提电梯实现"></a>浅提电梯实现</h1><p>读前注意，本人的设计并非最佳，其中有不少会引起复杂度增加的设计，请各位参考时务必谨慎。</p>
+<h2 id="概况"><a href="#概况" class="headerlink" title="概况"></a>概况</h2><p>在完成HW6后，本人的整体架构如下：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250406221034.png" alt="Pasted image 20250406221034.png"></p>
+<p>其中，电梯信息与电梯运行进程分离，便于维护。</p>
+<p>我的电梯，将运行状态分为以下几类：</p>
 <ul>
-<li><strong>看课件</strong>。但是，课件有些部分还是写得过于简略，这里还是建议配合教材使用。<em>北航版数分电子版教材，不妨在上面提到的<strong>三文鱼卷</strong>里的<strong>航类大一上资料库</strong>获取</em></li>
-<li><strong>看本校教材</strong>。这就不加赘述了。本校教材就是这张梗图里的教材，黄色封面。</li>
-<li><strong>看外校教材</strong>。个人感觉，北航自己编写的教材在部分内容上的讲解并不算细致，这时各位不妨参考以下外校的教材。上面提到的三文鱼卷的资料库里似乎也有，需要各位自己翻一翻。<br>由于苯人在大一下才开始尝试这么办，这方面经验并不是很足；若要找推荐书目，建议在网上寻求建议，<em>当然也可以拜托我询问一下其它梦拓</em></li>
-<li><strong>网课</strong>。B站大学，懂的都懂；由于我没试过，这方面的建议我也只能留个白（）</li>
+<li>IDLE：闲置，此处与常理理解中的闲置是一致的，不多赘述</li>
+<li><strong>RESERVED</strong>：<strong>预约</strong>，<strong>在闲置状态的电梯</strong>，收到<strong>起点与电梯当前所在位置不同楼的请求</strong>时，进入的<strong>移动状态</strong>。</li>
+<li>RUNNING：运行，电梯处在<strong>非预约状态</strong>时的正常移动状态。</li>
+<li>WAITING：等待，电梯停靠，进行上下客时进入的状态。停靠完成后，<strong>视情况</strong>转入RUNNING&#x2F;RESERVED&#x2F;IDLE状态。</li>
 </ul>
-<h4 id="个人感受-1"><a href="#个人感受-1" class="headerlink" title="个人感受"></a>个人感受</h4><ul>
-<li><p>要学好数分，除了做好习题真的别无他法。在各位完成作业的时候，<strong>千万不要因为写不完&#x2F;一时想不出解法而直接抄答案</strong>，<strong>后患无穷！！！</strong> 哪怕花的时间有点多，好好练是很关键的！</p>
-</li>
-<li><p>此外，由于一节课要学的内容非常之多，建议各位课前先看书&#x2F;课件预习（甚至直接自学完，课上顺便听听老师花了什么重点就行，我大一下就这么干的）。</p>
-</li>
-<li><p>以防出现上了就忘这种情况，建议各位上课稍微记记笔记，或者课下花一点点时间总结。<strong>此外，就我们这一届的经验而言，每周交作业的时候还会让你另外写一份学习心得。与其水过去，不妨就顺便在里面把自己本周学到的东西总结一下。</strong> 本人一室友就是这么做的，他最后数分成绩也还不错；反观我偷懒得多，最后成绩并不是很理想（</p>
-</li>
-<li><p>在这门课上，各位会接触到一个叫<strong>智慧树</strong>的校外学习平台。在这个平台，除了提交每周作业外，你还需要在上面 <strong>“提高知识点的掌握度”，即做题目</strong>。我个人对这一平台并无好感（主要是事多和有些题目过于偏、难、怪，且<strong>上面的掌握度（须每个达到80%以上，做的时候错一个题基本就没戏）、测试成绩还要算进成绩里面</strong>），<strong>但是这个提高掌握度的事是必须在期末前做完的。</strong> </p>
-<p>怎么解决它呢？一种办法是每次上完课就做一个知识点的习题。<strong>还有一种是完成每章的单元测试，满分后对应知识点的掌握度自动提升到80%以上，就不用每个知识点都做一遍题了。</strong></p>
-<p><strong>但是！千万不要因为它烦人，就把它拖到期末来做。其恶心程度会让你本就难受的考期雪上加霜！！</strong> 反正都得做，平常还得多练，干脆就把它当练习吧（笑）</p>
-</li>
-<li><p>平日的作业量<strong>有点小多</strong>，全用周末时间来写有点可惜。数分一周有两节（以我为例，我是周三、五上），不妨上了一节课就尽可能写现在能写的题目，避免出现题目想不出等问题。至于作业题目，开学课程群发的<strong>课程教学日历</strong>应该会全部列出来，<strong>不用等智慧树平台上出现了作业窗口再开始做</strong>。<strong>（当然，老师另有要求的话，以老师说的为准）</strong></p>
-<p>另有一个小事，就是当时我们的数分老师<strong>建议课后习题全做。</strong> 我认为这个对各位的要求太高了，各位在做完要求的作业的基础上<strong>量力而行</strong>即可，算是多练习的一个手段</p>
-</li>
-<li><p>如果感觉老师上课的节奏不适合自己，我建议全靠看ppt&#x2F;看教材自学。<strong>这是很正常的情况，因为各位同学可能遇到老师在课上大费周章地讲书上写好的证明过程、解题方法讲的不细致等情况，此时自学效果反而会比听课好</strong></p>
-</li>
-</ul>
-<h3 id="工科高等代数"><a href="#工科高等代数" class="headerlink" title="工科高等代数"></a>工科高等代数</h3><h4 id="正文-2"><a href="#正文-2" class="headerlink" title="正文"></a>正文</h4><p>这门课的难度其实不大，说实话没有什么预习的必要。</p>
-<p>先上的是解析几何。这一部分主要就是空间解析几何的一些基本知识，不难。</p>
-<p>上完之后，就进入到线性代数的部分了。这一部分学的主要是矩阵与行列式的知识，可能会稍微烧点脑筋。</p>
-<p>教材用的是李红裔、赵迪的《空间解析几何简明教程》与李尚志的《线性代数》。当然也可以试着看其他教材作为参考，不过这方面小弟经验不多，就不多说了。</p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806153253.png" alt="image.png"><br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/d9802a3a6c4a441eceffdbf1f89f305c.png" alt="d9802a3a6c4a441eceffdbf1f89f305c.png"></p>
-<h4 id="个人感受-2"><a href="#个人感受-2" class="headerlink" title="个人感受"></a>个人感受</h4><ul>
-<li><strong>如果要深入学习这门课程，强烈建议抛开课程自学</strong>。就以线性代数部分为例，在课上你只会学到矩阵是什么，有什么性质，却并不会教你<strong>学这个有什么用</strong>。甚至介绍性质的时候，有些老师也只会说<strong>这个性质”很好”，而不说”好”在哪里</strong>。如果你恰好对<strong>计算机图形学</strong>感兴趣的话，这门课更要学好，因为<strong>它是计算机图形学重要的数学基础之一</strong>。</li>
-<li>有些老师上课进度有些拖沓。<strong>感受到这个问题的时候，请果断地选择看课件&#x2F;教材自学。</strong></li>
-</ul>
-<h3 id="其他必修课程"><a href="#其他必修课程" class="headerlink" title="其他必修课程"></a>其他必修课程</h3><p>这里就写得简略一些，也不会很全，感受居多。</p>
+<p>同时，我们还需要记录电梯的<strong>运行方向</strong>，现规定：</p>
 <ul>
-<li>习概：应该还是王海宇老师在教。至少就王海宇老师的课，这门课平日是打着习概名号的社会科学导论课。如果对人文社科感兴趣的话，可以听一听，甚至课下跟老师多多交流，王老师是真的和善！😋不感兴趣也没关系，直接水掉是可以的，只要该完成的课堂展示等作业完成了即可。临近期末的时候会按教材勾复习重点，课上可以不听（</li>
-<li>思修：假设是付丽莎（Lisa）老师上的话，那还是很推荐的！平日就是正常的思修课堂，但是Lisa老师平日会准备一些小惊喜（如期末的明信片等），人也很和善！临近期末也会划重点，课程组也有一个公众号<strong>一航思修</strong>，上面会发课程总结等等，值得一看。</li>
-<li>体育课-足球课。北航的体育课是自己选的，我自己选了一个学年的足球课。原因无他，黄烨军老师和善不说，整个课上的氛围也很轻松活跃。也不知道黄老师是不是只上沙河的足球课，各位在学院路的话，可能就上不到了；<strong>如果在学院路也有的话，力荐！</strong></li>
-<li>（也不知道这个搬到学院路了还有没有）如果各位有入党的意愿的话，在大一上应该会进入学院的士信党建工作坊学习。这时各位应该会上高宁老师的《大国领袖》课程，<strong>强烈推荐各位上课认真听！！！</strong> 高宁老师的思政课，各届同学公认精彩，<strong>上了都说好！！</strong> 就算不打算入党，感兴趣的话也可以将高宁老师的《大国领袖》课当通识课来选，真的建议听一听！</li>
+<li>1：上行</li>
+<li>-1：下行</li>
+<li>0：仅在进入IDLE时设为此值。</li>
+<li>在电梯进入WAITING时，<strong>方向将被设置为下一步要移动的方向</strong></li>
 </ul>
-<h2 id="需要关注哪些信息渠道？"><a href="#需要关注哪些信息渠道？" class="headerlink" title="需要关注哪些信息渠道？"></a>需要关注哪些信息渠道？</h2><h3 id="微信公众号"><a href="#微信公众号" class="headerlink" title="微信公众号"></a>微信公众号</h3><ul>
-<li><strong>北航士谔书院</strong>微信公众号。这个是士谔书院的官方公众号，上面一般会分享<strong>各类学院活动的预告、学习经验分享等消息，</strong> 包括后面的<strong>冯如杯竞赛（必选）的通知，大类分流各专业的宣讲（大一下）预告</strong>，也是在这里发布。</li>
-<li><strong>微言航语</strong>微信公众号。这上面主要分享的是<strong>生活指南还有各类校级文娱活动的预告</strong>。后者一定要试着参与一下，<strong>真的很丰富多彩！！</strong> 例如：<strong>周末航影（免费在校看电影）</strong> 就是在这里发的预告；周末航影每周都会选取一部电影 <em>（包好看，比如有一次放的是《爱乐之城》）</em> 在学校的咏曼剧场放映，投票选电影和抽票的消息都是在这发的。还有<strong>厨艺课堂</strong>，教各位做甜点、咖啡、饺子等等的，有兴趣也可参与。有时还有剧团&#x2F;乐团进校园等活动。<strong>而这些例子只是校级文娱活动的一小部分！</strong></li>
-<li><strong>智慧北航</strong>。<strong>在用统一认证账号登陆后才可使用，这个各位新同学弄好账号之后就能访问了，稍安毋躁</strong>。一个集成服务平台，查成绩等很方便。</li>
-<li><strong>航财通</strong>微信公众号。不关注不行啊，你<strong>充饭卡</strong>就在这充！</li>
-<li><strong>北航后勤服务中心</strong>微信公众号。主要是<strong>停电、停水等通知</strong>。</li>
-<li><strong>北航教务处</strong>微信公众号。主要是教务有关的通知，比如<strong>四六级有关事项，选课通知，考试通知等</strong>。</li>
-<li><strong>北航总务</strong>公众号。类似于北航后勤中心，但是这里有<strong>交电费的入口，比较方便。</strong></li>
-<li><strong>全球北航</strong>公众号。各类<strong>留学、交换</strong>计划都会在上面宣传，有需求的同学可以看看</li>
-<li>各类社团的公众号。这个要看对哪个社团感兴趣。到时候各学生社团会进行宣传（“百团大战”），到时候现场扫码加就可以了。</li>
-<li><strong>北航社团中心</strong>。主要是社团（如：“百团大战”日期）相关事宜。</li>
-<li><strong>北京航空航天大学学生会</strong>。各大校内活动在上面都有通知，对学生会工作感兴趣的也可以加。</li>
-<li><strong>北航学生艺术团</strong>。艺术演出的活动公告一般都是在这里发布的，抢票信息也是！</li>
-<li><strong>北京航空航天大学校医院</strong>。在校医院看病的时候可能用得上。</li>
-<li><strong>北航图书馆</strong>。可以操作续借等图书馆有关事务。当然在i北航 App&#x2F;北航小程序上也可以做。</li>
-<li><strong>北京航空航天大学</strong>公众号。这里主要是对外宣传为主，如果对校级大新闻感兴趣可以关注一下。往常开学期间也会发机场&#x2F;火车站到北航的路径，摆渡车时刻等交通信息，可以留意一下。</li>
-<li>（谨慎选择）（非官方）“北航微生活”微信公众号。这是别人写的推荐之一，算是一个非官方的表白墙。本人没加过，不喜欢表白墙这类形式的我也不建议加。</li>
-</ul>
-<h3 id="两个神奇的非官方论坛"><a href="#两个神奇的非官方论坛" class="headerlink" title="两个神奇的非官方论坛"></a>两个神奇的非官方论坛</h3><p><strong>伴航</strong>：<a href="https://banhang.lyhtool.com:8001/">https://banhang.lyhtool.com:8001</a>  ，据观察里面有不少6系同学</p>
-<p><strong>航鸟小窝</strong>：<a href="https://buaa.live/bbs/">https://buaa.live/bbs/</a>  ，不过这个才建好不久，人气较上面那个冷清不少</p>
-<h3 id="教务处官网"><a href="#教务处官网" class="headerlink" title="教务处官网"></a>教务处官网</h3><h4 id="首页"><a href="#首页" class="headerlink" title="首页"></a>首页</h4><p>上面会公示<strong>转专业的相关事宜（如果有这个打算的话）</strong>（注，这个需要有统一身份认证账号后才能查，各位新同学弄好账号之后就能查了，稍安毋躁），也可以查询<strong>各个专业的培养方案（对后面专业分流有用）</strong>。后续的选课等，也是要在教务系统里操作的。</p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806174303.png" alt="image.png"></p>
-<p>各专业的培养方案，可以在主页的“培养指南”栏目中查询，会对后面的<strong>专业选择</strong>有所帮助。</p>
-<p>至于<strong>大类</strong>的培养方案？这个小弟似乎没有查到过，十分抱歉（</p>
-<h4 id="教务系统"><a href="#教务系统" class="headerlink" title="教务系统"></a>教务系统</h4><p><strong>（再次，注，这个需要有统一身份认证账号后才能访问，各位新同学弄好账号之后就能访问了，稍安毋躁）</strong></p>
-<h4 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h4><p>在校内的话，是可以在教务处首页点”本研教育管理系统“直接进去的。但在校外不行，需要多一个步骤——由北航VPN访问。</p>
+<p>电梯内亦有一子请求表，记录满足以下条件的请求：</p>
 <ul>
-<li><p>首先要进入北航官网（<a href="http://www.buaa.edu.cn),在导航栏点”常用链接“,再点”vpn系统“./">www.buaa.edu.cn），在导航栏点”常用链接“，再点”VPN系统“。</a><br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806175433.png" alt="image.png"></p>
-</li>
-<li><p>进入界面以后，随便选一个即可。此处以VPN4为例。<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806175510.png" alt="image.png"></p>
-</li>
-<li><p>随后需要用统一身份认证账号登陆。<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806175554.png" alt="image.png"></p>
-</li>
-<li><p>登陆后，在资源列表里找到”教务处官网“，或在搜索框直接搜”教务“。<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806175748.png" alt="image.png"></p>
-</li>
-<li><p>随后就进入了教务处的官网，点击本研教务管理系统，就可以正常用账号登入教务系统了。如果遇到这个界面，选新版系统入口就好了。<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806175932.png" alt="image.png"></p>
-</li>
+<li><strong>请求与电梯运行方向一致</strong></li>
+<li>记录当前方向的所有请求；比如，我们的电梯正在处理一个<code>F1-F3</code>的请求，现在处于<code>F2</code>；此时，若有一<code>F4-F5</code>的请求，则该请求可被指派给电梯，加入子请求表</li>
 </ul>
-<h4 id="正文-3"><a href="#正文-3" class="headerlink" title="正文"></a>正文</h4><p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806180116.png" alt="image.png"></p>
-<p>相信在日后，<strong>辅导员</strong>等会给出教务系统如何使用的更详细指南。本文主要是教各位怎么用教务系统查开课方案，课程等信息。</p>
-<p>信息的获取主要在”查询“一栏。<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806180616.png" alt="image.png"></p>
-<p>查询各专业和学院的开课计划这些，主要在”执行教学计划查询“里看。对于大类，院系选择<code>“[70]北航学院”</code>，其它专业的则根据不同专业对应的学院来选择就可以了。这个主要是后面选专业的时候，可以看看要上的课自己满不满意（笑）<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806181826.png" alt="image.png"></p>
-<h2 id="有关四、六级"><a href="#有关四、六级" class="headerlink" title="有关四、六级"></a>有关四、六级</h2><p>在大一的时候，我推荐各位就把四六级解决了——大一上干四级，大一下干六级。</p>
-<p>说实话，<strong>除了听力</strong>，四六级真不难。阅读题等等，在我感觉看来，就跟高考英语是一个水平。除了题型有所变化以外，难度跟高考英语其实是很相近的，大家<strong>不要对四六级太害怕，干就完事了！</strong></p>
-<p>为什么要强调“除了听力”？因为听力可以算是整套题最难的了：高考题是把问题印上卷子的，而四六级的听力要你<strong>先听完全文，再听问题，然后作答</strong>。更难的是，<strong>文章&#x2F;语段大部分只读一遍！</strong></p>
-<p>这部分的解法，有两个。一个适用于记性好的同学，就是先<strong>专心</strong>听完全文，期间不要<strong>看选项分神</strong>，再听问题，按印象作答——有一点挑战性。还有一种就是边听边看选项，听的时候发现关键字，就在对应选项旁边标记一下（手速快还可以多写点提示词）；最后听选项的时候，在标记了的选项里面选就好。<em>由于我一般用第一个办法，其他办法我并不是很了解；更好的办法，可能就要另请高明了</em></p>
-<p>因此，我的四六级备考建议是：真题看看熟悉题型就行，<strong>重点练听力</strong>。</p>
-<h2 id="有关体育锻炼"><a href="#有关体育锻炼" class="headerlink" title="有关体育锻炼"></a>有关体育锻炼</h2><p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806192608.png" alt="image.png"></p>
-<p>北航有个叫<strong>TD线</strong>的特色项目，此外还要求各位进行体育活动的<strong>阳光打卡</strong>。TD一天可打3次，阳光打卡一周只能打4次，具体要求在打卡页面就能看到。一个学期的要求据说是TD+阳光打卡共48次，其中必有32次TD+16次阳光打卡。但是为保安全，我建议TD也刷到48次。</p>
-<p>TD线通法可视个人喜好而言。想有一定锻炼量可以老实过各项项目；只为了刷完也可以摸鱼一路走过去。<strong>这两个算是正当的方法，不正当的方法就不说了，好孩子不要学（</strong></p>
-<p>而且，在各位军训完之后，我建议休整好就尽快弄完，<strong>以防期末忙的时候忘记，导致体育课白扣10分！</strong></p>
-<p>此外，有不少体育活动可以<strong>加TD次数</strong>。比如我们这一届在大一上的运动会时，有一个太极扇的表演项目；报名参加的同学，最后都<strong>喜提了48次TD次数。</strong></p>
-<h2 id="有关沙河美食"><a href="#有关沙河美食" class="headerlink" title="有关沙河美食"></a>有关沙河美食</h2><p>各位还是要在沙河待个两个星期的。是时候分享一点自己有限的美食储备了：</p>
-<p>注意，这里主要是中晚餐。北航食堂在早餐卖的<strong>基本都是包子等面食</strong>，仅有少数窗口卖面、馄饨之类（如西区1f的一个窗口），可能需要各位适应一下。</p>
+<h2 id="存储状态的额外信息"><a href="#存储状态的额外信息" class="headerlink" title="存储状态的额外信息"></a>存储状态的额外信息</h2><p>上面提到，我们的子请求表只允许同向请求加入；在我们现在的实现下，这种情况当然会产生：</p>
 <ul>
-<li><p>西区：只推荐-1f的清真食堂与1f的食堂。</p>
-<p>清真食堂可吃<strong>刀削面（现做），盖饭，炒饭，炒菜</strong>。<br>刀削面8元一位，好吃但分量较少；盖饭本人推荐黄焖牛肉（17.8一份）和普通的牛肉盖饭（可自选搭配蔬菜，15一份）；炒饭和刀削面在一个窗口，各个口味都不错，10块一位；炒菜本人力推<strong>小炒羊肉和金蛊牛肉（如果还有的话）</strong></p>
-<p>1f我主要是吃早餐：推荐<strong>叉烧包，白菜肉包子，燕麦包</strong>。早餐我一般是两个包子+一碗豆浆。</p>
+<li>电梯在<code>F3</code>，IDLE</li>
+<li>出现了一个<code>F1-F7</code>的请求，电梯进入RESERVED，空放到<code>F1</code></li>
+<li>电梯从<code>F3</code>空放去<code>F1</code>途中出现一个<code>F2-F1</code>的请求，我们自然希望捎带它，将其加入子请求表</li>
+</ul>
+<p>也就是说，<strong>空放方向与发出预约的请求的方向反向。</strong> 我们自然需要一个地方暂存这个预约请求；我选择通过<strong>继承</strong>的方法，<strong>将其存在状态内</strong>。</p>
+<p>具体而言：</p>
+<ul>
+<li>上面四个状态均属于一个<code>Status</code>类，内有一<code>enum Type</code>属性，记录当前状态类型</li>
+<li>若一个状态需要记录额外信息，则该状态作为<code>Status</code>的子类，<strong>额外信息作为子类的属性</strong>，存在子类中。</li>
+</ul>
+<p>我们此时只需对RESERVED，WAITING两个状态记录额外信息。</p>
+<p>RESERVED：</p>
+<ul>
+<li><code>allowPickUp</code>：中途是否允许捎带</li>
+<li><code>requester</code>：进行预约的请求。允许为null。</li>
+</ul>
+<p>WAITING：</p>
+<ul>
+<li><code>prevStatus</code>：进入WAITING前的状态。</li>
+</ul>
+<p>欲知为何如此，请继续看下文。</p>
+<h2 id="兼容SCHE请求"><a href="#兼容SCHE请求" class="headerlink" title="兼容SCHE请求"></a>兼容<code>SCHE</code>请求</h2><p>不知各位是否发现，在HW6引入的临时调度，跟我们上面提到的RESERVED略有相似之处？</p>
+<p>我们要让我们的现有设计兼容<code>SCHE</code>请求，只需做这么几件事情：</p>
+<ul>
+<li><code>SCHE-BEGIN</code>前，把途中无法捎带的请求赶回请求池；</li>
+<li>在临时调度至不同层时，<code>SCHE-BEGIN</code>对应转入一个 <strong><code>requester = null</code>，不允许捎带</strong>的RESERVED状态</li>
+<li>确保已有的RESERVED状态下的电梯运行规则，能够处理上述的<code>RESERVED</code>情况</li>
+</ul>
+<p>就这样，我们就做完了<code>SCHE</code>请求的电梯运行部分；剩下的，只需要实现指派电梯进<code>RESERVED</code>的逻辑，很省事吧！？</p>
+<h2 id="等待状态的转移规则"><a href="#等待状态的转移规则" class="headerlink" title="等待状态的转移规则"></a>等待状态的转移规则</h2><p>WAITING的状态转移规则如下：</p>
+<ul>
+<li>先前为<code>RUNNING</code>：<br>若仍有请求未到终点，则恢复RUNNING<br>若请求已全部满足，则进入IDLE</li>
+<li>先前为<code>RESERVED</code>：<br>若未到预约者起点，则恢复RESERVED<br>若到达了预约者起点，则进入RUNNING，同时<strong>将暂存的请求加入子请求表</strong></li>
+<li>先前为<code>IDLE</code>：<br>直接进入<code>RUNNING</code>，<br>因为我们保证，IDLE下的电梯被预约后，直接进入RESERVED状态，<br>此时必是因为，有一起点与IDLE状态下电梯所在位置的请求被分给了电梯。</li>
+</ul>
+<h1 id="调度算法"><a href="#调度算法" class="headerlink" title="调度算法"></a>调度算法</h1><p>交互方面，我采用的是一<code>Dispatcher</code>对多个<code>Elevator</code>的实现，与绝大多数做法一致。</p>
+<p>大家都知道影子电梯，不过它需要<strong>模拟电梯的整个运行过程</strong>，实现略显复杂；那么，有没有一个在复杂度和影子电梯的高效率之间折中的方案呢？</p>
+<p>是有的。我的这个策略在思路上与影子电梯有颇多相似之处，只不过：</p>
+<ul>
+<li>只需要计算（模拟）<strong>当前请求</strong>的运行时间</li>
+<li>已指派给电梯的其它请求的估计，<strong>利用优先级机制实现</strong></li>
+</ul>
+<h2 id="是否允许加入"><a href="#是否允许加入" class="headerlink" title="是否允许加入"></a>是否允许加入</h2><p>进行计算之前，<code>Dispatcher</code>需要得知当前正在评估的电梯，能否接受当前待加入的请求。</p>
+<p>可加入的规则如下：</p>
+<ul>
+<li>若电梯此时在IDLE状态下，直接允许加入，否则进行下述流程</li>
+<li>请求方向需与电梯当前运行方向一致；方向有关的说明见上文。</li>
+<li>电梯同向，且电梯此时没有超过请求的起点</li>
+<li>如果状态为（RESERVED）&#x2F;（WAITING，且前一个状态是RESERVED），则：<br>RESERVED状态需允许捎带<br>若预约请求方向与当前运行方向相反，则待加入请求的终点不得超过预约请求的起点</li>
+<li>加入后，不会出现电梯满员的情况</li>
+</ul>
+<p>“电梯满员”视个人实现不同，判断逻辑可能不同；我这里就以我的实现为例，谈谈我的判断逻辑。</p>
+<p>正如上文所述架构实现，我们一个电梯的子请求队列不仅包含了当前在电梯内的请求，还包含了将来电梯要捎带的请求；</p>
+<p>我们的判断逻辑是，假设请求加入了子请求表，<strong>得出各楼层处，最多同时出现的请求数；</strong> </p>
+<p>这一“同时出现的请求数”，反映了那一运行区间内，电梯内的人数。</p>
+<p><strong>若各区间的同时出现请求数的最大值，大于电梯容量，则认为此时加入请求会导致超员。</strong></p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250406214224.png" alt="Pasted image 20250406214224.png"></p>
+<p>如图所示，待加入请求在<code>F2-F3</code>区间会导致超员，故我们不应加入这一待加入请求。</p>
+<p>需要注意的是，如果采用了上文RESERVED状态的实现，若预约请求方向与电梯空放方向一致，此时还需将预约请求放进上面的图里进行比较。</p>
+<h2 id="计算评价指数"><a href="#计算评价指数" class="headerlink" title="计算评价指数"></a>计算评价指数</h2><p>在上述复杂的判断后，我们终于可以开始计算了…</p>
+<p>我们的计算公式如下：</p>
+<p>$$index &#x3D; index_{base} + priorityPenalty * elevStopTime$$</p>
+<h3 id="index-base"><a href="#index-base" class="headerlink" title="$index_{base}$"></a>$index_{base}$</h3><p>我们先需要得知：</p>
+<ul>
+<li>$dis$：电梯所在位置，与请求起点的楼层数</li>
+<li>$travel$：请求跨越的楼层数</li>
+<li>$stopCount$：请求沿途需要停靠，以让自己进电梯&#x2F;捎带其它请求；<code>stopCount</code>即中途停靠的次数</li>
+</ul>
+<p>随后即可算出当前请求的运行时间，作为我们评价指数计算的第一步；</p>
+<p>$$index_{base} &#x3D; (dis + travel)*elevSpeed + stopCount * elevStopTime $$</p>
+<h3 id="priorityPenalty"><a href="#priorityPenalty" class="headerlink" title="$priorityPenalty$"></a>$priorityPenalty$</h3><p>优先级惩罚，是所有请求的优先级惩罚之和：</p>
+<p>$$priorityPenalty &#x3D; \sum_{i&#x3D;1}^{n}{penalty_{R_i}}$$</p>
+<p>对于一个请求$R$，设其优先级为$priority$，楼层跨度为$travel$，则我们规定该请求允许的中途停靠次数$maxAllowedStops$如下：<br>$$maxAllowedStops &#x3D; round(travel * (1 - \frac{priority}{100}))$$<br>其中，$round(x)$取$x$最靠近的整数。</p>
+<p>在我们进行评价指数的计算时，我们先假设待加入请求已被加入；随后，对原有的请求$R_i$，算出加入后的<strong>总停靠次数</strong>$stops$。</p>
+<ul>
+<li>若$stops &lt;&#x3D; maxAllowedStops$：$penalty_{R_i} &#x3D; 0$</li>
+<li>否则：$penalty_{R_i} &#x3D; (stops - maxAllowedStops) * priority$</li>
+</ul>
+<h3 id="小总结"><a href="#小总结" class="headerlink" title="小总结"></a>小总结</h3><p>由此，我们就可以算出各个（可加入请求的）电梯的评价指数，选择评价指数最低者加入。</p>
+<p>上述是一个相对简单的模型，相信各位有更好的实现。</p>
+<h1 id="评测方案"><a href="#评测方案" class="headerlink" title="评测方案"></a>评测方案</h1><p>我选择构建评测机框架，<strong>留出随机数据生成器（dataGen）与正确性检查器（Checker）的接口</strong>。这样有利于提高不同题目下评测的灵活性。</p>
+<p>评测机框架方面，我构建了一个可以评测<strong>多程序、多测试点</strong>的多线程评测机，按照以下两种策略运行：</p>
+<ul>
+<li>测试深度优先：评测机优先对一个待测程序，测试多个测试点</li>
+<li>测试广度优先：评测机优先对一个测试点，测试多个程序</li>
+</ul>
+<p>评测机框架建议允许添加数据生成器生成的数据以外的数据，从而为人工构造高强度数据提供可能。</p>
+<p>运行测试程序方面，我选用了Python的<code>subprocess</code>库，其中的<code>POpen</code>方法十分有用，不仅可以指定子进程的工作目录，还可重定向子进程的输出。</p>
+<p>注意到，我们的数据投喂器读取的是**当前工作目录下的<code>stdin.txt</code>**；因此，我们可以通过指定不同工作目录的方法，来让投喂器同时测试多个样例。</p>
+<p>随后，我们即可使用数据投喂器+打包好的<code>.jar</code>进行评测；两个子进程需要用管道串起来，实现如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">input_process = subprocess.Popen(</span><br><span class="line">                [<span class="string">&#x27;input.exe&#x27;</span>],  <span class="comment"># input.exe 读取当前目录的 stdin.txt</span></span><br><span class="line">                cwd=case_dir,    <span class="comment"># 设置工作目录为测试用例目录</span></span><br><span class="line">                stdout=subprocess.PIPE,</span><br><span class="line">                stderr=subprocess.DEVNULL,</span><br><span class="line">                text=<span class="literal">True</span></span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">java_process = subprocess.Popen(</span><br><span class="line">                [<span class="string">&#x27;java&#x27;</span>, <span class="string">&#x27;-jar&#x27;</span>, os.path.join(target_dir, jar_file), <span class="string">f&quot;-Xmx<span class="subst">&#123;memLimit&#125;</span>&quot;</span>],</span><br><span class="line">                stdin=input_process.stdout,</span><br><span class="line">                stdout=fileout,</span><br><span class="line">                stderr=fileerr,</span><br><span class="line">                text=<span class="literal">True</span></span><br><span class="line">            )</span><br></pre></td></tr></table></figure>
+
+<p>据闻Python的<code>psutils</code>库有办法记录CPU使用时间，不过我的尝试没有成功，希望做过尝试的同学多多分享经验:P</p>
+<p>我两次作业的随机数据生成器与Checker均先由AI生成，再由人工进行细节修改。</p>
+<p>注意到，AI生成的Checker并不完全准确，在HW6时这一问题尤为显著，需要多处人工修正；<strong>在寻求AI工具的帮助，节省时间的同时，请务必仔细检查AI生成的工具是否能如预期般工作。</strong></p>
+<h1 id="之前写过的一些总结"><a href="#之前写过的一些总结" class="headerlink" title="之前写过的一些总结"></a>之前写过的一些总结</h1><ul>
+<li><a href="http://oo.e2.buaa.edu.cn/assignment/623/discussion/1684">使用ReentrantLock，实现更灵活的锁管理策略</a></li>
+<li><a href="http://oo.buaa.edu.cn/assignment/621/discussion/1682">在IDEA内部，进行更高效的死锁调试</a></li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li><p>本单元，我感觉最需要的其实是细心，不然线程间交互很容易出现问题。</p>
 </li>
-<li><p>东区：仅推荐3f的鼓瑟轩。如果各位军训的时候只能在东区解决饮食的话，那就将就吃1f&#x2F;3f的菜吧，没办法了（</p>
+<li><p>架构设计同样起到了关键的作用。本人架构中<code>RESERVED</code>状态的抽象，大大节省了本单元的开发时间。</p>
+<p>我认为，只要架构：</p>
+<ul>
+<li>易于维护；</li>
+<li>复杂度低（可以归进上条）；</li>
+<li>运行效率在可接受范围内；</li>
+</ul>
+<p>就可以算一个好设计。</p>
+<p>不过，我自己不得不承认，我本单元架构在不少实现细节上的复杂度实在太高，因此带来的BUG与维护的不便不在少数。</p>
+</li>
+<li><p>本单元亦让我直观地感受到了<strong>算法和数学模型，于程序的重要性何在。</strong> </p>
+<p>本人实现中，判断电梯是否满员的问题，可以抽象为计算一个二维空间内，所有线段的最多重叠次数；没有算法的帮助，计算效率很难提升。</p>
+<p>处理优先级问题的方法，其实就是简单的数学建模。</p>
+</li>
+<li><p>感受到了AI的力量。使用AI生成<code>checker</code>+人工修改的效率，远比纯手搓要高。</p>
 </li>
 </ul>
-<p>至于学院路的？孩子才搬过来，还不知道有啥好吃的，再探完了再报😋</p>
-<h2 id="信类只有计算机一个”好“选择？"><a href="#信类只有计算机一个”好“选择？" class="headerlink" title="信类只有计算机一个”好“选择？"></a>信类只有计算机一个”好“选择？</h2><p>答案很简明：<strong>不是</strong>，而且现在选计算机<strong>也不见得是好选择</strong>。</p>
-<p>此处且借梦拓培训时，上一届学长的分享内容一用（注：国奖 &#x3D; 国家奖学金）；<strong>里面的一些错误观点也可供各位参考</strong>：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806194045.png" alt="image.png"><br>计算机<strong>人才过饱和</strong>，这已经是不争的事实了；<strong>上一个出现这种情况的叫土木工程。</strong></p>
-<p>【[打灰爱音&#x2F;填词] 搅拌机下——“不提桶跑路已是我最后仅存的善良”】 <a href="https://www.bilibili.com/video/BV1eM4m1m74i">https://www.bilibili.com/video/BV1eM4m1m74i</a></p>
-<p>不妨把这首二创歌曲的对应部分改成计算机对应的内容，说不定你能发现周围人吹嘘计算机和曾经吹嘘土木的一些相似之处？（笑）</p>
-<p>薪资呢？如果你觉得干开发就能赚大钱的话，不妨打开一个叫Boss直聘的软件，搜一下热门的前&#x2F;后端开发的普遍薪资是多少。总之是<strong>不存在</strong>”一毕业就有40w薪资“这种事情的。</p>
-<p><strong>也许各位的确是奔着6系（计算机）来到北航的。但是，希望在大一这一年里，你能找到自己真正喜欢的专业方向，在大一下专业分流的时候，找到真正适合自己，且自己真心喜欢的选择。</strong></p>
-<p><strong>千万不要按着分数选专业。</strong> 就像上文截图，这种想法反而是<strong>分数禁锢了自己</strong>。选自己<strong>真心喜欢</strong>的才重要。更何况，北航这几年的大类招生已经<strong>相对理性</strong>了许多：这一次的大类分流，6系甚至招到了全年级700名（23级大类内共有1000余人），应该不会再出现往年300名都挤不进6系的”盛况“了。</p>
-<p><strong>更何况，信类的优势专业也不止计算机一个。</strong> </p>
-<p>电子信息工程学院（2系）和自动化科学与电气工程学院（3系，但是注意”电气工程“只有空壳，<strong>千万别选</strong>）也是本校的强项，在师资、设备、资源等方面都不比计算机学院差。<strong>如果你再留心看看北航被评上院士的各位教授的院系，更会发现，院士全在计算机外的其他院系，2系和3系（e.g. 23年刚评上的郭雷院士、焦宗夏院士）就有。</strong> 此外，如果你成绩亮眼的话，进2&#x2F;3系福利也有不少：例如2系可以进<strong>北斗实验班（约等于院士班？）</strong>，3系对大类前200名分进的同学<strong>有保研上的优惠</strong>，<strong>更能提早选科研导师，在大二就能接触科研项目</strong>，岂不美哉？</p>
-<p>其它的系呢？也有强的啊！仪器光电与科学学院（17系）实力也十分不错，在这方面北航可谓在全国占有绝对优势，<strong>不要因为报考的同学普遍成绩较差就不选它</strong>；还有一个集成电路学院（41系），师资也不错，在学院路的一号楼地下修了一个<strong>智能微纳中心，设备之齐全令人发指</strong>，保研也很方便。（常见问题：2&#x2F;41二者差别？这个建议以<strong>大一下的专业宣讲</strong>为主进行参考，这里我就不多嘴了。）</p>
-<p>总之，希望各位在<strong>大一下</strong>的时候能多参与一下各学院的专业宣讲，对大类里各个专业都<strong>有了明确的认识之后，再做选择</strong>。</p>
-<p>除此之外，各位在开学的时候会被要求选一个学业导师。这个制度有一个好，就是可以通过导师举办的<strong>导学活动认识各个学院</strong>。我当时就是报了41系的郑翔宇老师，得以参观41系的微纳中心。<strong>如果你现在对某个学院感兴趣，不妨到时候选一个来自该学院的老师。</strong></p>
-<p><strong>此外，选好导师可能会有你意想不到的福利！我有一位同学，当时选了3系的yjs老师；然后一次导学活动，他们导学小组竟然能有体验747-400型客机全动模拟驾驶舱的机会，这个机会加钱都不一定能有！！！当时的我，看到的时候眼都馋哭了😭</strong></p>
-<p>顺带一提，上文截图的”21系“是软件学院。某种意义上，6&#x2F;21二者差不多。硬要比就是毕业得的学位，师资这方面的差别。</p>
-<p>这一部分，我想借用一位我很尊崇的长者的话作结：<strong>“一个人的命运啊，当然要靠自我奋斗，但是也要考虑到历史的进程。”</strong></p>
-<h2 id="北京”航空航天“大学？"><a href="#北京”航空航天“大学？" class="headerlink" title="北京”航空航天“大学？"></a>北京”航空航天“大学？</h2><p>进入北航信类的你，肯定时常会想：”<strong>航空航天</strong>“跟我<strong>信类</strong>学生有啥关系？宣传这个有什么用？</p>
-<p><strong>是有的。</strong> 上一栏提到的2系、3系干的活很多都跟航空航天有关。就以3系为例，无人机系统、飞行控制就是3系的主要业务范围。航空机载设备跟17系关系很密；雷达等电子设备，战机隐身和反隐身是2系的业务范围，等等…就连规模相对较小的41系，在研究的MRAM的主要用途也是抗辐射的航空航天机载设备。</p>
-<p><strong>我想报6系，那又有啥关系呢？</strong> 航电设备难道不用写程序？（笑）。而且飞机设计这些是需要电脑跑流体仿真的，这个又能牵扯到计科的高性能计算（HPC）领域，又怎么能说无关呢？</p>
-<p>也许你对”航空航天“四字无感，或对信类有关航空航天的宣传感到不解。<strong>我能理解这种感受，这是非常正常的，特别是被6系的金子招牌吸引而进入北航的各位同学</strong>。</p>
-<p>但是，身为一名航空爱好者（兼半个伪航天迷？航天我了解真不多，2333），我希望各位还是能给”航空航天“四字一点尊重，<strong>更需要尊重那些愿意在沙河待上4年、7年乃至更久的航类同学；因为他们确实是抱着对航空航天事业的热爱而选择的航类，并为这份伟大的事业做出了不少的牺牲。</strong></p>
-<p>哪怕各位可能会觉得自己读的应该叫“知春路计算机应用学院”，但别忘了国内最权威的航空学术期刊《航空学报》是哪个单位主办的。</p>
-<p>这部分就写到这吧。可能各位对上述观点不大认同，那也没关系，就当是我对校内一些不良风气发的牢骚即可；但，如果各位认同小弟上述愚见的话，小弟自是非常感激。</p>
-<h2 id="跋"><a href="#跋" class="headerlink" title="跋"></a>跋</h2><p>这篇私货就写到这吧。如果日后有想到什么，再写点东西发给各位看官（</p>
-<p>本来是想再写写自我介绍的，但是时间实在紧迫……先这样吧，过几天我再写一个有关我自己的碎碎念。</p>
 ]]></content>
       <categories>
-        <category>梦拓相关</category>
+        <category>课程相关</category>
       </categories>
       <tags>
-        <tag>梦拓</tag>
-        <tag>心得</tag>
+        <tag>面向对象</tag>
       </tags>
   </entry>
   <entry>
@@ -490,6 +450,206 @@
       </tags>
   </entry>
   <entry>
+    <title>送给组内信类新生的一点点私货</title>
+    <url>/2024/08/04/BUAA-freshman-FAQ/</url>
+    <content><![CDATA[<h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p>首先，欢迎各位成为北航士谔书院的一员，也很荣幸能与大家共处同一梦拓小组！</p>
+<p>本文将尝试对大家初入大一可能遇到的部分问题进行解答，以备各位不时之需；同时夹带大量私货，欢迎各位参考😋</p>
+<p>本文是按苯人自己一年来的经验，想到什么写什么写成的，应该能涵盖各位可能碰到的不少问题。若有其它没有覆盖到的问题，欢迎各位联系交流！🤗</p>
+<span id="more"></span>
+
+<p>同时推荐一份民间编写的学生指南，供各位参考；<strong>由于这个指南全靠民间热心的各位大神自发更新，里面的消息可能有不少未及时更新或不准确，仅供参考，真有拿不准的问题欢迎问导员或者梦拓！</strong>：</p>
+<p>【腾讯文档】北京航空航天大学学生手册<br><a href="https://docs.qq.com/aio/DQXdSc0hXYlFVcnVY">https://docs.qq.com/aio/DQXdSc0hXYlFVcnVY</a></p>
+<p>另有一个比较抽象的新生指南：<a href="https://github.com/BUAA-Wjay/BUAANew">https://github.com/BUAA-Wjay/BUAANew</a><br>（可能需要翻墙），里面消息<strong>可能需要自己甄别一下，</strong> 尤其是各类非官方群，毕竟那里通常是<strong>卖课、推销、诈骗的高发区</strong>。</p>
+<h2 id="英语课程选A，还是选B？"><a href="#英语课程选A，还是选B？" class="headerlink" title="英语课程选A，还是选B？"></a>英语课程选A，还是选B？</h2><p>在各位联系到作为梦拓的我的不久之后，相信大家已经对英语课程的分级考有所耳闻了。虽说会参考分班考成绩来分，但这个还是需要各位填选A班还是B班的志愿；那么，选哪个呢？</p>
+<p>可能有同学担心，两个班的课业压力差别较大；又或者是在各类吹水群里，听说了前一届甚至前几届前辈对A&#x2F;B班的评价，对A&#x2F;B班的学习状态已有了刻板印象……自然，课业上的压力，两个班的区别<strong>当然是存在的</strong>。<strong>但是！A&#x2F;B班的课业压力孰轻孰重，各届的情况存在巨大的差别</strong>，前人的经验或许有帮助，但在这<strong>很有可能不具参考价值</strong>。</p>
+<p>比如，我的 <strong>上一届（2022级）</strong> 普遍反映A班的作业和杂事都很多，难度大云云，B班就很轻松；然而！在我的<strong>这一届（2023级），情况却恰恰相反</strong>。我选择的A班反而每周十分轻松。课堂氛围轻松不说，除了课堂展示以外的杂事与作业真不多，作业检查程度也不算太严；反观同寝室另外3位选择了B班的同学，<strong>每周</strong>都会同各类神奇的英语作业（比如：假设自己要留学，做留学的出行等一系列计划）斗智斗勇不说，据其描述课上也很忙……</p>
+<p>而且，两个班最后的期末考试考的都是同一套卷子。从只看成绩的角度而言，选两个班的差别可谓是没有。</p>
+<p>因此，个人认为，各位<strong>按照自己的实际英语能力进行选择</strong>就好。<em>如果硬要用量化指标界定能力好坏的话，各位前辈得出的经验是：高考英语140分以上，进A班应该就没问题了。这一点我认为还是可以参考的。</em></p>
+<h2 id="学习方法要转变吗？"><a href="#学习方法要转变吗？" class="headerlink" title="学习方法要转变吗？"></a>学习方法要转变吗？</h2><p>一个字：<strong>要</strong>。<strong>上大学必须自学为主。</strong></p>
+<p>在高中的时候，各位都习惯的是听老师讲课，自己照单全收即可；但是，在大学，<strong>这个想法是非常危险的</strong>！</p>
+<p>且不谈当下大学的本科教育质量之差，现在<strong>照念ppt上课的方式已是常态。</strong> 不自己课下深入学习，只靠课上听讲是不可能学好的！</p>
+<p>更何况，现在不少老师（包括北航）只管自己讲自己的，完全不管自己讲的时候台下的同学是否能听懂。<strong>我不觉得这种情况下，听课效果能有多理想，这样真不如自学。</strong></p>
+<p>我就是在大一上的时候仍然心存听老师上课的幻想，直到大一下才“放弃幻想，准备斗争”，最后成绩并不亮眼；当然，这部分在最后扯有关我的事的时候再说。</p>
+<p>总之，<strong>自学为主，这真的很关键！！</strong></p>
+<h2 id="有什么办法预习吗？"><a href="#有什么办法预习吗？" class="headerlink" title="有什么办法预习吗？"></a>有什么办法预习吗？</h2><p>有！办法还不少！这里稍微分享一点经验，<em>同时也会简要掺一点各课程的上课概况的私货</em></p>
+<p><em>宇宙安全申明：据说培养方案有改，课程开设方案和上课状况可能都有差别，仅供参考！</em></p>
+<p>进入信息大类，各位大一上学起来要花点功夫的主要就是<strong>工科数学分析、工科高等代数、C语言程序设计</strong>三门课程。剩下的基本没预习的必要。</p>
+<h3 id="两个学习资料的来源"><a href="#两个学习资料的来源" class="headerlink" title="两个学习资料的来源"></a>两个学习资料的来源</h3><p>开始之前，个人先推荐两个学习资料的来源渠道。</p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806124149.png" alt="image.png"><br>一个是<strong>北航士谔书院的学业支持中心</strong>的北航网盘资料库。里面包含了大一整个学年可能用到的<strong>往年题，课件</strong>等可能有用的学习资料，同时也有一部分竞赛四六级资料。如果各位对预习有所兴趣，完全可以看着里面的课件ppt来预习 <strong>（事实上，大学，至少北航，上课基本不看教材，而基本只看ppt，知识点等等都在上面；更有甚者是念ppt上课，这也很常见）</strong> 。</p>
+<p>里面的资料，相信对各位一定有所帮助：<br><a href="https://bhpan.buaa.edu.cn/anyshare/en-us/link/AAE382BC57552F47C3963B94EA8821E684/8432FD008DFD4F3D9256370735A84832/8EA3C8E70B7941ED9AA164501F0950D2/2E077C8617154E118896618A7C295703/8C5F58E5D4F94DD39151E336665D507B/7A3FF43284484037A2515529D9B0478F?_tb=none">https://bhpan.buaa.edu.cn/anyshare/en-us/link/AAE382BC57552F47C3963B94EA8821E684/8432FD008DFD4F3D9256370735A84832/8EA3C8E70B7941ED9AA164501F0950D2/2E077C8617154E118896618A7C295703/8C5F58E5D4F94DD39151E336665D507B/7A3FF43284484037A2515529D9B0478F?_tb=none</a></p>
+<p>   <img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806131618.png" alt="image.png"></p>
+<p>另一个是一个往届前辈运营的一个微信公众号：<strong>三文鱼卷。</strong> <em>（以防各位顾虑，纯推荐，没接广，23333）</em> </p>
+<p>这里面可以查到 <strong>包括但不限于信息类</strong> 的大一学习指南，里面整理的资料也挺全。<em>但是里面整理的资料难免出现分类混乱，质量参差不齐等问题，大家打包下载之后自己注意一下就可以了</em></p>
+<p>但是，这个公众号能提供的资料不止信类大一上、下的学习指南。搜索航类大一上、下的学习资料，你又能获得另一份数分、高代的学习资料。这是因为，两个大类的同学除了少数课程，大部分课程都是相近的。（<strong>注意，用之前还是要核对一下，比如航类大一上的线性代数，大一下的物理教材就和信类不一样</strong>）这时，您不妨在航类的资料库里翻一翻，说不定能够补足信类资料库里缺乏的东西。（比如说，电子版教材，这个我只在航类的资料库里看到过）</p>
+<h3 id="C语言程序设计"><a href="#C语言程序设计" class="headerlink" title="C语言程序设计"></a>C语言程序设计</h3><h4 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h4><p>先从程序设计（下称<strong>程设</strong>）开始吧。这一门课程主要教授C语言（纯C，没有C++&#x2F;C#）的基本使用，教的程度大概也是知道基本常用知识，能用但不知道背后原理 <em>（事实上，也没多少学校会在课上耐心教背后有趣的底层原理，比如头文件是怎么回事）</em> 的水平，并不算太深入。因此，不要对此有太大的心理压力。</p>
+<p>如果您<strong>恰好是前oier</strong>，大佬接我一拜😭🛐，这门课您根本不用担心！</p>
+<p>这一部分打好C语言的基础就可以了，后面大一下的数据结构课程就是建立在这门课的基础上的。</p>
+<p>预习这一部分课程，看 <strong>《C Primer Plus》</strong> 这本经典的C语言教材即可。在各位上课的时候，也可以把这本书当作自己的正式教材。</p>
+<p>又或者，试试这个：《Learn C the Hard Way》（<a href="https://wizardforcel.gitbooks.io/lcthw/content/preface.html%EF%BC%89%E3%80%82">https://wizardforcel.gitbooks.io/lcthw/content/preface.html）。</a></p>
+<p>只不过，这个教材涉及到Unix&#x2F;Linux，可能更适合对Unix&#x2F;Linux已经有所了解的同学。不熟悉也没关系，如果目的只是学C语言的话，碰到涉及Linux和valgrind等工具的部分跳掉即可，用vscode等IDE就行。至于vscode怎么配置C语言开发环境，网上自行搜索即可，教程挺多的。<br><em>（当然，这个教材对IDE不是很认可。从 <strong>只学C语言的角度，</strong> 可以姑且忽略这个反对的声音，23333）</em></p>
+<p>想多练手的话，<strong>力扣（LeetCode）</strong> 和<strong>洛谷</strong>可以考虑做一下。</p>
+<h4 id="个人感受"><a href="#个人感受" class="headerlink" title="个人感受"></a>个人感受</h4><ul>
+<li><p>这门课的<strong>作业</strong>，和每周上完课后的<strong>上机小测</strong>和<strong>考试</strong>都是在课程组的<strong>AC编程平台（<a href="https://accoding.buaa.edu.cn/%EF%BC%89">https://accoding.buaa.edu.cn/）</a></strong> 上进行的。形式效仿的是IOI赛制。<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806162926.png" alt="image.png"></p>
+</li>
+<li><p>一次典型的练习或上机会有 A-J 10个题。<strong>尽力而为就好，千万不要苛求做全，之前没接触过编程的同学很难做到。</strong> 作为参考，本人一般能做A-G题，有时可以接触到H、I题。</p>
+</li>
+<li><p>平台上出的题目多为前几届的优秀前辈编写。<em>可以把这个当成题目难度离谱的原因</em>，但也正因此，这门课程给的题目<strong>玩的梗奇多！</strong> 相信在看到自己熟悉的梗的时候，你也会会心一笑！</p>
+</li>
+<li><p><strong>对于第一次接触编程的同学，对这门课程感到压力是再正常不过的事。</strong> 放平心态，不要放弃！</p>
+</li>
+<li><p>部分题目的测试数据比较偏（但也确实应该在考虑范围内），经常会出现样例能过，但最后得到的测试结果是结果错误（WA）的情况。<strong>做题不要局限于样例数据，多想想题目给的数据范围，还有各种可能看似不可能的可能。</strong></p>
+</li>
+<li><p>以我的接触，这门课的助教都还算友好。<strong>有关题目</strong>的问题交流一般都会耐心解答，但是<strong>助教</strong>也是各位前辈兼任的，耐心自然也有限，<strong>不建议一遇到问题就直接找助教，也不应该上来就找助教帮忙debug，而是自己多次尝试无解后再去求助。</strong></p>
+</li>
+<li><p>视助教的友好程度，如果自己实在找不出问题，且不愿过度麻烦助教，可以向助教要题目的测试数据。<strong>但是这是万不得已的办法，不要轻易尝试，就算要到了也千万不要外传题目数据。对自己负责，同时也要对他人负责。更何况，有人可能要到数据就直接打表过关；打表这种做法对能力的锻炼一点好处都没有，后患无穷。要到数据，旨在用数据找到自己没考虑到的可能，然后在对自己的代码进行修改，而不是偷懒。</strong></p>
+</li>
+<li><p>一些题目可能会涉及不少高阶算法。欢迎网上自行搜索，提高自己的知识水平</p>
+</li>
+<li><p>助教一般会在每次上机&#x2F;练习&#x2F;考试后在课程群里发题解，<strong>里面助教会分享不少能提高自己能力的知识，值得一看。</strong></p>
+</li>
+<li><p>Github是个好地方，要学会在上面找参考代码（不限代码，其实什么都有）之类的资料。如果上不去的话，<strong>建议顺便学学怎么科学上网（特殊义）</strong>。</p>
+</li>
+<li><p>该课程<strong>只上8周</strong>，也就是说在期中那会这课就考完了。当时这节课是我们周四唯一要上的课，上完之后，下半学期的周四一节课都没有，那叫一个舒服啊😋相信各位也有机会享受这种福利（</p>
+</li>
+</ul>
+<h3 id="工科数学分析（一）"><a href="#工科数学分析（一）" class="headerlink" title="工科数学分析（一）"></a>工科数学分析（一）</h3><p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/c3a458bf4308d96022967f7e6b759be0.jpg" alt="c3a458bf4308d96022967f7e6b759be0.jpg"></p>
+<h4 id="正文-1"><a href="#正文-1" class="headerlink" title="正文"></a>正文</h4><p><strong>数分</strong>可谓大一除程序设计外的第二大难关。课程难度自然存在，但是还是能学好的。预习无非以下几个手段：</p>
+<ul>
+<li><strong>看课件</strong>。但是，课件有些部分还是写得过于简略，这里还是建议配合教材使用。<em>北航版数分电子版教材，不妨在上面提到的<strong>三文鱼卷</strong>里的<strong>航类大一上资料库</strong>获取</em></li>
+<li><strong>看本校教材</strong>。这就不加赘述了。本校教材就是这张梗图里的教材，黄色封面。</li>
+<li><strong>看外校教材</strong>。个人感觉，北航自己编写的教材在部分内容上的讲解并不算细致，这时各位不妨参考以下外校的教材。上面提到的三文鱼卷的资料库里似乎也有，需要各位自己翻一翻。<br>由于苯人在大一下才开始尝试这么办，这方面经验并不是很足；若要找推荐书目，建议在网上寻求建议，<em>当然也可以拜托我询问一下其它梦拓</em></li>
+<li><strong>网课</strong>。B站大学，懂的都懂；由于我没试过，这方面的建议我也只能留个白（）</li>
+</ul>
+<h4 id="个人感受-1"><a href="#个人感受-1" class="headerlink" title="个人感受"></a>个人感受</h4><ul>
+<li><p>要学好数分，除了做好习题真的别无他法。在各位完成作业的时候，<strong>千万不要因为写不完&#x2F;一时想不出解法而直接抄答案</strong>，<strong>后患无穷！！！</strong> 哪怕花的时间有点多，好好练是很关键的！</p>
+</li>
+<li><p>此外，由于一节课要学的内容非常之多，建议各位课前先看书&#x2F;课件预习（甚至直接自学完，课上顺便听听老师花了什么重点就行，我大一下就这么干的）。</p>
+</li>
+<li><p>以防出现上了就忘这种情况，建议各位上课稍微记记笔记，或者课下花一点点时间总结。<strong>此外，就我们这一届的经验而言，每周交作业的时候还会让你另外写一份学习心得。与其水过去，不妨就顺便在里面把自己本周学到的东西总结一下。</strong> 本人一室友就是这么做的，他最后数分成绩也还不错；反观我偷懒得多，最后成绩并不是很理想（</p>
+</li>
+<li><p>在这门课上，各位会接触到一个叫<strong>智慧树</strong>的校外学习平台。在这个平台，除了提交每周作业外，你还需要在上面 <strong>“提高知识点的掌握度”，即做题目</strong>。我个人对这一平台并无好感（主要是事多和有些题目过于偏、难、怪，且<strong>上面的掌握度（须每个达到80%以上，做的时候错一个题基本就没戏）、测试成绩还要算进成绩里面</strong>），<strong>但是这个提高掌握度的事是必须在期末前做完的。</strong> </p>
+<p>怎么解决它呢？一种办法是每次上完课就做一个知识点的习题。<strong>还有一种是完成每章的单元测试，满分后对应知识点的掌握度自动提升到80%以上，就不用每个知识点都做一遍题了。</strong></p>
+<p><strong>但是！千万不要因为它烦人，就把它拖到期末来做。其恶心程度会让你本就难受的考期雪上加霜！！</strong> 反正都得做，平常还得多练，干脆就把它当练习吧（笑）</p>
+</li>
+<li><p>平日的作业量<strong>有点小多</strong>，全用周末时间来写有点可惜。数分一周有两节（以我为例，我是周三、五上），不妨上了一节课就尽可能写现在能写的题目，避免出现题目想不出等问题。至于作业题目，开学课程群发的<strong>课程教学日历</strong>应该会全部列出来，<strong>不用等智慧树平台上出现了作业窗口再开始做</strong>。<strong>（当然，老师另有要求的话，以老师说的为准）</strong></p>
+<p>另有一个小事，就是当时我们的数分老师<strong>建议课后习题全做。</strong> 我认为这个对各位的要求太高了，各位在做完要求的作业的基础上<strong>量力而行</strong>即可，算是多练习的一个手段</p>
+</li>
+<li><p>如果感觉老师上课的节奏不适合自己，我建议全靠看ppt&#x2F;看教材自学。<strong>这是很正常的情况，因为各位同学可能遇到老师在课上大费周章地讲书上写好的证明过程、解题方法讲的不细致等情况，此时自学效果反而会比听课好</strong></p>
+</li>
+</ul>
+<h3 id="工科高等代数"><a href="#工科高等代数" class="headerlink" title="工科高等代数"></a>工科高等代数</h3><h4 id="正文-2"><a href="#正文-2" class="headerlink" title="正文"></a>正文</h4><p>这门课的难度其实不大，说实话没有什么预习的必要。</p>
+<p>先上的是解析几何。这一部分主要就是空间解析几何的一些基本知识，不难。</p>
+<p>上完之后，就进入到线性代数的部分了。这一部分学的主要是矩阵与行列式的知识，可能会稍微烧点脑筋。</p>
+<p>教材用的是李红裔、赵迪的《空间解析几何简明教程》与李尚志的《线性代数》。当然也可以试着看其他教材作为参考，不过这方面小弟经验不多，就不多说了。</p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806153253.png" alt="image.png"><br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/d9802a3a6c4a441eceffdbf1f89f305c.png" alt="d9802a3a6c4a441eceffdbf1f89f305c.png"></p>
+<h4 id="个人感受-2"><a href="#个人感受-2" class="headerlink" title="个人感受"></a>个人感受</h4><ul>
+<li><strong>如果要深入学习这门课程，强烈建议抛开课程自学</strong>。就以线性代数部分为例，在课上你只会学到矩阵是什么，有什么性质，却并不会教你<strong>学这个有什么用</strong>。甚至介绍性质的时候，有些老师也只会说<strong>这个性质”很好”，而不说”好”在哪里</strong>。如果你恰好对<strong>计算机图形学</strong>感兴趣的话，这门课更要学好，因为<strong>它是计算机图形学重要的数学基础之一</strong>。</li>
+<li>有些老师上课进度有些拖沓。<strong>感受到这个问题的时候，请果断地选择看课件&#x2F;教材自学。</strong></li>
+</ul>
+<h3 id="其他必修课程"><a href="#其他必修课程" class="headerlink" title="其他必修课程"></a>其他必修课程</h3><p>这里就写得简略一些，也不会很全，感受居多。</p>
+<ul>
+<li>习概：应该还是王海宇老师在教。至少就王海宇老师的课，这门课平日是打着习概名号的社会科学导论课。如果对人文社科感兴趣的话，可以听一听，甚至课下跟老师多多交流，王老师是真的和善！😋不感兴趣也没关系，直接水掉是可以的，只要该完成的课堂展示等作业完成了即可。临近期末的时候会按教材勾复习重点，课上可以不听（</li>
+<li>思修：假设是付丽莎（Lisa）老师上的话，那还是很推荐的！平日就是正常的思修课堂，但是Lisa老师平日会准备一些小惊喜（如期末的明信片等），人也很和善！临近期末也会划重点，课程组也有一个公众号<strong>一航思修</strong>，上面会发课程总结等等，值得一看。</li>
+<li>体育课-足球课。北航的体育课是自己选的，我自己选了一个学年的足球课。原因无他，黄烨军老师和善不说，整个课上的氛围也很轻松活跃。也不知道黄老师是不是只上沙河的足球课，各位在学院路的话，可能就上不到了；<strong>如果在学院路也有的话，力荐！</strong></li>
+<li>（也不知道这个搬到学院路了还有没有）如果各位有入党的意愿的话，在大一上应该会进入学院的士信党建工作坊学习。这时各位应该会上高宁老师的《大国领袖》课程，<strong>强烈推荐各位上课认真听！！！</strong> 高宁老师的思政课，各届同学公认精彩，<strong>上了都说好！！</strong> 就算不打算入党，感兴趣的话也可以将高宁老师的《大国领袖》课当通识课来选，真的建议听一听！</li>
+</ul>
+<h2 id="需要关注哪些信息渠道？"><a href="#需要关注哪些信息渠道？" class="headerlink" title="需要关注哪些信息渠道？"></a>需要关注哪些信息渠道？</h2><h3 id="微信公众号"><a href="#微信公众号" class="headerlink" title="微信公众号"></a>微信公众号</h3><ul>
+<li><strong>北航士谔书院</strong>微信公众号。这个是士谔书院的官方公众号，上面一般会分享<strong>各类学院活动的预告、学习经验分享等消息，</strong> 包括后面的<strong>冯如杯竞赛（必选）的通知，大类分流各专业的宣讲（大一下）预告</strong>，也是在这里发布。</li>
+<li><strong>微言航语</strong>微信公众号。这上面主要分享的是<strong>生活指南还有各类校级文娱活动的预告</strong>。后者一定要试着参与一下，<strong>真的很丰富多彩！！</strong> 例如：<strong>周末航影（免费在校看电影）</strong> 就是在这里发的预告；周末航影每周都会选取一部电影 <em>（包好看，比如有一次放的是《爱乐之城》）</em> 在学校的咏曼剧场放映，投票选电影和抽票的消息都是在这发的。还有<strong>厨艺课堂</strong>，教各位做甜点、咖啡、饺子等等的，有兴趣也可参与。有时还有剧团&#x2F;乐团进校园等活动。<strong>而这些例子只是校级文娱活动的一小部分！</strong></li>
+<li><strong>智慧北航</strong>。<strong>在用统一认证账号登陆后才可使用，这个各位新同学弄好账号之后就能访问了，稍安毋躁</strong>。一个集成服务平台，查成绩等很方便。</li>
+<li><strong>航财通</strong>微信公众号。不关注不行啊，你<strong>充饭卡</strong>就在这充！</li>
+<li><strong>北航后勤服务中心</strong>微信公众号。主要是<strong>停电、停水等通知</strong>。</li>
+<li><strong>北航教务处</strong>微信公众号。主要是教务有关的通知，比如<strong>四六级有关事项，选课通知，考试通知等</strong>。</li>
+<li><strong>北航总务</strong>公众号。类似于北航后勤中心，但是这里有<strong>交电费的入口，比较方便。</strong></li>
+<li><strong>全球北航</strong>公众号。各类<strong>留学、交换</strong>计划都会在上面宣传，有需求的同学可以看看</li>
+<li>各类社团的公众号。这个要看对哪个社团感兴趣。到时候各学生社团会进行宣传（“百团大战”），到时候现场扫码加就可以了。</li>
+<li><strong>北航社团中心</strong>。主要是社团（如：“百团大战”日期）相关事宜。</li>
+<li><strong>北京航空航天大学学生会</strong>。各大校内活动在上面都有通知，对学生会工作感兴趣的也可以加。</li>
+<li><strong>北航学生艺术团</strong>。艺术演出的活动公告一般都是在这里发布的，抢票信息也是！</li>
+<li><strong>北京航空航天大学校医院</strong>。在校医院看病的时候可能用得上。</li>
+<li><strong>北航图书馆</strong>。可以操作续借等图书馆有关事务。当然在i北航 App&#x2F;北航小程序上也可以做。</li>
+<li><strong>北京航空航天大学</strong>公众号。这里主要是对外宣传为主，如果对校级大新闻感兴趣可以关注一下。往常开学期间也会发机场&#x2F;火车站到北航的路径，摆渡车时刻等交通信息，可以留意一下。</li>
+<li>（谨慎选择）（非官方）“北航微生活”微信公众号。这是别人写的推荐之一，算是一个非官方的表白墙。本人没加过，不喜欢表白墙这类形式的我也不建议加。</li>
+</ul>
+<h3 id="两个神奇的非官方论坛"><a href="#两个神奇的非官方论坛" class="headerlink" title="两个神奇的非官方论坛"></a>两个神奇的非官方论坛</h3><p><strong>伴航</strong>：<a href="https://banhang.lyhtool.com:8001/">https://banhang.lyhtool.com:8001</a>  ，据观察里面有不少6系同学</p>
+<p><strong>航鸟小窝</strong>：<a href="https://buaa.live/bbs/">https://buaa.live/bbs/</a>  ，不过这个才建好不久，人气较上面那个冷清不少</p>
+<h3 id="教务处官网"><a href="#教务处官网" class="headerlink" title="教务处官网"></a>教务处官网</h3><h4 id="首页"><a href="#首页" class="headerlink" title="首页"></a>首页</h4><p>上面会公示<strong>转专业的相关事宜（如果有这个打算的话）</strong>（注，这个需要有统一身份认证账号后才能查，各位新同学弄好账号之后就能查了，稍安毋躁），也可以查询<strong>各个专业的培养方案（对后面专业分流有用）</strong>。后续的选课等，也是要在教务系统里操作的。</p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806174303.png" alt="image.png"></p>
+<p>各专业的培养方案，可以在主页的“培养指南”栏目中查询，会对后面的<strong>专业选择</strong>有所帮助。</p>
+<p>至于<strong>大类</strong>的培养方案？这个小弟似乎没有查到过，十分抱歉（</p>
+<h4 id="教务系统"><a href="#教务系统" class="headerlink" title="教务系统"></a>教务系统</h4><p><strong>（再次，注，这个需要有统一身份认证账号后才能访问，各位新同学弄好账号之后就能访问了，稍安毋躁）</strong></p>
+<h4 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h4><p>在校内的话，是可以在教务处首页点”本研教育管理系统“直接进去的。但在校外不行，需要多一个步骤——由北航VPN访问。</p>
+<ul>
+<li><p>首先要进入北航官网（<a href="http://www.buaa.edu.cn),在导航栏点”常用链接“,再点”vpn系统“./">www.buaa.edu.cn），在导航栏点”常用链接“，再点”VPN系统“。</a><br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806175433.png" alt="image.png"></p>
+</li>
+<li><p>进入界面以后，随便选一个即可。此处以VPN4为例。<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806175510.png" alt="image.png"></p>
+</li>
+<li><p>随后需要用统一身份认证账号登陆。<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806175554.png" alt="image.png"></p>
+</li>
+<li><p>登陆后，在资源列表里找到”教务处官网“，或在搜索框直接搜”教务“。<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806175748.png" alt="image.png"></p>
+</li>
+<li><p>随后就进入了教务处的官网，点击本研教务管理系统，就可以正常用账号登入教务系统了。如果遇到这个界面，选新版系统入口就好了。<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806175932.png" alt="image.png"></p>
+</li>
+</ul>
+<h4 id="正文-3"><a href="#正文-3" class="headerlink" title="正文"></a>正文</h4><p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806180116.png" alt="image.png"></p>
+<p>相信在日后，<strong>辅导员</strong>等会给出教务系统如何使用的更详细指南。本文主要是教各位怎么用教务系统查开课方案，课程等信息。</p>
+<p>信息的获取主要在”查询“一栏。<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806180616.png" alt="image.png"></p>
+<p>查询各专业和学院的开课计划这些，主要在”执行教学计划查询“里看。对于大类，院系选择<code>“[70]北航学院”</code>，其它专业的则根据不同专业对应的学院来选择就可以了。这个主要是后面选专业的时候，可以看看要上的课自己满不满意（笑）<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806181826.png" alt="image.png"></p>
+<h2 id="有关四、六级"><a href="#有关四、六级" class="headerlink" title="有关四、六级"></a>有关四、六级</h2><p>在大一的时候，我推荐各位就把四六级解决了——大一上干四级，大一下干六级。</p>
+<p>说实话，<strong>除了听力</strong>，四六级真不难。阅读题等等，在我感觉看来，就跟高考英语是一个水平。除了题型有所变化以外，难度跟高考英语其实是很相近的，大家<strong>不要对四六级太害怕，干就完事了！</strong></p>
+<p>为什么要强调“除了听力”？因为听力可以算是整套题最难的了：高考题是把问题印上卷子的，而四六级的听力要你<strong>先听完全文，再听问题，然后作答</strong>。更难的是，<strong>文章&#x2F;语段大部分只读一遍！</strong></p>
+<p>这部分的解法，有两个。一个适用于记性好的同学，就是先<strong>专心</strong>听完全文，期间不要<strong>看选项分神</strong>，再听问题，按印象作答——有一点挑战性。还有一种就是边听边看选项，听的时候发现关键字，就在对应选项旁边标记一下（手速快还可以多写点提示词）；最后听选项的时候，在标记了的选项里面选就好。<em>由于我一般用第一个办法，其他办法我并不是很了解；更好的办法，可能就要另请高明了</em></p>
+<p>因此，我的四六级备考建议是：真题看看熟悉题型就行，<strong>重点练听力</strong>。</p>
+<h2 id="有关体育锻炼"><a href="#有关体育锻炼" class="headerlink" title="有关体育锻炼"></a>有关体育锻炼</h2><p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806192608.png" alt="image.png"></p>
+<p>北航有个叫<strong>TD线</strong>的特色项目，此外还要求各位进行体育活动的<strong>阳光打卡</strong>。TD一天可打3次，阳光打卡一周只能打4次，具体要求在打卡页面就能看到。一个学期的要求据说是TD+阳光打卡共48次，其中必有32次TD+16次阳光打卡。但是为保安全，我建议TD也刷到48次。</p>
+<p>TD线通法可视个人喜好而言。想有一定锻炼量可以老实过各项项目；只为了刷完也可以摸鱼一路走过去。<strong>这两个算是正当的方法，不正当的方法就不说了，好孩子不要学（</strong></p>
+<p>而且，在各位军训完之后，我建议休整好就尽快弄完，<strong>以防期末忙的时候忘记，导致体育课白扣10分！</strong></p>
+<p>此外，有不少体育活动可以<strong>加TD次数</strong>。比如我们这一届在大一上的运动会时，有一个太极扇的表演项目；报名参加的同学，最后都<strong>喜提了48次TD次数。</strong></p>
+<h2 id="有关沙河美食"><a href="#有关沙河美食" class="headerlink" title="有关沙河美食"></a>有关沙河美食</h2><p>各位还是要在沙河待个两个星期的。是时候分享一点自己有限的美食储备了：</p>
+<p>注意，这里主要是中晚餐。北航食堂在早餐卖的<strong>基本都是包子等面食</strong>，仅有少数窗口卖面、馄饨之类（如西区1f的一个窗口），可能需要各位适应一下。</p>
+<ul>
+<li><p>西区：只推荐-1f的清真食堂与1f的食堂。</p>
+<p>清真食堂可吃<strong>刀削面（现做），盖饭，炒饭，炒菜</strong>。<br>刀削面8元一位，好吃但分量较少；盖饭本人推荐黄焖牛肉（17.8一份）和普通的牛肉盖饭（可自选搭配蔬菜，15一份）；炒饭和刀削面在一个窗口，各个口味都不错，10块一位；炒菜本人力推<strong>小炒羊肉和金蛊牛肉（如果还有的话）</strong></p>
+<p>1f我主要是吃早餐：推荐<strong>叉烧包，白菜肉包子，燕麦包</strong>。早餐我一般是两个包子+一碗豆浆。</p>
+</li>
+<li><p>东区：仅推荐3f的鼓瑟轩。如果各位军训的时候只能在东区解决饮食的话，那就将就吃1f&#x2F;3f的菜吧，没办法了（</p>
+</li>
+</ul>
+<p>至于学院路的？孩子才搬过来，还不知道有啥好吃的，再探完了再报😋</p>
+<h2 id="信类只有计算机一个”好“选择？"><a href="#信类只有计算机一个”好“选择？" class="headerlink" title="信类只有计算机一个”好“选择？"></a>信类只有计算机一个”好“选择？</h2><p>答案很简明：<strong>不是</strong>，而且现在选计算机<strong>也不见得是好选择</strong>。</p>
+<p>此处且借梦拓培训时，上一届学长的分享内容一用（注：国奖 &#x3D; 国家奖学金）；<strong>里面的一些错误观点也可供各位参考</strong>：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/20240806194045.png" alt="image.png"><br>计算机<strong>人才过饱和</strong>，这已经是不争的事实了；<strong>上一个出现这种情况的叫土木工程。</strong></p>
+<p>【[打灰爱音&#x2F;填词] 搅拌机下——“不提桶跑路已是我最后仅存的善良”】 <a href="https://www.bilibili.com/video/BV1eM4m1m74i">https://www.bilibili.com/video/BV1eM4m1m74i</a></p>
+<p>不妨把这首二创歌曲的对应部分改成计算机对应的内容，说不定你能发现周围人吹嘘计算机和曾经吹嘘土木的一些相似之处？（笑）</p>
+<p>薪资呢？如果你觉得干开发就能赚大钱的话，不妨打开一个叫Boss直聘的软件，搜一下热门的前&#x2F;后端开发的普遍薪资是多少。总之是<strong>不存在</strong>”一毕业就有40w薪资“这种事情的。</p>
+<p><strong>也许各位的确是奔着6系（计算机）来到北航的。但是，希望在大一这一年里，你能找到自己真正喜欢的专业方向，在大一下专业分流的时候，找到真正适合自己，且自己真心喜欢的选择。</strong></p>
+<p><strong>千万不要按着分数选专业。</strong> 就像上文截图，这种想法反而是<strong>分数禁锢了自己</strong>。选自己<strong>真心喜欢</strong>的才重要。更何况，北航这几年的大类招生已经<strong>相对理性</strong>了许多：这一次的大类分流，6系甚至招到了全年级700名（23级大类内共有1000余人），应该不会再出现往年300名都挤不进6系的”盛况“了。</p>
+<p><strong>更何况，信类的优势专业也不止计算机一个。</strong> </p>
+<p>电子信息工程学院（2系）和自动化科学与电气工程学院（3系，但是注意”电气工程“只有空壳，<strong>千万别选</strong>）也是本校的强项，在师资、设备、资源等方面都不比计算机学院差。<strong>如果你再留心看看北航被评上院士的各位教授的院系，更会发现，院士全在计算机外的其他院系，2系和3系（e.g. 23年刚评上的郭雷院士、焦宗夏院士）就有。</strong> 此外，如果你成绩亮眼的话，进2&#x2F;3系福利也有不少：例如2系可以进<strong>北斗实验班（约等于院士班？）</strong>，3系对大类前200名分进的同学<strong>有保研上的优惠</strong>，<strong>更能提早选科研导师，在大二就能接触科研项目</strong>，岂不美哉？</p>
+<p>其它的系呢？也有强的啊！仪器光电与科学学院（17系）实力也十分不错，在这方面北航可谓在全国占有绝对优势，<strong>不要因为报考的同学普遍成绩较差就不选它</strong>；还有一个集成电路学院（41系），师资也不错，在学院路的一号楼地下修了一个<strong>智能微纳中心，设备之齐全令人发指</strong>，保研也很方便。（常见问题：2&#x2F;41二者差别？这个建议以<strong>大一下的专业宣讲</strong>为主进行参考，这里我就不多嘴了。）</p>
+<p>总之，希望各位在<strong>大一下</strong>的时候能多参与一下各学院的专业宣讲，对大类里各个专业都<strong>有了明确的认识之后，再做选择</strong>。</p>
+<p>除此之外，各位在开学的时候会被要求选一个学业导师。这个制度有一个好，就是可以通过导师举办的<strong>导学活动认识各个学院</strong>。我当时就是报了41系的郑翔宇老师，得以参观41系的微纳中心。<strong>如果你现在对某个学院感兴趣，不妨到时候选一个来自该学院的老师。</strong></p>
+<p><strong>此外，选好导师可能会有你意想不到的福利！我有一位同学，当时选了3系的yjs老师；然后一次导学活动，他们导学小组竟然能有体验747-400型客机全动模拟驾驶舱的机会，这个机会加钱都不一定能有！！！当时的我，看到的时候眼都馋哭了😭</strong></p>
+<p>顺带一提，上文截图的”21系“是软件学院。某种意义上，6&#x2F;21二者差不多。硬要比就是毕业得的学位，师资这方面的差别。</p>
+<p>这一部分，我想借用一位我很尊崇的长者的话作结：<strong>“一个人的命运啊，当然要靠自我奋斗，但是也要考虑到历史的进程。”</strong></p>
+<h2 id="北京”航空航天“大学？"><a href="#北京”航空航天“大学？" class="headerlink" title="北京”航空航天“大学？"></a>北京”航空航天“大学？</h2><p>进入北航信类的你，肯定时常会想：”<strong>航空航天</strong>“跟我<strong>信类</strong>学生有啥关系？宣传这个有什么用？</p>
+<p><strong>是有的。</strong> 上一栏提到的2系、3系干的活很多都跟航空航天有关。就以3系为例，无人机系统、飞行控制就是3系的主要业务范围。航空机载设备跟17系关系很密；雷达等电子设备，战机隐身和反隐身是2系的业务范围，等等…就连规模相对较小的41系，在研究的MRAM的主要用途也是抗辐射的航空航天机载设备。</p>
+<p><strong>我想报6系，那又有啥关系呢？</strong> 航电设备难道不用写程序？（笑）。而且飞机设计这些是需要电脑跑流体仿真的，这个又能牵扯到计科的高性能计算（HPC）领域，又怎么能说无关呢？</p>
+<p>也许你对”航空航天“四字无感，或对信类有关航空航天的宣传感到不解。<strong>我能理解这种感受，这是非常正常的，特别是被6系的金子招牌吸引而进入北航的各位同学</strong>。</p>
+<p>但是，身为一名航空爱好者（兼半个伪航天迷？航天我了解真不多，2333），我希望各位还是能给”航空航天“四字一点尊重，<strong>更需要尊重那些愿意在沙河待上4年、7年乃至更久的航类同学；因为他们确实是抱着对航空航天事业的热爱而选择的航类，并为这份伟大的事业做出了不少的牺牲。</strong></p>
+<p>哪怕各位可能会觉得自己读的应该叫“知春路计算机应用学院”，但别忘了国内最权威的航空学术期刊《航空学报》是哪个单位主办的。</p>
+<p>这部分就写到这吧。可能各位对上述观点不大认同，那也没关系，就当是我对校内一些不良风气发的牢骚即可；但，如果各位认同小弟上述愚见的话，小弟自是非常感激。</p>
+<h2 id="跋"><a href="#跋" class="headerlink" title="跋"></a>跋</h2><p>这篇私货就写到这吧。如果日后有想到什么，再写点东西发给各位看官（</p>
+<p>本来是想再写写自我介绍的，但是时间实在紧迫……先这样吧，过几天我再写一个有关我自己的碎碎念。</p>
+]]></content>
+      <categories>
+        <category>梦拓相关</category>
+      </categories>
+      <tags>
+        <tag>梦拓</tag>
+        <tag>心得</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OO_U2 - HW7简要总结</title>
     <url>/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>讨论区已有一众仙人分享了自己的实现，但我认为我有在降低修改复杂度上更进一步的办法。</p>
@@ -669,157 +829,172 @@
       </tags>
   </entry>
   <entry>
-    <title>OO_U2 - HW5,6阶段性总结</title>
-    <url>/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
-<p>我的调度算法，与我的架构实现耦合度较高，因此我不得不先提一些我自己的电梯实现；不需要的同学，欢迎直接跳开“电梯实现”部分。</p>
+    <title>OO_U2 - 电梯</title>
+    <url>/2025/05/13/OO_U3%20-%20JML/</url>
+    <content><![CDATA[<blockquote>
+<p>本文就是本人的博客作业。本单元除了优化方法外乏善可陈，因此我没什么额外要说的。</p>
 </blockquote>
-<p>这算是本人两周以来的一个总结吧，终于有时间写了…</p>
 <span id="more"></span>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本单元以一个简单的社交网络为背景，要求各位同学按照题目给出的JML规格，进行规格化开发。</p>
+<p>此外，本单元中还要求各位同学对部分关键方法构建JUnit单元测试，同时也引导了同学们利用大模型辅助规格化开发。</p>
+<h1 id="测试过程"><a href="#测试过程" class="headerlink" title="测试过程"></a>测试过程</h1><h2 id="不同类别的测试"><a href="#不同类别的测试" class="headerlink" title="不同类别的测试"></a>不同类别的测试</h2><p>按照要求，我们把集中类型的测试先简要介绍一遍：</p>
+<ul>
+<li>单元测试：从开发者角度，对最小可测试单元的测试，比如方法</li>
+<li>功能测试：从用户角度，对程序的某个特定功能进行测试</li>
+<li>集成测试：各个功能组合起来，整体进行测试</li>
+<li>压力测试：集成测试上更进一步，以大数据量&#x2F;多边界条件等，测试程序的性能和正确性</li>
+<li>回归测试：在原有程序基础上进一步开发后，测试修改后程序是否保证原有功能的正确性</li>
+</ul>
+<p>这集中测试，在我看来，是软件开发的不同阶段进行的：</p>
+<ul>
+<li>单元、功能、集成测试：在开发过程中进行，旨在验证当前完成的开发工作是否正确</li>
+<li>压力测试：在开发工作已有整体成果后进行，旨在验证Corner Case等严格条件下的正确性&#x2F;效率</li>
+<li>回归测试：在原有基础上继续开发后进行，旨在验证原有功能不受新增功能影响</li>
+</ul>
+<h2 id="数据构造策略"><a href="#数据构造策略" class="headerlink" title="数据构造策略"></a>数据构造策略</h2><p>我选择使用数据生成器，并按照一定的指令出现权重来随机生成指令。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">possible_instructions = [</span><br><span class="line"><span class="string">&quot;ap&quot;</span>, <span class="string">&quot;ar&quot;</span>, <span class="string">&quot;mr&quot;</span>, <span class="string">&quot;at&quot;</span>, <span class="string">&quot;dt&quot;</span>, <span class="string">&quot;att&quot;</span>, <span class="string">&quot;dft&quot;</span>,</span><br><span class="line"><span class="string">&quot;qv&quot;</span>, <span class="string">&quot;qci&quot;</span>, <span class="string">&quot;qts&quot;</span>, <span class="string">&quot;qtav&quot;</span>, <span class="string">&quot;qba&quot;</span>, <span class="string">&quot;qcs&quot;</span>, <span class="string">&quot;qsp&quot;</span>,</span><br><span class="line"><span class="string">&quot;coa&quot;</span>, <span class="string">&quot;doa&quot;</span>, <span class="string">&quot;ca&quot;</span>, <span class="string">&quot;da&quot;</span>, <span class="string">&quot;foa&quot;</span>, <span class="string">&quot;qbc&quot;</span>, <span class="string">&quot;qra&quot;</span>,</span><br><span class="line"><span class="string">&quot;am&quot;</span>, <span class="string">&quot;arem&quot;</span>, <span class="string">&quot;afm&quot;</span>, <span class="string">&quot;aem&quot;</span>, <span class="string">&quot;sm&quot;</span>, <span class="string">&quot;sei&quot;</span>, <span class="string">&quot;dce&quot;</span>,</span><br><span class="line"><span class="string">&quot;qsv&quot;</span>, <span class="string">&quot;qrm&quot;</span>, <span class="string">&quot;qp&quot;</span>, <span class="string">&quot;qm&quot;</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">weights = [</span><br><span class="line"><span class="number">12</span>, <span class="number">15</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="comment"># ap, ar, mr, at, dt, att, dft</span></span><br><span class="line"><span class="number">7</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="comment"># qv, qci, qts, qtav, qba, qcs, qsp</span></span><br><span class="line"><span class="number">8</span>, <span class="number">4</span>, <span class="number">10</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="comment"># coa, doa, ca, da, foa, qbc, qra</span></span><br><span class="line"><span class="number">10</span>, <span class="number">8</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">15</span>, <span class="number">8</span>, <span class="number">3</span>, <span class="comment"># am, arem, afm, aem, sm, sei, dce</span></span><br><span class="line"><span class="number">6</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">6</span> <span class="comment"># qsv, qrm, qp, qm</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
-<h1 id="浅提电梯实现"><a href="#浅提电梯实现" class="headerlink" title="浅提电梯实现"></a>浅提电梯实现</h1><p>读前注意，本人的设计并非最佳，其中有不少会引起复杂度增加的设计，请各位参考时务必谨慎。</p>
-<h2 id="概况"><a href="#概况" class="headerlink" title="概况"></a>概况</h2><p>在完成HW6后，本人的整体架构如下：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250406221034.png" alt="Pasted image 20250406221034.png"></p>
-<p>其中，电梯信息与电梯运行进程分离，便于维护。</p>
-<p>我的电梯，将运行状态分为以下几类：</p>
+<p>注意到，本单元作业的输入，可能存在以下情况：</p>
 <ul>
-<li>IDLE：闲置，此处与常理理解中的闲置是一致的，不多赘述</li>
-<li><strong>RESERVED</strong>：<strong>预约</strong>，<strong>在闲置状态的电梯</strong>，收到<strong>起点与电梯当前所在位置不同楼的请求</strong>时，进入的<strong>移动状态</strong>。</li>
-<li>RUNNING：运行，电梯处在<strong>非预约状态</strong>时的正常移动状态。</li>
-<li>WAITING：等待，电梯停靠，进行上下客时进入的状态。停靠完成后，<strong>视情况</strong>转入RUNNING&#x2F;RESERVED&#x2F;IDLE状态。</li>
+<li>增删密集型（频繁<code>ap/mr/coa</code>等）</li>
+<li>查询密集型（频繁<code>qtvs/qcs/qsp/...</code>）</li>
+<li>上述两者兼备</li>
 </ul>
-<p>同时，我们还需要记录电梯的<strong>运行方向</strong>，现规定：</p>
+<p>我们由此可以对应调整数据生成器中，各类指令的权重，以生成多种情况下的测试数据，补足随机测试过于随机的短板。</p>
+<h1 id="大模型辅助"><a href="#大模型辅助" class="headerlink" title="大模型辅助"></a>大模型辅助</h1><p>本单元中，我主要利用大模型，辅助了<strong>规格阅读、自动测试</strong>两个部分。</p>
+<p>当前的大模型在具备了思维链等技术后，<strong>并不需要过多的提示词，多了反而会影响模型的表现。</strong> 我们要做的，就是<strong>给足大模型需要参考的信息</strong>。就本单元而言，大模型需要的信息，无非指导书，以及各个文件里存放的JML规格。</p>
+<p>如果需要模型按某个流程执行任务，再在提示词里面描述清楚自己想要的流程，就可以了。</p>
+<h2 id="规格阅读"><a href="#规格阅读" class="headerlink" title="规格阅读"></a>规格阅读</h2><p>随着大模型的日趋成熟，以及JML语料每年的增长，当前的大模型已经可以做到：用户用极少的提示词，给足必要的信息，即可让大模型在JML有关问题上，输出质量较高的结果。</p>
+<p>以下是我使用Deepseek辅助阅读JML的一次尝试；其输出结论确与规格描述的结果一致。</p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/defa235b050fdc689ac5e48c8d368341.jpg" alt="defa235b050fdc689ac5e48c8d368341.jpg"></p>
+<p>考虑到AI输出有时仍不可靠，在本单元中，我均采用了先本人阅读一遍规格，得出规格想要规定的结果后，再让AI阅读一遍，随后将自己的结论与AI的结论进行比较的模式，以确保我对规格的理解正确。</p>
+<h2 id="自动测试"><a href="#自动测试" class="headerlink" title="自动测试"></a>自动测试</h2><p>在第二单元尝到了利用已有评测机框架，由AI代劳数据生成与Checker的甜头后，我在本单元继续延续了这一自动测试思路。</p>
+<p>具体而言，我向AI提交了这些输入：</p>
 <ul>
-<li>1：上行</li>
-<li>-1：下行</li>
-<li>0：仅在进入IDLE时设为此值。</li>
-<li>在电梯进入WAITING时，<strong>方向将被设置为下一步要移动的方向</strong></li>
+<li>课程指导书（通过网页审查元素，可以得知其存在一个<code>content.json</code>中）</li>
+<li>存有规格内容的各个<code>.java</code>文件，合并为一个文本文档，规避AI工具的文件上传次数限制</li>
+<li>示例<code>datagen.py</code>与<code>checker.py</code>，旨在让AI在已有评测机接口下，编写数据生成与正确检查器</li>
+<li>一定的提示词</li>
 </ul>
-<p>电梯内亦有一子请求表，记录满足以下条件的请求：</p>
-<ul>
-<li><strong>请求与电梯运行方向一致</strong></li>
-<li>记录当前方向的所有请求；比如，我们的电梯正在处理一个<code>F1-F3</code>的请求，现在处于<code>F2</code>；此时，若有一<code>F4-F5</code>的请求，则该请求可被指派给电梯，加入子请求表</li>
-</ul>
-<h2 id="存储状态的额外信息"><a href="#存储状态的额外信息" class="headerlink" title="存储状态的额外信息"></a>存储状态的额外信息</h2><p>上面提到，我们的子请求表只允许同向请求加入；在我们现在的实现下，这种情况当然会产生：</p>
-<ul>
-<li>电梯在<code>F3</code>，IDLE</li>
-<li>出现了一个<code>F1-F7</code>的请求，电梯进入RESERVED，空放到<code>F1</code></li>
-<li>电梯从<code>F3</code>空放去<code>F1</code>途中出现一个<code>F2-F1</code>的请求，我们自然希望捎带它，将其加入子请求表</li>
-</ul>
-<p>也就是说，<strong>空放方向与发出预约的请求的方向反向。</strong> 我们自然需要一个地方暂存这个预约请求；我选择通过<strong>继承</strong>的方法，<strong>将其存在状态内</strong>。</p>
-<p>具体而言：</p>
-<ul>
-<li>上面四个状态均属于一个<code>Status</code>类，内有一<code>enum Type</code>属性，记录当前状态类型</li>
-<li>若一个状态需要记录额外信息，则该状态作为<code>Status</code>的子类，<strong>额外信息作为子类的属性</strong>，存在子类中。</li>
-</ul>
-<p>我们此时只需对RESERVED，WAITING两个状态记录额外信息。</p>
-<p>RESERVED：</p>
-<ul>
-<li><code>allowPickUp</code>：中途是否允许捎带</li>
-<li><code>requester</code>：进行预约的请求。允许为null。</li>
-</ul>
-<p>WAITING：</p>
-<ul>
-<li><code>prevStatus</code>：进入WAITING前的状态。</li>
-</ul>
-<p>欲知为何如此，请继续看下文。</p>
-<h2 id="兼容SCHE请求"><a href="#兼容SCHE请求" class="headerlink" title="兼容SCHE请求"></a>兼容<code>SCHE</code>请求</h2><p>不知各位是否发现，在HW6引入的临时调度，跟我们上面提到的RESERVED略有相似之处？</p>
-<p>我们要让我们的现有设计兼容<code>SCHE</code>请求，只需做这么几件事情：</p>
-<ul>
-<li><code>SCHE-BEGIN</code>前，把途中无法捎带的请求赶回请求池；</li>
-<li>在临时调度至不同层时，<code>SCHE-BEGIN</code>对应转入一个 <strong><code>requester = null</code>，不允许捎带</strong>的RESERVED状态</li>
-<li>确保已有的RESERVED状态下的电梯运行规则，能够处理上述的<code>RESERVED</code>情况</li>
-</ul>
-<p>就这样，我们就做完了<code>SCHE</code>请求的电梯运行部分；剩下的，只需要实现指派电梯进<code>RESERVED</code>的逻辑，很省事吧！？</p>
-<h2 id="等待状态的转移规则"><a href="#等待状态的转移规则" class="headerlink" title="等待状态的转移规则"></a>等待状态的转移规则</h2><p>WAITING的状态转移规则如下：</p>
-<ul>
-<li>先前为<code>RUNNING</code>：<br>若仍有请求未到终点，则恢复RUNNING<br>若请求已全部满足，则进入IDLE</li>
-<li>先前为<code>RESERVED</code>：<br>若未到预约者起点，则恢复RESERVED<br>若到达了预约者起点，则进入RUNNING，同时<strong>将暂存的请求加入子请求表</strong></li>
-<li>先前为<code>IDLE</code>：<br>直接进入<code>RUNNING</code>，<br>因为我们保证，IDLE下的电梯被预约后，直接进入RESERVED状态，<br>此时必是因为，有一起点与IDLE状态下电梯所在位置的请求被分给了电梯。</li>
-</ul>
-<h1 id="调度算法"><a href="#调度算法" class="headerlink" title="调度算法"></a>调度算法</h1><p>交互方面，我采用的是一<code>Dispatcher</code>对多个<code>Elevator</code>的实现，与绝大多数做法一致。</p>
-<p>大家都知道影子电梯，不过它需要<strong>模拟电梯的整个运行过程</strong>，实现略显复杂；那么，有没有一个在复杂度和影子电梯的高效率之间折中的方案呢？</p>
-<p>是有的。我的这个策略在思路上与影子电梯有颇多相似之处，只不过：</p>
-<ul>
-<li>只需要计算（模拟）<strong>当前请求</strong>的运行时间</li>
-<li>已指派给电梯的其它请求的估计，<strong>利用优先级机制实现</strong></li>
-</ul>
-<h2 id="是否允许加入"><a href="#是否允许加入" class="headerlink" title="是否允许加入"></a>是否允许加入</h2><p>进行计算之前，<code>Dispatcher</code>需要得知当前正在评估的电梯，能否接受当前待加入的请求。</p>
-<p>可加入的规则如下：</p>
-<ul>
-<li>若电梯此时在IDLE状态下，直接允许加入，否则进行下述流程</li>
-<li>请求方向需与电梯当前运行方向一致；方向有关的说明见上文。</li>
-<li>电梯同向，且电梯此时没有超过请求的起点</li>
-<li>如果状态为（RESERVED）&#x2F;（WAITING，且前一个状态是RESERVED），则：<br>RESERVED状态需允许捎带<br>若预约请求方向与当前运行方向相反，则待加入请求的终点不得超过预约请求的起点</li>
-<li>加入后，不会出现电梯满员的情况</li>
-</ul>
-<p>“电梯满员”视个人实现不同，判断逻辑可能不同；我这里就以我的实现为例，谈谈我的判断逻辑。</p>
-<p>正如上文所述架构实现，我们一个电梯的子请求队列不仅包含了当前在电梯内的请求，还包含了将来电梯要捎带的请求；</p>
-<p>我们的判断逻辑是，假设请求加入了子请求表，<strong>得出各楼层处，最多同时出现的请求数；</strong> </p>
-<p>这一“同时出现的请求数”，反映了那一运行区间内，电梯内的人数。</p>
-<p><strong>若各区间的同时出现请求数的最大值，大于电梯容量，则认为此时加入请求会导致超员。</strong></p>
-<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250406214224.png" alt="Pasted image 20250406214224.png"></p>
-<p>如图所示，待加入请求在<code>F2-F3</code>区间会导致超员，故我们不应加入这一待加入请求。</p>
-<p>需要注意的是，如果采用了上文RESERVED状态的实现，若预约请求方向与电梯空放方向一致，此时还需将预约请求放进上面的图里进行比较。</p>
-<h2 id="计算评价指数"><a href="#计算评价指数" class="headerlink" title="计算评价指数"></a>计算评价指数</h2><p>在上述复杂的判断后，我们终于可以开始计算了…</p>
-<p>我们的计算公式如下：</p>
-<p>$$index &#x3D; index_{base} + priorityPenalty * elevStopTime$$</p>
-<h3 id="index-base"><a href="#index-base" class="headerlink" title="$index_{base}$"></a>$index_{base}$</h3><p>我们先需要得知：</p>
-<ul>
-<li>$dis$：电梯所在位置，与请求起点的楼层数</li>
-<li>$travel$：请求跨越的楼层数</li>
-<li>$stopCount$：请求沿途需要停靠，以让自己进电梯&#x2F;捎带其它请求；<code>stopCount</code>即中途停靠的次数</li>
-</ul>
-<p>随后即可算出当前请求的运行时间，作为我们评价指数计算的第一步；</p>
-<p>$$index_{base} &#x3D; (dis + travel)*elevSpeed + stopCount * elevStopTime $$</p>
-<h3 id="priorityPenalty"><a href="#priorityPenalty" class="headerlink" title="$priorityPenalty$"></a>$priorityPenalty$</h3><p>优先级惩罚，是所有请求的优先级惩罚之和：</p>
-<p>$$priorityPenalty &#x3D; \sum_{i&#x3D;1}^{n}{penalty_{R_i}}$$</p>
-<p>对于一个请求$R$，设其优先级为$priority$，楼层跨度为$travel$，则我们规定该请求允许的中途停靠次数$maxAllowedStops$如下：<br>$$maxAllowedStops &#x3D; round(travel * (1 - \frac{priority}{100}))$$<br>其中，$round(x)$取$x$最靠近的整数。</p>
-<p>在我们进行评价指数的计算时，我们先假设待加入请求已被加入；随后，对原有的请求$R_i$，算出加入后的<strong>总停靠次数</strong>$stops$。</p>
-<ul>
-<li>若$stops &lt;&#x3D; maxAllowedStops$：$penalty_{R_i} &#x3D; 0$</li>
-<li>否则：$penalty_{R_i} &#x3D; (stops - maxAllowedStops) * priority$</li>
-</ul>
-<h3 id="小总结"><a href="#小总结" class="headerlink" title="小总结"></a>小总结</h3><p>由此，我们就可以算出各个（可加入请求的）电梯的评价指数，选择评价指数最低者加入。</p>
-<p>上述是一个相对简单的模型，相信各位有更好的实现。</p>
-<h1 id="评测方案"><a href="#评测方案" class="headerlink" title="评测方案"></a>评测方案</h1><p>我选择构建评测机框架，<strong>留出随机数据生成器（dataGen）与正确性检查器（Checker）的接口</strong>。这样有利于提高不同题目下评测的灵活性。</p>
-<p>评测机框架方面，我构建了一个可以评测<strong>多程序、多测试点</strong>的多线程评测机，按照以下两种策略运行：</p>
-<ul>
-<li>测试深度优先：评测机优先对一个待测程序，测试多个测试点</li>
-<li>测试广度优先：评测机优先对一个测试点，测试多个程序</li>
-</ul>
-<p>评测机框架建议允许添加数据生成器生成的数据以外的数据，从而为人工构造高强度数据提供可能。</p>
-<p>运行测试程序方面，我选用了Python的<code>subprocess</code>库，其中的<code>POpen</code>方法十分有用，不仅可以指定子进程的工作目录，还可重定向子进程的输出。</p>
-<p>注意到，我们的数据投喂器读取的是**当前工作目录下的<code>stdin.txt</code>**；因此，我们可以通过指定不同工作目录的方法，来让投喂器同时测试多个样例。</p>
-<p>随后，我们即可使用数据投喂器+打包好的<code>.jar</code>进行评测；两个子进程需要用管道串起来，实现如下：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">input_process = subprocess.Popen(</span><br><span class="line">                [<span class="string">&#x27;input.exe&#x27;</span>],  <span class="comment"># input.exe 读取当前目录的 stdin.txt</span></span><br><span class="line">                cwd=case_dir,    <span class="comment"># 设置工作目录为测试用例目录</span></span><br><span class="line">                stdout=subprocess.PIPE,</span><br><span class="line">                stderr=subprocess.DEVNULL,</span><br><span class="line">                text=<span class="literal">True</span></span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">java_process = subprocess.Popen(</span><br><span class="line">                [<span class="string">&#x27;java&#x27;</span>, <span class="string">&#x27;-jar&#x27;</span>, os.path.join(target_dir, jar_file), <span class="string">f&quot;-Xmx<span class="subst">&#123;memLimit&#125;</span>&quot;</span>],</span><br><span class="line">                stdin=input_process.stdout,</span><br><span class="line">                stdout=fileout,</span><br><span class="line">                stderr=fileerr,</span><br><span class="line">                text=<span class="literal">True</span></span><br><span class="line">            )</span><br></pre></td></tr></table></figure>
+<p>本单元中，我的提示词如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">请参考main.txt中，各类的JML规格描述及Runner类的行为，以及exception.txt中各种异常的输出，参考content.json中指导书的数据范围限制，为我编写本次作业的数据生成器（datagen）与正确性检查器（checker）。上传的datagen与checker作为示例，你需要保留其中的接口。</span><br></pre></td></tr></table></figure>
 
-<p>据闻Python的<code>psutils</code>库有办法记录CPU使用时间，不过我的尝试没有成功，希望做过尝试的同学多多分享经验:P</p>
-<p>我两次作业的随机数据生成器与Checker均先由AI生成，再由人工进行细节修改。</p>
-<p>注意到，AI生成的Checker并不完全准确，在HW6时这一问题尤为显著，需要多处人工修正；<strong>在寻求AI工具的帮助，节省时间的同时，请务必仔细检查AI生成的工具是否能如预期般工作。</strong></p>
-<h1 id="之前写过的一些总结"><a href="#之前写过的一些总结" class="headerlink" title="之前写过的一些总结"></a>之前写过的一些总结</h1><ul>
-<li><a href="http://oo.e2.buaa.edu.cn/assignment/623/discussion/1684">使用ReentrantLock，实现更灵活的锁管理策略</a></li>
-<li><a href="http://oo.buaa.edu.cn/assignment/621/discussion/1682">在IDEA内部，进行更高效的死锁调试</a></li>
-</ul>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
-<li><p>本单元，我感觉最需要的其实是细心，不然线程间交互很容易出现问题。</p>
-</li>
-<li><p>架构设计同样起到了关键的作用。本人架构中<code>RESERVED</code>状态的抽象，大大节省了本单元的开发时间。</p>
-<p>我认为，只要架构：</p>
+
+<p>而在第二单元，一次作业的指导书，依赖上一次作业的指导书补全不变的设计要求的情况下，我的提示词是这样的；此时，我在文件中上传了各次作业的指导书。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">请帮我生成一个第七次作业的数据生成器（datagen）和正确性检查器（checker）；你应该先查看第五、第六次作业，再查看第七次作业在先前两次作业上做的修改，再开始工作；我已附上写好的datagen和checker，请仿照其格式进行编写。</span><br></pre></td></tr></table></figure>
+
+<p>在自动生成datagen&#x2F;checker的过程中，我尝试了Deepseek-R1&#x2F;Gemini 2.5 Pro&#x2F;o3-mini等模型，均能取得一定成果。生成的datagen一般不存在问题，但生成的Checker虽整体框架无误，但在边界条件的检查上往往会存在疏漏。</p>
+<p>针对这个问题，我选择“边测试，边修改”：在出现Checker报错时，先检查我自己的程序是否有问题，在确认自己的程序无误后再检查checker的问题。如果修改起来很方便，自己改了即可，不方便则直接指出问题，让AI工具进行修改。这一模式我已在多次作业中确认可行，且获得了可观的成果，可以在后续的第四单元继续使用。</p>
+<p>生成的datagen出问题的情况也存在，主要表现在部分指令不在生成范围内。这个问题，一般给AI指出问题，并让其修正即可。（假设之前你已经给足了参考信息）</p>
+<h1 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h1><p>实不相瞒，这单元的架构已经给定了设计，可发挥的空间并不大，也没有什么重复介绍的必要。这一部分介绍的，主要是优化方法。</p>
+<h2 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h2><p>这主要是为<code>isCircle()</code>方法服务。我们需要快速判断关系图内，两个人是否连通。诚然，使用BFS更通用，但是利用并查集，查找的最好情况，复杂度可以达到<code>O(1)</code>。</p>
+<p>具体而言，就是对于关系图内各节点（人）进行聚类：</p>
 <ul>
-<li>易于维护；</li>
-<li>复杂度低（可以归进上条）；</li>
-<li>运行效率在可接受范围内；</li>
+<li>每个聚类，选取一个节点作为代表</li>
+<li>每个节点记录自己所在聚类的代表</li>
+<li>通过比较每个节点的代表是否相等，得出二者是否在一个聚类内</li>
+<li>一个聚类中，可以保证各节点关系连通</li>
 </ul>
-<p>就可以算一个好设计。</p>
-<p>不过，我自己不得不承认，我本单元架构在不少实现细节上的复杂度实在太高，因此带来的BUG与维护的不便不在少数。</p>
-</li>
-<li><p>本单元亦让我直观地感受到了<strong>算法和数学模型，于程序的重要性何在。</strong> </p>
-<p>本人实现中，判断电梯是否满员的问题，可以抽象为计算一个二维空间内，所有线段的最多重叠次数；没有算法的帮助，计算效率很难提升。</p>
-<p>处理优先级问题的方法，其实就是简单的数学建模。</p>
-</li>
-<li><p>感受到了AI的力量。使用AI生成<code>checker</code>+人工修改的效率，远比纯手搓要高。</p>
-</li>
+<p>注意到，并查集的维护是个严重的问题。我选择在Network内维护一份完整的关系图，同时引入脏位机制；在发生关系删除时，脏位置高；在查询时，若脏位有效，则按照关系图重建并查集。</p>
+<p>并查集内部引入<strong>路径合并</strong>，以及<strong>按节点数的启发式合并</strong>，避免退化成链表带来的性能下降。</p>
+<h2 id="脏位"><a href="#脏位" class="headerlink" title="脏位"></a>脏位</h2><p>众所周知，当我们修改了一个状态后，只要我们不查询它，我们是不知道它改变了的！</p>
+<p>因此，我们引入脏位：</p>
+<ul>
+<li>对于某个不好维护的状态</li>
+<li>状态受到影响，要发生改变，且有其他信息知道如何改变时，<strong>不改变状态，而是把脏位置1</strong></li>
+<li>在查询状态时，若脏位有效，则按照其他信息重建状态，否则直接返回状态</li>
 </ul>
+<p>利用这一思路的方法：</p>
+<ul>
+<li><code>queryCoupleSum()</code> ，在关系权重发生变化时，难以一下就得知配对数变化</li>
+<li><code>getBestContributor()</code>，文章删除导致贡献变化，不遍历很难得知最佳贡献着</li>
+<li><code>queryBestAcquaintance()</code>，在关系权重发生变化时，不遍历当前熟人，很难得知最佳熟人</li>
+</ul>
+<h2 id="动态维护"><a href="#动态维护" class="headerlink" title="动态维护"></a>动态维护</h2><p>在我们向一个集合加入一个元素时，我们便可动态维护一个集合整体的属性，从而避免查询该属性时遍历整个集合，导致效率下降的问题。</p>
+<p>以<code>queryTagValueSum()</code>为例，每发生一次关系的加入&#x2F;更改&#x2F;删除，Tag内的valueSum属性就对应进行加减。</p>
+<p><code>queryTagVar()</code>思路与之类似，不再赘述。</p>
+<h2 id="链表的维护"><a href="#链表的维护" class="headerlink" title="链表的维护"></a>链表的维护</h2><p>主要是为了处理<code>queryReceivedArticle()</code>。</p>
+<p>在文章发生删除时，我们需要对Person接到的该文章进行删除。链表的删除一直是个问题，一般采取遍历链表，找到目标再删除的方法；很显然，在链表大小较大时，如此删除的开销实在太大。</p>
+<p>而且，包装好的LinkedList中的方法，无法做到高效移除链表中所有符合某一规则的元素。在这个情况下，我们希望一下移除链表中，所有文章ID为指定值的节点。</p>
+<p>注意到，对于双向链表，如果已知要移除的节点，那么，只需修改其前后节点的连接即可，时间复杂度可以做到<code>O(1)</code>，十分诱人；由此，我萌生了一个想法：在原有双向链表的基础上，再使用哈希表+链表，记录一个文章ID值对应的所有节点。时间复杂度是O(n)，不过n取决于已有的同文章ID节点数，相较遍历整个链表，效率也已经足够了。</p>
+<p>随后，我自行实现了一个<code>IndexedLinkedList</code>类，实现了上述思路。较我原有的实现方法，这么做的时间、空间复杂度均有所下降。原有思路见下文“性能优化”。</p>
+<p>这么做的性能瓶颈，在于额外HashMap的维护。</p>
+<h2 id="杂项-增量化开发"><a href="#杂项-增量化开发" class="headerlink" title="杂项 - 增量化开发"></a>杂项 - 增量化开发</h2><p>众所周知，解引用、条件分支等等都是有时间开销的；为了尽可能减少这一开销，我们引入“增量式编程”。</p>
+<p>举一个例子：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 两次解引用开销</span></span><br><span class="line"><span class="type">int</span> <span class="variable">var1</span> <span class="operator">=</span> persons.get(id).getVar1();</span><br><span class="line"><span class="type">int</span> <span class="variable">var2</span> <span class="operator">=</span> persons.get(id).getVar2();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 一次解引用</span></span><br><span class="line"><span class="type">Person</span> <span class="variable">p</span> <span class="operator">=</span> persons.get(id);</span><br><span class="line"><span class="type">int</span> <span class="variable">var1</span> <span class="operator">=</span> p.getVar1();</span><br><span class="line"><span class="type">int</span> <span class="variable">var2</span> <span class="operator">=</span> p.getVar2();</span><br></pre></td></tr></table></figure>
+
+<p>这能够带来一定程度的效率提升。</p>
+<h2 id="性能相关"><a href="#性能相关" class="headerlink" title="性能相关"></a>性能相关</h2><p>上面提到，我在选择带索引双向链表前，使用了另外一个方法，这里简要做一个介绍。</p>
+<p>既然链表删除要遍历，<strong>那我可不可以不删呢？</strong> 答案是可以的。</p>
+<p>注意到，<code>articles</code>容器只可能有两种操作：</p>
+<ul>
+<li>在头部插入新节点</li>
+<li>删除容器中所有ID为特定值的节点</li>
+</ul>
+<p>且：</p>
+<ul>
+<li>在ID为特定值的所有节点删除后，后续仍有可能加入ID位为该值的节点</li>
+<li>删除和加入不可能同时发生</li>
+<li>删除的区间，和删除后新加入的区间不相交</li>
+</ul>
+<p>因此，我们可以：</p>
+<ul>
+<li>链表只增不删</li>
+<li>用一个<code>HashMap&lt;Int, Int&gt;</code>，记录当前链表中，一个ID有效节点的个数</li>
+<li>每加入一个节点，对应ID有效次数加1，没有键值就设为1</li>
+<li>全部删除时，直接撤销键值对应</li>
+</ul>
+<p>并在<code>query/getReceivedArticle</code>处动手脚：</p>
+<ul>
+<li>从头遍历，对于某个ID的节点，以HashMap对应键值，作为遍历中，读取该ID节点的次数</li>
+<li>若次数&lt;&#x3D;有效节点数，则认为该节点有效，将其加入返回的容器中</li>
+<li>若次数大于有效节点数，则认为该节点是被删除操作删除的操作，忽略之，从下一个节点继续遍历</li>
+</ul>
+<p>这样就可以规避删除的遍历问题。</p>
+<p>但是，这么做有两个严重的问题：</p>
+<ul>
+<li><strong>内存溢出</strong>：这一机制对链表只加不减，得亏强测强度仍然不算大，不然这样是有可能MLE的</li>
+<li>极端情况：考虑两个节点之间，间隔了数量极大个无效节点；这样的话，我们遍历的效率会急剧降低，且这一代价<strong>每次查询都存在</strong>，我们无法保证这种情况不发生</li>
+</ul>
+<p>因此，我换到了上面使用带索引双向链表的方法。换了之后，对于Hw10的强测测试点，不仅有时间效率的提升，也解决了上面两个严重的问题。</p>
+<h1 id="对规格的理解"><a href="#对规格的理解" class="headerlink" title="对规格的理解"></a>对规格的理解</h1><p>在谈这些问题之前，我们需要明确，<strong>规格描述的是什么？</strong> 事实上，<strong>规格描述的是方法执行后的结果，而非方法执行的过程</strong>。</p>
+<ul>
+<li>规格中出现的“过程”，可以认为是测试流程，也可以认为是用来描述结果的过程。</li>
+<li>规格中出现的容器实现等等，<strong>只是为了举例描述一个结果</strong>，可以认为其实现是一个抽象概念</li>
+</ul>
+<p>因此，我们能发现一个显而易见的结论：<strong>规格不规定达到结果的过程</strong>，规格与实现分离因此合理，我们自然也可以在实现过程这一部分自由发挥，只要保证结果符合规格即可。</p>
+<h1 id="JUnit有关"><a href="#JUnit有关" class="headerlink" title="JUnit有关"></a>JUnit有关</h1><p>我认为测试可以分为两部分，一是不同测试上下文，二是<strong>方法自身</strong>的正确性检验。</p>
+<p>我们先谈方法正确性检验的部分吧。</p>
+<p>上面提到，规格中出现的”过程“，可以认为就是测试流程。因此，按照规格中描述的过程来编写测试，即可保证测试通过与符合规格等价，这是最简单的办法。</p>
+<p>当然，我们也可以根据规格描述的结果，以另一个测试流程来检验；不过，既然规格已经告诉你测试流程了，<strong>除非这一新的测试流程，在保证检测正确性的前提下，效率更快， 我们没有不按照规格给的测试流程编写测试的理由。</strong></p>
+<p>综上，<strong>照抄规格</strong>，就是实现方法正确性检验的最简便方法。在这个选择下，“Junit测试检验代码实现与规格的一致性的效果”这个问题更不成立，因为我们的method测试流程，本来就是跟规格描述完全一致的。</p>
+<p>方法正确性检验后，就是<strong>构建不同的测试上下文了</strong>，换言之，构造测试数据。事实上，我在本单元作业对JUnit的测试中出现的问题，都是因为构建的测试数据不够强大，未能考虑到部分边界条件。</p>
+<p>那我们怎么知道要考虑什么边界条件？这就是“利用规格信息”要做的了。我们需要从规格中得知：</p>
+<ul>
+<li>待测试方法要求哪些属性不变，要变的属性怎么变</li>
+<li>待测方法涉及的属性，会受其它什么方法的影响</li>
+</ul>
+<p>明确好这两点后，我们基本就能找出所有的边界条件了。</p>
+<h1 id="本单元学习体会"><a href="#本单元学习体会" class="headerlink" title="本单元学习体会"></a>本单元学习体会</h1><h2 id="算法的重要"><a href="#算法的重要" class="headerlink" title="算法的重要"></a>算法的重要</h2><p>如果说前两个单元是为了考察同学们对程序整体架构的设计能力，这个单元考察的就是：同学们在架构确定的前提下，进行具体实现的能力。</p>
+<p>长期以来，我都对算法不甚重视，期望用架构或多线程等方法，代替算法解决问题。<strong>本单元打消了我这一错误的偏见，让我真正认识到了算法的重要性。</strong></p>
+<p>具体而言，查询关系是否连通这一问题，在并查集以外，我实在想不出效率更高的办法，这就是算法影响程序效率的一个实例。</p>
+<h2 id="测试的重要性"><a href="#测试的重要性" class="headerlink" title="测试的重要性"></a>测试的重要性</h2><p>本单元开始的第一次作业，我认为严格按照规格描述的结果实现，就不会产生问题，我因此没搓评测机。然后在强测就出现了问题，最后检查发现，是自己的一处愚蠢的笔误（笑，把value赋值到id上）造成的；在有评测机的情况下，这个问题很好发现，但我没搓评测机，这个问题我就没发现。</p>
+<p>自此以后，我每单元都搓一次评测机，避免这种事情再次发生；后面也确实没有发生过。</p>
+<p><strong>时刻认为自己写的程序有Bug，</strong> 这个思维模式还是很重要的。</p>
+<h2 id="JML为何难以推广？"><a href="#JML为何难以推广？" class="headerlink" title="JML为何难以推广？"></a>JML为何难以推广？</h2><p>形式化验证的需求的确很小，但我认为JML难以推广，是<strong>可读性出了问题</strong>。</p>
+<p>我们简要比较一下，几种语言如何描述结果：</p>
+<p>自然语言：操作后，id1对应成员的 | 包含id2对应的成员的 | 所有tag内，不再包含id2对应的成员</p>
+<p>JML语言：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">@ ensures  (\forall <span class="type">int</span> i; <span class="number">0</span> &lt;= i &amp;&amp; i &lt; getPerson(id1).tags.length;  </span><br><span class="line">@                      \old(getPerson(id1).tags[i].hasPerson(getPerson(id2)))==&gt;!getPerson(id1).tags[i].hasPerson(getPerson(id2)));</span><br></pre></td></tr></table></figure>
+
+<p>（伪）数学语言：<br>$$\forall t \in Persons[id1].Tags[], prev(t.hasPerson(id2))\rightarrow  !t.hasPerson(id2)$$</p>
+<p>不可否认，自然语言在表达上最直观凝练，但是它无法避免产生歧义的问题；在形式化验证&#x2F;规格化开发等严谨的前提下，自然语言一般不被使用，或仅作为辅助说明出现。</p>
+<p>这就是我们为何要引入规格语言。</p>
+<p>但是，不难注意到，与我们上面的（伪）数学语言相比，描述相同的结果，JML语言花费了显然更多的篇幅；这是为什么？</p>
+<p>一言以蔽之，<strong>JML的抽象程度还不够，没有脱离具体实现。</strong> 事实上，JML在尝试用一种基础的，具体的实现（比如容器认为是数组），或一种基础的，具体的过程（比如容器的查找过程），来尝试描述自己想要的结果。</p>
+<p>在本人对形式化验证的简单了解后，我了解到了<code>TLA+</code>这门形式化验证语言。其<strong>完全基于数理逻辑</strong>，而非软件开发思想，从而做到了高度抽象、脱离具体实现。最后的描述效果，与我们上面随手写的（伪）数学语言基本一致，严谨而简明。</p>
+<p>当一个工具带来的收益，远远小于其带来的负面影响时，是否采用它就很值得商榷了。JML确实做到了严谨描述结果，但其带来的可读性问题十分严重。与之比较，作为当前主流的形式化验证语言，TLA+采用了<strong>数理逻辑语言</strong>进行结果的描述；虽然有初始的学习成本，但其保证了描述的可读性。相信这就是JML难以推广的原因吧，<strong>这也让我认识到了选好工具的必要性。</strong></p>
+<p>在研究这个问题的时候，我也再次感受到了 <strong>“抽象”</strong> 这一哲学，在计算机科学中的重要作用。抽象不仅有利于找出通用的解决方法，<strong>更有利于准确地描述问题。</strong></p>
 ]]></content>
       <categories>
         <category>课程相关</category>
@@ -1057,6 +1232,42 @@
       </tags>
   </entry>
   <entry>
+    <title>图床测试</title>
+    <url>/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</url>
+    <content><![CDATA[<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/%7B433FA560-1033-4134-A91E-3F4E0C6D3AC2%7D.png" alt="{433FA560-1033-4134-A91E-3F4E0C6D3AC2}.png"></p>
+<p>通过阿里云OSS+PicGo的方案，本博客成功实现了图床功能。</p>
+<p>Github在国内访问速度太慢，为了实现图片快速加载，只能加点钱上阿里云了 :(</p>
+<p>不过一个月也就6块钱，也就约等于一个月少喝一瓶东方树叶嘛😋</p>
+]]></content>
+      <categories>
+        <category>建站历程</category>
+      </categories>
+      <tags>
+        <tag>测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>建站第一日</title>
+    <url>/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/</url>
+    <content><![CDATA[<p>今天做成的事情不多，主要是做了一下侧边栏的结构，改了个色，加了个favicon，然后基本就没了。</p>
+<p>上述工作的确很简单，但为何忙了一天，却只完成了这几件事呢？问题出在评论区功能和图床的实现上。</p>
+<span id="more"></span>
+
+<p>先说图床。<br>这个Blog显然不会是一个纯文字的博客，后续放图进文章的问题肯定要考虑到。<br>Github Pages没记错的话，库大小似乎是有限制的（1GB？），把所有文章的图片直接存库里固然不现实。找了一天，暂时还没有找到一个成本为0或接近0的方案，基本都要涉及到买域名&#x2F;配置云服务。目前看到一个PicGo + Github的方案似乎可行，之后有空再试。</p>
+<p>再说评论系统。<br>为了和各位读者相互交流，评论区肯定是少不了的。<br>但是，正是在评论区实现的方案选择上，我近乎浪费了一整个早上。为什么呢？还请继续往下看：</p>
+<p>NexT主题集成了几个评论系统：disqus, 畅言，livere，gitalk和utterances。<br>disqus在国内访问速率堪忧，甚至大概率打不开，不在考虑范围内；<br>livere在国内倒是能用，但是必须要社交平台账号登录，不大符合我允许匿名留言的想法；<br>gitalk和utterances必须要求Github登录后才能评论，门槛之高不言而喻，且同样无法实现匿名评论。<br>那畅言呢？要求登录是其一，其美观程度之差是其二，本着不妥协的原则，这个方案也行不通。</p>
+<p>在上述方案都不符合预期的情况下，只得求助各路教程，而各路教程都不约而同地指向了valine。valine允许匿名，外观简洁，看起来就是最佳之选了。在一番了解后，发现valine原本被集成在NexT内，但出于不再开源和安全问题的原因被移除，以单独插件形式存在。安装并配置好后，却发现其无法正常使用：起初是出现401报错，后变为不报错，但评论无法正常发表，点下发表后毫无反应。</p>
+<p>一番折腾后，评论区的建设仍毫无进展，只得暂时作罢。</p>
+<p>Blog的基本框架现在已经成型。接下来的建设任务，我想就是攻克下这两个难题了。至于小细节，留到日后吧。</p>
+]]></content>
+      <categories>
+        <category>建站历程</category>
+      </categories>
+      <tags>
+        <tag>心得</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>在IDEA内部，进行更高效的死锁调试</title>
     <url>/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/</url>
     <content><![CDATA[<blockquote>
@@ -1100,27 +1311,6 @@
       </categories>
       <tags>
         <tag>面向对象</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>建站第一日</title>
-    <url>/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/</url>
-    <content><![CDATA[<p>今天做成的事情不多，主要是做了一下侧边栏的结构，改了个色，加了个favicon，然后基本就没了。</p>
-<p>上述工作的确很简单，但为何忙了一天，却只完成了这几件事呢？问题出在评论区功能和图床的实现上。</p>
-<span id="more"></span>
-
-<p>先说图床。<br>这个Blog显然不会是一个纯文字的博客，后续放图进文章的问题肯定要考虑到。<br>Github Pages没记错的话，库大小似乎是有限制的（1GB？），把所有文章的图片直接存库里固然不现实。找了一天，暂时还没有找到一个成本为0或接近0的方案，基本都要涉及到买域名&#x2F;配置云服务。目前看到一个PicGo + Github的方案似乎可行，之后有空再试。</p>
-<p>再说评论系统。<br>为了和各位读者相互交流，评论区肯定是少不了的。<br>但是，正是在评论区实现的方案选择上，我近乎浪费了一整个早上。为什么呢？还请继续往下看：</p>
-<p>NexT主题集成了几个评论系统：disqus, 畅言，livere，gitalk和utterances。<br>disqus在国内访问速率堪忧，甚至大概率打不开，不在考虑范围内；<br>livere在国内倒是能用，但是必须要社交平台账号登录，不大符合我允许匿名留言的想法；<br>gitalk和utterances必须要求Github登录后才能评论，门槛之高不言而喻，且同样无法实现匿名评论。<br>那畅言呢？要求登录是其一，其美观程度之差是其二，本着不妥协的原则，这个方案也行不通。</p>
-<p>在上述方案都不符合预期的情况下，只得求助各路教程，而各路教程都不约而同地指向了valine。valine允许匿名，外观简洁，看起来就是最佳之选了。在一番了解后，发现valine原本被集成在NexT内，但出于不再开源和安全问题的原因被移除，以单独插件形式存在。安装并配置好后，却发现其无法正常使用：起初是出现401报错，后变为不报错，但评论无法正常发表，点下发表后毫无反应。</p>
-<p>一番折腾后，评论区的建设仍毫无进展，只得暂时作罢。</p>
-<p>Blog的基本框架现在已经成型。接下来的建设任务，我想就是攻克下这两个难题了。至于小细节，留到日后吧。</p>
-]]></content>
-      <categories>
-        <category>建站历程</category>
-      </categories>
-      <tags>
-        <tag>心得</tag>
       </tags>
   </entry>
   <entry>
@@ -1208,18 +1398,96 @@
       </tags>
   </entry>
   <entry>
-    <title>图床测试</title>
-    <url>/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</url>
-    <content><![CDATA[<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/%7B433FA560-1033-4134-A91E-3F4E0C6D3AC2%7D.png" alt="{433FA560-1033-4134-A91E-3F4E0C6D3AC2}.png"></p>
-<p>通过阿里云OSS+PicGo的方案，本博客成功实现了图床功能。</p>
-<p>Github在国内访问速度太慢，为了实现图片快速加载，只能加点钱上阿里云了 :(</p>
-<p>不过一个月也就6块钱，也就约等于一个月少喝一瓶东方树叶嘛😋</p>
+    <title>第一次尝试</title>
+    <url>/2023/11/27/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95/</url>
+    <content><![CDATA[<pre><code>万事开头难。
+</code></pre>
+<p>有关建设个人博客这件事，本人其实早在2022年5月，就已按各路教程，用Hexo和Github Pages搭好了环境。苦于当时的学业压力，加上后续也没有任何写随笔的时间和欲望，这一项目就此搁浅，主页上也只留着默认的“hello world”。</p>
+<p>转眼，过了一年半，这个想法又被提上了日程。主要的推动力，我想是高宁老师在几周前《大国领袖》课程上的点醒。的确，写作使人深刻。思想在矛盾中产生进步，而若不以文字记录下所思所想，任何进步所获，都将被时间冲淡，最后终将导致自己寸步未进。听得此话，如醍醐灌顶。也许，真的是时候认真记录一下自己的所思所想了。</p>
+<p>初入大学数月，感受颇丰——无论是学业上，还是这几个月来自己学余的所见所闻。这几个月，有看完MyGo!!!!!、补完少歌之后的感动，有学业繁重、认识到自己与各路大神差距的压力，有对自己选择信息类，而非三年前自己所热爱的航空学的怀疑，更有初中以后，自己的精神支柱长期空缺的反思。上述种种，我想，绝非只是自己心里想想，然后任其随时间逝去就能过去的。用文字记录下自己的感受，并在写作中反思，我想才是正解。</p>
+<p>当然，自己搭建Blog，也绝非易事。在您观看这篇文章时，本人可能还在潜心研究NexT主题的各类复杂设置，这个博客也大概率还只是一个刚搭好的毛胚房。这也算是我第一次真正使用Github开发自己的项目，要学习的东西自然也是很多。</p>
+<p>写到这里，已然词穷。本人Blog的第一篇文章，就到此草草作结吧。</p>
+<p>但愿写完这篇文章之后，我还能记得继续写吧（笑</p>
 ]]></content>
       <categories>
-        <category>建站历程</category>
+        <category>随笔</category>
       </categories>
       <tags>
-        <tag>测试</tag>
+        <tag>心得</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>航砖祭祖后日谈</title>
+    <url>/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</url>
+    <content><![CDATA[<p>本文将对BUAA_CO_2024进行简要回顾，并给出自己的一些主观建议，仅供参考。</p>
+<span id="more"></span>
+
+<h1 id="预习建议"><a href="#预习建议" class="headerlink" title="预习建议"></a>预习建议</h1><p>主要针对实验部分进行预习。理论部分听课&#x2F;考前看408资料即可。有简单&#x2F;复杂两个预习方法。</p>
+<p>简单玩法，我推荐游玩图灵完备（Turing Complete）。玩到汇编之前基本就差不多了，当然能打完是最好，2333</p>
+<p>复杂玩法（<strong>地狱难度！！</strong>），我力推<a href="https://ysyx.oscc.cc/">“一生一芯”项目</a>。做到B阶段，在体系结构方面的理解就足够薄纱课程组给的实验方案了；课上测试另说（笑）</p>
+<p>要完成“一生一芯”，请预留至少两个月时间。<strong>难度真的很高，做之前做好思想觉悟！！</strong></p>
+<p>只不过，一生一芯用的指令集是RISC-V，跟课程组选用的MIPS有所不同。二者都属于RISC，不过有一些实现细节的不同，我认为影响不大。</p>
+<p>哪怕你在大二上上完了计组，如果你对体系结构感兴趣，我还是推荐你抽时间做一做一生一芯这个项目。因为在你上完后（至少我上完后），你会发现，本校的计组在硬件实现方面的知识实在欠缺，想不到吧？</p>
+<h1 id="课程概况"><a href="#课程概况" class="headerlink" title="课程概况"></a>课程概况</h1><p>最终目标：要求实现支持数条MIPS指令，以及异常、中断的五级流水线处理器。</p>
+<p>要求实现的指令集十分精简，具体可看本人P7的设计文档。</p>
+<p>课程分为理论课与实验课两部分。理论课讲述的是正常的计组课程内容。理论课部分的资料，出于课件版权问题，不在此放出。在课程正式开始时，建议咨询各路学长&#x2F;学姐获取资料。</p>
+<p>实验课即是各个Project。</p>
+<ul>
+<li>P0~P1：利用Logisim构建一些简单电路</li>
+<li>P2：利用MARS编写MIPS汇编程序</li>
+<li>P3：使用Logisim搭建单周期MIPS处理器</li>
+<li>P4：使用Verilog实现单周期MIPS处理器</li>
+<li>P5：实现五级流水线，处理各类冒险（数据冒险等）</li>
+<li>P6：进一步完善P5的设计，主要是添加MDU与新指令</li>
+<li>P7：支持异常与中断</li>
+</ul>
+<p>实验部分，在线上测试平台(cscore.buaa.edu.cn)，对各位的设计进行测试。</p>
+<h1 id="细说实验部分"><a href="#细说实验部分" class="headerlink" title="细说实验部分"></a>细说实验部分</h1><p>包含机房上机、课下作业两环节。</p>
+<p>对每一Project，需完成课下提交，方有上机测试资格；在完成上机测试之后，该Project才视为通过。各Project实行闯关制，唯有前一Project通过才可进行下一Project。</p>
+<p>在本届中，闯关制在P3才正式启动；也就是说，P0-P2课下&#x2F;课上未通过，也不会影响后续进度，到P3开始才影响。<strong>但考虑到实验部分成绩会算入最终成绩，我仍然建议尽力而为。</strong></p>
+<p>在学期的第1-3周为Pre阶段；同学在此期间在课程网站的教程部分，学习后续要用到的知识。其中有一些习题，<strong>由于判分标准始终不明，我还是建议尽力而为。</strong></p>
+<p>4-15周则是实验正式开始阶段。期间，你需要完成“一周一P，打下计组Project那些事”（P7例外，给了两周）。12周对8个Project（0-7），还包括P0-P2的保送，容错其实还行。</p>
+<p>课下测试是<strong>弱测</strong>，仅对你的实现是否基本正确进行测试，在边界条件下的正确性可能不会测试。在线上测试时，除对你的新加指令进行测试外，还会对你的课下提交进行<strong>强测</strong>，覆盖更多的边界条件。</p>
+<p>若你课下没考虑周全，看到课下提交通过就认为完事的话，那你很有可能会在课上满脸痛苦的找bug，还找不出，最后喜提再来一次…</p>
+<p>这也是为什么，我们需要在课下造评测机，数据生成器等等，自行尽可能全面测试。</p>
+<p>机房上机类似于考试，在本届设在每周一晚7点开始，共持续2小时，<strong>闭卷</strong>。</p>
+<p>每次上机考三个题，三个过两个记为通过，全过记为优秀。<strong>过两题和过三题的给分区别至今无人明确，我继续建议尽力而为。同时，在时间不够的时候，切勿盲目追求三题全过。</strong></p>
+<p>P0-P2就是做一下Pre练习类似的题目，有一定难度；</p>
+<p>P3-P6是三个加指令题。<strong>这部分就有意思了</strong>，这里加的不是MIPS指令集中的指令，而是课程组自行编写的新指令。具体题型建议参考往届学长&#x2F;学姐博客。</p>
+<p>P7则是对课下提交进行强测，并附带一个异常有关的加指令题。只要课下写得好，P7其实更简单。</p>
+<p>在每次上机完成后，还要简要回答一些问题。这部分就是助教挑几个问题问，大家基本都能答上，不用担心。</p>
+<h1 id="讨论区"><a href="#讨论区" class="headerlink" title="讨论区"></a>讨论区</h1><p>课程平台设有讨论区。在此鼓励各位积极水帖，积极分享交流经验。</p>
+<p>你可以分享：</p>
+<ul>
+<li>解题思路</li>
+<li>架构搭建经验</li>
+<li>数据生成思路&#x2F;实现</li>
+<li>评测机搭建思路&#x2F;实现</li>
+<li>其它可以提高效率的窍门：比如我自己就找到了命令行调用ISE的办法，直接抛弃臃肿的GUI🤤</li>
+</ul>
+<h1 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h1><h2 id="有关硬件实现"><a href="#有关硬件实现" class="headerlink" title="有关硬件实现"></a>有关硬件实现</h2><p>前面有稍微提到，本课程设计在硬件实现方面有所欠缺。何出此言？</p>
+<p>在P6时，我们要求加入MDU，以支持乘除操作。但是，课程组给出的要求是用<code>*</code>、<code>/</code>、<code>%</code>行为级描述乘、除、取余操作，其硬件实现在实验教材中并未提及（在我这一届）。在理论课那边呢？这要看老师，有些老师可能会提，也有不提的，这是一点。</p>
+<p>第二点，自2023年（我的上一届），课程设计去掉了P8 - FPGA实验。自此，实验设计中唯一跟硬件沾边的部分被砍没了。</p>
+<p>因此，只看实验教程，你不会知道：</p>
+<ul>
+<li>怎么把自己的设计搬上FPGA</li>
+<li>时序约束文件怎么写</li>
+<li>FPGA上怎么调用IP核，用上板载DRAM&#x2F;SRAM</li>
+<li>自己设计的时序情况如何，怎么进行时序优化</li>
+</ul>
+<p>第三点，课上测试。有一些指令逻辑对应的电路设计很难实现，且需要搭建专门模块，在我看来不大符合“通用处理器”的设计初衷。有些题目，在我看来，考察的其实是面向过程编程能力和读题能力，跟体系结构没什么关系。但从考察对自己架构的熟悉程度而言，这种设计也合理。</p>
+<p>因此，如果你实在对体系结构感兴趣，我推荐你课下自己多花时间了解，不要窘于课程设计。当然，如果你对体系结构不感兴趣，这种课程设计也确实足够了。</p>
+<h2 id="和理论课的脱节"><a href="#和理论课的脱节" class="headerlink" title="和理论课的脱节"></a>和理论课的脱节</h2><p>这个情况主要对2306。对于高工的同学（2318）是另外一个故事，我看他们的实验性实验设计挺不错的。</p>
+<p>主要是，理论课讲了Cache，实验课没有考察实现。这个问题在高工部分的新版实验解决了，那个实验有考察Cache部分的内容，不知道这个实验2406会不会采用。</p>
+<p>还有就是，理论课进度取决于老师。比如，P5实验开始，有的老师可能已经讲完了流水线和冒险有关知识，而有的老师还没开始，这就会导致实验进度与理论课进度的脱节。这问题没啥好解法，自己看往年课件吧。</p>
+<p>在这两点以外，其实就没什么好吐槽的了，挺好的。</p>
+]]></content>
+      <categories>
+        <category>课程相关</category>
+      </categories>
+      <tags>
+        <tag>心得</tag>
+        <tag>计组</tag>
       </tags>
   </entry>
   <entry>
@@ -1529,99 +1797,6 @@
       <tags>
         <tag>心得</tag>
         <tag>计组</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>航砖祭祖后日谈</title>
-    <url>/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</url>
-    <content><![CDATA[<p>本文将对BUAA_CO_2024进行简要回顾，并给出自己的一些主观建议，仅供参考。</p>
-<span id="more"></span>
-
-<h1 id="预习建议"><a href="#预习建议" class="headerlink" title="预习建议"></a>预习建议</h1><p>主要针对实验部分进行预习。理论部分听课&#x2F;考前看408资料即可。有简单&#x2F;复杂两个预习方法。</p>
-<p>简单玩法，我推荐游玩图灵完备（Turing Complete）。玩到汇编之前基本就差不多了，当然能打完是最好，2333</p>
-<p>复杂玩法（<strong>地狱难度！！</strong>），我力推<a href="https://ysyx.oscc.cc/">“一生一芯”项目</a>。做到B阶段，在体系结构方面的理解就足够薄纱课程组给的实验方案了；课上测试另说（笑）</p>
-<p>要完成“一生一芯”，请预留至少两个月时间。<strong>难度真的很高，做之前做好思想觉悟！！</strong></p>
-<p>只不过，一生一芯用的指令集是RISC-V，跟课程组选用的MIPS有所不同。二者都属于RISC，不过有一些实现细节的不同，我认为影响不大。</p>
-<p>哪怕你在大二上上完了计组，如果你对体系结构感兴趣，我还是推荐你抽时间做一做一生一芯这个项目。因为在你上完后（至少我上完后），你会发现，本校的计组在硬件实现方面的知识实在欠缺，想不到吧？</p>
-<h1 id="课程概况"><a href="#课程概况" class="headerlink" title="课程概况"></a>课程概况</h1><p>最终目标：要求实现支持数条MIPS指令，以及异常、中断的五级流水线处理器。</p>
-<p>要求实现的指令集十分精简，具体可看本人P7的设计文档。</p>
-<p>课程分为理论课与实验课两部分。理论课讲述的是正常的计组课程内容。理论课部分的资料，出于课件版权问题，不在此放出。在课程正式开始时，建议咨询各路学长&#x2F;学姐获取资料。</p>
-<p>实验课即是各个Project。</p>
-<ul>
-<li>P0~P1：利用Logisim构建一些简单电路</li>
-<li>P2：利用MARS编写MIPS汇编程序</li>
-<li>P3：使用Logisim搭建单周期MIPS处理器</li>
-<li>P4：使用Verilog实现单周期MIPS处理器</li>
-<li>P5：实现五级流水线，处理各类冒险（数据冒险等）</li>
-<li>P6：进一步完善P5的设计，主要是添加MDU与新指令</li>
-<li>P7：支持异常与中断</li>
-</ul>
-<p>实验部分，在线上测试平台(cscore.buaa.edu.cn)，对各位的设计进行测试。</p>
-<h1 id="细说实验部分"><a href="#细说实验部分" class="headerlink" title="细说实验部分"></a>细说实验部分</h1><p>包含机房上机、课下作业两环节。</p>
-<p>对每一Project，需完成课下提交，方有上机测试资格；在完成上机测试之后，该Project才视为通过。各Project实行闯关制，唯有前一Project通过才可进行下一Project。</p>
-<p>在本届中，闯关制在P3才正式启动；也就是说，P0-P2课下&#x2F;课上未通过，也不会影响后续进度，到P3开始才影响。<strong>但考虑到实验部分成绩会算入最终成绩，我仍然建议尽力而为。</strong></p>
-<p>在学期的第1-3周为Pre阶段；同学在此期间在课程网站的教程部分，学习后续要用到的知识。其中有一些习题，<strong>由于判分标准始终不明，我还是建议尽力而为。</strong></p>
-<p>4-15周则是实验正式开始阶段。期间，你需要完成“一周一P，打下计组Project那些事”（P7例外，给了两周）。12周对8个Project（0-7），还包括P0-P2的保送，容错其实还行。</p>
-<p>课下测试是<strong>弱测</strong>，仅对你的实现是否基本正确进行测试，在边界条件下的正确性可能不会测试。在线上测试时，除对你的新加指令进行测试外，还会对你的课下提交进行<strong>强测</strong>，覆盖更多的边界条件。</p>
-<p>若你课下没考虑周全，看到课下提交通过就认为完事的话，那你很有可能会在课上满脸痛苦的找bug，还找不出，最后喜提再来一次…</p>
-<p>这也是为什么，我们需要在课下造评测机，数据生成器等等，自行尽可能全面测试。</p>
-<p>机房上机类似于考试，在本届设在每周一晚7点开始，共持续2小时，<strong>闭卷</strong>。</p>
-<p>每次上机考三个题，三个过两个记为通过，全过记为优秀。<strong>过两题和过三题的给分区别至今无人明确，我继续建议尽力而为。同时，在时间不够的时候，切勿盲目追求三题全过。</strong></p>
-<p>P0-P2就是做一下Pre练习类似的题目，有一定难度；</p>
-<p>P3-P6是三个加指令题。<strong>这部分就有意思了</strong>，这里加的不是MIPS指令集中的指令，而是课程组自行编写的新指令。具体题型建议参考往届学长&#x2F;学姐博客。</p>
-<p>P7则是对课下提交进行强测，并附带一个异常有关的加指令题。只要课下写得好，P7其实更简单。</p>
-<p>在每次上机完成后，还要简要回答一些问题。这部分就是助教挑几个问题问，大家基本都能答上，不用担心。</p>
-<h1 id="讨论区"><a href="#讨论区" class="headerlink" title="讨论区"></a>讨论区</h1><p>课程平台设有讨论区。在此鼓励各位积极水帖，积极分享交流经验。</p>
-<p>你可以分享：</p>
-<ul>
-<li>解题思路</li>
-<li>架构搭建经验</li>
-<li>数据生成思路&#x2F;实现</li>
-<li>评测机搭建思路&#x2F;实现</li>
-<li>其它可以提高效率的窍门：比如我自己就找到了命令行调用ISE的办法，直接抛弃臃肿的GUI🤤</li>
-</ul>
-<h1 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h1><h2 id="有关硬件实现"><a href="#有关硬件实现" class="headerlink" title="有关硬件实现"></a>有关硬件实现</h2><p>前面有稍微提到，本课程设计在硬件实现方面有所欠缺。何出此言？</p>
-<p>在P6时，我们要求加入MDU，以支持乘除操作。但是，课程组给出的要求是用<code>*</code>、<code>/</code>、<code>%</code>行为级描述乘、除、取余操作，其硬件实现在实验教材中并未提及（在我这一届）。在理论课那边呢？这要看老师，有些老师可能会提，也有不提的，这是一点。</p>
-<p>第二点，自2023年（我的上一届），课程设计去掉了P8 - FPGA实验。自此，实验设计中唯一跟硬件沾边的部分被砍没了。</p>
-<p>因此，只看实验教程，你不会知道：</p>
-<ul>
-<li>怎么把自己的设计搬上FPGA</li>
-<li>时序约束文件怎么写</li>
-<li>FPGA上怎么调用IP核，用上板载DRAM&#x2F;SRAM</li>
-<li>自己设计的时序情况如何，怎么进行时序优化</li>
-</ul>
-<p>第三点，课上测试。有一些指令逻辑对应的电路设计很难实现，且需要搭建专门模块，在我看来不大符合“通用处理器”的设计初衷。有些题目，在我看来，考察的其实是面向过程编程能力和读题能力，跟体系结构没什么关系。但从考察对自己架构的熟悉程度而言，这种设计也合理。</p>
-<p>因此，如果你实在对体系结构感兴趣，我推荐你课下自己多花时间了解，不要窘于课程设计。当然，如果你对体系结构不感兴趣，这种课程设计也确实足够了。</p>
-<h2 id="和理论课的脱节"><a href="#和理论课的脱节" class="headerlink" title="和理论课的脱节"></a>和理论课的脱节</h2><p>这个情况主要对2306。对于高工的同学（2318）是另外一个故事，我看他们的实验性实验设计挺不错的。</p>
-<p>主要是，理论课讲了Cache，实验课没有考察实现。这个问题在高工部分的新版实验解决了，那个实验有考察Cache部分的内容，不知道这个实验2406会不会采用。</p>
-<p>还有就是，理论课进度取决于老师。比如，P5实验开始，有的老师可能已经讲完了流水线和冒险有关知识，而有的老师还没开始，这就会导致实验进度与理论课进度的脱节。这问题没啥好解法，自己看往年课件吧。</p>
-<p>在这两点以外，其实就没什么好吐槽的了，挺好的。</p>
-]]></content>
-      <categories>
-        <category>课程相关</category>
-      </categories>
-      <tags>
-        <tag>心得</tag>
-        <tag>计组</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>第一次尝试</title>
-    <url>/2023/11/27/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95/</url>
-    <content><![CDATA[<pre><code>万事开头难。
-</code></pre>
-<p>有关建设个人博客这件事，本人其实早在2022年5月，就已按各路教程，用Hexo和Github Pages搭好了环境。苦于当时的学业压力，加上后续也没有任何写随笔的时间和欲望，这一项目就此搁浅，主页上也只留着默认的“hello world”。</p>
-<p>转眼，过了一年半，这个想法又被提上了日程。主要的推动力，我想是高宁老师在几周前《大国领袖》课程上的点醒。的确，写作使人深刻。思想在矛盾中产生进步，而若不以文字记录下所思所想，任何进步所获，都将被时间冲淡，最后终将导致自己寸步未进。听得此话，如醍醐灌顶。也许，真的是时候认真记录一下自己的所思所想了。</p>
-<p>初入大学数月，感受颇丰——无论是学业上，还是这几个月来自己学余的所见所闻。这几个月，有看完MyGo!!!!!、补完少歌之后的感动，有学业繁重、认识到自己与各路大神差距的压力，有对自己选择信息类，而非三年前自己所热爱的航空学的怀疑，更有初中以后，自己的精神支柱长期空缺的反思。上述种种，我想，绝非只是自己心里想想，然后任其随时间逝去就能过去的。用文字记录下自己的感受，并在写作中反思，我想才是正解。</p>
-<p>当然，自己搭建Blog，也绝非易事。在您观看这篇文章时，本人可能还在潜心研究NexT主题的各类复杂设置，这个博客也大概率还只是一个刚搭好的毛胚房。这也算是我第一次真正使用Github开发自己的项目，要学习的东西自然也是很多。</p>
-<p>写到这里，已然词穷。本人Blog的第一篇文章，就到此草草作结吧。</p>
-<p>但愿写完这篇文章之后，我还能记得继续写吧（笑</p>
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>心得</tag>
       </tags>
   </entry>
 </search>

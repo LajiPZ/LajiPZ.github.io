@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>OO_U2 - 电梯 - Position 0 - LajiPZ的随想屋</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Position 0 - LajiPZ的随想屋"><meta name="msapplication-TileImage" content="/img/pz13.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Position 0 - LajiPZ的随想屋"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="本文就是本人的博客作业。本单元除了优化方法外乏善可陈，因此我没什么额外要说的。"><meta property="og:type" content="blog"><meta property="og:title" content="OO_U2 - 电梯"><meta property="og:url" content="http://lajipz.top/2025/05/13/OO_U3%20-%20JML/"><meta property="og:site_name" content="Position 0 - LajiPZ的随想屋"><meta property="og:description" content="本文就是本人的博客作业。本单元除了优化方法外乏善可陈，因此我没什么额外要说的。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/defa235b050fdc689ac5e48c8d368341.jpg"><meta property="article:published_time" content="2025-05-13T11:00:00.000Z"><meta property="article:modified_time" content="2025-05-13T10:57:43.867Z"><meta property="article:author" content="LajiPZ"><meta property="article:tag" content="面向对象"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/defa235b050fdc689ac5e48c8d368341.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lajipz.top/2025/05/13/OO_U3%20-%20JML/"},"headline":"OO_U2 - 电梯","image":["https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/defa235b050fdc689ac5e48c8d368341.jpg"],"datePublished":"2025-05-13T11:00:00.000Z","dateModified":"2025-05-13T10:57:43.867Z","author":{"@type":"Person","name":"LajiPZ"},"publisher":{"@type":"Organization","name":"Position 0 - LajiPZ的随想屋","logo":{"@type":"ImageObject","url":"http://lajipz.top/img/pz13.png"}},"description":"本文就是本人的博客作业。本单元除了优化方法外乏善可陈，因此我没什么额外要说的。"}</script><link rel="canonical" href="http://lajipz.top/2025/05/13/OO_U3%20-%20JML/"><link rel="icon" href="/img/pz13.png"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/6.0.0/css/all.min.css"><link data-pjax rel="stylesheet" href="https://unpkg.com/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://unpkg.com/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://unpkg.com/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Position 0 - LajiPZ的随想屋" type="application/atom+xml">
+</head><body class="is-$3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-05-13T11:00:00.000Z" title="5/13/2025, 7:00:00 PM">2025-05-13</time>发表</span><span class="level-item"><time dateTime="2025-05-13T10:57:43.867Z" title="5/13/2025, 6:57:43 PM">2025-05-13</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a></span><span class="level-item">36 分钟读完 (大约5418个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">OO_U2 - 电梯</h1><div class="content"><blockquote>
+<p>本文就是本人的博客作业。本单元除了优化方法外乏善可陈，因此我没什么额外要说的。</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本单元以一个简单的社交网络为背景，要求各位同学按照题目给出的JML规格，进行规格化开发。</p>
+<p>此外，本单元中还要求各位同学对部分关键方法构建JUnit单元测试，同时也引导了同学们利用大模型辅助规格化开发。</p>
+<h1 id="测试过程"><a href="#测试过程" class="headerlink" title="测试过程"></a>测试过程</h1><h2 id="不同类别的测试"><a href="#不同类别的测试" class="headerlink" title="不同类别的测试"></a>不同类别的测试</h2><p>按照要求，我们把集中类型的测试先简要介绍一遍：</p>
+<ul>
+<li>单元测试：从开发者角度，对最小可测试单元的测试，比如方法</li>
+<li>功能测试：从用户角度，对程序的某个特定功能进行测试</li>
+<li>集成测试：各个功能组合起来，整体进行测试</li>
+<li>压力测试：集成测试上更进一步，以大数据量&#x2F;多边界条件等，测试程序的性能和正确性</li>
+<li>回归测试：在原有程序基础上进一步开发后，测试修改后程序是否保证原有功能的正确性</li>
+</ul>
+<p>这集中测试，在我看来，是软件开发的不同阶段进行的：</p>
+<ul>
+<li>单元、功能、集成测试：在开发过程中进行，旨在验证当前完成的开发工作是否正确</li>
+<li>压力测试：在开发工作已有整体成果后进行，旨在验证Corner Case等严格条件下的正确性&#x2F;效率</li>
+<li>回归测试：在原有基础上继续开发后进行，旨在验证原有功能不受新增功能影响</li>
+</ul>
+<h2 id="数据构造策略"><a href="#数据构造策略" class="headerlink" title="数据构造策略"></a>数据构造策略</h2><p>我选择使用数据生成器，并按照一定的指令出现权重来随机生成指令。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">possible_instructions = [</span><br><span class="line"><span class="string">&quot;ap&quot;</span>, <span class="string">&quot;ar&quot;</span>, <span class="string">&quot;mr&quot;</span>, <span class="string">&quot;at&quot;</span>, <span class="string">&quot;dt&quot;</span>, <span class="string">&quot;att&quot;</span>, <span class="string">&quot;dft&quot;</span>,</span><br><span class="line"><span class="string">&quot;qv&quot;</span>, <span class="string">&quot;qci&quot;</span>, <span class="string">&quot;qts&quot;</span>, <span class="string">&quot;qtav&quot;</span>, <span class="string">&quot;qba&quot;</span>, <span class="string">&quot;qcs&quot;</span>, <span class="string">&quot;qsp&quot;</span>,</span><br><span class="line"><span class="string">&quot;coa&quot;</span>, <span class="string">&quot;doa&quot;</span>, <span class="string">&quot;ca&quot;</span>, <span class="string">&quot;da&quot;</span>, <span class="string">&quot;foa&quot;</span>, <span class="string">&quot;qbc&quot;</span>, <span class="string">&quot;qra&quot;</span>,</span><br><span class="line"><span class="string">&quot;am&quot;</span>, <span class="string">&quot;arem&quot;</span>, <span class="string">&quot;afm&quot;</span>, <span class="string">&quot;aem&quot;</span>, <span class="string">&quot;sm&quot;</span>, <span class="string">&quot;sei&quot;</span>, <span class="string">&quot;dce&quot;</span>,</span><br><span class="line"><span class="string">&quot;qsv&quot;</span>, <span class="string">&quot;qrm&quot;</span>, <span class="string">&quot;qp&quot;</span>, <span class="string">&quot;qm&quot;</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">weights = [</span><br><span class="line"><span class="number">12</span>, <span class="number">15</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="comment"># ap, ar, mr, at, dt, att, dft</span></span><br><span class="line"><span class="number">7</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="comment"># qv, qci, qts, qtav, qba, qcs, qsp</span></span><br><span class="line"><span class="number">8</span>, <span class="number">4</span>, <span class="number">10</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="comment"># coa, doa, ca, da, foa, qbc, qra</span></span><br><span class="line"><span class="number">10</span>, <span class="number">8</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">15</span>, <span class="number">8</span>, <span class="number">3</span>, <span class="comment"># am, arem, afm, aem, sm, sei, dce</span></span><br><span class="line"><span class="number">6</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">6</span> <span class="comment"># qsv, qrm, qp, qm</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>注意到，本单元作业的输入，可能存在以下情况：</p>
+<ul>
+<li>增删密集型（频繁<code>ap/mr/coa</code>等）</li>
+<li>查询密集型（频繁<code>qtvs/qcs/qsp/...</code>）</li>
+<li>上述两者兼备</li>
+</ul>
+<p>我们由此可以对应调整数据生成器中，各类指令的权重，以生成多种情况下的测试数据，补足随机测试过于随机的短板。</p>
+<h1 id="大模型辅助"><a href="#大模型辅助" class="headerlink" title="大模型辅助"></a>大模型辅助</h1><p>本单元中，我主要利用大模型，辅助了<strong>规格阅读、自动测试</strong>两个部分。</p>
+<p>当前的大模型在具备了思维链等技术后，<strong>并不需要过多的提示词，多了反而会影响模型的表现。</strong> 我们要做的，就是<strong>给足大模型需要参考的信息</strong>。就本单元而言，大模型需要的信息，无非指导书，以及各个文件里存放的JML规格。</p>
+<p>如果需要模型按某个流程执行任务，再在提示词里面描述清楚自己想要的流程，就可以了。</p>
+<h2 id="规格阅读"><a href="#规格阅读" class="headerlink" title="规格阅读"></a>规格阅读</h2><p>随着大模型的日趋成熟，以及JML语料每年的增长，当前的大模型已经可以做到：用户用极少的提示词，给足必要的信息，即可让大模型在JML有关问题上，输出质量较高的结果。</p>
+<p>以下是我使用Deepseek辅助阅读JML的一次尝试；其输出结论确与规格描述的结果一致。</p>
+<p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/defa235b050fdc689ac5e48c8d368341.jpg" alt="defa235b050fdc689ac5e48c8d368341.jpg"></p>
+<p>考虑到AI输出有时仍不可靠，在本单元中，我均采用了先本人阅读一遍规格，得出规格想要规定的结果后，再让AI阅读一遍，随后将自己的结论与AI的结论进行比较的模式，以确保我对规格的理解正确。</p>
+<h2 id="自动测试"><a href="#自动测试" class="headerlink" title="自动测试"></a>自动测试</h2><p>在第二单元尝到了利用已有评测机框架，由AI代劳数据生成与Checker的甜头后，我在本单元继续延续了这一自动测试思路。</p>
+<p>具体而言，我向AI提交了这些输入：</p>
+<ul>
+<li>课程指导书（通过网页审查元素，可以得知其存在一个<code>content.json</code>中）</li>
+<li>存有规格内容的各个<code>.java</code>文件，合并为一个文本文档，规避AI工具的文件上传次数限制</li>
+<li>示例<code>datagen.py</code>与<code>checker.py</code>，旨在让AI在已有评测机接口下，编写数据生成与正确检查器</li>
+<li>一定的提示词</li>
+</ul>
+<p>本单元中，我的提示词如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请参考main.txt中，各类的JML规格描述及Runner类的行为，以及exception.txt中各种异常的输出，参考content.json中指导书的数据范围限制，为我编写本次作业的数据生成器（datagen）与正确性检查器（checker）。上传的datagen与checker作为示例，你需要保留其中的接口。</span><br></pre></td></tr></table></figure>
+
+
+<p>而在第二单元，一次作业的指导书，依赖上一次作业的指导书补全不变的设计要求的情况下，我的提示词是这样的；此时，我在文件中上传了各次作业的指导书。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请帮我生成一个第七次作业的数据生成器（datagen）和正确性检查器（checker）；你应该先查看第五、第六次作业，再查看第七次作业在先前两次作业上做的修改，再开始工作；我已附上写好的datagen和checker，请仿照其格式进行编写。</span><br></pre></td></tr></table></figure>
+
+<p>在自动生成datagen&#x2F;checker的过程中，我尝试了Deepseek-R1&#x2F;Gemini 2.5 Pro&#x2F;o3-mini等模型，均能取得一定成果。生成的datagen一般不存在问题，但生成的Checker虽整体框架无误，但在边界条件的检查上往往会存在疏漏。</p>
+<p>针对这个问题，我选择“边测试，边修改”：在出现Checker报错时，先检查我自己的程序是否有问题，在确认自己的程序无误后再检查checker的问题。如果修改起来很方便，自己改了即可，不方便则直接指出问题，让AI工具进行修改。这一模式我已在多次作业中确认可行，且获得了可观的成果，可以在后续的第四单元继续使用。</p>
+<p>生成的datagen出问题的情况也存在，主要表现在部分指令不在生成范围内。这个问题，一般给AI指出问题，并让其修正即可。（假设之前你已经给足了参考信息）</p>
+<h1 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h1><p>实不相瞒，这单元的架构已经给定了设计，可发挥的空间并不大，也没有什么重复介绍的必要。这一部分介绍的，主要是优化方法。</p>
+<h2 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h2><p>这主要是为<code>isCircle()</code>方法服务。我们需要快速判断关系图内，两个人是否连通。诚然，使用BFS更通用，但是利用并查集，查找的最好情况，复杂度可以达到<code>O(1)</code>。</p>
+<p>具体而言，就是对于关系图内各节点（人）进行聚类：</p>
+<ul>
+<li>每个聚类，选取一个节点作为代表</li>
+<li>每个节点记录自己所在聚类的代表</li>
+<li>通过比较每个节点的代表是否相等，得出二者是否在一个聚类内</li>
+<li>一个聚类中，可以保证各节点关系连通</li>
+</ul>
+<p>注意到，并查集的维护是个严重的问题。我选择在Network内维护一份完整的关系图，同时引入脏位机制；在发生关系删除时，脏位置高；在查询时，若脏位有效，则按照关系图重建并查集。</p>
+<p>并查集内部引入<strong>路径合并</strong>，以及<strong>按节点数的启发式合并</strong>，避免退化成链表带来的性能下降。</p>
+<h2 id="脏位"><a href="#脏位" class="headerlink" title="脏位"></a>脏位</h2><p>众所周知，当我们修改了一个状态后，只要我们不查询它，我们是不知道它改变了的！</p>
+<p>因此，我们引入脏位：</p>
+<ul>
+<li>对于某个不好维护的状态</li>
+<li>状态受到影响，要发生改变，且有其他信息知道如何改变时，<strong>不改变状态，而是把脏位置1</strong></li>
+<li>在查询状态时，若脏位有效，则按照其他信息重建状态，否则直接返回状态</li>
+</ul>
+<p>利用这一思路的方法：</p>
+<ul>
+<li><code>queryCoupleSum()</code> ，在关系权重发生变化时，难以一下就得知配对数变化</li>
+<li><code>getBestContributor()</code>，文章删除导致贡献变化，不遍历很难得知最佳贡献着</li>
+<li><code>queryBestAcquaintance()</code>，在关系权重发生变化时，不遍历当前熟人，很难得知最佳熟人</li>
+</ul>
+<h2 id="动态维护"><a href="#动态维护" class="headerlink" title="动态维护"></a>动态维护</h2><p>在我们向一个集合加入一个元素时，我们便可动态维护一个集合整体的属性，从而避免查询该属性时遍历整个集合，导致效率下降的问题。</p>
+<p>以<code>queryTagValueSum()</code>为例，每发生一次关系的加入&#x2F;更改&#x2F;删除，Tag内的valueSum属性就对应进行加减。</p>
+<p><code>queryTagVar()</code>思路与之类似，不再赘述。</p>
+<h2 id="链表的维护"><a href="#链表的维护" class="headerlink" title="链表的维护"></a>链表的维护</h2><p>主要是为了处理<code>queryReceivedArticle()</code>。</p>
+<p>在文章发生删除时，我们需要对Person接到的该文章进行删除。链表的删除一直是个问题，一般采取遍历链表，找到目标再删除的方法；很显然，在链表大小较大时，如此删除的开销实在太大。</p>
+<p>而且，包装好的LinkedList中的方法，无法做到高效移除链表中所有符合某一规则的元素。在这个情况下，我们希望一下移除链表中，所有文章ID为指定值的节点。</p>
+<p>注意到，对于双向链表，如果已知要移除的节点，那么，只需修改其前后节点的连接即可，时间复杂度可以做到<code>O(1)</code>，十分诱人；由此，我萌生了一个想法：在原有双向链表的基础上，再使用哈希表+链表，记录一个文章ID值对应的所有节点。时间复杂度是O(n)，不过n取决于已有的同文章ID节点数，相较遍历整个链表，效率也已经足够了。</p>
+<p>随后，我自行实现了一个<code>IndexedLinkedList</code>类，实现了上述思路。较我原有的实现方法，这么做的时间、空间复杂度均有所下降。原有思路见下文“性能优化”。</p>
+<p>这么做的性能瓶颈，在于额外HashMap的维护。</p>
+<h2 id="杂项-增量化开发"><a href="#杂项-增量化开发" class="headerlink" title="杂项 - 增量化开发"></a>杂项 - 增量化开发</h2><p>众所周知，解引用、条件分支等等都是有时间开销的；为了尽可能减少这一开销，我们引入“增量式编程”。</p>
+<p>举一个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 两次解引用开销</span></span><br><span class="line"><span class="type">int</span> <span class="variable">var1</span> <span class="operator">=</span> persons.get(id).getVar1();</span><br><span class="line"><span class="type">int</span> <span class="variable">var2</span> <span class="operator">=</span> persons.get(id).getVar2();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 一次解引用</span></span><br><span class="line"><span class="type">Person</span> <span class="variable">p</span> <span class="operator">=</span> persons.get(id);</span><br><span class="line"><span class="type">int</span> <span class="variable">var1</span> <span class="operator">=</span> p.getVar1();</span><br><span class="line"><span class="type">int</span> <span class="variable">var2</span> <span class="operator">=</span> p.getVar2();</span><br></pre></td></tr></table></figure>
+
+<p>这能够带来一定程度的效率提升。</p>
+<h2 id="性能相关"><a href="#性能相关" class="headerlink" title="性能相关"></a>性能相关</h2><p>上面提到，我在选择带索引双向链表前，使用了另外一个方法，这里简要做一个介绍。</p>
+<p>既然链表删除要遍历，<strong>那我可不可以不删呢？</strong> 答案是可以的。</p>
+<p>注意到，<code>articles</code>容器只可能有两种操作：</p>
+<ul>
+<li>在头部插入新节点</li>
+<li>删除容器中所有ID为特定值的节点</li>
+</ul>
+<p>且：</p>
+<ul>
+<li>在ID为特定值的所有节点删除后，后续仍有可能加入ID位为该值的节点</li>
+<li>删除和加入不可能同时发生</li>
+<li>删除的区间，和删除后新加入的区间不相交</li>
+</ul>
+<p>因此，我们可以：</p>
+<ul>
+<li>链表只增不删</li>
+<li>用一个<code>HashMap&lt;Int, Int&gt;</code>，记录当前链表中，一个ID有效节点的个数</li>
+<li>每加入一个节点，对应ID有效次数加1，没有键值就设为1</li>
+<li>全部删除时，直接撤销键值对应</li>
+</ul>
+<p>并在<code>query/getReceivedArticle</code>处动手脚：</p>
+<ul>
+<li>从头遍历，对于某个ID的节点，以HashMap对应键值，作为遍历中，读取该ID节点的次数</li>
+<li>若次数&lt;&#x3D;有效节点数，则认为该节点有效，将其加入返回的容器中</li>
+<li>若次数大于有效节点数，则认为该节点是被删除操作删除的操作，忽略之，从下一个节点继续遍历</li>
+</ul>
+<p>这样就可以规避删除的遍历问题。</p>
+<p>但是，这么做有两个严重的问题：</p>
+<ul>
+<li><strong>内存溢出</strong>：这一机制对链表只加不减，得亏强测强度仍然不算大，不然这样是有可能MLE的</li>
+<li>极端情况：考虑两个节点之间，间隔了数量极大个无效节点；这样的话，我们遍历的效率会急剧降低，且这一代价<strong>每次查询都存在</strong>，我们无法保证这种情况不发生</li>
+</ul>
+<p>因此，我换到了上面使用带索引双向链表的方法。换了之后，对于Hw10的强测测试点，不仅有时间效率的提升，也解决了上面两个严重的问题。</p>
+<h1 id="对规格的理解"><a href="#对规格的理解" class="headerlink" title="对规格的理解"></a>对规格的理解</h1><p>在谈这些问题之前，我们需要明确，<strong>规格描述的是什么？</strong> 事实上，<strong>规格描述的是方法执行后的结果，而非方法执行的过程</strong>。</p>
+<ul>
+<li>规格中出现的“过程”，可以认为是测试流程，也可以认为是用来描述结果的过程。</li>
+<li>规格中出现的容器实现等等，<strong>只是为了举例描述一个结果</strong>，可以认为其实现是一个抽象概念</li>
+</ul>
+<p>因此，我们能发现一个显而易见的结论：<strong>规格不规定达到结果的过程</strong>，规格与实现分离因此合理，我们自然也可以在实现过程这一部分自由发挥，只要保证结果符合规格即可。</p>
+<h1 id="JUnit有关"><a href="#JUnit有关" class="headerlink" title="JUnit有关"></a>JUnit有关</h1><p>我认为测试可以分为两部分，一是不同测试上下文，二是<strong>方法自身</strong>的正确性检验。</p>
+<p>我们先谈方法正确性检验的部分吧。</p>
+<p>上面提到，规格中出现的”过程“，可以认为就是测试流程。因此，按照规格中描述的过程来编写测试，即可保证测试通过与符合规格等价，这是最简单的办法。</p>
+<p>当然，我们也可以根据规格描述的结果，以另一个测试流程来检验；不过，既然规格已经告诉你测试流程了，<strong>除非这一新的测试流程，在保证检测正确性的前提下，效率更快， 我们没有不按照规格给的测试流程编写测试的理由。</strong></p>
+<p>综上，<strong>照抄规格</strong>，就是实现方法正确性检验的最简便方法。在这个选择下，“Junit测试检验代码实现与规格的一致性的效果”这个问题更不成立，因为我们的method测试流程，本来就是跟规格描述完全一致的。</p>
+<p>方法正确性检验后，就是<strong>构建不同的测试上下文了</strong>，换言之，构造测试数据。事实上，我在本单元作业对JUnit的测试中出现的问题，都是因为构建的测试数据不够强大，未能考虑到部分边界条件。</p>
+<p>那我们怎么知道要考虑什么边界条件？这就是“利用规格信息”要做的了。我们需要从规格中得知：</p>
+<ul>
+<li>待测试方法要求哪些属性不变，要变的属性怎么变</li>
+<li>待测方法涉及的属性，会受其它什么方法的影响</li>
+</ul>
+<p>明确好这两点后，我们基本就能找出所有的边界条件了。</p>
+<h1 id="本单元学习体会"><a href="#本单元学习体会" class="headerlink" title="本单元学习体会"></a>本单元学习体会</h1><h2 id="算法的重要"><a href="#算法的重要" class="headerlink" title="算法的重要"></a>算法的重要</h2><p>如果说前两个单元是为了考察同学们对程序整体架构的设计能力，这个单元考察的就是：同学们在架构确定的前提下，进行具体实现的能力。</p>
+<p>长期以来，我都对算法不甚重视，期望用架构或多线程等方法，代替算法解决问题。<strong>本单元打消了我这一错误的偏见，让我真正认识到了算法的重要性。</strong></p>
+<p>具体而言，查询关系是否连通这一问题，在并查集以外，我实在想不出效率更高的办法，这就是算法影响程序效率的一个实例。</p>
+<h2 id="测试的重要性"><a href="#测试的重要性" class="headerlink" title="测试的重要性"></a>测试的重要性</h2><p>本单元开始的第一次作业，我认为严格按照规格描述的结果实现，就不会产生问题，我因此没搓评测机。然后在强测就出现了问题，最后检查发现，是自己的一处愚蠢的笔误（笑，把value赋值到id上）造成的；在有评测机的情况下，这个问题很好发现，但我没搓评测机，这个问题我就没发现。</p>
+<p>自此以后，我每单元都搓一次评测机，避免这种事情再次发生；后面也确实没有发生过。</p>
+<p><strong>时刻认为自己写的程序有Bug，</strong> 这个思维模式还是很重要的。</p>
+<h2 id="JML为何难以推广？"><a href="#JML为何难以推广？" class="headerlink" title="JML为何难以推广？"></a>JML为何难以推广？</h2><p>形式化验证的需求的确很小，但我认为JML难以推广，是<strong>可读性出了问题</strong>。</p>
+<p>我们简要比较一下，几种语言如何描述结果：</p>
+<p>自然语言：操作后，id1对应成员的 | 包含id2对应的成员的 | 所有tag内，不再包含id2对应的成员</p>
+<p>JML语言：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@ ensures  (\forall <span class="type">int</span> i; <span class="number">0</span> &lt;= i &amp;&amp; i &lt; getPerson(id1).tags.length;  </span><br><span class="line">@                      \old(getPerson(id1).tags[i].hasPerson(getPerson(id2)))==&gt;!getPerson(id1).tags[i].hasPerson(getPerson(id2)));</span><br></pre></td></tr></table></figure>
+
+<p>（伪）数学语言：<br>$$\forall t \in Persons[id1].Tags[], prev(t.hasPerson(id2))\rightarrow  !t.hasPerson(id2)$$</p>
+<p>不可否认，自然语言在表达上最直观凝练，但是它无法避免产生歧义的问题；在形式化验证&#x2F;规格化开发等严谨的前提下，自然语言一般不被使用，或仅作为辅助说明出现。</p>
+<p>这就是我们为何要引入规格语言。</p>
+<p>但是，不难注意到，与我们上面的（伪）数学语言相比，描述相同的结果，JML语言花费了显然更多的篇幅；这是为什么？</p>
+<p>一言以蔽之，<strong>JML的抽象程度还不够，没有脱离具体实现。</strong> 事实上，JML在尝试用一种基础的，具体的实现（比如容器认为是数组），或一种基础的，具体的过程（比如容器的查找过程），来尝试描述自己想要的结果。</p>
+<p>在本人对形式化验证的简单了解后，我了解到了<code>TLA+</code>这门形式化验证语言。其<strong>完全基于数理逻辑</strong>，而非软件开发思想，从而做到了高度抽象、脱离具体实现。最后的描述效果，与我们上面随手写的（伪）数学语言基本一致，严谨而简明。</p>
+<p>当一个工具带来的收益，远远小于其带来的负面影响时，是否采用它就很值得商榷了。JML确实做到了严谨描述结果，但其带来的可读性问题十分严重。与之比较，作为当前主流的形式化验证语言，TLA+采用了<strong>数理逻辑语言</strong>进行结果的描述；虽然有初始的学习成本，但其保证了描述的可读性。相信这就是JML难以推广的原因吧，<strong>这也让我认识到了选好工具的必要性。</strong></p>
+<p>在研究这个问题的时候，我也再次感受到了 <strong>“抽象”</strong> 这一哲学，在计算机科学中的重要作用。抽象不仅有利于找出通用的解决方法，<strong>更有利于准确地描述问题。</strong></p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>OO_U2 - 电梯</p><p><a href="http://lajipz.top/2025/05/13/OO_U3 - JML/">http://lajipz.top/2025/05/13/OO_U3 - JML/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>LajiPZ</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2025-05-13</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-05-13</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">面向对象</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=671eeccad01e2b00125527bf&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/"><span class="level-item">OO_U2 - HW5,6阶段性总结</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="waline-thread"></div><link rel="stylesheet" href="https://unpkg.com/@waline/client@2/dist/waline.css"><script src="https://unpkg.com/@waline/client@2/dist/waline.js"></script><script>Waline.init({
+            el: '#waline-thread',
+            serverURL: "https://comments.lajipz.top/",
+            path: window.location.pathname,
+            lang: "zh-CN",
+            
+            emoji: ["https://unpkg.com/@waline/emojis@1.2.0/tieba","https://unpkg.com/@waline/emojis@1.2.0/weibo","https://unpkg.com/@waline/emojis@1.2.0/bilibili"],
+            
+            meta: ["nick","mail","link"],
+            requiredMeta: [],
+            login: "enable",
+            
+            pageSize: 10,
+            imageUploader: false,
+            highlighter: false,
+            texRenderer: false,
+            search: false,
+            pageview: false,
+            comment: false,
+            copyright: true,
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#前言"><span class="level-left"><span class="level-item">1</span><span class="level-item">前言</span></span></a></li><li><a class="level is-mobile" href="#测试过程"><span class="level-left"><span class="level-item">2</span><span class="level-item">测试过程</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#不同类别的测试"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">不同类别的测试</span></span></a></li><li><a class="level is-mobile" href="#数据构造策略"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">数据构造策略</span></span></a></li></ul></li><li><a class="level is-mobile" href="#大模型辅助"><span class="level-left"><span class="level-item">3</span><span class="level-item">大模型辅助</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#规格阅读"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">规格阅读</span></span></a></li><li><a class="level is-mobile" href="#自动测试"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">自动测试</span></span></a></li></ul></li><li><a class="level is-mobile" href="#架构设计"><span class="level-left"><span class="level-item">4</span><span class="level-item">架构设计</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#并查集"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">并查集</span></span></a></li><li><a class="level is-mobile" href="#脏位"><span class="level-left"><span class="level-item">4.2</span><span class="level-item">脏位</span></span></a></li><li><a class="level is-mobile" href="#动态维护"><span class="level-left"><span class="level-item">4.3</span><span class="level-item">动态维护</span></span></a></li><li><a class="level is-mobile" href="#链表的维护"><span class="level-left"><span class="level-item">4.4</span><span class="level-item">链表的维护</span></span></a></li><li><a class="level is-mobile" href="#杂项-增量化开发"><span class="level-left"><span class="level-item">4.5</span><span class="level-item">杂项 - 增量化开发</span></span></a></li><li><a class="level is-mobile" href="#性能相关"><span class="level-left"><span class="level-item">4.6</span><span class="level-item">性能相关</span></span></a></li></ul></li><li><a class="level is-mobile" href="#对规格的理解"><span class="level-left"><span class="level-item">5</span><span class="level-item">对规格的理解</span></span></a></li><li><a class="level is-mobile" href="#JUnit有关"><span class="level-left"><span class="level-item">6</span><span class="level-item">JUnit有关</span></span></a></li><li><a class="level is-mobile" href="#本单元学习体会"><span class="level-left"><span class="level-item">7</span><span class="level-item">本单元学习体会</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#算法的重要"><span class="level-left"><span class="level-item">7.1</span><span class="level-item">算法的重要</span></span></a></li><li><a class="level is-mobile" href="#测试的重要性"><span class="level-left"><span class="level-item">7.2</span><span class="level-item">测试的重要性</span></span></a></li><li><a class="level is-mobile" href="#JML为何难以推广？"><span class="level-left"><span class="level-item">7.3</span><span class="level-item">JML为何难以推广？</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a><p class="is-size-7"><span>&copy; 2025 LajiPZ</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://unpkg.com/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://unpkg.com/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://unpkg.com/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://unpkg.com/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script src="https://unpkg.com/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
