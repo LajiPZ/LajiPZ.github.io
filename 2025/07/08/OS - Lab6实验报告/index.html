@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>OS - Lab6实验报告 - Position 0 - LajiPZ的随想屋</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Position 0 - LajiPZ的随想屋"><meta name="msapplication-TileImage" content="/img/pz13.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Position 0 - LajiPZ的随想屋"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="归档于2025年7月8日。  思考题6.1很简单，我们把两个case互换即可。"><meta property="og:type" content="blog"><meta property="og:title" content="OS - Lab6实验报告"><meta property="og:url" content="http://lajipz.top/2025/07/08/OS%20-%20Lab6%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"><meta property="og:site_name" content="Position 0 - LajiPZ的随想屋"><meta property="og:description" content="归档于2025年7月8日。  思考题6.1很简单，我们把两个case互换即可。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250603152038.png"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250603154613.png"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250603154548.png"><meta property="article:published_time" content="2025-07-08T15:00:00.000Z"><meta property="article:modified_time" content="2025-07-08T16:02:56.455Z"><meta property="article:author" content="LajiPZ"><meta property="article:tag" content="操作系统"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250603152038.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lajipz.top/2025/07/08/OS%20-%20Lab6%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"},"headline":"OS - Lab6实验报告","image":["https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250603152038.png","https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250603154613.png","https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250603154548.png"],"datePublished":"2025-07-08T15:00:00.000Z","dateModified":"2025-07-08T16:02:56.455Z","author":{"@type":"Person","name":"LajiPZ"},"publisher":{"@type":"Organization","name":"Position 0 - LajiPZ的随想屋","logo":{"@type":"ImageObject","url":"http://lajipz.top/img/pz13.png"}},"description":"归档于2025年7月8日。  思考题6.1很简单，我们把两个case互换即可。"}</script><link rel="canonical" href="http://lajipz.top/2025/07/08/OS%20-%20Lab6%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"><link rel="icon" href="/img/pz13.png"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/6.0.0/css/all.min.css"><link data-pjax rel="stylesheet" href="https://unpkg.com/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://unpkg.com/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://unpkg.com/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Position 0 - LajiPZ的随想屋" type="application/atom+xml">
+</head><body class="is-$3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a><a class="navbar-item" href="/links">友链</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-07-08T15:00:00.000Z" title="7/8/2025, 11:00:00 PM">2025-07-08</time>发表</span><span class="level-item"><time dateTime="2025-07-08T16:02:56.455Z" title="7/9/2025, 12:02:56 AM">2025-07-09</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a></span><span class="level-item">8 分钟读完 (大约1126个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">OS - Lab6实验报告</h1><div class="content"><blockquote>
+<p>归档于2025年7月8日。</p>
+</blockquote>
+<h1 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h1><h2 id="6-1"><a href="#6-1" class="headerlink" title="6.1"></a>6.1</h2><p>很简单，我们把两个case互换即可。</p>
+<span id="more"></span>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span>  </span></span><br><span class="line">  </span><br><span class="line"><span class="type">int</span> fildes[<span class="number">2</span>];  </span><br><span class="line"><span class="type">char</span> buf[<span class="number">100</span>];  </span><br><span class="line"><span class="type">int</span> status;  </span><br><span class="line">  </span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;  </span><br><span class="line">       status = pipe(fildes);  </span><br><span class="line">       <span class="keyword">if</span> (status == <span class="number">-1</span>) <span class="keyword">return</span> <span class="number">-1</span>;  </span><br><span class="line">       <span class="keyword">switch</span> (fork()) &#123;  </span><br><span class="line">               <span class="keyword">case</span> <span class="number">-1</span>:  </span><br><span class="line">                       <span class="keyword">break</span>;  </span><br><span class="line">               <span class="keyword">case</span> <span class="number">0</span>:  </span><br><span class="line">                       close(fildes[<span class="number">0</span>]); <span class="comment">/* 关闭不用的读端 */</span>  </span><br><span class="line">                       write(fildes[<span class="number">1</span>], <span class="string">&quot;Hello world\n&quot;</span>, <span class="number">12</span>); <span class="comment">/* 向管道中写数据 */</span>  </span><br><span class="line">                       close(fildes[<span class="number">1</span>]); <span class="comment">/* 写入结束，关闭写端 */</span>  </span><br><span class="line">                       <span class="built_in">exit</span>(EXIT_SUCCESS);  </span><br><span class="line">               <span class="keyword">default</span>:  </span><br><span class="line">                       close(fildes[<span class="number">1</span>]); <span class="comment">/* 关闭不用的写端 */</span>  </span><br><span class="line">                       read(fildes[<span class="number">0</span>], buf, <span class="number">100</span>); <span class="comment">/* 从管道中读数据 */</span>  </span><br><span class="line">                       <span class="built_in">printf</span>(<span class="string">&quot;parent-process read:%s&quot;</span>,buf); <span class="comment">/* 打印读到的数据 */</span>  </span><br><span class="line">                       close(fildes[<span class="number">0</span>]); <span class="comment">/* 读取结束，关闭读端 */</span>  </span><br><span class="line">                       <span class="built_in">exit</span>(EXIT_SUCCESS);  </span><br><span class="line">       &#125;  </span><br><span class="line">       <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-2"><a href="#6-2" class="headerlink" title="6.2"></a>6.2</h2><ul>
+<li>在我们当前<code>dup()</code>的实现下，我们是先复制文件标识符，再复制文件内容；</li>
+<li>如果目标是一个管道，如此就会导致<code>pageref(pipe) &gt; pageref(fd)</code>的取值发生最终取值外的变化；</li>
+<li>如果中途被打断，此时执行判断，就会得到错误的判断结果</li>
+</ul>
+<h2 id="6-3"><a href="#6-3" class="headerlink" title="6.3"></a>6.3</h2><p>在执行<code>syscall</code>时，系统的中断使能会被关闭，计时器发出的中断无效；因此，系统调用过程不会被打断，是原子操作。</p>
+<p>与之对比，调用系统的某个模块，比如说，给文件系统进程，提出打开文件的请求，这个步骤不是原子请求。因为这部分，我们采用了微内核设计，将系统调用变成了进程间通信问题。</p>
+<h2 id="6-4"><a href="#6-4" class="headerlink" title="6.4"></a>6.4</h2><ul>
+<li>调整<code>fd</code>与<code>pipe unmap</code>的顺序后，是可以解决这一问题的：在这一操作下，我们总能保证<code>pageref(pipe) &gt; pageref(fd)</code>，<strong>即不会导致<code>pageref(pipe) == pageref(fd)</code>这一条件语句的取值，在执行过程中出现真实结果外的变化</strong>，因此在过程被打断时不会误判。</li>
+<li>是会的；在我们当前的实现下，我们是先复制文件标识符，再复制文件内容；如此就会导致<code>pageref(pipe) &gt; pageref(fd)</code>的取值发生真实结果外的变化；调换顺序后，这句话就恒真，也就不会出现中途打断误判的问题了。</li>
+</ul>
+<h2 id="6-5"><a href="#6-5" class="headerlink" title="6.5"></a>6.5</h2><p>打开文件的过程：</p>
+<ul>
+<li>调用<code>open()</code>；</li>
+<li>分配一个文件描述符；</li>
+<li>通过与文件管理进程进行IPC，将文件映射到文件描述符中</li>
+<li>建立文件内容的内存映射</li>
+</ul>
+<p>读取ELF：</p>
+<ul>
+<li>主要由我们已经实现的<code>load_icode()</code>实现</li>
+<li><code>load_icode()</code>调用<code>elf_load_seg()</code>加载各个段，并建立内存映射</li>
+</ul>
+<p>有关<code>.bss</code>：</p>
+<ul>
+<li><code>.bss</code>段是与<code>.data</code>和<code>.text</code>连在一块空间内的</li>
+<li><code>.data</code>与<code>.text</code>没有占满的空间，被置0,分给了<code>.bss</code></li>
+<li>另外分配时，使用<code>syscall_mem_alloc()</code>分配，但是不映射到任何内容</li>
+</ul>
+<h2 id="6-6"><a href="#6-6" class="headerlink" title="6.6"></a>6.6</h2><p>在<code>user/init.c</code>中，我们可以找到答案：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250603152038.png" alt="Pasted image 20250603152038.png"></p>
+<h2 id="6-7"><a href="#6-7" class="headerlink" title="6.7"></a>6.7</h2><p>都是外部程序，因为我们都要开一个子<code>shell</code>来处理。</p>
+<p><code>cd</code>之所以是内部命令，是因为 <strong><code>cd</code>改变了此时<code>shell</code>的工作目录</strong>；如果是外部指令，更改只会对子<code>shell</code>生效；<strong>换言之，我们此时交互的<code>shell</code>执行了之后没有任何效果。</strong></p>
+<h2 id="6-8"><a href="#6-8" class="headerlink" title="6.8"></a>6.8</h2><p>我们需要手动修改一下<code>sh.c</code>中的<code>runcmd()</code>，以在正常spawn时，输出spawn信息。<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250603154613.png" alt="Pasted image 20250603154613.png"></p>
+<p>观察运行结果：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250603154548.png" alt="Pasted image 20250603154548.png"></p>
+<p><code>spawn</code>有两次，对应的均为执行<code>ls.b</code>与<code>cat.b</code>的进程；</p>
+<p><code>destroy</code>有四次，对应两次<code>spawn</code>，以及两个<code>fork()</code>出的shell子进程。</p>
+<h1 id="难点分析"><a href="#难点分析" class="headerlink" title="难点分析"></a>难点分析</h1><p>我认为，是<code>shell</code>的整个执行流程，以及弄清楚<code>shell</code>与先前实现的功能之间如何连接。</p>
+<p>在明白了外部功能是由子<code>shell</code>执行以后，以及<code>spawn()</code>函数的调用关系后，剩下的事情就很简单了。</p>
+<h1 id="实验体会"><a href="#实验体会" class="headerlink" title="实验体会"></a>实验体会</h1><p>OS的实验部分就此结束了。</p>
+<p>尽管MOS的实现较为简陋，但在完成各个Lab的实验内容的过程中，我确对理论课所学知识有了更深的理解，也对硬件如何与系统软件构建联系有了初步的认识，收获颇丰。</p>
+<p>至于Lab6，其实要完成的功能并不难，难点仍然在于整个执行流程。</p>
+<h1 id="原创声明"><a href="#原创声明" class="headerlink" title="原创声明"></a>原创声明</h1><p>本报告为本人原创。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>OS - Lab6实验报告</p><p><a href="http://lajipz.top/2025/07/08/OS - Lab6实验报告/">http://lajipz.top/2025/07/08/OS - Lab6实验报告/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>LajiPZ</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2025-07-08</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-07-09</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=671eeccad01e2b00125527bf&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2025/07/08/OS%20-%20Lab5%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">OS - Lab5实验报告</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/07/08/OS%20-%20Lab4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"><span class="level-item">OS - Lab4实验报告</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="waline-thread"></div><link rel="stylesheet" href="https://unpkg.com/@waline/client@2/dist/waline.css"><script src="https://unpkg.com/@waline/client@2/dist/waline.js"></script><script>Waline.init({
+            el: '#waline-thread',
+            serverURL: "https://comments.lajipz.top/",
+            path: window.location.pathname,
+            lang: "zh-CN",
+            
+            emoji: ["https://unpkg.com/@waline/emojis@1.2.0/tieba","https://unpkg.com/@waline/emojis@1.2.0/weibo","https://unpkg.com/@waline/emojis@1.2.0/bilibili"],
+            
+            meta: ["nick","mail","link"],
+            requiredMeta: [],
+            login: "enable",
+            
+            pageSize: 10,
+            imageUploader: false,
+            highlighter: false,
+            texRenderer: false,
+            search: false,
+            pageview: false,
+            comment: false,
+            copyright: true,
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#思考题"><span class="level-left"><span class="level-item">1</span><span class="level-item">思考题</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#6-1"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">6.1</span></span></a></li><li><a class="level is-mobile" href="#6-2"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">6.2</span></span></a></li><li><a class="level is-mobile" href="#6-3"><span class="level-left"><span class="level-item">1.3</span><span class="level-item">6.3</span></span></a></li><li><a class="level is-mobile" href="#6-4"><span class="level-left"><span class="level-item">1.4</span><span class="level-item">6.4</span></span></a></li><li><a class="level is-mobile" href="#6-5"><span class="level-left"><span class="level-item">1.5</span><span class="level-item">6.5</span></span></a></li><li><a class="level is-mobile" href="#6-6"><span class="level-left"><span class="level-item">1.6</span><span class="level-item">6.6</span></span></a></li><li><a class="level is-mobile" href="#6-7"><span class="level-left"><span class="level-item">1.7</span><span class="level-item">6.7</span></span></a></li><li><a class="level is-mobile" href="#6-8"><span class="level-left"><span class="level-item">1.8</span><span class="level-item">6.8</span></span></a></li></ul></li><li><a class="level is-mobile" href="#难点分析"><span class="level-left"><span class="level-item">2</span><span class="level-item">难点分析</span></span></a></li><li><a class="level is-mobile" href="#实验体会"><span class="level-left"><span class="level-item">3</span><span class="level-item">实验体会</span></span></a></li><li><a class="level is-mobile" href="#原创声明"><span class="level-left"><span class="level-item">4</span><span class="level-item">原创声明</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a><p class="is-size-7"><span>&copy; 2025 LajiPZ</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://unpkg.com/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://unpkg.com/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://unpkg.com/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://unpkg.com/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script src="https://unpkg.com/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

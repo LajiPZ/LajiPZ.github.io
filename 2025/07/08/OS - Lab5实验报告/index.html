@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>OS - Lab5实验报告 - Position 0 - LajiPZ的随想屋</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Position 0 - LajiPZ的随想屋"><meta name="msapplication-TileImage" content="/img/pz13.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Position 0 - LajiPZ的随想屋"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="归档于2025年7月8日。  思考题5.1这跟Cache的更新策略有一些关系。 若Cache采用了写回策略，则：由kseg0写设备，向设备传递的数据会被存入Cache，而不会真正到达设备；仅在对应Cache块被清除掉时，向设备传输的数据才能到达设备。这会导致设备的延迟响应，甚至不响应。 Cache的更新策略，也与这个问题有关。如果Cache中缓存了设备的状态寄存器，那么：众所周知，设备的状态往往"><meta property="og:type" content="blog"><meta property="og:title" content="OS - Lab5实验报告"><meta property="og:url" content="http://lajipz.top/2025/07/08/OS%20-%20Lab5%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"><meta property="og:site_name" content="Position 0 - LajiPZ的随想屋"><meta property="og:description" content="归档于2025年7月8日。  思考题5.1这跟Cache的更新策略有一些关系。 若Cache采用了写回策略，则：由kseg0写设备，向设备传递的数据会被存入Cache，而不会真正到达设备；仅在对应Cache块被清除掉时，向设备传输的数据才能到达设备。这会导致设备的延迟响应，甚至不响应。 Cache的更新策略，也与这个问题有关。如果Cache中缓存了设备的状态寄存器，那么：众所周知，设备的状态往往"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250506194608.png"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250506202229.png"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250507080102.png"><meta property="article:published_time" content="2025-07-08T15:00:00.000Z"><meta property="article:modified_time" content="2025-07-08T16:02:54.808Z"><meta property="article:author" content="LajiPZ"><meta property="article:tag" content="操作系统"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250506194608.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lajipz.top/2025/07/08/OS%20-%20Lab5%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"},"headline":"OS - Lab5实验报告","image":["https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250506194608.png","https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250506202229.png","https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250507080102.png"],"datePublished":"2025-07-08T15:00:00.000Z","dateModified":"2025-07-08T16:02:54.808Z","author":{"@type":"Person","name":"LajiPZ"},"publisher":{"@type":"Organization","name":"Position 0 - LajiPZ的随想屋","logo":{"@type":"ImageObject","url":"http://lajipz.top/img/pz13.png"}},"description":"归档于2025年7月8日。  思考题5.1这跟Cache的更新策略有一些关系。 若Cache采用了写回策略，则：由kseg0写设备，向设备传递的数据会被存入Cache，而不会真正到达设备；仅在对应Cache块被清除掉时，向设备传输的数据才能到达设备。这会导致设备的延迟响应，甚至不响应。 Cache的更新策略，也与这个问题有关。如果Cache中缓存了设备的状态寄存器，那么：众所周知，设备的状态往往"}</script><link rel="canonical" href="http://lajipz.top/2025/07/08/OS%20-%20Lab5%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"><link rel="icon" href="/img/pz13.png"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/6.0.0/css/all.min.css"><link data-pjax rel="stylesheet" href="https://unpkg.com/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://unpkg.com/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://unpkg.com/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Position 0 - LajiPZ的随想屋" type="application/atom+xml">
+</head><body class="is-$3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a><a class="navbar-item" href="/links">友链</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-07-08T15:00:00.000Z" title="7/8/2025, 11:00:00 PM">2025-07-08</time>发表</span><span class="level-item"><time dateTime="2025-07-08T16:02:54.808Z" title="7/9/2025, 12:02:54 AM">2025-07-09</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a></span><span class="level-item">18 分钟读完 (大约2717个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">OS - Lab5实验报告</h1><div class="content"><blockquote>
+<p>归档于2025年7月8日。</p>
+</blockquote>
+<h1 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h1><h2 id="5-1"><a href="#5-1" class="headerlink" title="5.1"></a>5.1</h2><p>这跟Cache的更新策略有一些关系。</p>
+<p>若Cache采用了写回策略，则：由<code>kseg0</code>写设备，向设备传递的数据会被存入Cache，而不会真正到达设备；仅在对应Cache块被清除掉时，向设备传输的数据才能到达设备。这会导致设备的延迟响应，甚至不响应。</p>
+<p>Cache的更新策略，也与这个问题有关。如果Cache中缓存了设备的状态寄存器，那么：众所周知，设备的状态往往实时变化，若要保持Cache与设备状态寄存器的一致，我们必须时刻更新Cache，其性能开销极大，完全背离了Cache的设计本意；不维持一致性，则在Cache中读出的设备状态信息与实际的设备状态往往不符，会引起程序逻辑的问题。</p>
+<p>这样做对不同设备的影响当然是不同的。对于IDE硬盘，可能是一次读&#x2F;写请求迟迟不响应，导致程序长时间阻塞；对于显示设备（串口输出&#x2F;显示器&#x2F;…），可能是迟迟不显示该显示的内容。</p>
+<span id="more"></span>
+
+<h2 id="5-2"><a href="#5-2" class="headerlink" title="5.2"></a>5.2</h2><p>答案在<code>user/include/fs.h</code>中：</p>
+<ul>
+<li><code>FILE_STRUCT_SIZE</code>：文件控制块大小，为256</li>
+<li><code>BLOCK_SIZE</code>:磁盘块大小；与<code>PAGE_SIZE</code>相等，为4096</li>
+</ul>
+<p>由此得知，一个磁盘块，最多可存储4096&#x2F;256 &#x3D; 16个文件控制块。</p>
+<p>剩下两个问题，需要看<code>f_(in)direct</code>能指向多少个磁盘块；答案是10 + (BLOCKSIZE &#x2F; 4 - 10) &#x3D; 1024个。</p>
+<p>对于文件，文件系统支持的单个文件大小，为<code>4096 * 1024byte</code> &#x3D; 4MB。</p>
+<p>对于目录，其下可以有<code>1024 * 16</code> &#x3D; 16k 个文件。</p>
+<h2 id="5-3"><a href="#5-3" class="headerlink" title="5.3"></a>5.3</h2><p>分析可知，我们的块缓存，采用了类似Cache中<strong>直接映射</strong>的思路，故缓冲区大小即等于最大硬盘容量。</p>
+<p>查询<code>serv.h</code>得知，我们得知这一片空间大小为<code>0x40000000</code>byte；换算过来，就是1GB.</p>
+<p><del>这些宏定义能不能起个好点的名字？DISKMAX一晃眼还以为是地址上限，结果仔细一看才发现是空间大小…况且之前都是用上限来界定空间，这里突然换成基地址+空间大小又是个什么意思</del></p>
+<h2 id="5-4"><a href="#5-4" class="headerlink" title="5.4"></a>5.4</h2><p>要我说，其实都重要…</p>
+<ul>
+<li>BLOCK_SIZE：<strong>硬盘块</strong>大小</li>
+<li>N_DIRECT：文件控制块中，直接指向硬盘块的指针个数</li>
+<li>FILE2BLK：一个硬盘块里，可存文件控制块的个数</li>
+<li>SECT_SIZE：<strong>一个扇区</strong>的大小</li>
+<li>SECT2BLK：<strong>一个硬盘块</strong>可以存多少个<strong>扇区</strong>；注意这二者是不一样的</li>
+<li>DISKMAP&#x2F;MAX：指示内存中，硬盘缓冲区的起始位置与大小</li>
+</ul>
+<h2 id="5-5"><a href="#5-5" class="headerlink" title="5.5"></a>5.5</h2><p>在动手写程序之前，我们不妨先分析一番。</p>
+<p>众所周知，fork()会将父进程的内存映射复制给子进程；此处指向Fd的内存映射，应该也是在被复制的内存映射范围内的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;  </span><br><span class="line">	<span class="type">int</span> fd;  </span><br><span class="line">	<span class="type">int</span> r;  </span><br><span class="line">	<span class="type">char</span> buf[<span class="number">512</span>];  </span><br><span class="line">	fd = open(<span class="string">&quot;/test&quot;</span>,O_RDONLY);  </span><br><span class="line">	r = fork();  </span><br><span class="line">	<span class="keyword">if</span>(r == <span class="number">0</span>)&#123;  </span><br><span class="line">		<span class="keyword">if</span>((r = read(fd,buf,<span class="number">3</span>))!=<span class="number">3</span>)&#123;  </span><br><span class="line">			user_panic(<span class="string">&quot;read error&quot;</span>);  </span><br><span class="line">		&#125;  </span><br><span class="line">		debugf(<span class="string">&quot;child read: %s\n&quot;</span>,buf);  </span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;  </span><br><span class="line">		<span class="keyword">if</span>((r = read(fd,buf,<span class="number">3</span>))!=<span class="number">3</span>)&#123;  </span><br><span class="line">			user_panic(<span class="string">&quot;read error&quot;</span>);  </span><br><span class="line">		&#125;  </span><br><span class="line">		debugf(<span class="string">&quot;parent read: %s\n&quot;</span>,buf);  </span><br><span class="line">	&#125;  </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试下来，确实也是如此。</p>
+<p>编写的时候需要注意：</p>
+<ul>
+<li>open()返回的是<code>fd</code>的<strong>编号</strong></li>
+<li>read()&#x2F;write()中的参数，传入的都是<code>int fdnum</code>，而非<code>fd</code>本身</li>
+<li><code>file_read/write()</code>是给驱动用的，用户态只需要调用<code>open/write()</code>。</li>
+</ul>
+<h2 id="5-6"><a href="#5-6" class="headerlink" title="5.6"></a>5.6</h2><p>先看<code>fd.h</code>里两个：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  34 // file descriptor  </span><br><span class="line">  35 struct Fd &#123;  </span><br><span class="line">&gt;&gt; 36     u_int fd_dev_id;  // 设备ID；对于文件则为可以简单理解为硬盘ID</span><br><span class="line">&gt;&gt; 37     u_int fd_offset;  // 当前读写位置，距起始位置的偏移</span><br><span class="line">&gt;&gt; 38     u_int fd_omode;  // 文件读写模式</span><br><span class="line">  39 &#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  49 // file descriptor + file  </span><br><span class="line">  50 struct Filefd &#123;  </span><br><span class="line">  51     struct Fd f_fd;  // 文件对应的描述符</span><br><span class="line">&gt;&gt; 52     u_int f_fileid;  // 文件ID</span><br><span class="line">  53     struct File f_file;  // 文件控制块</span><br><span class="line">  54 &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>再看FIle结构体：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">  26 struct File &#123;  </span><br><span class="line">  27     char f_name[MAXNAMELEN]; // filename  </span><br><span class="line">  28     uint32_t f_size;     // file size in bytes  </span><br><span class="line">  29     uint32_t f_type;     // file type  </span><br><span class="line">  30     uint32_t f_direct[NDIRECT];  // 指向硬盘块的直接指针</span><br><span class="line">  31     uint32_t f_indirect;  // 间接硬盘块指针</span><br><span class="line">  32    </span><br><span class="line">  33     struct File *f_dir; // 文件所在文件夹</span><br><span class="line">  34     char f_pad[FILE_STRUCT_SIZE - MAXNAMELEN - (3 + NDIRECT) * 4 - sizeof(void *)];  // padding</span><br><span class="line">  35 &#125;</span><br></pre></td></tr></table></figure>
+
+<p>顺手提一下，Fd是怎么变成FileFd的：</p>
+<ul>
+<li>在<code>serv.c</code>的<code>serve_open()</code>中，先<code>file_create()</code>创建文件控制块，</li>
+<li>再<code>file_open()</code>，将文件加载进文件控制块；</li>
+<li>最后，配置好FileFd，由fsipc，将<code>ffd</code>传回给<code>fsipc_open(path, mode, fd)</code>中的<code>fd</code>，配合强制类型转化完成。</li>
+</ul>
+<h2 id="5-7"><a href="#5-7" class="headerlink" title="5.7"></a>5.7</h2><p><del>怎么OS也要跟UML语义纠缠</del></p>
+<p>一共有这三种：</p>
+<ul>
+<li>Found Message（如<code>ENV_CREATE</code>）：无触发对象消息</li>
+<li>同步消息：发送后，发送者停止自己的活动，如<code>ipc_send(fsreq)</code>，直到收到返回消息</li>
+<li>返回消息：如<code>ipc_send(dst_va)</code></li>
+</ul>
+<p>具体实现：</p>
+<ul>
+<li>Found Message：将信息存在一个指定空间内，发送者就什么都不做了；ENV_CREATE就是将进程放进调度队列里</li>
+<li>同步消息：类似于握手机制，在一个<code>ipc_send()</code>后，立即执行<code>ipc_recv()</code>；在未收到信息时等待，收到后则程序恢复执行</li>
+<li>返回信息：就是普通的<code>ipc_send()</code>，只是为了配合同步消息的实现。</li>
+</ul>
+<h1 id="难点分析"><a href="#难点分析" class="headerlink" title="难点分析"></a>难点分析</h1><h2 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h2><p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250506194608.png" alt="Pasted image 20250506194608.png"></p>
+<p>按照教程中示意图，我们可以得知：</p>
+<ul>
+<li>用户进程通过调用库，请求文件服务，实现文件操作</li>
+<li><code>file_read()/write()</code>由<strong>用户库完成</strong>，而非直接调用文件服务</li>
+<li>文件服务单独为一个进程</li>
+<li>用户进程由进程间通信，与服务进程交互</li>
+<li>服务进程由中断进入内核，进行外部设备的文件交互</li>
+</ul>
+<h2 id="MMIO"><a href="#MMIO" class="headerlink" title="MMIO"></a>MMIO</h2><p><code>malta.h</code>中，诸如<code>0x18000000</code>一类的地址，指向的是<strong>物理地址</strong>。</p>
+<p>在内核中，欲通过MMIO对这些外设进行交互，则需要访问一个映射到设备物理地址的<strong>虚拟地址；这个虚拟地址在kseg1内，物理地址加上kseg1的偏移，即可得到对应的虚拟地址</strong>。</p>
+<p>对于MMIO的内存操作，指针建议都带上<code>volatile</code>修饰符，以避免编译器错误优化，带来预期外的结果：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250506202229.png" alt="Pasted image 20250506202229.png"></p>
+<p>kseg1看这名字就知道是内核态的地址空间；我们的IDE驱动程序在用户态，故我们需要一个<strong>系统调用</strong>，来对这个地址进行访问。</p>
+<h2 id="文件系统的空闲位图"><a href="#文件系统的空闲位图" class="headerlink" title="文件系统的空闲位图"></a>文件系统的空闲位图</h2><p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250507080102.png" alt="Pasted image 20250507080102.png"></p>
+<ul>
+<li>位图的起点<strong>在Block[2]处</strong>，也就是Super Block的下一个Block</li>
+<li>每一个字节设为0xff，即全设为1；一个块的字节大小即BLOCK_SIZE</li>
+<li>第三步的<code>if</code>，即“根据实际情况，将不存在部分设为0”</li>
+<li>在<code>fs/fs.c</code>中，由<code>read_bitmap()</code>，将位图读入<code>bitmap[]</code>中。</li>
+<li><code>*bitmap</code>是一个<code>uint32_t *</code>，也就是一单位的<code>bitmap[]</code>有32个硬盘块的空闲位，这就是为什么下面<code>free</code>有关函数，要用<code>bitmap[blockNo / 32]</code>的形式访问位图。</li>
+<li><code>free_block()</code>中，若blockno为0，则会将分区表和引导扇区free掉。参考删掉<code>pagefile.sys</code>会发生什么（笑）</li>
+</ul>
+<h2 id="create-file"><a href="#create-file" class="headerlink" title="create_file()"></a><code>create_file()</code></h2><p>这个函数，实际做的是：</p>
+<ul>
+<li>为文件分配一块空闲的空间。</li>
+<li>首先，遍历目标目录；</li>
+<li>先看是否有空闲File块，有则复用</li>
+<li>完全遍历后，没有空闲File块，则为目标目录分配一个新的块；</li>
+<li>新块的起始位置，就是目标<code>File</code>块的位置。</li>
+</ul>
+<h2 id="map-block"><a href="#map-block" class="headerlink" title="map_block()"></a><code>map_block()</code></h2><p>不要忘了，<code>page_alloc</code>是内核用的；用户态分配页，是通过<code>syscall_mem_alloc()</code>来实现的。</p>
+<p>也别忘了，参数中<code>envid = 0</code>，指示当前进程。（syscall流程见本人Lab4文档…）</p>
+<h2 id="思考题用户态程序的编写"><a href="#思考题用户态程序的编写" class="headerlink" title="思考题用户态程序的编写"></a>思考题用户态程序的编写</h2><p>注意到，实验环境中已有的环境，已经生成了二进制机器码。</p>
+<p>本人并没有找到效仿之，并在<code>init.c</code>中<code>ENV_CREATE</code>的较简便方法，遂选择直接修改<code>init.c</code>进行运行。</p>
+<h2 id="小细节"><a href="#小细节" class="headerlink" title="小细节"></a>小细节</h2><p>我记得最深的，就是设备物理地址是否合法的检验。</p>
+<p>指导书里是这么写的（指导书给的范围没错）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">同时还要检查物理地址的有效性，在实验中允许访问的地址范围为: </span><br><span class="line">console: [0x180003F8, 0x18000418), disk: [0x180001F0, 0x180001F8)，</span><br><span class="line">当出现越界时， 应返回指定的错误码。</span><br></pre></td></tr></table></figure>
+
+<p>然而直接按照上面的范围，把条件写成<code>if ((pa &gt;= 0x180003f8 &amp;&amp; pa + len &lt; 0x18000418)</code><strong>是错的</strong>，条件应该是<code>if ((pa &gt;= 0x180003f8 &amp;&amp; pa + len &lt;= 0x18000418)</code>。</p>
+<p>为什么？考虑基地址为0，空间大小为4；那么我们可访问的地址，应该是<code>[0x0, 0x3]</code>，对吧？</p>
+<p>但在上面，使用<code>pa + len</code>的情况下，0x0 + 4 &#x3D; 0x4；此时我们应该是允许等于0x4的。</p>
+<p>一个基本的数学小问题，需要细心，不能看到指导书就直接照搬。</p>
+<h2 id="思考题中提到的"><a href="#思考题中提到的" class="headerlink" title="思考题中提到的"></a>思考题中提到的</h2><p>比如说进程通信（fsipc），Fd到Filefd的转换过程等等，我认为有难度的地方，我都在思考题部分提到了；若您感兴趣，还请重新翻到上文阅读。</p>
+<h1 id="实验体会"><a href="#实验体会" class="headerlink" title="实验体会"></a>实验体会</h1><p>本次实验虽然花了比我预期要多的时间（），但是难度比我预期要低。</p>
+<p>我的感受就是，遇到不懂的，就边读边记，实在搞不懂就参考前人的经验。像<code>Fd</code>到<code>FileFd</code>的转换，我不边读源码，边在报告里记录其流程，我自己真不一定能搞定。</p>
+<p>至于参考前人经验…就比如说上面提到的，设备物理地址合法性检验的问题，在我没查看MOS的开源代码前，我真没有意识到这个问题，花了不少时间找bug。当然，参考不等于抄，参考之后自己一定要理解。</p>
+<h1 id="原创声明"><a href="#原创声明" class="headerlink" title="原创声明"></a>原创声明</h1><p>本文绝大部分内容为本人原创，但在实验过程中，确定部分细节是否实现正确时，本人难免参考了以下资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://gitee.com/osbuaa/mos">https://gitee.com/osbuaa/mos</a></li>
+<li><a target="_blank" rel="noopener" href="https://seafoodfat1ger.github.io/2024/05/29/OS/OS_Lab5">https://seafoodfat1ger.github.io/2024/05/29/OS/OS_Lab5</a></li>
+</ul>
+</div><div class="article-licensing box"><div class="licensing-title"><p>OS - Lab5实验报告</p><p><a href="http://lajipz.top/2025/07/08/OS - Lab5实验报告/">http://lajipz.top/2025/07/08/OS - Lab5实验报告/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>LajiPZ</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2025-07-08</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-07-09</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=671eeccad01e2b00125527bf&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2025/07/08/OS%20-%20Lab3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">OS - Lab3实验报告</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/07/08/OS%20-%20Lab6%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"><span class="level-item">OS - Lab6实验报告</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="waline-thread"></div><link rel="stylesheet" href="https://unpkg.com/@waline/client@2/dist/waline.css"><script src="https://unpkg.com/@waline/client@2/dist/waline.js"></script><script>Waline.init({
+            el: '#waline-thread',
+            serverURL: "https://comments.lajipz.top/",
+            path: window.location.pathname,
+            lang: "zh-CN",
+            
+            emoji: ["https://unpkg.com/@waline/emojis@1.2.0/tieba","https://unpkg.com/@waline/emojis@1.2.0/weibo","https://unpkg.com/@waline/emojis@1.2.0/bilibili"],
+            
+            meta: ["nick","mail","link"],
+            requiredMeta: [],
+            login: "enable",
+            
+            pageSize: 10,
+            imageUploader: false,
+            highlighter: false,
+            texRenderer: false,
+            search: false,
+            pageview: false,
+            comment: false,
+            copyright: true,
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#思考题"><span class="level-left"><span class="level-item">1</span><span class="level-item">思考题</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#5-1"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">5.1</span></span></a></li><li><a class="level is-mobile" href="#5-2"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">5.2</span></span></a></li><li><a class="level is-mobile" href="#5-3"><span class="level-left"><span class="level-item">1.3</span><span class="level-item">5.3</span></span></a></li><li><a class="level is-mobile" href="#5-4"><span class="level-left"><span class="level-item">1.4</span><span class="level-item">5.4</span></span></a></li><li><a class="level is-mobile" href="#5-5"><span class="level-left"><span class="level-item">1.5</span><span class="level-item">5.5</span></span></a></li><li><a class="level is-mobile" href="#5-6"><span class="level-left"><span class="level-item">1.6</span><span class="level-item">5.6</span></span></a></li><li><a class="level is-mobile" href="#5-7"><span class="level-left"><span class="level-item">1.7</span><span class="level-item">5.7</span></span></a></li></ul></li><li><a class="level is-mobile" href="#难点分析"><span class="level-left"><span class="level-item">2</span><span class="level-item">难点分析</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#文件系统"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">文件系统</span></span></a></li><li><a class="level is-mobile" href="#MMIO"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">MMIO</span></span></a></li><li><a class="level is-mobile" href="#文件系统的空闲位图"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">文件系统的空闲位图</span></span></a></li><li><a class="level is-mobile" href="#create-file"><span class="level-left"><span class="level-item">2.4</span><span class="level-item">create_file()</span></span></a></li><li><a class="level is-mobile" href="#map-block"><span class="level-left"><span class="level-item">2.5</span><span class="level-item">map_block()</span></span></a></li><li><a class="level is-mobile" href="#思考题用户态程序的编写"><span class="level-left"><span class="level-item">2.6</span><span class="level-item">思考题用户态程序的编写</span></span></a></li><li><a class="level is-mobile" href="#小细节"><span class="level-left"><span class="level-item">2.7</span><span class="level-item">小细节</span></span></a></li><li><a class="level is-mobile" href="#思考题中提到的"><span class="level-left"><span class="level-item">2.8</span><span class="level-item">思考题中提到的</span></span></a></li></ul></li><li><a class="level is-mobile" href="#实验体会"><span class="level-left"><span class="level-item">3</span><span class="level-item">实验体会</span></span></a></li><li><a class="level is-mobile" href="#原创声明"><span class="level-left"><span class="level-item">4</span><span class="level-item">原创声明</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a><p class="is-size-7"><span>&copy; 2025 LajiPZ</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://unpkg.com/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://unpkg.com/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://unpkg.com/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://unpkg.com/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script src="https://unpkg.com/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

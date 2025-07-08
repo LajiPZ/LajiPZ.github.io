@@ -6,7 +6,7 @@
   <link href="http://lajipz.top/atom.xml" rel="self"/>
   
   <link href="http://lajipz.top/"/>
-  <updated>2025-05-13T11:15:10.882Z</updated>
+  <updated>2025-07-08T15:28:41.339Z</updated>
   <id>http://lajipz.top/</id>
   
   <author>
@@ -15,6 +15,236 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>OS - LA32R移植报告</title>
+    <link href="http://lajipz.top/2025/07/08/OS%20-%20LA32R%E7%A7%BB%E6%A4%8D%E6%8A%A5%E5%91%8A/"/>
+    <id>http://lajipz.top/2025/07/08/OS%20-%20LA32R%E7%A7%BB%E6%A4%8D%E6%8A%A5%E5%91%8A/</id>
+    <published>2025-07-08T15:00:00.000Z</published>
+    <updated>2025-07-08T15:28:41.339Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;这一部分由我与另一位同学共同完成。我主要完成的是SD卡部分的工作。仅此向Lab4就已探索出前三个Lab移植的他表示敬意…&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;指令集适配&quot;&gt;&lt;a href=&quot;#指令集适配&quot; class=&quot;headerlink&quot; title=&quot;指令集适配&quot;&gt;&lt;/a&gt;指令集适配&lt;/h1&gt;&lt;p&gt;这一部分只介绍较为关键的改动。有关Makefile中编译选项的修改，指令名称、格式变动引起的修改，在此不多加赘述。&lt;/p&gt;
+&lt;h2 id=&quot;例外有关&quot;&gt;&lt;a href=&quot;#例外有关&quot; class=&quot;headerlink&quot; title=&quot;例外有关&quot;&gt;&lt;/a&gt;例外有关&lt;/h2&gt;&lt;p&gt;LA32R需要在状态控制寄存器（CSR）中，配置&lt;code&gt;EENTRY&lt;/code&gt;和&lt;code&gt;TLBRENTRY&lt;/code&gt;两项，分别对应普通例外的入口地址，以及TLB重填例外的入口地址。&lt;strong&gt;不难注意到，LA32R的TLB重填例外，是与其他例外分开处理的。&lt;/strong&gt; &lt;/p&gt;
+&lt;p&gt;此外，由于触发 TLB 重填例外之后，处理器核将进入直接地址翻译模式，&lt;code&gt;TLBRENTRY&lt;/code&gt;处所填入口地址应当是&lt;strong&gt;物理地址&lt;/strong&gt;。&lt;code&gt;EENTRY&lt;/code&gt;不受影F响。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OS - Lab1实验报告</title>
+    <link href="http://lajipz.top/2025/07/08/OS%20-%20Lab1%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
+    <id>http://lajipz.top/2025/07/08/OS%20-%20Lab1%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
+    <published>2025-07-08T15:00:00.000Z</published>
+    <updated>2025-07-08T16:02:46.662Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;归档于2025年7月8日。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;思考题&quot;&gt;&lt;a href=&quot;#思考题&quot; class=&quot;headerlink&quot; title=&quot;思考题&quot;&gt;&lt;/a&gt;思考题&lt;/h1&gt;&lt;h2 id=&quot;1-1&quot;&gt;&lt;a href=&quot;#1-1&quot; class=&quot;headerlink&quot; title=&quot;1.1&quot;&gt;&lt;/a&gt;1.1&lt;/h2&gt;&lt;p&gt;先回答&lt;code&gt;objdump&lt;/code&gt;的参数作用：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-D&lt;/code&gt;：显示所有反汇编结果。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-S&lt;/code&gt;：在源码可以找到的情况下，将源码与反汇编结果一同输出：&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OS - Lab2实验报告</title>
+    <link href="http://lajipz.top/2025/07/08/OS%20-%20Lab2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
+    <id>http://lajipz.top/2025/07/08/OS%20-%20Lab2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
+    <published>2025-07-08T15:00:00.000Z</published>
+    <updated>2025-07-08T16:02:48.742Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;归档于2025年7月8日。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;杂记&quot;&gt;&lt;a href=&quot;#杂记&quot; class=&quot;headerlink&quot; title=&quot;杂记&quot;&gt;&lt;/a&gt;杂记&lt;/h1&gt;&lt;p&gt;&lt;img src=&quot;https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250410155839.png&quot; alt=&quot;Pasted image 20250410155839.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;我们需要回顾一下内存空间相关的知识。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;kuseg&lt;/code&gt;：用户态空间，需要通过TLB和Cache&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kseg0&lt;/code&gt;：过Cache，不过TLB；&lt;strong&gt;MMU拉低最高位（-0x8000_0000）得物理地址&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kseg1&lt;/code&gt;：Cache和TLB都不过；&lt;strong&gt;MMU拉低高三位得物理地址&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kseg2&lt;/code&gt;：过TLB和Cache&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;还有，MIPS通过MMIO (Memory Mapped IO)进行外设访问。显然外设处在固定的物理地址上，我们肯定想到&lt;code&gt;kseg1&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;TLB需要软件初始化，故内核最开始自然放在不用TLB的&lt;code&gt;kseg0&lt;/code&gt;上。&lt;code&gt;kseg1&lt;/code&gt;暂时认为是访问IO设备专用。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OS - Lab3实验报告</title>
+    <link href="http://lajipz.top/2025/07/08/OS%20-%20Lab3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
+    <id>http://lajipz.top/2025/07/08/OS%20-%20Lab3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
+    <published>2025-07-08T15:00:00.000Z</published>
+    <updated>2025-07-08T16:02:51.154Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;归档于2025年7月8日。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;思考题&quot;&gt;&lt;a href=&quot;#思考题&quot; class=&quot;headerlink&quot; title=&quot;思考题&quot;&gt;&lt;/a&gt;思考题&lt;/h1&gt;&lt;h2 id=&quot;3-1&quot;&gt;&lt;a href=&quot;#3-1&quot; class=&quot;headerlink&quot; title=&quot;3.1&quot;&gt;&lt;/a&gt;3.1&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;UVPT指示的是整个页表空间的起始位置。&lt;/li&gt;
+&lt;li&gt;在页表自映射的设计下，&lt;code&gt; e-&amp;gt;env_pgdir[PDX(UVPT)]&lt;/code&gt;访问了页目录中，&lt;strong&gt;指向页目录自身的页目录项&lt;/strong&gt;；&lt;/li&gt;
+&lt;li&gt;将这一页目录项赋值为&lt;code&gt;PADDR(e-&amp;gt;env_pgdir) | PTE_V&lt;/code&gt;，也就是在&lt;strong&gt;构建自映射，并让这一项有效&lt;/strong&gt;，从而使得页目录可被正确访问。&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OS - Lab5实验报告</title>
+    <link href="http://lajipz.top/2025/07/08/OS%20-%20Lab5%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
+    <id>http://lajipz.top/2025/07/08/OS%20-%20Lab5%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
+    <published>2025-07-08T15:00:00.000Z</published>
+    <updated>2025-07-08T16:02:54.808Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;归档于2025年7月8日。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;思考题&quot;&gt;&lt;a href=&quot;#思考题&quot; class=&quot;headerlink&quot; title=&quot;思考题&quot;&gt;&lt;/a&gt;思考题&lt;/h1&gt;&lt;h2 id=&quot;5-1&quot;&gt;&lt;a href=&quot;#5-1&quot; class=&quot;headerlink&quot; title=&quot;5.1&quot;&gt;&lt;/a&gt;5.1&lt;/h2&gt;&lt;p&gt;这跟Cache的更新策略有一些关系。&lt;/p&gt;
+&lt;p&gt;若Cache采用了写回策略，则：由&lt;code&gt;kseg0&lt;/code&gt;写设备，向设备传递的数据会被存入Cache，而不会真正到达设备；仅在对应Cache块被清除掉时，向设备传输的数据才能到达设备。这会导致设备的延迟响应，甚至不响应。&lt;/p&gt;
+&lt;p&gt;Cache的更新策略，也与这个问题有关。如果Cache中缓存了设备的状态寄存器，那么：众所周知，设备的状态往往实时变化，若要保持Cache与设备状态寄存器的一致，我们必须时刻更新Cache，其性能开销极大，完全背离了Cache的设计本意；不维持一致性，则在Cache中读出的设备状态信息与实际的设备状态往往不符，会引起程序逻辑的问题。&lt;/p&gt;
+&lt;p&gt;这样做对不同设备的影响当然是不同的。对于IDE硬盘，可能是一次读&amp;#x2F;写请求迟迟不响应，导致程序长时间阻塞；对于显示设备（串口输出&amp;#x2F;显示器&amp;#x2F;…），可能是迟迟不显示该显示的内容。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OS - Lab6实验报告</title>
+    <link href="http://lajipz.top/2025/07/08/OS%20-%20Lab6%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
+    <id>http://lajipz.top/2025/07/08/OS%20-%20Lab6%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
+    <published>2025-07-08T15:00:00.000Z</published>
+    <updated>2025-07-08T16:02:56.455Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;归档于2025年7月8日。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;思考题&quot;&gt;&lt;a href=&quot;#思考题&quot; class=&quot;headerlink&quot; title=&quot;思考题&quot;&gt;&lt;/a&gt;思考题&lt;/h1&gt;&lt;h2 id=&quot;6-1&quot;&gt;&lt;a href=&quot;#6-1&quot; class=&quot;headerlink&quot; title=&quot;6.1&quot;&gt;&lt;/a&gt;6.1&lt;/h2&gt;&lt;p&gt;很简单，我们把两个case互换即可。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OS - Lab4实验报告</title>
+    <link href="http://lajipz.top/2025/07/08/OS%20-%20Lab4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
+    <id>http://lajipz.top/2025/07/08/OS%20-%20Lab4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
+    <published>2025-07-08T15:00:00.000Z</published>
+    <updated>2025-07-08T16:02:52.781Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;归档于2025年7月8日。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;感觉开始上强度了。&lt;/p&gt;
+&lt;p&gt;我需要从头理一些东西。&lt;/p&gt;
+&lt;h1 id=&quot;杂记&quot;&gt;&lt;a href=&quot;#杂记&quot; class=&quot;headerlink&quot; title=&quot;杂记&quot;&gt;&lt;/a&gt;杂记&lt;/h1&gt;&lt;h2 id=&quot;syscall的处理&quot;&gt;&lt;a href=&quot;#syscall的处理&quot; class=&quot;headerlink&quot; title=&quot;syscall的处理&quot;&gt;&lt;/a&gt;syscall的处理&lt;/h2&gt;&lt;p&gt;以&lt;code&gt;debugf()&lt;/code&gt;为例：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;处理参数，随后调用&lt;code&gt;vdebugf()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;vdebugf()&lt;/code&gt;中调用熟悉的&lt;code&gt;vprintfmt&lt;/code&gt;，用&lt;code&gt;debug_output&lt;/code&gt;作为后端&lt;/li&gt;
+&lt;li&gt;随后还调用了&lt;code&gt;debug_flush()&lt;/code&gt;，调用出&lt;code&gt;syscall_print_cons&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;syscall_print_cons()&lt;/code&gt;调用&lt;code&gt;msyscall()&lt;/code&gt;，传入信号参数&lt;code&gt;SYS_print_cons&lt;/code&gt;，指示之&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OO_U4 - UML</title>
+    <link href="http://lajipz.top/2025/06/10/OO_U4%20-%20Checker/"/>
+    <id>http://lajipz.top/2025/06/10/OO_U4%20-%20Checker/</id>
+    <published>2025-06-10T11:00:00.000Z</published>
+    <updated>2025-07-08T14:42:02.387Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;本文使用Python搭建评测机。使用其他语言，在具体实现上可能存在差异，本文只是提供了一个思路。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;众所周知，本次作业采用了“交互式评测”，会根据同学们的程序输出，来动态生成新的指令。这对本地复现作业评测方式，构建自动化测试带来了一些挑战。&lt;/p&gt;
+&lt;p&gt;本人在一番折腾&lt;del&gt;，并在各路大模型的协助&lt;/del&gt;后，成功在本地初步完成了交互式评测的搭建。本文将对我折腾的经验，进行一些简要的分享。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OO_U4 - UML</title>
+    <link href="http://lajipz.top/2025/06/10/OO_U4%20-%20UML/"/>
+    <id>http://lajipz.top/2025/06/10/OO_U4%20-%20UML/</id>
+    <published>2025-06-10T11:00:00.000Z</published>
+    <updated>2025-07-08T14:46:52.846Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;直接就是博客作业。文末的课程收获是真情实感。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;漫长的OO历程，终于到此结束了。&lt;/p&gt;
+&lt;p&gt;本篇文章将简要介绍本人在本单元中，利用UML进行正向建模的经历，并对一学期以来的课程经历做一个简要回顾。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    
+  </entry>
   
   <entry>
     <title>OO_U3 - JML</title>
@@ -38,17 +268,16 @@
   </entry>
   
   <entry>
-    <title>OO_U2 - HW5,6阶段性总结</title>
-    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/"/>
-    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/</id>
+    <title>OO_U2 - HW7简要总结</title>
+    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/"/>
+    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/</id>
     <published>2025-04-17T15:00:00.000Z</published>
-    <updated>2025-04-21T06:32:23.121Z</updated>
+    <updated>2025-04-21T06:39:05.077Z</updated>
     
     
-    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;我的调度算法，与我的架构实现耦合度较高，因此我不得不先提一些我自己的电梯实现；不需要的同学，欢迎直接跳开“电梯实现”部分。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;这算是本人两周以来的一个总结吧，终于有时间写了…&lt;/p&gt;</summary>
+    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;讨论区已有一众仙人分享了自己的实现，但我认为我有在降低修改复杂度上更进一步的办法。&lt;/p&gt;
+&lt;p&gt;考虑到本次作业为本单元的最后一次作业，我的修改方法更注重于&lt;strong&gt;降低修改的复杂度，可能存在部分性能的牺牲。&lt;/strong&gt; 在各位进行参考时，请注意这一点。&lt;/p&gt;
+&lt;p&gt;本人实现的亮点在于：UPDATE请求的处理，与双轿厢目标楼层的规避，&lt;strong&gt;全部利用线程交互实现&lt;/strong&gt;。&lt;/p&gt;</summary>
     
     
     
@@ -60,16 +289,17 @@
   </entry>
   
   <entry>
-    <title>OO_U2 - HW7简要总结</title>
-    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/"/>
-    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/</id>
+    <title>OO_U2 - HW5,6阶段性总结</title>
+    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/"/>
+    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/</id>
     <published>2025-04-17T15:00:00.000Z</published>
-    <updated>2025-04-21T06:39:05.077Z</updated>
+    <updated>2025-04-21T06:32:23.121Z</updated>
     
     
-    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;讨论区已有一众仙人分享了自己的实现，但我认为我有在降低修改复杂度上更进一步的办法。&lt;/p&gt;
-&lt;p&gt;考虑到本次作业为本单元的最后一次作业，我的修改方法更注重于&lt;strong&gt;降低修改的复杂度，可能存在部分性能的牺牲。&lt;/strong&gt; 在各位进行参考时，请注意这一点。&lt;/p&gt;
-&lt;p&gt;本人实现的亮点在于：UPDATE请求的处理，与双轿厢目标楼层的规避，&lt;strong&gt;全部利用线程交互实现&lt;/strong&gt;。&lt;/p&gt;</summary>
+    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;我的调度算法，与我的架构实现耦合度较高，因此我不得不先提一些我自己的电梯实现；不需要的同学，欢迎直接跳开“电梯实现”部分。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这算是本人两周以来的一个总结吧，终于有时间写了…&lt;/p&gt;</summary>
     
     
     
@@ -216,7 +446,7 @@
     <link href="http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/"/>
     <id>http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</id>
     <published>2025-02-04T13:23:00.000Z</published>
-    <updated>2025-02-21T05:50:09.322Z</updated>
+    <updated>2025-07-08T15:25:30.627Z</updated>
     
     
     <summary type="html">&lt;p&gt;本文将对BUAA_CO_2024进行简要回顾，并给出自己的一些主观建议，仅供参考。&lt;/p&gt;</summary>
@@ -237,7 +467,7 @@
     <link href="http://lajipz.top/2025/02/04/%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E6%9B%B4%E4%BC%98%E9%9B%85%E5%9C%B0%E5%88%A9%E7%94%A8ISE%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91/"/>
     <id>http://lajipz.top/2025/02/04/%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E6%9B%B4%E4%BC%98%E9%9B%85%E5%9C%B0%E5%88%A9%E7%94%A8ISE%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91/</id>
     <published>2025-02-04T13:23:00.000Z</published>
-    <updated>2025-02-21T05:50:09.322Z</updated>
+    <updated>2025-07-08T15:25:28.936Z</updated>
     
     
     <summary type="html">&lt;blockquote&gt;
@@ -269,7 +499,7 @@
     <link href="http://lajipz.top/2025/02/04/%E2%80%9C%E6%B3%95%E5%BE%8B%E3%80%81%E7%A7%91%E6%8A%80%E4%B8%8E%E7%A4%BE%E4%BC%9A%E2%80%9D%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%20-%202024/"/>
     <id>http://lajipz.top/2025/02/04/%E2%80%9C%E6%B3%95%E5%BE%8B%E3%80%81%E7%A7%91%E6%8A%80%E4%B8%8E%E7%A4%BE%E4%BC%9A%E2%80%9D%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%20-%202024/</id>
     <published>2025-02-04T00:47:00.000Z</published>
-    <updated>2025-02-21T05:50:09.320Z</updated>
+    <updated>2025-07-08T14:59:51.045Z</updated>
     
     
     <summary type="html">&lt;p&gt;本文记录了本人复习“法律、科技与社会”课程时，对课后思考题给出的答案。&lt;/p&gt;
@@ -289,145 +519,6 @@
     <category term="水课" scheme="http://lajipz.top/tags/%E6%B0%B4%E8%AF%BE/"/>
     
     <category term="FKS" scheme="http://lajipz.top/tags/FKS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>本人背单词的粗劣经验</title>
-    <link href="http://lajipz.top/2024/08/08/%E6%9C%AC%E4%BA%BA%E8%83%8C%E5%8D%95%E8%AF%8D%E7%9A%84%E7%B2%97%E5%8A%A3%E7%BB%8F%E9%AA%8C/"/>
-    <id>http://lajipz.top/2024/08/08/%E6%9C%AC%E4%BA%BA%E8%83%8C%E5%8D%95%E8%AF%8D%E7%9A%84%E7%B2%97%E5%8A%A3%E7%BB%8F%E9%AA%8C/</id>
-    <published>2024-08-08T03:45:14.000Z</published>
-    <updated>2025-02-21T05:50:09.321Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;写在前面：本文本来是写给本人一位英语学着有些吃力的好友的一篇私货；但由于自己在给梦拓学弟们写闲聊的时候扯到了我自己学英语的经历，索性就把我自己写的这篇烂文发出来给各位参考（或公开处刑）吧。&lt;br&gt;如果本文有不足&amp;#x2F;误导&amp;#x2F;错误之处，欢迎您在本文的评论区中直接指出（更是欢迎语言学相关的朋友给予专业的指导），小弟必感激不尽！&lt;/p&gt;
-&lt;/blockquote&gt;</summary>
-    
-    
-    
-    <category term="随笔" scheme="http://lajipz.top/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
-    
-    <category term="英语" scheme="http://lajipz.top/tags/%E8%8B%B1%E8%AF%AD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>自己的碎碎念</title>
-    <link href="http://lajipz.top/2024/08/07/casualTalk/"/>
-    <id>http://lajipz.top/2024/08/07/casualTalk/</id>
-    <published>2024-08-07T12:58:06.000Z</published>
-    <updated>2025-04-21T06:32:04.566Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;在给各位塞的私货里面，我大段写了一些经验，自己这部分提的不多；故这里再多闲聊一点，让各位能对我大一经历了什么有点了解（笑）&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="梦拓相关" scheme="http://lajipz.top/categories/%E6%A2%A6%E6%8B%93%E7%9B%B8%E5%85%B3/"/>
-    
-    
-    <category term="梦拓" scheme="http://lajipz.top/tags/%E6%A2%A6%E6%8B%93/"/>
-    
-    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>送给组内信类新生的一点点私货</title>
-    <link href="http://lajipz.top/2024/08/04/BUAA-freshman-FAQ/"/>
-    <id>http://lajipz.top/2024/08/04/BUAA-freshman-FAQ/</id>
-    <published>2024-08-04T13:11:00.000Z</published>
-    <updated>2025-02-21T05:50:09.308Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;序&quot;&gt;&lt;a href=&quot;#序&quot; class=&quot;headerlink&quot; title=&quot;序&quot;&gt;&lt;/a&gt;序&lt;/h2&gt;&lt;p&gt;首先，欢迎各位成为北航士谔书院的一员，也很荣幸能与大家共处同一梦拓小组！&lt;/p&gt;
-&lt;p&gt;本文将尝试对大家初入大一可能遇到的部分问题进行解答，以备各位不时之需；同时夹带大量私货，欢迎各位参考😋&lt;/p&gt;
-&lt;p&gt;本文是按苯人自己一年来的经验，想到什么写什么写成的，应该能涵盖各位可能碰到的不少问题。若有其它没有覆盖到的问题，欢迎各位联系交流！🤗&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="梦拓相关" scheme="http://lajipz.top/categories/%E6%A2%A6%E6%8B%93%E7%9B%B8%E5%85%B3/"/>
-    
-    
-    <category term="梦拓" scheme="http://lajipz.top/tags/%E6%A2%A6%E6%8B%93/"/>
-    
-    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>图床测试</title>
-    <link href="http://lajipz.top/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/"/>
-    <id>http://lajipz.top/2023/11/30/%E5%9B%BE%E5%BA%8A%E6%B5%8B%E8%AF%95/</id>
-    <published>2023-11-30T05:47:18.000Z</published>
-    <updated>2025-04-21T06:27:40.420Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/%7B433FA560-1033-4134-A91E-3F4E0C6D3AC2%7D.png&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="建站历程" scheme="http://lajipz.top/categories/%E5%BB%BA%E7%AB%99%E5%8E%86%E7%A8%8B/"/>
-    
-    
-    <category term="测试" scheme="http://lajipz.top/tags/%E6%B5%8B%E8%AF%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>建站第一日</title>
-    <link href="http://lajipz.top/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/"/>
-    <id>http://lajipz.top/2023/11/28/%E5%BB%BA%E7%AB%99%E7%AC%AC%E4%B8%80%E6%97%A5/</id>
-    <published>2023-11-28T14:36:21.000Z</published>
-    <updated>2025-04-21T06:27:41.141Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;今天做成的事情不多，主要是做了一下侧边栏的结构，改了个色，加了个favicon，然后基本就没了。&lt;/p&gt;
-&lt;p&gt;上述工作的确很简单，但为何忙了一天，却只完成了这几件事呢？问题出在评论区功能和图床的实现上。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="建站历程" scheme="http://lajipz.top/categories/%E5%BB%BA%E7%AB%99%E5%8E%86%E7%A8%8B/"/>
-    
-    
-    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>第一次尝试</title>
-    <link href="http://lajipz.top/2023/11/27/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95/"/>
-    <id>http://lajipz.top/2023/11/27/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%9D%E8%AF%95/</id>
-    <published>2023-11-27T03:30:00.000Z</published>
-    <updated>2025-02-21T05:50:09.322Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;pre&gt;&lt;code&gt;万事开头难。
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;有关建设个人博客这件事，本人其实早在2022年5月，就已按各路教程，用Hexo和Github</summary>
-        
-      
-    
-    
-    
-    <category term="随笔" scheme="http://lajipz.top/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
     
   </entry>
   

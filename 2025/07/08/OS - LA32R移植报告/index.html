@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>OS - LA32R移植报告 - Position 0 - LajiPZ的随想屋</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Position 0 - LajiPZ的随想屋"><meta name="msapplication-TileImage" content="/img/pz13.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Position 0 - LajiPZ的随想屋"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="这一部分由我与另一位同学共同完成。我主要完成的是SD卡部分的工作。仅此向Lab4就已探索出前三个Lab移植的他表示敬意…  指令集适配这一部分只介绍较为关键的改动。有关Makefile中编译选项的修改，指令名称、格式变动引起的修改，在此不多加赘述。 例外有关LA32R需要在状态控制寄存器（CSR）中，配置EENTRY和TLBRENTRY两项，分别对应普通例外的入口地址，以及TLB重填例外的入口地"><meta property="og:type" content="blog"><meta property="og:title" content="OS - LA32R移植报告"><meta property="og:url" content="http://lajipz.top/2025/07/08/OS%20-%20LA32R%E7%A7%BB%E6%A4%8D%E6%8A%A5%E5%91%8A/"><meta property="og:site_name" content="Position 0 - LajiPZ的随想屋"><meta property="og:description" content="这一部分由我与另一位同学共同完成。我主要完成的是SD卡部分的工作。仅此向Lab4就已探索出前三个Lab移植的他表示敬意…  指令集适配这一部分只介绍较为关键的改动。有关Makefile中编译选项的修改，指令名称、格式变动引起的修改，在此不多加赘述。 例外有关LA32R需要在状态控制寄存器（CSR）中，配置EENTRY和TLBRENTRY两项，分别对应普通例外的入口地址，以及TLB重填例外的入口地"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/cf952bc27452f66f7a1a0fb562dfbb62.jpg"><meta property="article:published_time" content="2025-07-08T15:00:00.000Z"><meta property="article:modified_time" content="2025-07-08T15:28:41.339Z"><meta property="article:author" content="LajiPZ"><meta property="article:tag" content="操作系统"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/cf952bc27452f66f7a1a0fb562dfbb62.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lajipz.top/2025/07/08/OS%20-%20LA32R%E7%A7%BB%E6%A4%8D%E6%8A%A5%E5%91%8A/"},"headline":"OS - LA32R移植报告","image":["https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/cf952bc27452f66f7a1a0fb562dfbb62.jpg"],"datePublished":"2025-07-08T15:00:00.000Z","dateModified":"2025-07-08T15:28:41.339Z","author":{"@type":"Person","name":"LajiPZ"},"publisher":{"@type":"Organization","name":"Position 0 - LajiPZ的随想屋","logo":{"@type":"ImageObject","url":"http://lajipz.top/img/pz13.png"}},"description":"这一部分由我与另一位同学共同完成。我主要完成的是SD卡部分的工作。仅此向Lab4就已探索出前三个Lab移植的他表示敬意…  指令集适配这一部分只介绍较为关键的改动。有关Makefile中编译选项的修改，指令名称、格式变动引起的修改，在此不多加赘述。 例外有关LA32R需要在状态控制寄存器（CSR）中，配置EENTRY和TLBRENTRY两项，分别对应普通例外的入口地址，以及TLB重填例外的入口地"}</script><link rel="canonical" href="http://lajipz.top/2025/07/08/OS%20-%20LA32R%E7%A7%BB%E6%A4%8D%E6%8A%A5%E5%91%8A/"><link rel="icon" href="/img/pz13.png"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/6.0.0/css/all.min.css"><link data-pjax rel="stylesheet" href="https://unpkg.com/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://unpkg.com/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://unpkg.com/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Position 0 - LajiPZ的随想屋" type="application/atom+xml">
+</head><body class="is-$3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a><a class="navbar-item" href="/links">友链</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-07-08T15:00:00.000Z" title="7/8/2025, 11:00:00 PM">2025-07-08</time>发表</span><span class="level-item"><time dateTime="2025-07-08T15:28:41.339Z" title="7/8/2025, 11:28:41 PM">2025-07-08</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a></span><span class="level-item">22 分钟读完 (大约3363个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">OS - LA32R移植报告</h1><div class="content"><blockquote>
+<p>这一部分由我与另一位同学共同完成。我主要完成的是SD卡部分的工作。仅此向Lab4就已探索出前三个Lab移植的他表示敬意…</p>
+</blockquote>
+<h1 id="指令集适配"><a href="#指令集适配" class="headerlink" title="指令集适配"></a>指令集适配</h1><p>这一部分只介绍较为关键的改动。有关Makefile中编译选项的修改，指令名称、格式变动引起的修改，在此不多加赘述。</p>
+<h2 id="例外有关"><a href="#例外有关" class="headerlink" title="例外有关"></a>例外有关</h2><p>LA32R需要在状态控制寄存器（CSR）中，配置<code>EENTRY</code>和<code>TLBRENTRY</code>两项，分别对应普通例外的入口地址，以及TLB重填例外的入口地址。<strong>不难注意到，LA32R的TLB重填例外，是与其他例外分开处理的。</strong> </p>
+<p>此外，由于触发 TLB 重填例外之后，处理器核将进入直接地址翻译模式，<code>TLBRENTRY</code>处所填入口地址应当是<strong>物理地址</strong>。<code>EENTRY</code>不受影F响。</p>
+<span id="more"></span>
+
+<p>配置两个入口的工作，也在<code>start.S</code>中进行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">       la      a0, exc_gen_entry  </span><br><span class="line">       csrwr   a0, csr_eentry  </span><br><span class="line"></span><br><span class="line">       la      a1, tlb_miss_entry  </span><br><span class="line">       // 转换为物理地址</span><br><span class="line">       li.w    a0, 0x1fffffff  </span><br><span class="line">       and     a1, a1, a0  </span><br><span class="line">       </span><br><span class="line">       csrwr   a1, csr_tlbrentry</span><br></pre></td></tr></table></figure>
+
+
+<p>随后，是异常处理程序入口的获取。</p>
+<p>这需要修改<code>kern/entry.S</code>：</p>
+<ul>
+<li>在出现TLB有关异常时，LA32R核会直接由先前已经规定的TLB例外入口，进入对应的处理程序，我们在这里只需要关心其他例外的处理程序入口；</li>
+<li>与先前由<code>CP0.CAUSE</code>获取例外编号类似，我们由<code>CSR.ESTAT</code>获取例外编号，进入对应的处理程序。</li>
+</ul>
+<h2 id="虚拟地址翻译"><a href="#虚拟地址翻译" class="headerlink" title="虚拟地址翻译"></a>虚拟地址翻译</h2><p>LA32R引入了 <strong>“直接地址翻译模式”与“映射地址翻译模式”</strong>。在我们的实验中，我们的虚拟地址与物理地址位数相同，前者的虚拟地址直接就是物理地址，后者的虚拟地址则是由MMU进行管理，与常见实现类似。</p>
+<p>LA32R还提供了“直接映射地址翻译模式”，允许在映射地址翻译模式下，按照CSR.DMW0&#x2F;1中配置好的地址翻译窗口，将某个虚拟地址不通过页表，直接翻译为某个物理地址。</p>
+<p>对于某些地址，我们希望其不通过Cache，直接访问内存（如MMIO有关）。LA32R提供了一致可缓存、强序非缓存两种模式，粗浅理解就是可否通过缓存访问。</p>
+<p>LA32R并没有体系结构约定的虚拟地址空间。我们决定沿用原有的地址空间设计。因此，我们需要借助直接映射地址翻译，进行原设计中kseg0、kseg1的配置，是否可缓存的规则也与先前设计一致。</p>
+<p>这一部分的配置工作在<code>start.S</code>中，于跳转到<code>la32r_init()</code>前进行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">       // Configure KSEG0/1  </span><br><span class="line">       li.w a0, 0x8000000a  </span><br><span class="line">       csrwr a0, csr_dmw0  </span><br><span class="line">       li.w a0, 0xa0000011  </span><br><span class="line">       csrwr a0, csr_dmw1  </span><br><span class="line">       </span><br><span class="line">       /* jump to la32r_init */  </span><br><span class="line">       b       la32r_init</span><br></pre></td></tr></table></figure>
+
+<p>此外，在<code>start.S</code>中，除了原有的禁用中断外，我们还需启用映射地址翻译模式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">       li.w    a0, 0xb0     // PLV = 0, ID = 0, DA = 0, PG = 1, DATF = DATM = 01 </span><br><span class="line">       csrwr   a0, csr_crmd</span><br></pre></td></tr></table></figure>
+
+<p>LA32R亦对TLB&#x2F;页表的表项结构产生了影响，大致可以归纳为以下两点：</p>
+<ul>
+<li>引入<code>PLV</code>位，对访问权限进行控制；这需要在涉及页表操作时，对应设置权限位（<code>pmap.c</code>与<code>env.c</code>中涉及更改居多。大部分为PLV3，即用户态）</li>
+<li>表项属性位置的变化。</li>
+</ul>
+<h2 id="TLB异常有关"><a href="#TLB异常有关" class="headerlink" title="TLB异常有关"></a>TLB异常有关</h2><p>正如前文所言，TLB重填的处理入口，在LA32R中是与普通异常独立的，这为我们的实现带来了便利。</p>
+<ol>
+<li><code>tlb_out</code>被弃用，<code>tlb_invalidate()</code>使用<code>invtlb</code>指令即可实现</li>
+</ol>
+<ul>
+<li>原有设计，是去除指定<code>asid</code>与<code>va</code>的TLB项目</li>
+<li>内存共享问题此处已被考虑，就是要去除这一被共享的TLB项</li>
+<li>查询LA32R手册，得知其对应模式标志为0x6</li>
+<li><code>invtlb 0x6, a0, a1</code>即可，<code>$a0/1</code>对应先前<code>tlb_out</code>参数中的<code>asid/va</code>。</li>
+</ul>
+<ol start="2">
+<li><code>tlb_asm.S</code>内直接实现<code>tlb_miss_entry</code>中的重填逻辑。整体流程：</li>
+</ol>
+<ul>
+<li>将处理过程中，要用到的寄存器原始内容保存进CSR</li>
+<li>读取CSR中，一级页表地址</li>
+<li>按照BADV，算出页目录索引</li>
+<li>按页表索引，得出页目录项；检查之是否合法</li>
+<li>合法，继续读取页表，将页表项存入TLB</li>
+<li>不合法，则缺页，写两个空项进入TLB</li>
+<li>处理完后，恢复寄存器</li>
+</ul>
+<p>原有的TLB项对应页无效逻辑变化不大，此处不加赘述。</p>
+<p>对应，<code>kern/tlbex.c</code>受到影响。</p>
+<h2 id="计时器"><a href="#计时器" class="headerlink" title="计时器"></a>计时器</h2><p>首先，要配置计时器的中断使能，需要配置CSR.ECFG。这在进程创建时(env.c)进行；在进程切换，根据Trapframe恢复现场时，时钟中断对应就会启用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">e-&gt;env_tf.csr_ecfg = ECFG_TIE;</span><br></pre></td></tr></table></figure>
+
+<p>其次，是计时器的控制，需要配置CSR.TCFG。实现在<code>include/kclock.h</code>中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.macro RESET_KCLOCK</span><br><span class="line">li.w t0, 0xfffd // Enable = 1, Periodic = 0, Else as the init value of clock</span><br><span class="line">csrwr t0, csr_tcfg</span><br><span class="line">.endm</span><br></pre></td></tr></table></figure>
+
+<p>LA32R提供了<code>Periodic</code>的计时器复位方法：在时钟中断发生后，计时器自动复位成CSR.TVAL中预设值。为了简化设计，我们选择MIPS中原有的计时器复位思路，即时钟中断发生后，由软件手动配置计时器。</p>
+<p>最后，则是时钟中断的处理。在LA32R中，我们需要手动写<code>CSR.TICLR</code>寄存器，进行时钟中断的清除。这部分逻辑在<code>genex.S</code>处实现：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">handle_int:    </span><br><span class="line">	 // 判断是否为时钟中断；</span><br><span class="line">	 // 与原有逻辑相似，</span><br><span class="line">	 // 但现在从CSR.ESTAT中获取异常信息                                        </span><br><span class="line">     csrrd   t0, csr_estat   </span><br><span class="line">     andi    t1, t0, ESTAT_TI            </span><br><span class="line">     bne     t1, zero, timer_irq           </span><br><span class="line"> timer_irq:                                   </span><br><span class="line">     li.w     t0,1                               </span><br><span class="line">     csrwr    t0, csr_ticlr                    </span><br><span class="line">     li.w      a0, 0 </span><br><span class="line">     b       schedule                             </span><br><span class="line">END(handle_int)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="上下文保存"><a href="#上下文保存" class="headerlink" title="上下文保存"></a>上下文保存</h2><p>首先，我们需要修改<code>Trapframe</code>结构体的定义，使得移植后，我们仍能得知异常处理所需要的CSR信息：</p>
+<ul>
+<li>PRMD：出错时的当前状态；这主要是为了进程的创建，使得进程退出后能够正常让系统回到内核态</li>
+<li>BADV：出错的访存地址</li>
+<li>ESTAT：例外状态，旨在得知发生了什么异常</li>
+<li>ERA：异常处理后，返回的程序PC</li>
+<li>ECFG：旨在方便创建进程时，打开时钟中断</li>
+</ul>
+<p>单独存储PRMD、BADV，而不是直接从CSR内读取，主要是为了处理异常的嵌套，单层异常的话，其实等价于此时CSR.PRMD与CSR.BADV中存储的值。</p>
+<p>对应的，我们需要修改<code>include/stackframe.h</code>中的<code>SAVE/RESTORE_ALL</code>宏，更新指令为LA32R格式，并适应现在的Trapframe设计，使得上下文能够正常保存与恢复。</p>
+<p>此外，在LA32R的寄存器定义下，发生了以下两个关键变动：</p>
+<ul>
+<li><code>$sp</code>以及返回值寄存器的编号发生了变化；</li>
+<li>LA32R下，参数寄存器有5个，不再需要在栈帧中存放额外参数</li>
+</ul>
+<p>这需要我们对设计这两个更改的地方进行修正。</p>
+<h1 id="SD卡驱动"><a href="#SD卡驱动" class="headerlink" title="SD卡驱动"></a>SD卡驱动</h1><p>这部分的工作，大体可以分为SD卡的初始化，以及SD卡的读写两个部分。</p>
+<ul>
+<li>自然，我们需要规定需要访问的SD Host Controller寄存器的地址；本实现选择跟串口地址的定义放在一起。</li>
+<li>SD卡的初始化，本实现选择放在<code>la32r_init()</code>中。</li>
+<li>SD卡的核心交互逻辑，存储在<code>kern/sd.c</code>中。</li>
+<li>对应有<code>include/sd.h</code>，规定了ADMA2描述符结构体<code>adma2_desc_entry</code>，SD Host Controller寄存器的访问宏<code>SDREG()</code>，以及向SD卡发指令操作的函数定义。</li>
+</ul>
+<p>为方便表述，下称Host Controller为控制器。</p>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>这里主要分为三步：</p>
+<ul>
+<li>配置控制器与SD卡的时钟；</li>
+<li>配置控制器的一般&#x2F;错误中断状态使能；</li>
+<li>给SD卡发送指令，初始化SD卡。</li>
+</ul>
+<p>配置时钟控制，通过配置控制器的Clock Control Register实现。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">sd_clk_init</span><span class="params">()</span> &#123;</span><br><span class="line">	SDREG(MEGASOC_SD_CCR) = (</span><br><span class="line">		<span class="number">0x00</span> &lt;&lt; <span class="number">8</span> | <span class="comment">// 直接使用可用的基础频率</span></span><br><span class="line">		<span class="number">0x1</span> &lt;&lt; <span class="number">0</span> <span class="comment">// 启用控制器内部时钟</span></span><br><span class="line">	);</span><br><span class="line">	<span class="keyword">while</span> (!(SDREG(MEGASOC_SD_CCR) &amp; <span class="number">0x0002</span>)) &#123;&#125; <span class="comment">// 等待控制器内部时钟稳定</span></span><br><span class="line">	SDREG(MEGASOC_SD_CCR) |= <span class="number">0x1</span> &lt;&lt; <span class="number">2</span>; <span class="comment">// 启动SD卡的时钟</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在时钟配置完成后，我们才能对SD卡发送指令，进行初始化。</p>
+<p>一般&#x2F;错误中断状态使能，则是通过配置控制器的Normal&#x2F;Error Interrupt Status Enable Register实现的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">sd_intr_init</span><span class="params">()</span> &#123;</span><br><span class="line">	SDREG(MEGASOC_SD_NISER) = (</span><br><span class="line">		<span class="number">1</span> &lt;&lt; <span class="number">0</span> | <span class="comment">// CMD done</span></span><br><span class="line">		<span class="number">1</span> &lt;&lt; <span class="number">1</span> | <span class="comment">// Transfer done</span></span><br><span class="line">		<span class="number">1</span> &lt;&lt; <span class="number">3</span> <span class="comment">// DMA intr</span></span><br><span class="line">	);</span><br><span class="line">	</span><br><span class="line">	SDREG(MEGASOC_SD_EISER) = (</span><br><span class="line">		<span class="number">1</span> &lt;&lt; <span class="number">0</span> | <span class="number">1</span> &lt;&lt; <span class="number">1</span> | <span class="comment">// CMD timeout/CRC</span></span><br><span class="line">		<span class="number">1</span> &lt;&lt; <span class="number">4</span> | <span class="number">1</span> &lt;&lt; <span class="number">5</span> | <span class="comment">// DAT timeout/CRC</span></span><br><span class="line">		<span class="number">1</span> &lt;&lt; <span class="number">9</span> <span class="comment">// ADMA err</span></span><br><span class="line">	);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于<code>NISER</code>，我们只需要知道指令完成、数据发送完成（用于SD卡读写时）、DMA中断（DMA出错时有用）三个中断。而<code>EISER</code>，只需配置ADMA错误，控制器的CMD&#x2F;DAT两条线的超时&#x2F;CRC校验错误即可。</p>
+<p>这两步完成后，即可按照手册中的初始化步骤，对SD卡自身进行初始化了。<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/cf952bc27452f66f7a1a0fb562dfbb62.jpg" alt="cf952bc27452f66f7a1a0fb562dfbb62.jpg"></p>
+<hr>
+<p>我们使用ADMA2方法进行SD卡的读写。本实现在SD卡初始化时，就对SD卡的传输方式就进行配置。这通过配置<code>Host Control 1 Register</code>实现。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SDREG_8(MEGASOC_SD_HC1R) = <span class="number">0x2</span> &lt;&lt; <span class="number">3</span>; <span class="comment">// Setup ADMA2</span></span><br></pre></td></tr></table></figure>
+
+<p>在进行SD卡的读写前，我们还需要让SD卡进入传输状态。</p>
+<ul>
+<li>在上面的初始化过程中，我们通过<code>CMD3</code>的返回值，得知了当前已插入SD卡的相对地址<code>RCA</code>；</li>
+<li>我们需要通过发送<code>CMD7</code>，以这一RCA为参数，使得被插入的卡被选中，进入传输状态</li>
+<li>只有在传输状态下，SD卡才能接收并执行<code>CMD18/25</code>两个读写指令，进行正常读写。</li>
+<li>同样，本实现在<code>sd_init()</code>中就发送<code>CMD7</code>，简化SD卡读写逻辑的编写</li>
+</ul>
+<hr>
+<p>至此，整个SD卡的初始化流程就结束了。此后，我们即可调用SD卡的读写逻辑，对SD卡进行读写。</p>
+<h2 id="读写逻辑"><a href="#读写逻辑" class="headerlink" title="读写逻辑"></a>读写逻辑</h2><p>整个读写逻辑，我们打包在<code>sys_read/write_block()</code>系统调用中。文件服务在需要进行读写时，直接调用<code>syscall_(read/write)_block(secno, (dst/src), nsecs)</code>，即可对SD卡进行读写。增加系统调用的操作在此不加赘述。</p>
+<p>具体的读写逻辑，在<code>kern/syscall_all.c</code>中定义。读、写过程十分相近，大体可以分为以下步骤：</p>
+<ul>
+<li>配置ADMA2标志符表，并将标志符表的物理地址，写入控制器的ADMA System Address寄存器，告知控制器标志符表的地址</li>
+<li>配置控制器的Transfer Mode寄存器，为读&#x2F;写操作做准备</li>
+<li>配置控制器的块大小、块计数寄存器；</li>
+<li>发送多块读&#x2F;写指令（CMD18&#x2F;25）</li>
+</ul>
+<p>此处以读操作的实现为例，进行具体分析。</p>
+<p>描述符表项的结构体定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">	<span class="type">uint16_t</span> attribute;</span><br><span class="line">	<span class="type">uint16_t</span> length;</span><br><span class="line">	<span class="type">uint32_t</span> paddr;</span><br><span class="line">&#125; adma2_desc_entry;</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">sys_read_block</span><span class="params">(u_int secno, <span class="type">void</span> *dst, u_int nsecs)</span> &#123;</span><br><span class="line">	<span class="comment">// 初始化描述符表；各描述符表项需连续分布在一段地址空间上</span></span><br><span class="line">	adma2_desc_entry adma2_dtable[<span class="number">512</span>];</span><br><span class="line">	<span class="type">int</span> i;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; nsecs; i++) &#123;</span><br><span class="line">		<span class="type">uint32_t</span> vaddr = dst + (i * <span class="number">512</span>);</span><br><span class="line">		<span class="type">uint32_t</span> paddr = va2pa(curenv-&gt;env_pgdir, (u_long)vaddr); <span class="comment">// 获取目标地址的物理地址；描述符表项的地址域，需要的是物理地址</span></span><br><span class="line">		</span><br><span class="line">		adma2_dtable[i].paddr = ((<span class="type">uint32_t</span>)(paddr));</span><br><span class="line">		adma2_dtable[i].length = <span class="number">512</span>; <span class="comment">// 一块的大小</span></span><br><span class="line">		</span><br><span class="line">		adma2_dtable[i].attribute = <span class="number">1</span> &lt;&lt; <span class="number">5</span> | <span class="comment">// 配置表项为传输模式；此处涉及描述符表项的其他设计，此处略</span></span><br><span class="line">									<span class="number">1</span> &lt;&lt; <span class="number">2</span> | <span class="comment">// 出现错误时中断</span></span><br><span class="line">									<span class="number">1</span> &lt;&lt; <span class="number">0</span>; <span class="comment">// 表示该表项合法</span></span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (i == nsecs - <span class="number">1</span>) &#123;</span><br><span class="line">			adma2_dtable[i].attribute |= <span class="number">1</span> &lt;&lt; <span class="number">1</span>; <span class="comment">// 描述符表的最后一项，需要配置一个终止标记</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	SDREG(MEGASOC_SD_TM) = <span class="number">1</span> &lt;&lt; <span class="number">0</span> | <span class="comment">// 启用DMA</span></span><br><span class="line">	<span class="number">1</span> &lt;&lt; <span class="number">1</span> |<span class="comment">// 启用块计数寄存器；配合CMD12使用</span></span><br><span class="line">	<span class="number">0x1</span> &lt;&lt; <span class="number">2</span> | <span class="comment">// 自动发送CMD12（停止传输）；这样，我们就只需在发送CMD18/25后，等待“传输完成”中断</span></span><br><span class="line">	<span class="number">1</span> &lt;&lt; <span class="number">4</span> |<span class="comment">// 数据方向为读</span></span><br><span class="line">	<span class="number">1</span> &lt;&lt; <span class="number">5</span>; <span class="comment">// 多块数据操作</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 将描述符表的物理地址告知控制器</span></span><br><span class="line">	<span class="type">uint32_t</span> dtable_paddr = PADDR(adma2_dtable);</span><br><span class="line">	SDREG(MEGASOC_SD_ADMASAR_BASE) = ((<span class="type">uint16_t</span>)(dtable_paddr &amp; <span class="number">0xffff</span>));</span><br><span class="line">	SDREG(MEGASOC_SD_ADMASAR_BASE + <span class="number">0x2</span>) = ((<span class="type">uint16_t</span>)(dtable_paddr &gt;&gt; <span class="number">16</span>));</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 配置块大小和块数</span></span><br><span class="line">	SDREG(MEGASOC_SD_BLKSIZE) = <span class="number">512</span>;</span><br><span class="line">	SDREG(MEGASOC_SD_BLKCNTR) = ((<span class="type">uint16_t</span>) nsecs);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 发送读/写指令，等待其完成</span></span><br><span class="line">	sd_send_cmd18(secno * <span class="number">512</span>); <span class="comment">// CMD18/25传入的SD卡数据地址参数，是字节编址的，因此需要对参数做如此变换</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>至此，我们就完成了一个基本的SD卡驱动。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>OS - LA32R移植报告</p><p><a href="http://lajipz.top/2025/07/08/OS - LA32R移植报告/">http://lajipz.top/2025/07/08/OS - LA32R移植报告/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>LajiPZ</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2025-07-08</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-07-08</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=671eeccad01e2b00125527bf&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/07/08/OS%20-%20Lab1%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"><span class="level-item">OS - Lab1实验报告</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="waline-thread"></div><link rel="stylesheet" href="https://unpkg.com/@waline/client@2/dist/waline.css"><script src="https://unpkg.com/@waline/client@2/dist/waline.js"></script><script>Waline.init({
+            el: '#waline-thread',
+            serverURL: "https://comments.lajipz.top/",
+            path: window.location.pathname,
+            lang: "zh-CN",
+            
+            emoji: ["https://unpkg.com/@waline/emojis@1.2.0/tieba","https://unpkg.com/@waline/emojis@1.2.0/weibo","https://unpkg.com/@waline/emojis@1.2.0/bilibili"],
+            
+            meta: ["nick","mail","link"],
+            requiredMeta: [],
+            login: "enable",
+            
+            pageSize: 10,
+            imageUploader: false,
+            highlighter: false,
+            texRenderer: false,
+            search: false,
+            pageview: false,
+            comment: false,
+            copyright: true,
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#指令集适配"><span class="level-left"><span class="level-item">1</span><span class="level-item">指令集适配</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#例外有关"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">例外有关</span></span></a></li><li><a class="level is-mobile" href="#虚拟地址翻译"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">虚拟地址翻译</span></span></a></li><li><a class="level is-mobile" href="#TLB异常有关"><span class="level-left"><span class="level-item">1.3</span><span class="level-item">TLB异常有关</span></span></a></li><li><a class="level is-mobile" href="#计时器"><span class="level-left"><span class="level-item">1.4</span><span class="level-item">计时器</span></span></a></li><li><a class="level is-mobile" href="#上下文保存"><span class="level-left"><span class="level-item">1.5</span><span class="level-item">上下文保存</span></span></a></li></ul></li><li><a class="level is-mobile" href="#SD卡驱动"><span class="level-left"><span class="level-item">2</span><span class="level-item">SD卡驱动</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#初始化"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">初始化</span></span></a></li><li><a class="level is-mobile" href="#读写逻辑"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">读写逻辑</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a><p class="is-size-7"><span>&copy; 2025 LajiPZ</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://unpkg.com/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://unpkg.com/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://unpkg.com/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://unpkg.com/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script src="https://unpkg.com/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

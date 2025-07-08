@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>OO_U4 - UML - Position 0 - LajiPZ的随想屋</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Position 0 - LajiPZ的随想屋"><meta name="msapplication-TileImage" content="/img/pz13.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Position 0 - LajiPZ的随想屋"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="直接就是博客作业。文末的课程收获是真情实感。  漫长的OO历程，终于到此结束了。 本篇文章将简要介绍本人在本单元中，利用UML进行正向建模的经历，并对一学期以来的课程经历做一个简要回顾。"><meta property="og:type" content="blog"><meta property="og:title" content="OO_U4 - UML"><meta property="og:url" content="http://lajipz.top/2025/06/10/OO_U4%20-%20UML/"><meta property="og:site_name" content="Position 0 - LajiPZ的随想屋"><meta property="og:description" content="直接就是博客作业。文末的课程收获是真情实感。  漫长的OO历程，终于到此结束了。 本篇文章将简要介绍本人在本单元中，利用UML进行正向建模的经历，并对一学期以来的课程经历做一个简要回顾。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250610221243.png"><meta property="article:published_time" content="2025-06-10T11:00:00.000Z"><meta property="article:modified_time" content="2025-07-08T14:46:52.846Z"><meta property="article:author" content="LajiPZ"><meta property="article:tag" content="面向对象"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250610221243.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lajipz.top/2025/06/10/OO_U4%20-%20UML/"},"headline":"OO_U4 - UML","image":["https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250610221243.png"],"datePublished":"2025-06-10T11:00:00.000Z","dateModified":"2025-07-08T14:46:52.846Z","author":{"@type":"Person","name":"LajiPZ"},"publisher":{"@type":"Organization","name":"Position 0 - LajiPZ的随想屋","logo":{"@type":"ImageObject","url":"http://lajipz.top/img/pz13.png"}},"description":"直接就是博客作业。文末的课程收获是真情实感。  漫长的OO历程，终于到此结束了。 本篇文章将简要介绍本人在本单元中，利用UML进行正向建模的经历，并对一学期以来的课程经历做一个简要回顾。"}</script><link rel="canonical" href="http://lajipz.top/2025/06/10/OO_U4%20-%20UML/"><link rel="icon" href="/img/pz13.png"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/6.0.0/css/all.min.css"><link data-pjax rel="stylesheet" href="https://unpkg.com/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://unpkg.com/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://unpkg.com/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Position 0 - LajiPZ的随想屋" type="application/atom+xml">
+</head><body class="is-$3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a><a class="navbar-item" href="/links">友链</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-06-10T11:00:00.000Z" title="6/10/2025, 7:00:00 PM">2025-06-10</time>发表</span><span class="level-item"><time dateTime="2025-07-08T14:46:52.846Z" title="7/8/2025, 10:46:52 PM">2025-07-08</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a></span><span class="level-item">16 分钟读完 (大约2438个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">OO_U4 - UML</h1><div class="content"><blockquote>
+<p>直接就是博客作业。文末的课程收获是真情实感。</p>
+</blockquote>
+<p>漫长的OO历程，终于到此结束了。</p>
+<p>本篇文章将简要介绍本人在本单元中，利用UML进行正向建模的经历，并对一学期以来的课程经历做一个简要回顾。</p>
+<span id="more"></span>
+<h1 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h1><p><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250610221243.png" alt="Pasted image 20250610221243.png"></p>
+<ul>
+<li><code>Main</code>类负责处理输入</li>
+<li><code>Library</code>负责“分发指令”给各个下属类，同时起到“中转数据”的作用</li>
+<li><code>Bookshelf</code>等为<code>Library</code>的下属，负责完成具体指令</li>
+<li><code>User</code>、<code>Book</code>分别为读者、书本的状态信息，对应实现了一些查询&#x2F;状态转移方法</li>
+<li>对于预约，我设计了一<code>AppointmentInfo</code>类，用于记录预约请求的有关信息</li>
+</ul>
+<h1 id="正向建模"><a href="#正向建模" class="headerlink" title="正向建模"></a>正向建模</h1><p>事实上，我的正向建模过程并没有使用StarUML这款可视化建模工具，而是在草稿纸上，仿照UML的基本格式“打草稿”：</p>
+<p>对于架构设计：</p>
+<ul>
+<li>根据问题，抽象出需要的类</li>
+<li>根据每个类所需要实现的功能，规定好必须实现的属性和方法</li>
+<li>根据属性、方法与类之间的交互逻辑，确定类之间的聚合&#x2F;继承等关系</li>
+</ul>
+<p>在更新架构设计时：</p>
+<ul>
+<li>确定是否加类</li>
+<li>是否有属性&#x2F;方法的更改</li>
+<li>是否有类之间关系的更改</li>
+</ul>
+<p>架构的设计与迭代流程大概是这样。</p>
+<p>至于状态与流程图，打草稿结果与UML画出来的结果近乎一致，在这里也就不再展开了，只需注意转移规则与方法关联的问题。</p>
+<h2 id="与最终设计的追踪关系"><a href="#与最终设计的追踪关系" class="headerlink" title="与最终设计的追踪关系"></a>与最终设计的追踪关系</h2><ul>
+<li>类图：正如上文所言，本人采取的建模方式是<strong>先建模出必要的架构</strong>，再在其基础上进行具体实现。因此，初始的UML设计，与最终实现还是有细微差别。也就是说，我的开发过程中，有具体设计反过来添加UML中属性&#x2F;方法的状况。好处是，这有利于加快开发效率，避免过度拘泥；坏处是，UML按理不该修改，但我们事实上改了。</li>
+<li>状态&#x2F;流程图：我的状态&#x2F;流程转移，都是基于初始设计中的必要方法的；因此，最终实现是与初始设计一致的。</li>
+</ul>
+<h1 id="大模型辅助正向建模"><a href="#大模型辅助正向建模" class="headerlink" title="大模型辅助正向建模"></a>大模型辅助正向建模</h1><p>就我个人体验而言，我认为直接让大模型进行正向建模的效果差强人意。具体表现为，大模型会因幻觉，出现脱离于当前问题上下文的设计：如类与继承关系。</p>
+<p>出于这一原因，本人的正向建模大部分由我本人完成。至于大模型的作用，我仅是让大模型生成了初步的正向建模模型。</p>
+<p>大模型辅助建模，我主要是在实验课上实践。总结实验课上的经验，我的经验如下：</p>
+<ul>
+<li>与实验指导书相反，我选择<strong>尽可能减少Prompt的规模</strong>。实践证明，当前主流大模型已足够在简明的Prompt下，生成令人满意的答案。</li>
+<li>我只向大模型传入了当次任务的指导书，以及一个简明的Prompt.</li>
+<li>这个Prompt内，主要是对指导书内一些没有显式声明的限制条件进行补充；以本单元为例，图书馆开馆时间不一定连续就是一个隐形条件。</li>
+<li>在指导书足够清晰明了，介绍了所有要求与限制的情况下，我的Prompt甚至简单到只有三个字：“帮我做”。</li>
+</ul>
+<p>更具体而言，要让大模型做架构设计，总体分三步：</p>
+<ul>
+<li>设计总体架构：开什么类，类之间怎么交互</li>
+<li>细化类：需要什么属性和方法</li>
+<li>具体实现：开始编写方法内逻辑即可。</li>
+</ul>
+<h1 id="设计思维的演进"><a href="#设计思维的演进" class="headerlink" title="设计思维的演进"></a>设计思维的演进</h1><p>在OOPre反复重构的心理阴影下，我在本学期OO正课开始，就对正向建模的过程较为重视。当然，四个单元下来，设计思路还是有长进的。</p>
+<ul>
+<li>U1：初级阶段；对<strong>当前问题</strong>进行正向建模，不充分考虑未来可能的扩展方向；这导致我在Hw2时出现了一次代价较高的重构。</li>
+<li>U2：吸收上一单元教训，在Hw5时前半周投入大量时间，用于设计后续作业通用的架构，以及电梯调度&#x2F;运行策略；这一决定确有收获，后续迭代相对轻松；但全过程<strong>并未对进程间交互流程进行正向建模</strong>，导致Hw5多处出现死锁，强测失利…</li>
+<li>U3：按照规格按部就班；这应该是正向建模完成后的正常开发流程，我在此体会到了何为“规格与实现分离”。正向建模实质上就是设计规格，反过来改正向建模架构，严谨而言是不应发生的。</li>
+<li>U4：正式进行正向建模。发现自己正向建模的思维仍然不够严谨，出现了反向改正向建模架构这种事情。这其实也反映了我的正向建模仍然不够抽象，这可能是我日后需要锻炼的地方。</li>
+</ul>
+<h1 id="测试思维"><a href="#测试思维" class="headerlink" title="测试思维"></a>测试思维</h1><p>四个单元下来，我的测试思维基本稳定；但在U3时，我的单元测试思维得到了强化。</p>
+<p>具体而言，我当前的测试思维是：</p>
+<ul>
+<li>回归测试：当前修改，不应影响原有功能的正确性；</li>
+<li>针对边界条件测试：明确开发过程中遇到的边界条件，在实现一个功能后，即对其进行边界条件测试；</li>
+<li>随机测试：随机生成数据，<strong>评测机灌水式测试</strong>；虽然简单暴力，但从扩大测试范围的角度确实有用；</li>
+<li>压力测试：主要针对U2；评测机多进程并发评测，测试设计是否合理。</li>
+<li>单元测试：更细颗粒度，针对某个方法进行测试。</li>
+</ul>
+<h1 id="课程收获"><a href="#课程收获" class="headerlink" title="课程收获"></a>课程收获</h1><p>从U1刚开始的高度紧张、焦虑，到U2中期后的逐步驾轻就熟，我认为本学期OO课程为我带来的最大收获，是<strong>面对困难任务时心态的转变</strong>。</p>
+<p>自大学入学以来，我面对困难任务，要么是想捷径，要么是找合理的办法规避。要自己动手解决时，我往往对着问题焦虑地发愣：<strong>因无法完成任务而焦虑，因焦虑而无从下手</strong>。本学期的OO课程帮我打破了这一恶性思维闭环，鼓励我<strong>先放手大胆尝试，再考虑能不能做成</strong>。</p>
+<p>这一思维模式的转变确实为我带来了好处。在第二单元中，我尝试了使用<code>oolens</code>未介绍的<code>ReentrantLock</code>，并从头完全设计了一套自己的电梯运行&#x2F;调度策略。电梯单元任务的确艰巨，但在那一单元我大胆尝试，受益匪浅。可以说是万事开头难吧，但最重要的始终是<strong>试着迈出第一步，然后坚定的走下去。</strong></p>
+<p>另一收获是<strong>构建属于自己的评测机的经验</strong>，这也可以算是敢于尝试的一大成果吧。我构建评测机也是始于第二单元。随后，我逐步探索出了多进程并发评测，以及AI构建数据生成器&#x2F;Checker的整个工作流程。收获还是颇为显著的，在构建好评测机后，除了Hw5评测机构建完成时间太晚、Hw9<strong>心浮气躁</strong>不用评测机翻车以外，其他次作业都没在强测里出问题。</p>
+<p>由此，我也感受到了<strong>充分测试，对于程序开发的重要意义所在</strong>。在开发完一个功能后，第一假设应是“这个程序有bug”，而不是写完后就骄傲自满，完全不做测试，或是简单的“目视法”找bug。<strong>测试思维</strong>，也算是OO课程给我的一点收获吧。</p>
+<p><strong>我的抽象思维与建模能力也得到了提升。</strong> U1、U2每次作业的正向建模，以及对后续迭代需求的简单预测，为我减少迭代开发量做出了重大贡献。U4时，我针对问题的建模能力也较前两个单元成熟了许多，在正向建模上花费的时间比之前少了不少。</p>
+<p>在此，我由衷感谢OO课程组的各位老师与助教，本学期以来的陪伴与支持。没有你们的无私奉献，相信我是不会获得上文这么多收获的。再次，Большое спасибо!</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>OO_U4 - UML</p><p><a href="http://lajipz.top/2025/06/10/OO_U4 - UML/">http://lajipz.top/2025/06/10/OO_U4 - UML/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>LajiPZ</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2025-06-10</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-07-08</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">面向对象</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=671eeccad01e2b00125527bf&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2025/06/10/OO_U4%20-%20Checker/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">OO_U4 - UML</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/05/13/OO_U3%20-%20JML/"><span class="level-item">OO_U3 - JML</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="waline-thread"></div><link rel="stylesheet" href="https://unpkg.com/@waline/client@2/dist/waline.css"><script src="https://unpkg.com/@waline/client@2/dist/waline.js"></script><script>Waline.init({
+            el: '#waline-thread',
+            serverURL: "https://comments.lajipz.top/",
+            path: window.location.pathname,
+            lang: "zh-CN",
+            
+            emoji: ["https://unpkg.com/@waline/emojis@1.2.0/tieba","https://unpkg.com/@waline/emojis@1.2.0/weibo","https://unpkg.com/@waline/emojis@1.2.0/bilibili"],
+            
+            meta: ["nick","mail","link"],
+            requiredMeta: [],
+            login: "enable",
+            
+            pageSize: 10,
+            imageUploader: false,
+            highlighter: false,
+            texRenderer: false,
+            search: false,
+            pageview: false,
+            comment: false,
+            copyright: true,
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#整体架构"><span class="level-left"><span class="level-item">1</span><span class="level-item">整体架构</span></span></a></li><li><a class="level is-mobile" href="#正向建模"><span class="level-left"><span class="level-item">2</span><span class="level-item">正向建模</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#与最终设计的追踪关系"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">与最终设计的追踪关系</span></span></a></li></ul></li><li><a class="level is-mobile" href="#大模型辅助正向建模"><span class="level-left"><span class="level-item">3</span><span class="level-item">大模型辅助正向建模</span></span></a></li><li><a class="level is-mobile" href="#设计思维的演进"><span class="level-left"><span class="level-item">4</span><span class="level-item">设计思维的演进</span></span></a></li><li><a class="level is-mobile" href="#测试思维"><span class="level-left"><span class="level-item">5</span><span class="level-item">测试思维</span></span></a></li><li><a class="level is-mobile" href="#课程收获"><span class="level-left"><span class="level-item">6</span><span class="level-item">课程收获</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a><p class="is-size-7"><span>&copy; 2025 LajiPZ</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://unpkg.com/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://unpkg.com/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://unpkg.com/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://unpkg.com/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script src="https://unpkg.com/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

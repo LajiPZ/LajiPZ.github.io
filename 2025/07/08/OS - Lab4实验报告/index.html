@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>OS - Lab4实验报告 - Position 0 - LajiPZ的随想屋</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Position 0 - LajiPZ的随想屋"><meta name="msapplication-TileImage" content="/img/pz13.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Position 0 - LajiPZ的随想屋"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="归档于2025年7月8日。  感觉开始上强度了。 我需要从头理一些东西。 杂记syscall的处理以debugf()为例：  处理参数，随后调用vdebugf() vdebugf()中调用熟悉的vprintfmt，用debug_output作为后端 随后还调用了debug_flush()，调用出syscall_print_cons syscall_print_cons()调用msyscall()"><meta property="og:type" content="blog"><meta property="og:title" content="OS - Lab4实验报告"><meta property="og:url" content="http://lajipz.top/2025/07/08/OS%20-%20Lab4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"><meta property="og:site_name" content="Position 0 - LajiPZ的随想屋"><meta property="og:description" content="归档于2025年7月8日。  感觉开始上强度了。 我需要从头理一些东西。 杂记syscall的处理以debugf()为例：  处理参数，随后调用vdebugf() vdebugf()中调用熟悉的vprintfmt，用debug_output作为后端 随后还调用了debug_flush()，调用出syscall_print_cons syscall_print_cons()调用msyscall()"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250427102524.png"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250427103520.png"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250427150912.png"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250427134303.png"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250427132910.png"><meta property="og:image" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250427102524.png"><meta property="article:published_time" content="2025-07-08T15:00:00.000Z"><meta property="article:modified_time" content="2025-07-08T16:02:52.781Z"><meta property="article:author" content="LajiPZ"><meta property="article:tag" content="操作系统"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250427102524.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://lajipz.top/2025/07/08/OS%20-%20Lab4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"},"headline":"OS - Lab4实验报告","image":["https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250427102524.png","https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250427103520.png","https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250427150912.png","https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250427134303.png","https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250427132910.png","https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250427102524.png"],"datePublished":"2025-07-08T15:00:00.000Z","dateModified":"2025-07-08T16:02:52.781Z","author":{"@type":"Person","name":"LajiPZ"},"publisher":{"@type":"Organization","name":"Position 0 - LajiPZ的随想屋","logo":{"@type":"ImageObject","url":"http://lajipz.top/img/pz13.png"}},"description":"归档于2025年7月8日。  感觉开始上强度了。 我需要从头理一些东西。 杂记syscall的处理以debugf()为例：  处理参数，随后调用vdebugf() vdebugf()中调用熟悉的vprintfmt，用debug_output作为后端 随后还调用了debug_flush()，调用出syscall_print_cons syscall_print_cons()调用msyscall()"}</script><link rel="canonical" href="http://lajipz.top/2025/07/08/OS%20-%20Lab4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"><link rel="icon" href="/img/pz13.png"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/6.0.0/css/all.min.css"><link data-pjax rel="stylesheet" href="https://unpkg.com/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://unpkg.com/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://unpkg.com/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://unpkg.com/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Position 0 - LajiPZ的随想屋" type="application/atom+xml">
+</head><body class="is-$3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a><a class="navbar-item" href="/links">友链</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2025-07-08T15:00:00.000Z" title="7/8/2025, 11:00:00 PM">2025-07-08</time>发表</span><span class="level-item"><time dateTime="2025-07-08T16:02:52.781Z" title="7/9/2025, 12:02:52 AM">2025-07-09</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/">课程相关</a></span><span class="level-item">28 分钟读完 (大约4237个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">OS - Lab4实验报告</h1><div class="content"><blockquote>
+<p>归档于2025年7月8日。</p>
+</blockquote>
+<p>感觉开始上强度了。</p>
+<p>我需要从头理一些东西。</p>
+<h1 id="杂记"><a href="#杂记" class="headerlink" title="杂记"></a>杂记</h1><h2 id="syscall的处理"><a href="#syscall的处理" class="headerlink" title="syscall的处理"></a>syscall的处理</h2><p>以<code>debugf()</code>为例：</p>
+<ul>
+<li>处理参数，随后调用<code>vdebugf()</code></li>
+<li><code>vdebugf()</code>中调用熟悉的<code>vprintfmt</code>，用<code>debug_output</code>作为后端</li>
+<li>随后还调用了<code>debug_flush()</code>，调用出<code>syscall_print_cons</code></li>
+<li><code>syscall_print_cons()</code>调用<code>msyscall()</code>，传入信号参数<code>SYS_print_cons</code>，指示之</li>
+</ul>
+<span id="more"></span>
+
+<p>好，到了<code>msyscall</code>，发现其只做了这么简单的事情：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1 #include &lt;asm/asm.h&gt;</span><br><span class="line">2</span><br><span class="line">3 LEAF(msyscall)</span><br><span class="line">4     // Just use &#x27;syscall&#x27; instruction and return.</span><br><span class="line">5</span><br><span class="line">6     /* Exercise 4.1: Your code here. */</span><br><span class="line">7     syscall</span><br><span class="line">8     jr    ra</span><br><span class="line">9 END(msyscall)</span><br></pre></td></tr></table></figure>
+<p>只调了个<code>syscall</code>，然后返回，没了？我参数呢？在调用<code>msyscall</code>的时候，参数就已经存在了栈上了，不用担心。</p>
+<p>之后就是进入<code>syscall</code>的异常处理程序；自然我们想到往<code>genex.s</code>看：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BUILD_HANDLER sys do_syscall</span><br></pre></td></tr></table></figure>
+
+<p>好的，异常是由<code>do_syscall()</code>做的，继续看；存在<code>syscall_all.c</code>里的：</p>
+<p>众所周知，我们的异常处理会保存Trapframe；Trapframe的保存，是在进入了内核态之后，在<code>entry.S</code>中进行；此时Trapframe保存了我们<code>msyscall()</code>的参数，故我们的参数这里才会用到；</p>
+<p>首先就是第一个参数；当然是从<code>$a0($4)</code>里取了；这样，我们就知道要执行哪一个系统调用，从<code>syscall_table[]</code>里取函数了。</p>
+<p>出问题的时候，就返回一个异常值；函数返回值（第一个）就是<code>$v0($2)</code>了；存了之后<code>return</code>就是。</p>
+<p>整个系统调用流程大概就是这样。</p>
+<h2 id="sys"><a href="#sys" class="headerlink" title="sys_*()"></a><code>sys_*()</code></h2><p>需要注意的是，我们在系统调用中进行的系统操作（增删映射，设置进程控制块状态等），<strong>一般都是由<code>sys_*()</code>完成的，而非直接使用<code>page_remove()</code>等函数。</strong></p>
+<p><strong>最主要的原因是，我们需要由<code>envid2env()</code>，围绕<code>envid/pid</code>进行一些处理</strong>，比如：</p>
+<ul>
+<li><code>envid == 0</code>，则指向当前进程</li>
+<li>判断进程是否已被释放（<code>status == ENV_FREE</code>）</li>
+<li>进程ID是否出错：我们由<code>ENVX(envid)</code>取出的进程块的<code>envid</code>，应该与我们现在这个<code>envid</code>一致</li>
+<li>权限检查：<strong>检查操作是否是进程自己对自己</strong>，或者是进程对自己的 <strong>“直系子进程”</strong>。</li>
+</ul>
+<p>我自己做Lab4的时候没怎么注意这个问题，然后就踩坑了。</p>
+<h2 id="进程间通信"><a href="#进程间通信" class="headerlink" title="进程间通信"></a>进程间通信</h2><p>我们这里是通过<strong>内存共享</strong>实现的。</p>
+<p>为了实现IPC，我们需要在进程块中加这么几样东西：</p>
+<ul>
+<li>起点；<strong>来自哪个进程</strong></li>
+<li>终点；<strong>被映射到了接收方的哪个虚拟地址</strong></li>
+<li>传递的信息</li>
+<li><strong>当前进程是否可接受信息</strong></li>
+<li><strong>当前进程是否在等待要接收的信息</strong></li>
+</ul>
+<p>进行进程通信这个操作，还是通过<strong>系统调用（syscall）</strong> 实现的。因此，对应逻辑在<code>sys_*()</code>中。</p>
+<p>我们在这里的问题是，这里对应的共享内存空间到底是哪里？</p>
+<p>阅读源码，我们发现其利用<code>is_illegal_va()</code>检查地址是否合法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">112 static inline int is_illegal_va(u_long va) &#123;</span><br><span class="line">113     return va &lt; UTEMP || va &gt;= UTOP;</span><br><span class="line">114 &#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后，是时候好好看看内存布局了：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250427102524.png" alt="Pasted image 20250427102524.png"></p>
+<ul>
+<li><code>&lt;UTEMP</code>：无效内存对应空间</li>
+<li><code>&gt;= UTOP</code>：超出<code>kuseg</code>的一定范围；换言之，超出了<strong>用户栈的范围</strong></li>
+</ul>
+<p>也就是说，我们共享的信息，是在<strong>用户空间内</strong>共享的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">我们知道，所有的进程都共享同一个内核空间（主要为 kseg0）。因此，想要在不同空间之 间交换数据，我们就可以借助于内核空间来实现。</span><br></pre></td></tr></table></figure>
+
+<p>指导书的这句话，意思是<strong>借助内核空间</strong>，进行两个进程对同一内存块的映射。</p>
+<p>看向<code>sys_ipc_recv()</code>：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250427103520.png" alt="Pasted image 20250427103520.png"></p>
+<p>我们为何要<code>((Trapframe *)KSTACKTOP - 1 )-&gt;regs[2] = 0</code>；</p>
+<p>此时，我们的当前进程的栈，自然在栈顶上；栈使用的空间正好就是<code>Trapframe</code>的大小，故我们这么做，<strong>就是在访问当前进程的上下文</strong>，将函数返回值设为0.</p>
+<p><strong>那么，为什么我们这里不直接<code>return</code>呢？</strong> 因为我们此时要做到一个<strong>阻塞进程的效果</strong>，若直接<code>return 0</code>，进程就会继续恢复进行，不符合我们的预期；将返回值暂存在上下文中，就可以做到<strong>阻塞解除后，进程被重新调度，恢复执行，得到返回值0的效果了</strong>。</p>
+<p>阻塞的解除，是在<code>sys_ipc_try_send()</code>里，由<strong>修改接收方状态为<code>ENV_RUNNABLE</code>，并将接收方重新放回调度队列中实现的</strong>。</p>
+<p>对了，还有个好玩的事情：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250427150912.png" alt="Pasted image 20250427150912.png"></p>
+<p>为何我们不需要<code>checkperm</code>？因为进程间通信不需要检查进程是否为父子关系；<code>checkperm</code>检查的是envid是否指向自己，或自己的直系子进程。</p>
+<h3 id="src-dstva-0-？"><a href="#src-dstva-0-？" class="headerlink" title="src/dstva == 0 ？"></a><code>src/dstva == 0</code> ？</h3><p>我认为指导书这里说的不是很清楚？</p>
+<p>不难注意到，我们在<code>try_send()</code>时，在<code>srcva == 0</code>时，<strong>不会</strong>将发送方的某个页面，映射到接收方的某个页面上。</p>
+<p>但是，<strong>我们还是会对接收方进程控制块的<code>ipc</code>域进行修改（e.g. 待接收位拉低，value位设为要传递的value值），并将接收方放回调度队列。</strong> 这一点很关键。</p>
+<p>当然，这其中一个作用就如指导书所言，仅由进程块的<code>value</code>域传递小量信息，快捷方便；但我认为<strong>这跟进程的同步也有关系</strong>。</p>
+<p>回顾前面的<code>recv()</code>，我们在待接收时阻塞，在发送时唤醒，这不就是多进程的同步吗？（笑</p>
+<h2 id="fork"><a href="#fork" class="headerlink" title="fork()"></a><code>fork()</code></h2><p><code>fork()</code>怎么创建一个与父函数不同的新进程的？这个答案指导书已经告诉我们了，通过<code>fork()-exec()</code>的配合。</p>
+<h3 id="小实验"><a href="#小实验" class="headerlink" title="小实验"></a>小实验</h3><p>对了，在做实验的时候，我发现了一个有趣的现象。在使用管道重定向带<code>fork()</code>程序的输出的时候，输出有些奇怪：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">1</span> <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"> <span class="number">2</span> <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"> <span class="number">3</span></span><br><span class="line"> <span class="number">4</span> <span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line"> <span class="number">5</span>     <span class="type">int</span> var = <span class="number">1</span>;</span><br><span class="line"> <span class="number">6</span>     <span class="type">long</span> pid;</span><br><span class="line"> <span class="number">7</span>     <span class="built_in">printf</span>(<span class="string">&quot;Before: var = %d\n&quot;</span>,var);</span><br><span class="line"> <span class="number">8</span>     pid = fork();</span><br><span class="line"> <span class="number">9</span>     <span class="keyword">if</span> (pid == <span class="number">0</span>) &#123;</span><br><span class="line"><span class="number">10</span>         var = <span class="number">2</span>;</span><br><span class="line"><span class="number">11</span>         sleep(<span class="number">3</span>);</span><br><span class="line"><span class="number">12</span>         <span class="built_in">printf</span>(<span class="string">&quot;Child: %d&quot;</span>,var);</span><br><span class="line"><span class="number">13</span>     &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="number">14</span>         sleep(<span class="number">2</span>);</span><br><span class="line"><span class="number">15</span>         <span class="built_in">printf</span>(<span class="string">&quot;Parent: %d&quot;</span>,var);</span><br><span class="line"><span class="number">16</span>     &#125;</span><br><span class="line"><span class="number">17</span>     <span class="built_in">printf</span>(<span class="string">&quot;, pid: %ld\n&quot;</span>, (<span class="type">long</span>) getpid());</span><br><span class="line"><span class="number">18</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">19</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1 Before: var = 1</span><br><span class="line">2 Parent: 1, pid: 113267</span><br><span class="line">3 Before: var = 1</span><br><span class="line">4 Child: 2, pid: 113268</span><br></pre></td></tr></table></figure>
+
+<p><code>Before</code>句按理只会输出一次，为何这里输出了两次？由于我们的实验还没做到管道部分，这里我们暂时也不知道为什么…</p>
+<h3 id="自上而下分析"><a href="#自上而下分析" class="headerlink" title="自上而下分析"></a>自上而下分析</h3><p><code>fork()</code>干了这么几件事：</p>
+<ul>
+<li>设置父进程的TLB Mod Handler</li>
+<li><code>exofork()</code>创建子进程，获得创建好的进程控制块的PID</li>
+<li>自此开始分割父进程和子进程；<strong>父进程在此完成所有操作，返回0</strong></li>
+<li>子进程：构建父进程所有页的映射</li>
+<li>设置子进程的TLB Mod Handler，并让子进程进入RUNNABLE</li>
+</ul>
+<p>还有一点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOS 允许进程访问自身的进程控制块，而在 user/lib/libos.c 的实现中，用户程序在运 行时入口会将一个用户空间中的指针变量 struct Env *env 指向当前进程的控制块。对于 fork 后的子进程，它具有了一个与父亲不同的进程控制块，因此在子进程第一次被调度的时候（当然 这时还是在 fork 函数中）需要对 env 指针进行更新，使其仍指向当前进程的控制块。这一更新 过程与运行时入口对 env 指针的初始化过程相同。</span><br></pre></td></tr></table></figure>
+
+<p>这就是为什么：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250427134303.png" alt="Pasted image 20250427134303.png"></p>
+<p>继续。<strong>构建父进程映射部分的细节颇有意思</strong>：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250427132910.png" alt="Pasted image 20250427132910.png"></p>
+<p>结合上面的内存空间图，我们得知：我们将kuseg段，所有在USTACKTOP下的页面全部映射到子进程中（当然要做COW的处理）；这样一来，循环条件就很明显了：找所有USTACKTOP下的页。</p>
+<p>随后就是里面的条件了：</p>
+<ul>
+<li>页号对应页目录项要有效</li>
+<li>页表项要有效</li>
+</ul>
+<p>非有效即可认为映射不准确，故选择不映射；到时候会产生缺页异常重新取的。</p>
+<h1 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h1><h2 id="4-1"><a href="#4-1" class="headerlink" title="4.1"></a>4.1</h2><p>在我们上面回顾了一下syscall的流程后，这个问题就很好解答了。</p>
+<ul>
+<li>将GPR的所有信息存入Trapframe，在处理完成后再从Trapframe恢复，这样GPR的信息在调用前后就不会发生变化。</li>
+<li>理论而言是可以的，因为此时的<code>$a0-$a4</code>按理没有发生改变，<strong>但这违反了我们保护现场的原则</strong>；这也是我们为何需要从Trapframe中读取的原因；此外，Trapframe自身能保证GPR就是调用前的状态，有更保险的方法为什么不用（）</li>
+<li><code>do_syscall()</code>从Trapframe中读出<code>msyscall()</code>传入的参数，从而将这些参数分发给<code>sys_*()</code></li>
+<li>这部分的改变主要在<code>do_syscall()</code>中发生；<br>此时，<code>cp0_epc</code>加4；在用户态，表示异常处理完后直接执行下一条指令；<br><code>tf-&gt;regs[2]</code>被设为了调用的处理函数的返回值；如果没有对应系统调用的处理函数，会返回一个错误值；对于用户态，我们此处就可以根据返回值确定系统调用的状态，对应进行处理。</li>
+</ul>
+<h2 id="4-2"><a href="#4-2" class="headerlink" title="4.2"></a>4.2</h2><p>为了检测<code>envid</code>对应的进程是否真的存在。</p>
+<p>有这么一种可能：</p>
+<ul>
+<li>传入<code>envid2env()</code>的<code>envid</code>是一个<strong>当前不存在</strong>的进程</li>
+<li><code>envid</code>指向的<code>envs[]</code>存的是无效信息</li>
+<li>如果不判断，我们就会错误地认为这个进程存在…</li>
+</ul>
+<h2 id="4-3"><a href="#4-3" class="headerlink" title="4.3"></a>4.3</h2><p>首先，<code>mkenvid()</code>正如其名，创建一个新的进程ID，它的结果当然不应该为0。</p>
+<p><code>envid2env()</code>这一函数其实“名不副实”，因为除根据<code>envid</code>获取进程控制块外，他还整合了<strong>检查进程控制权限</strong>的功能。</p>
+<p>何为“进程控制权限”？阅读源码，我们知道，“进程控制”只有在两种情况下合法：</p>
+<ul>
+<li>查询的<code>envid</code>，对应的正好就是调用<code>envid2env()</code>的进程自己；</li>
+<li>查询的<code>envid</code>，对应的是调用进程的 <strong>“直系子进程”</strong>。</li>
+</ul>
+<p><code>envid2env()</code>能处理<code>envid==0</code>的情况，其实是<strong>为了给进程获取自身的进程控制块提供方便</strong>。毕竟，进程此时不获取自己的进程控制块，是不知道自己的PID的。</p>
+<h2 id="4-4"><a href="#4-4" class="headerlink" title="4.4"></a>4.4</h2><p>C。</p>
+<p>父函数调用fork()，生成了子进程；随后，给父子两进程返回不同的返回值。</p>
+<h2 id="4-5"><a href="#4-5" class="headerlink" title="4.5"></a>4.5</h2><p>把内存空间图继续搬下来：<br><img src="https://lajipz-blogpics.oss-cn-beijing.aliyuncs.com/Pasted%20image%2020250427102524.png" alt="Pasted image 20250427102524.png"></p>
+<p>对于USTACKTOP以上的空间：</p>
+<ul>
+<li>ULIM-UVPT：父进程自己的页表，我们的<code>duppage</code>会做重建页表的工作，故不用</li>
+<li><code>pages/envs</code>：被映射到系统的<code>pages[]</code>和<code>envs[]</code>两个内核数组；每个进程在<code>env_init</code>时就做了映射，故不用</li>
+<li>exception_stack：仅在用户态处理异常时要用到，这里用不上，故不管</li>
+</ul>
+<p>剩下的只要满足条件，就要映射。</p>
+<h2 id="4-6"><a href="#4-6" class="headerlink" title="4.6"></a>4.6</h2><p>首先，我们知道，页表是被映射到了一个确定的虚拟地址上的，且我们的MOS采用了页表自映射。</p>
+<ul>
+<li><code>vpd</code>，<code>vpt</code>分别获取页目录和页表的<strong>起始地址</strong>；<code>lib.h</code>中将二者分别定义为了<code>Pde *</code>与<code>Pte *</code>，故按照指针的用法使用之即可；比如说，可以<code>vpd[PDE_ID]</code>，也可以<code>vpd + PDE_ID</code>。</li>
+<li>页表被映射到了<strong>一个确定的虚拟地址</strong>上；一个进程拥有一套自己的页表；在切换进程时，这个页表也会被切换。在得知基地址和偏移量后，能访问页表就很自然了。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#define vpt ((const volatile Pte *)UVPT)  </span><br><span class="line">#define vpd ((const volatile Pde *)(UVPT + (PDX(UVPT) &lt;&lt; PGSHIFT)))</span><br></pre></td></tr></table></figure></li>
+<li><code>vpd</code>处<code>UVPT + (PDX(UVPT) &lt;&lt; PGSHIFT)</code>已经很明显了，不再赘述</li>
+<li>不能，权限不够</li>
+</ul>
+<h1 id="4-7"><a href="#4-7" class="headerlink" title="4.7"></a>4.7</h1><ul>
+<li><p>重入机制如下，注意<code>tf-&gt;regs[29] &gt;= UXSTACKTOP</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">80 void do_tlb_mod(struct Trapframe *tf) &#123;</span><br><span class="line">81     struct Trapframe tmp_tf = *tf;</span><br><span class="line">82</span><br><span class="line">83     if (tf-&gt;regs[29] &lt; USTACKTOP || tf-&gt;regs[29] &gt;= UXSTACKTOP) &#123;</span><br><span class="line">84         tf-&gt;regs[29] = UXSTACKTOP;</span><br><span class="line">85     &#125;</span><br></pre></td></tr></table></figure>
+<p>考虑这么一种可能：<code>do_tlb_mod</code>的处理函数，再次访问了一个需要COW的页。</p>
+</li>
+<li><p>此处异常处理的一部分在用户态处理，<strong>这是有可能破坏上下文的</strong>；为了维护进程进入异常处理前后的上下文一致，我们自然需要保存进入异常前的上下文。此外，异常现场是在进入异常时保存的，对用户态透明，故我们需要将其复制到用户空间。</p>
+<p>以防我忘了，多写一点：<br><code>do_tlb_mod()</code>中，进行了上下文的复制；对于现在放在<code>Trapframe</code>的那一份上下文，我们修改其<code>cp0.epc</code>到处理函数的位置；</p>
+<p>随后，开始执行处理函数（如<code>cow_entry</code>）。执行完成后，会调用<code>syscall_set_trapframe</code>，以复制的那一份上下文，恢复进程的上下文。</p>
+<p>恢复<code>$sp</code>和上下文，是在<code>sys_set_trapframe</code>处完成的。</p>
+</li>
+</ul>
+<h2 id="4-8"><a href="#4-8" class="headerlink" title="4.8"></a>4.8</h2><ul>
+<li>微内核的概念中，异常处理放在用户态处理，减少了因权限不足等问题引起系统崩溃的可能。</li>
+<li>在用户态处理页写入异常时，我们可以调度其他进程继续执行，避免主机为了处理这一异常，让其他进程等待太久。</li>
+</ul>
+<h2 id="4-9"><a href="#4-9" class="headerlink" title="4.9"></a>4.9</h2><ul>
+<li>我认为二者相对位置没什么影响。因为第一个<code>set_entry</code>是对于父进程的，子进程直到父进程为其设置<code>tlb_mod_entry</code>（第二个<code>set_entry</code>）前都不会执行，故没有影响。放的位置可能就看个人喜好了。</li>
+<li>写时复制保护，保护的是USTACKTOP下的所有内容；这当然也包括了我们的函数参数；假设我们调用了一个函数，就可能触发COW；如果我们将<code>set_entry</code>放在COW机制后，就有可能导致调用函数时产生COW异常，而没有对应处理函数的问题。</li>
+</ul>
+<h1 id="难点分析"><a href="#难点分析" class="headerlink" title="难点分析"></a>难点分析</h1><ul>
+<li>各个过程耦合程度挺高的，需要真正重头过一遍才能看懂。具体见我上面的杂记吧。</li>
+<li>在前几个单元的思维定势下，我常常忘记一些地方需要用<code>sys_*()</code>；比如<code>duppage</code>中页表的映射，我下意识就输入了<code>page_insert()</code>…</li>
+<li>细节很多。比如说<code>fork</code>进行COW映射时，<strong>还需要关注页目录&#x2F;页表项是否有效</strong>。没有注释的提醒，我一开始确实没有考虑这么多…</li>
+</ul>
+<h1 id="实验体会"><a href="#实验体会" class="headerlink" title="实验体会"></a>实验体会</h1><p>我深刻感觉到本单元开始，任务的加重。</p>
+<p>首先是注释细化程度进一步下降，这让我<strong>不得不更谨慎地考虑实现细节</strong>。最后确实发现不少细节漏掉了，比如上面提到的COW映射，与页目录&#x2F;页表有效有关的问题。我自觉自己注意细节的能力在日趋下降，是时候想办法改变一下了。</p>
+<p>说实话，本次Lab是我第一次大量参考往届学长&#x2F;MOS开源仓库的代码。虽说能保证最后结果正确，但为了避免印象不深，而在第二天从头再看一遍的时间开销还是很大。怎么才能达到独立完成，和参考他人经验之间的平衡，是个值得探讨的问题。</p>
+<h1 id="原创声明"><a href="#原创声明" class="headerlink" title="原创声明"></a>原创声明</h1><p>本人报告的绝大部分内容由我自己独立完成。但我在思考题4.5、4.7处遇到了一些困难，有参考两位学长（学姐）博客中的思路，谨此致谢：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://seafoodfat1ger.github.io/2024/05/24/OS/OS_Lab4/">https://seafoodfat1ger.github.io/2024/05/24/OS/OS_Lab4/</a></li>
+<li><a target="_blank" rel="noopener" href="https://volcaxiao.top/2023/06/10/BUAA-OS-lab4-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E4%B8%8Eipc%E4%B8%8Efork/#%E5%AE%9E%E9%AA%8C%E4%BD%93%E4%BC%9A">https://volcaxiao.top/2023/06/10/BUAA-OS-lab4-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E4%B8%8Eipc%E4%B8%8Efork/#%E5%AE%9E%E9%AA%8C%E4%BD%93%E4%BC%9A</a></li>
+</ul>
+</div><div class="article-licensing box"><div class="licensing-title"><p>OS - Lab4实验报告</p><p><a href="http://lajipz.top/2025/07/08/OS - Lab4实验报告/">http://lajipz.top/2025/07/08/OS - Lab4实验报告/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>LajiPZ</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2025-07-08</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2025-07-09</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=671eeccad01e2b00125527bf&amp;product=inline-share-buttons&amp;source=platform" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2025/07/08/OS%20-%20Lab6%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">OS - Lab6实验报告</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/06/10/OO_U4%20-%20Checker/"><span class="level-item">OO_U4 - UML</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card" id="comments"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="waline-thread"></div><link rel="stylesheet" href="https://unpkg.com/@waline/client@2/dist/waline.css"><script src="https://unpkg.com/@waline/client@2/dist/waline.js"></script><script>Waline.init({
+            el: '#waline-thread',
+            serverURL: "https://comments.lajipz.top/",
+            path: window.location.pathname,
+            lang: "zh-CN",
+            
+            emoji: ["https://unpkg.com/@waline/emojis@1.2.0/tieba","https://unpkg.com/@waline/emojis@1.2.0/weibo","https://unpkg.com/@waline/emojis@1.2.0/bilibili"],
+            
+            meta: ["nick","mail","link"],
+            requiredMeta: [],
+            login: "enable",
+            
+            pageSize: 10,
+            imageUploader: false,
+            highlighter: false,
+            texRenderer: false,
+            search: false,
+            pageview: false,
+            comment: false,
+            copyright: true,
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#杂记"><span class="level-left"><span class="level-item">1</span><span class="level-item">杂记</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#syscall的处理"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">syscall的处理</span></span></a></li><li><a class="level is-mobile" href="#sys"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">sys_*()</span></span></a></li><li><a class="level is-mobile" href="#进程间通信"><span class="level-left"><span class="level-item">1.3</span><span class="level-item">进程间通信</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#src-dstva-0-？"><span class="level-left"><span class="level-item">1.3.1</span><span class="level-item">src/dstva == 0 ？</span></span></a></li></ul></li><li><a class="level is-mobile" href="#fork"><span class="level-left"><span class="level-item">1.4</span><span class="level-item">fork()</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#小实验"><span class="level-left"><span class="level-item">1.4.1</span><span class="level-item">小实验</span></span></a></li><li><a class="level is-mobile" href="#自上而下分析"><span class="level-left"><span class="level-item">1.4.2</span><span class="level-item">自上而下分析</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#思考题"><span class="level-left"><span class="level-item">2</span><span class="level-item">思考题</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#4-1"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">4.1</span></span></a></li><li><a class="level is-mobile" href="#4-2"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">4.2</span></span></a></li><li><a class="level is-mobile" href="#4-3"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">4.3</span></span></a></li><li><a class="level is-mobile" href="#4-4"><span class="level-left"><span class="level-item">2.4</span><span class="level-item">4.4</span></span></a></li><li><a class="level is-mobile" href="#4-5"><span class="level-left"><span class="level-item">2.5</span><span class="level-item">4.5</span></span></a></li><li><a class="level is-mobile" href="#4-6"><span class="level-left"><span class="level-item">2.6</span><span class="level-item">4.6</span></span></a></li></ul></li><li><a class="level is-mobile" href="#4-7"><span class="level-left"><span class="level-item">3</span><span class="level-item">4.7</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#4-8"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">4.8</span></span></a></li><li><a class="level is-mobile" href="#4-9"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">4.9</span></span></a></li></ul></li><li><a class="level is-mobile" href="#难点分析"><span class="level-left"><span class="level-item">4</span><span class="level-item">难点分析</span></span></a></li><li><a class="level is-mobile" href="#实验体会"><span class="level-left"><span class="level-item">5</span><span class="level-item">实验体会</span></span></a></li><li><a class="level is-mobile" href="#原创声明"><span class="level-left"><span class="level-item">6</span><span class="level-item">原创声明</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/pz13.png" alt="Position 0 - LajiPZ的随想屋" height="28"></a><p class="is-size-7"><span>&copy; 2025 LajiPZ</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://unpkg.com/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://unpkg.com/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://unpkg.com/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://unpkg.com/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://unpkg.com/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/javascript" id="MathJax-script" async>MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      chtml: {
+        matchFontHeight: false
+      }
+    };</script><script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script><script src="https://unpkg.com/pjax@0.2.8/pjax.min.js"></script><script src="/js/pjax.js"></script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
