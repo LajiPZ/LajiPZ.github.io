@@ -6,7 +6,7 @@
   <link href="http://lajipz.top/atom.xml" rel="self"/>
   
   <link href="http://lajipz.top/"/>
-  <updated>2025-07-08T15:28:41.339Z</updated>
+  <updated>2025-07-08T16:02:46.662Z</updated>
   <id>http://lajipz.top/</id>
   
   <author>
@@ -15,30 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>OS - LA32R移植报告</title>
-    <link href="http://lajipz.top/2025/07/08/OS%20-%20LA32R%E7%A7%BB%E6%A4%8D%E6%8A%A5%E5%91%8A/"/>
-    <id>http://lajipz.top/2025/07/08/OS%20-%20LA32R%E7%A7%BB%E6%A4%8D%E6%8A%A5%E5%91%8A/</id>
-    <published>2025-07-08T15:00:00.000Z</published>
-    <updated>2025-07-08T15:28:41.339Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;这一部分由我与另一位同学共同完成。我主要完成的是SD卡部分的工作。仅此向Lab4就已探索出前三个Lab移植的他表示敬意…&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&quot;指令集适配&quot;&gt;&lt;a href=&quot;#指令集适配&quot; class=&quot;headerlink&quot; title=&quot;指令集适配&quot;&gt;&lt;/a&gt;指令集适配&lt;/h1&gt;&lt;p&gt;这一部分只介绍较为关键的改动。有关Makefile中编译选项的修改，指令名称、格式变动引起的修改，在此不多加赘述。&lt;/p&gt;
-&lt;h2 id=&quot;例外有关&quot;&gt;&lt;a href=&quot;#例外有关&quot; class=&quot;headerlink&quot; title=&quot;例外有关&quot;&gt;&lt;/a&gt;例外有关&lt;/h2&gt;&lt;p&gt;LA32R需要在状态控制寄存器（CSR）中，配置&lt;code&gt;EENTRY&lt;/code&gt;和&lt;code&gt;TLBRENTRY&lt;/code&gt;两项，分别对应普通例外的入口地址，以及TLB重填例外的入口地址。&lt;strong&gt;不难注意到，LA32R的TLB重填例外，是与其他例外分开处理的。&lt;/strong&gt; &lt;/p&gt;
-&lt;p&gt;此外，由于触发 TLB 重填例外之后，处理器核将进入直接地址翻译模式，&lt;code&gt;TLBRENTRY&lt;/code&gt;处所填入口地址应当是&lt;strong&gt;物理地址&lt;/strong&gt;。&lt;code&gt;EENTRY&lt;/code&gt;不受影F响。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
-    
-    
-    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
   
   <entry>
     <title>OS - Lab1实验报告</title>
@@ -56,6 +32,30 @@
 &lt;li&gt;&lt;code&gt;-D&lt;/code&gt;：显示所有反汇编结果。&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;-S&lt;/code&gt;：在源码可以找到的情况下，将源码与反汇编结果一同输出：&lt;/li&gt;
 &lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OS - LA32R移植报告</title>
+    <link href="http://lajipz.top/2025/07/08/OS%20-%20LA32R%E7%A7%BB%E6%A4%8D%E6%8A%A5%E5%91%8A/"/>
+    <id>http://lajipz.top/2025/07/08/OS%20-%20LA32R%E7%A7%BB%E6%A4%8D%E6%8A%A5%E5%91%8A/</id>
+    <published>2025-07-08T15:00:00.000Z</published>
+    <updated>2025-07-08T15:28:41.339Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;这一部分由我与另一位同学共同完成。我主要完成的是SD卡部分的工作。仅此向Lab4就已探索出前三个Lab移植的他表示敬意…&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;指令集适配&quot;&gt;&lt;a href=&quot;#指令集适配&quot; class=&quot;headerlink&quot; title=&quot;指令集适配&quot;&gt;&lt;/a&gt;指令集适配&lt;/h1&gt;&lt;p&gt;这一部分只介绍较为关键的改动。有关Makefile中编译选项的修改，指令名称、格式变动引起的修改，在此不多加赘述。&lt;/p&gt;
+&lt;h2 id=&quot;例外有关&quot;&gt;&lt;a href=&quot;#例外有关&quot; class=&quot;headerlink&quot; title=&quot;例外有关&quot;&gt;&lt;/a&gt;例外有关&lt;/h2&gt;&lt;p&gt;LA32R需要在状态控制寄存器（CSR）中，配置&lt;code&gt;EENTRY&lt;/code&gt;和&lt;code&gt;TLBRENTRY&lt;/code&gt;两项，分别对应普通例外的入口地址，以及TLB重填例外的入口地址。&lt;strong&gt;不难注意到，LA32R的TLB重填例外，是与其他例外分开处理的。&lt;/strong&gt; &lt;/p&gt;
+&lt;p&gt;此外，由于触发 TLB 重填例外之后，处理器核将进入直接地址翻译模式，&lt;code&gt;TLBRENTRY&lt;/code&gt;处所填入口地址应当是&lt;strong&gt;物理地址&lt;/strong&gt;。&lt;code&gt;EENTRY&lt;/code&gt;不受影F响。&lt;/p&gt;</summary>
     
     
     
@@ -98,6 +98,28 @@
   </entry>
   
   <entry>
+    <title>OS - Lab6实验报告</title>
+    <link href="http://lajipz.top/2025/07/08/OS%20-%20Lab6%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
+    <id>http://lajipz.top/2025/07/08/OS%20-%20Lab6%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
+    <published>2025-07-08T15:00:00.000Z</published>
+    <updated>2025-07-08T16:02:56.455Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;归档于2025年7月8日。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;思考题&quot;&gt;&lt;a href=&quot;#思考题&quot; class=&quot;headerlink&quot; title=&quot;思考题&quot;&gt;&lt;/a&gt;思考题&lt;/h1&gt;&lt;h2 id=&quot;6-1&quot;&gt;&lt;a href=&quot;#6-1&quot; class=&quot;headerlink&quot; title=&quot;6.1&quot;&gt;&lt;/a&gt;6.1&lt;/h2&gt;&lt;p&gt;很简单，我们把两个case互换即可。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
     <title>OS - Lab3实验报告</title>
     <link href="http://lajipz.top/2025/07/08/OS%20-%20Lab3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
     <id>http://lajipz.top/2025/07/08/OS%20-%20Lab3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
@@ -113,53 +135,6 @@
 &lt;li&gt;在页表自映射的设计下，&lt;code&gt; e-&amp;gt;env_pgdir[PDX(UVPT)]&lt;/code&gt;访问了页目录中，&lt;strong&gt;指向页目录自身的页目录项&lt;/strong&gt;；&lt;/li&gt;
 &lt;li&gt;将这一页目录项赋值为&lt;code&gt;PADDR(e-&amp;gt;env_pgdir) | PTE_V&lt;/code&gt;，也就是在&lt;strong&gt;构建自映射，并让这一项有效&lt;/strong&gt;，从而使得页目录可被正确访问。&lt;/li&gt;
 &lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
-    
-    
-    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>OS - Lab5实验报告</title>
-    <link href="http://lajipz.top/2025/07/08/OS%20-%20Lab5%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
-    <id>http://lajipz.top/2025/07/08/OS%20-%20Lab5%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
-    <published>2025-07-08T15:00:00.000Z</published>
-    <updated>2025-07-08T16:02:54.808Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;归档于2025年7月8日。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&quot;思考题&quot;&gt;&lt;a href=&quot;#思考题&quot; class=&quot;headerlink&quot; title=&quot;思考题&quot;&gt;&lt;/a&gt;思考题&lt;/h1&gt;&lt;h2 id=&quot;5-1&quot;&gt;&lt;a href=&quot;#5-1&quot; class=&quot;headerlink&quot; title=&quot;5.1&quot;&gt;&lt;/a&gt;5.1&lt;/h2&gt;&lt;p&gt;这跟Cache的更新策略有一些关系。&lt;/p&gt;
-&lt;p&gt;若Cache采用了写回策略，则：由&lt;code&gt;kseg0&lt;/code&gt;写设备，向设备传递的数据会被存入Cache，而不会真正到达设备；仅在对应Cache块被清除掉时，向设备传输的数据才能到达设备。这会导致设备的延迟响应，甚至不响应。&lt;/p&gt;
-&lt;p&gt;Cache的更新策略，也与这个问题有关。如果Cache中缓存了设备的状态寄存器，那么：众所周知，设备的状态往往实时变化，若要保持Cache与设备状态寄存器的一致，我们必须时刻更新Cache，其性能开销极大，完全背离了Cache的设计本意；不维持一致性，则在Cache中读出的设备状态信息与实际的设备状态往往不符，会引起程序逻辑的问题。&lt;/p&gt;
-&lt;p&gt;这样做对不同设备的影响当然是不同的。对于IDE硬盘，可能是一次读&amp;#x2F;写请求迟迟不响应，导致程序长时间阻塞；对于显示设备（串口输出&amp;#x2F;显示器&amp;#x2F;…），可能是迟迟不显示该显示的内容。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
-    
-    
-    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>OS - Lab6实验报告</title>
-    <link href="http://lajipz.top/2025/07/08/OS%20-%20Lab6%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
-    <id>http://lajipz.top/2025/07/08/OS%20-%20Lab6%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
-    <published>2025-07-08T15:00:00.000Z</published>
-    <updated>2025-07-08T16:02:56.455Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;归档于2025年7月8日。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&quot;思考题&quot;&gt;&lt;a href=&quot;#思考题&quot; class=&quot;headerlink&quot; title=&quot;思考题&quot;&gt;&lt;/a&gt;思考题&lt;/h1&gt;&lt;h2 id=&quot;6-1&quot;&gt;&lt;a href=&quot;#6-1&quot; class=&quot;headerlink&quot; title=&quot;6.1&quot;&gt;&lt;/a&gt;6.1&lt;/h2&gt;&lt;p&gt;很简单，我们把两个case互换即可。&lt;/p&gt;</summary>
     
     
     
@@ -190,6 +165,31 @@
 &lt;li&gt;随后还调用了&lt;code&gt;debug_flush()&lt;/code&gt;，调用出&lt;code&gt;syscall_print_cons&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;syscall_print_cons()&lt;/code&gt;调用&lt;code&gt;msyscall()&lt;/code&gt;，传入信号参数&lt;code&gt;SYS_print_cons&lt;/code&gt;，指示之&lt;/li&gt;
 &lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OS - Lab5实验报告</title>
+    <link href="http://lajipz.top/2025/07/08/OS%20-%20Lab5%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
+    <id>http://lajipz.top/2025/07/08/OS%20-%20Lab5%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
+    <published>2025-07-08T15:00:00.000Z</published>
+    <updated>2025-07-08T16:02:54.808Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;归档于2025年7月8日。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;思考题&quot;&gt;&lt;a href=&quot;#思考题&quot; class=&quot;headerlink&quot; title=&quot;思考题&quot;&gt;&lt;/a&gt;思考题&lt;/h1&gt;&lt;h2 id=&quot;5-1&quot;&gt;&lt;a href=&quot;#5-1&quot; class=&quot;headerlink&quot; title=&quot;5.1&quot;&gt;&lt;/a&gt;5.1&lt;/h2&gt;&lt;p&gt;这跟Cache的更新策略有一些关系。&lt;/p&gt;
+&lt;p&gt;若Cache采用了写回策略，则：由&lt;code&gt;kseg0&lt;/code&gt;写设备，向设备传递的数据会被存入Cache，而不会真正到达设备；仅在对应Cache块被清除掉时，向设备传输的数据才能到达设备。这会导致设备的延迟响应，甚至不响应。&lt;/p&gt;
+&lt;p&gt;Cache的更新策略，也与这个问题有关。如果Cache中缓存了设备的状态寄存器，那么：众所周知，设备的状态往往实时变化，若要保持Cache与设备状态寄存器的一致，我们必须时刻更新Cache，其性能开销极大，完全背离了Cache的设计本意；不维持一致性，则在Cache中读出的设备状态信息与实际的设备状态往往不符，会引起程序逻辑的问题。&lt;/p&gt;
+&lt;p&gt;这样做对不同设备的影响当然是不同的。对于IDE硬盘，可能是一次读&amp;#x2F;写请求迟迟不响应，导致程序长时间阻塞；对于显示设备（串口输出&amp;#x2F;显示器&amp;#x2F;…），可能是迟迟不显示该显示的内容。&lt;/p&gt;</summary>
     
     
     
@@ -268,27 +268,6 @@
   </entry>
   
   <entry>
-    <title>OO_U2 - HW7简要总结</title>
-    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/"/>
-    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/</id>
-    <published>2025-04-17T15:00:00.000Z</published>
-    <updated>2025-04-21T06:39:05.077Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;讨论区已有一众仙人分享了自己的实现，但我认为我有在降低修改复杂度上更进一步的办法。&lt;/p&gt;
-&lt;p&gt;考虑到本次作业为本单元的最后一次作业，我的修改方法更注重于&lt;strong&gt;降低修改的复杂度，可能存在部分性能的牺牲。&lt;/strong&gt; 在各位进行参考时，请注意这一点。&lt;/p&gt;
-&lt;p&gt;本人实现的亮点在于：UPDATE请求的处理，与双轿厢目标楼层的规避，&lt;strong&gt;全部利用线程交互实现&lt;/strong&gt;。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
-    
-    
-    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
-    
-  </entry>
-  
-  <entry>
     <title>OO_U2 - HW5,6阶段性总结</title>
     <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/"/>
     <id>http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/</id>
@@ -300,6 +279,27 @@
 &lt;p&gt;我的调度算法，与我的架构实现耦合度较高，因此我不得不先提一些我自己的电梯实现；不需要的同学，欢迎直接跳开“电梯实现”部分。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;这算是本人两周以来的一个总结吧，终于有时间写了…&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OO_U2 - HW7简要总结</title>
+    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/"/>
+    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/</id>
+    <published>2025-04-17T15:00:00.000Z</published>
+    <updated>2025-04-21T06:39:05.077Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;讨论区已有一众仙人分享了自己的实现，但我认为我有在降低修改复杂度上更进一步的办法。&lt;/p&gt;
+&lt;p&gt;考虑到本次作业为本单元的最后一次作业，我的修改方法更注重于&lt;strong&gt;降低修改的复杂度，可能存在部分性能的牺牲。&lt;/strong&gt; 在各位进行参考时，请注意这一点。&lt;/p&gt;
+&lt;p&gt;本人实现的亮点在于：UPDATE请求的处理，与双轿厢目标楼层的规避，&lt;strong&gt;全部利用线程交互实现&lt;/strong&gt;。&lt;/p&gt;</summary>
     
     
     
@@ -340,28 +340,6 @@
   </entry>
   
   <entry>
-    <title>使用ReentrantLock，实现更灵活的锁管理策略</title>
-    <link href="http://lajipz.top/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/"/>
-    <id>http://lajipz.top/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/</id>
-    <published>2025-04-17T15:00:00.000Z</published>
-    <updated>2025-04-21T06:32:29.342Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;本文是对OO第二单元总结的一部分。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;众所周知，我们可以通过&lt;code&gt;synchronized&lt;/code&gt;方法，以及&lt;code&gt;synchronized&lt;/code&gt;代码块获取对象的锁；但是，你是否发现，这一做法有时并不灵活？&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
-    
-    
-    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
-    
-  </entry>
-  
-  <entry>
     <title>在IDEA内部，进行更高效的死锁调试</title>
     <link href="http://lajipz.top/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/"/>
     <id>http://lajipz.top/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/</id>
@@ -374,6 +352,28 @@
 &lt;/blockquote&gt;
 &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://mp.weixin.qq.com/s/xbVZPRuHR_Dl39O4S6ny0w&quot;&gt;oolens最近发的多线程文章中&lt;/a&gt;介绍了两套调试工具，但个人认为二者功能相互独立，且二者使用起来都不大方便。&lt;strong&gt;这两个工具还是太吃操作了，有没有什么更简单又强势的工具推荐一下呢？&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;有的兄弟，有的！&lt;/strong&gt; 使用IDEA本身就够了！我们主要利用的，是它的&lt;code&gt;Dump Threads（获取线程转储）&lt;/code&gt;功能。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用ReentrantLock，实现更灵活的锁管理策略</title>
+    <link href="http://lajipz.top/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/"/>
+    <id>http://lajipz.top/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/</id>
+    <published>2025-04-17T15:00:00.000Z</published>
+    <updated>2025-04-21T06:32:29.342Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;本文是对OO第二单元总结的一部分。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;众所周知，我们可以通过&lt;code&gt;synchronized&lt;/code&gt;方法，以及&lt;code&gt;synchronized&lt;/code&gt;代码块获取对象的锁；但是，你是否发现，这一做法有时并不灵活？&lt;/p&gt;</summary>
     
     
     
@@ -442,27 +442,6 @@
   </entry>
   
   <entry>
-    <title>航砖祭祖后日谈</title>
-    <link href="http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/"/>
-    <id>http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</id>
-    <published>2025-02-04T13:23:00.000Z</published>
-    <updated>2025-07-08T15:25:30.627Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;本文将对BUAA_CO_2024进行简要回顾，并给出自己的一些主观建议，仅供参考。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
-    
-    
-    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
-    
-    <category term="计组" scheme="http://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
-    
-  </entry>
-  
-  <entry>
     <title>通过命令行，更优雅地利用ISE进行开发</title>
     <link href="http://lajipz.top/2025/02/04/%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E6%9B%B4%E4%BC%98%E9%9B%85%E5%9C%B0%E5%88%A9%E7%94%A8ISE%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91/"/>
     <id>http://lajipz.top/2025/02/04/%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E6%9B%B4%E4%BC%98%E9%9B%85%E5%9C%B0%E5%88%A9%E7%94%A8ISE%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91/</id>
@@ -482,6 +461,27 @@
 &lt;/ul&gt;
 &lt;p&gt;但在本文的方法下，以上问题均可一一化解！&lt;/p&gt;
 &lt;p&gt;本文是教程中&lt;a href=&quot;http://cscore.buaa.edu.cn/tutorial/verilog/verilog-6/verilog-6-6/&quot;&gt;ISE、VCS 与自动化测试&lt;/a&gt;的一小点拓展。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    
+    <category term="计组" scheme="http://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>航砖祭祖后日谈</title>
+    <link href="http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/"/>
+    <id>http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</id>
+    <published>2025-02-04T13:23:00.000Z</published>
+    <updated>2025-07-08T15:25:30.627Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;本文将对BUAA_CO_2024进行简要回顾，并给出自己的一些主观建议，仅供参考。&lt;/p&gt;</summary>
     
     
     
