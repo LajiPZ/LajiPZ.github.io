@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Position 0 - LajiPZ的随想屋</title>
-  <icon>http://lajipz.top/icon.png</icon>
+  <icon>https://lajipz.top/icon.png</icon>
   <subtitle>Position 0 - LajiPZ的随想屋</subtitle>
-  <link href="http://lajipz.top/atom.xml" rel="self"/>
+  <link href="https://lajipz.top/atom.xml" rel="self"/>
   
-  <link href="http://lajipz.top/"/>
-  <updated>2025-07-08T16:02:46.662Z</updated>
-  <id>http://lajipz.top/</id>
+  <link href="https://lajipz.top/"/>
+  <updated>2026-11-06T11:08:15.357Z</updated>
+  <id>https://lajipz.top/</id>
   
   <author>
     <name>LajiPZ</name>
@@ -17,9 +17,22 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>测试</title>
+    <link href="https://lajipz.top/2026/11/06/%E6%B5%8B%E8%AF%95/"/>
+    <id>https://lajipz.top/2026/11/06/%E6%B5%8B%E8%AF%95/</id>
+    <published>2026-11-06T11:08:13.000Z</published>
+    <updated>2026-11-06T11:08:15.357Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>OS - Lab1实验报告</title>
-    <link href="http://lajipz.top/2025/07/08/OS%20-%20Lab1%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
-    <id>http://lajipz.top/2025/07/08/OS%20-%20Lab1%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
+    <link href="https://lajipz.top/2025/07/08/OS%20-%20Lab1%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
+    <id>https://lajipz.top/2025/07/08/OS%20-%20Lab1%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
     <published>2025-07-08T15:00:00.000Z</published>
     <updated>2025-07-08T16:02:46.662Z</updated>
     
@@ -35,17 +48,17 @@
     
     
     
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    <category term="操作系统" scheme="https://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
   <entry>
     <title>OS - LA32R移植报告</title>
-    <link href="http://lajipz.top/2025/07/08/OS%20-%20LA32R%E7%A7%BB%E6%A4%8D%E6%8A%A5%E5%91%8A/"/>
-    <id>http://lajipz.top/2025/07/08/OS%20-%20LA32R%E7%A7%BB%E6%A4%8D%E6%8A%A5%E5%91%8A/</id>
+    <link href="https://lajipz.top/2025/07/08/OS%20-%20LA32R%E7%A7%BB%E6%A4%8D%E6%8A%A5%E5%91%8A/"/>
+    <id>https://lajipz.top/2025/07/08/OS%20-%20LA32R%E7%A7%BB%E6%A4%8D%E6%8A%A5%E5%91%8A/</id>
     <published>2025-07-08T15:00:00.000Z</published>
     <updated>2025-07-08T15:28:41.339Z</updated>
     
@@ -59,17 +72,17 @@
     
     
     
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    <category term="操作系统" scheme="https://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
   <entry>
     <title>OS - Lab2实验报告</title>
-    <link href="http://lajipz.top/2025/07/08/OS%20-%20Lab2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
-    <id>http://lajipz.top/2025/07/08/OS%20-%20Lab2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
+    <link href="https://lajipz.top/2025/07/08/OS%20-%20Lab2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
+    <id>https://lajipz.top/2025/07/08/OS%20-%20Lab2%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
     <published>2025-07-08T15:00:00.000Z</published>
     <updated>2025-07-08T16:02:48.742Z</updated>
     
@@ -90,17 +103,17 @@
     
     
     
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    <category term="操作系统" scheme="https://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
   <entry>
     <title>OS - Lab6实验报告</title>
-    <link href="http://lajipz.top/2025/07/08/OS%20-%20Lab6%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
-    <id>http://lajipz.top/2025/07/08/OS%20-%20Lab6%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
+    <link href="https://lajipz.top/2025/07/08/OS%20-%20Lab6%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
+    <id>https://lajipz.top/2025/07/08/OS%20-%20Lab6%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
     <published>2025-07-08T15:00:00.000Z</published>
     <updated>2025-07-08T16:02:56.455Z</updated>
     
@@ -112,17 +125,17 @@
     
     
     
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    <category term="操作系统" scheme="https://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
   <entry>
     <title>OS - Lab3实验报告</title>
-    <link href="http://lajipz.top/2025/07/08/OS%20-%20Lab3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
-    <id>http://lajipz.top/2025/07/08/OS%20-%20Lab3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
+    <link href="https://lajipz.top/2025/07/08/OS%20-%20Lab3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
+    <id>https://lajipz.top/2025/07/08/OS%20-%20Lab3%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
     <published>2025-07-08T15:00:00.000Z</published>
     <updated>2025-07-08T16:02:51.154Z</updated>
     
@@ -138,17 +151,17 @@
     
     
     
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    <category term="操作系统" scheme="https://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
   <entry>
     <title>OS - Lab4实验报告</title>
-    <link href="http://lajipz.top/2025/07/08/OS%20-%20Lab4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
-    <id>http://lajipz.top/2025/07/08/OS%20-%20Lab4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
+    <link href="https://lajipz.top/2025/07/08/OS%20-%20Lab4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
+    <id>https://lajipz.top/2025/07/08/OS%20-%20Lab4%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
     <published>2025-07-08T15:00:00.000Z</published>
     <updated>2025-07-08T16:02:52.781Z</updated>
     
@@ -168,17 +181,17 @@
     
     
     
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    <category term="操作系统" scheme="https://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
   <entry>
     <title>OS - Lab5实验报告</title>
-    <link href="http://lajipz.top/2025/07/08/OS%20-%20Lab5%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
-    <id>http://lajipz.top/2025/07/08/OS%20-%20Lab5%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
+    <link href="https://lajipz.top/2025/07/08/OS%20-%20Lab5%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
+    <id>https://lajipz.top/2025/07/08/OS%20-%20Lab5%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</id>
     <published>2025-07-08T15:00:00.000Z</published>
     <updated>2025-07-08T16:02:54.808Z</updated>
     
@@ -193,17 +206,17 @@
     
     
     
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="操作系统" scheme="http://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    <category term="操作系统" scheme="https://lajipz.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
   <entry>
     <title>OO_U4 - UML</title>
-    <link href="http://lajipz.top/2025/06/10/OO_U4%20-%20Checker/"/>
-    <id>http://lajipz.top/2025/06/10/OO_U4%20-%20Checker/</id>
+    <link href="https://lajipz.top/2025/06/10/OO_U4%20-%20Checker/"/>
+    <id>https://lajipz.top/2025/06/10/OO_U4%20-%20Checker/</id>
     <published>2025-06-10T11:00:00.000Z</published>
     <updated>2025-07-08T14:42:02.387Z</updated>
     
@@ -216,17 +229,17 @@
     
     
     
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    <category term="面向对象" scheme="https://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
     
   </entry>
   
   <entry>
     <title>OO_U4 - UML</title>
-    <link href="http://lajipz.top/2025/06/10/OO_U4%20-%20UML/"/>
-    <id>http://lajipz.top/2025/06/10/OO_U4%20-%20UML/</id>
+    <link href="https://lajipz.top/2025/06/10/OO_U4%20-%20UML/"/>
+    <id>https://lajipz.top/2025/06/10/OO_U4%20-%20UML/</id>
     <published>2025-06-10T11:00:00.000Z</published>
     <updated>2025-07-08T14:46:52.846Z</updated>
     
@@ -239,17 +252,17 @@
     
     
     
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    <category term="面向对象" scheme="https://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
     
   </entry>
   
   <entry>
     <title>OO_U3 - JML</title>
-    <link href="http://lajipz.top/2025/05/13/OO_U3%20-%20JML/"/>
-    <id>http://lajipz.top/2025/05/13/OO_U3%20-%20JML/</id>
+    <link href="https://lajipz.top/2025/05/13/OO_U3%20-%20JML/"/>
+    <id>https://lajipz.top/2025/05/13/OO_U3%20-%20JML/</id>
     <published>2025-05-13T11:00:00.000Z</published>
     <updated>2025-05-13T11:15:10.882Z</updated>
     
@@ -260,17 +273,17 @@
     
     
     
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    <category term="面向对象" scheme="https://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
     
   </entry>
   
   <entry>
     <title>OO_U2 - HW5,6阶段性总结</title>
-    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/"/>
-    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/</id>
+    <link href="https://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/"/>
+    <id>https://lajipz.top/2025/04/17/OO_U2%20-%20HW5,6%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/</id>
     <published>2025-04-17T15:00:00.000Z</published>
     <updated>2025-04-21T06:32:23.121Z</updated>
     
@@ -282,17 +295,17 @@
     
     
     
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    <category term="面向对象" scheme="https://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
     
   </entry>
   
   <entry>
     <title>OO_U2 - HW7简要总结</title>
-    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/"/>
-    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/</id>
+    <link href="https://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/"/>
+    <id>https://lajipz.top/2025/04/17/OO_U2%20-%20HW7%E7%AE%80%E8%A6%81%E6%80%BB%E7%BB%93/</id>
     <published>2025-04-17T15:00:00.000Z</published>
     <updated>2025-04-21T06:39:05.077Z</updated>
     
@@ -303,17 +316,17 @@
     
     
     
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    <category term="面向对象" scheme="https://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
     
   </entry>
   
   <entry>
     <title>OO_U2 - 电梯</title>
-    <link href="http://lajipz.top/2025/04/17/OO_U2%20-%20%E7%94%B5%E6%A2%AF/"/>
-    <id>http://lajipz.top/2025/04/17/OO_U2%20-%20%E7%94%B5%E6%A2%AF/</id>
+    <link href="https://lajipz.top/2025/04/17/OO_U2%20-%20%E7%94%B5%E6%A2%AF/"/>
+    <id>https://lajipz.top/2025/04/17/OO_U2%20-%20%E7%94%B5%E6%A2%AF/</id>
     <published>2025-04-17T15:00:00.000Z</published>
     <updated>2025-04-21T06:50:49.284Z</updated>
     
@@ -332,17 +345,17 @@
     
     
     
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    <category term="面向对象" scheme="https://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
     
   </entry>
   
   <entry>
     <title>在IDEA内部，进行更高效的死锁调试</title>
-    <link href="http://lajipz.top/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/"/>
-    <id>http://lajipz.top/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/</id>
+    <link href="https://lajipz.top/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/"/>
+    <id>https://lajipz.top/2025/04/17/%E5%9C%A8IDEA%E5%86%85%E9%83%A8%EF%BC%8C%E8%BF%9B%E8%A1%8C%E6%9B%B4%E9%AB%98%E6%95%88%E7%9A%84%E6%AD%BB%E9%94%81%E8%B0%83%E8%AF%95/</id>
     <published>2025-04-17T15:00:00.000Z</published>
     <updated>2025-04-21T06:32:34.501Z</updated>
     
@@ -355,17 +368,17 @@
     
     
     
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    <category term="面向对象" scheme="https://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
     
   </entry>
   
   <entry>
     <title>使用ReentrantLock，实现更灵活的锁管理策略</title>
-    <link href="http://lajipz.top/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/"/>
-    <id>http://lajipz.top/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/</id>
+    <link href="https://lajipz.top/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/"/>
+    <id>https://lajipz.top/2025/04/17/%E4%BD%BF%E7%94%A8ReentrantLock%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E9%94%81%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5/</id>
     <published>2025-04-17T15:00:00.000Z</published>
     <updated>2025-04-21T06:32:29.342Z</updated>
     
@@ -377,17 +390,17 @@
     
     
     
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    <category term="面向对象" scheme="https://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
     
   </entry>
   
   <entry>
     <title>OO_U1 - 数学表达式</title>
-    <link href="http://lajipz.top/2025/02/28/OO_U1%20-%20%E6%95%B0%E5%AD%A6%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
-    <id>http://lajipz.top/2025/02/28/OO_U1%20-%20%E6%95%B0%E5%AD%A6%E8%A1%A8%E8%BE%BE%E5%BC%8F/</id>
+    <link href="https://lajipz.top/2025/02/28/OO_U1%20-%20%E6%95%B0%E5%AD%A6%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    <id>https://lajipz.top/2025/02/28/OO_U1%20-%20%E6%95%B0%E5%AD%A6%E8%A1%A8%E8%BE%BE%E5%BC%8F/</id>
     <published>2025-02-28T02:44:00.000Z</published>
     <updated>2025-04-14T15:43:59.656Z</updated>
     
@@ -407,17 +420,17 @@
     
     
     
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="面向对象" scheme="http://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
+    <category term="面向对象" scheme="https://lajipz.top/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/"/>
     
   </entry>
   
   <entry>
     <title>技术演示 - 并发执行的多测试数据对拍脚本</title>
-    <link href="http://lajipz.top/2025/02/04/%E6%8A%80%E6%9C%AF%E6%BC%94%E7%A4%BA%20-%20%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C%E7%9A%84%E5%A4%9A%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%E5%AF%B9%E6%8B%8D%E8%84%9A%E6%9C%AC/"/>
-    <id>http://lajipz.top/2025/02/04/%E6%8A%80%E6%9C%AF%E6%BC%94%E7%A4%BA%20-%20%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C%E7%9A%84%E5%A4%9A%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%E5%AF%B9%E6%8B%8D%E8%84%9A%E6%9C%AC/</id>
+    <link href="https://lajipz.top/2025/02/04/%E6%8A%80%E6%9C%AF%E6%BC%94%E7%A4%BA%20-%20%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C%E7%9A%84%E5%A4%9A%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%E5%AF%B9%E6%8B%8D%E8%84%9A%E6%9C%AC/"/>
+    <id>https://lajipz.top/2025/02/04/%E6%8A%80%E6%9C%AF%E6%BC%94%E7%A4%BA%20-%20%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C%E7%9A%84%E5%A4%9A%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%E5%AF%B9%E6%8B%8D%E8%84%9A%E6%9C%AC/</id>
     <published>2025-02-04T13:23:00.000Z</published>
     <updated>2025-02-21T05:50:09.321Z</updated>
     
@@ -432,19 +445,19 @@
     
     
     
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    <category term="心得" scheme="https://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
     
-    <category term="计组" scheme="http://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
+    <category term="计组" scheme="https://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
     
   </entry>
   
   <entry>
     <title>通过命令行，更优雅地利用ISE进行开发</title>
-    <link href="http://lajipz.top/2025/02/04/%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E6%9B%B4%E4%BC%98%E9%9B%85%E5%9C%B0%E5%88%A9%E7%94%A8ISE%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91/"/>
-    <id>http://lajipz.top/2025/02/04/%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E6%9B%B4%E4%BC%98%E9%9B%85%E5%9C%B0%E5%88%A9%E7%94%A8ISE%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91/</id>
+    <link href="https://lajipz.top/2025/02/04/%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E6%9B%B4%E4%BC%98%E9%9B%85%E5%9C%B0%E5%88%A9%E7%94%A8ISE%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91/"/>
+    <id>https://lajipz.top/2025/02/04/%E9%80%9A%E8%BF%87%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E6%9B%B4%E4%BC%98%E9%9B%85%E5%9C%B0%E5%88%A9%E7%94%A8ISE%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91/</id>
     <published>2025-02-04T13:23:00.000Z</published>
     <updated>2025-07-08T15:25:28.936Z</updated>
     
@@ -464,19 +477,19 @@
     
     
     
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    <category term="心得" scheme="https://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
     
-    <category term="计组" scheme="http://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
+    <category term="计组" scheme="https://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
     
   </entry>
   
   <entry>
     <title>航砖祭祖后日谈</title>
-    <link href="http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/"/>
-    <id>http://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</id>
+    <link href="https://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/"/>
+    <id>https://lajipz.top/2025/02/04/%E8%88%AA%E7%A0%96%E7%A5%AD%E7%A5%96%E5%90%8E%E6%97%A5%E8%B0%88/</id>
     <published>2025-02-04T13:23:00.000Z</published>
     <updated>2025-07-08T15:25:30.627Z</updated>
     
@@ -485,40 +498,12 @@
     
     
     
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
+    <category term="课程相关" scheme="https://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
     
     
-    <category term="心得" scheme="http://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
+    <category term="心得" scheme="https://lajipz.top/tags/%E5%BF%83%E5%BE%97/"/>
     
-    <category term="计组" scheme="http://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>“法律、科技与社会”课后思考题答案 - 2024</title>
-    <link href="http://lajipz.top/2025/02/04/%E2%80%9C%E6%B3%95%E5%BE%8B%E3%80%81%E7%A7%91%E6%8A%80%E4%B8%8E%E7%A4%BE%E4%BC%9A%E2%80%9D%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%20-%202024/"/>
-    <id>http://lajipz.top/2025/02/04/%E2%80%9C%E6%B3%95%E5%BE%8B%E3%80%81%E7%A7%91%E6%8A%80%E4%B8%8E%E7%A4%BE%E4%BC%9A%E2%80%9D%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%20-%202024/</id>
-    <published>2025-02-04T00:47:00.000Z</published>
-    <updated>2025-07-08T14:59:51.045Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;本文记录了本人复习“法律、科技与社会”课程时，对课后思考题给出的答案。&lt;/p&gt;
-&lt;p&gt;众所周知，本课的期末考试就是从课后思考题中抽集体来考，怎么复习想必大家都知道了。当然，不知道这几个思考题之后会不会变。&lt;/p&gt;
-&lt;p&gt;以下答案均为本人手搓，在考试获得了95分，当然这个给分可能有玄学成分在里面，仅供参考。&lt;/p&gt;
-&lt;h1 id=&quot;技术是中立的吗？为什么？&quot;&gt;&lt;a href=&quot;#技术是中立的吗？为什么？&quot; class=&quot;headerlink&quot; title=&quot;技术是中立的吗？为什么？&quot;&gt;&lt;/a&gt;技术是中立的吗？为什么？&lt;/h1&gt;&lt;p&gt;   不是。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;技术置身于社会中，具有社会性。&lt;/li&gt;
-&lt;li&gt;技术是占有世界的媒介，同时也是人类活动的一种形式。其背后包含了人类思维结果。&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="课程相关" scheme="http://lajipz.top/categories/%E8%AF%BE%E7%A8%8B%E7%9B%B8%E5%85%B3/"/>
-    
-    
-    <category term="水课" scheme="http://lajipz.top/tags/%E6%B0%B4%E8%AF%BE/"/>
-    
-    <category term="FKS" scheme="http://lajipz.top/tags/FKS/"/>
+    <category term="计组" scheme="https://lajipz.top/tags/%E8%AE%A1%E7%BB%84/"/>
     
   </entry>
   
